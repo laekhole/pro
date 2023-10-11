@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<sql id="select">
+		board_num, mem_id, title, content, reg_date, mod_date, view_count, pid
+	</sql>
+	
+	<sql id="whereClause">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="searchWord != null and searchWord != ''">
+				<choose>
+					<when test="type1 == 'title'">
+						and title like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<when test="type1 == 'mem_id'">
+						and mem_id like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<otherwise>
+						and (title like concat(concat('%', #{searchWord}), '%') or mem_id like concat(concat('%', #{searchWord}), '%')
+					</otherwise>
+				</choose>
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="totalCount" parameterType="BoardSearchVO" resultType="int">
+		select count(*)
+		from board
+		<include refid="whereClause" />
+	</select>
+
+	<select id="selectBoardList" parameterType="BoardSearchVO" resultType="BoardVO">
+		<include refid="paging.top" />
+		select 
+    	level, pid, board_num, mem_id, title, content, reg_date, mod_date, view_count
+		from board
+		<include refid="whereClause" />
+		start with pid=0
+		CONNECT BY PRIOR board_num = pid
+		order SIBLINGS by board_num desc
+		<include refid="paging.bottom" />
+	</select>
+	
+	
+</mapper>
