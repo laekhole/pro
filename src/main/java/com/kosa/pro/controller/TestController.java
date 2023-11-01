@@ -23,8 +23,8 @@ public class TestController extends PrtController {
 	@RequestMapping("main.do")
 	public String mainIndex(SearchVO search, Model model) throws Exception {
 		log.info(">>>>>>>>>>>>>>ㅇㅇㅇㅇㅇ");
-		model.addAttribute("test", getConfig().getAdminName());
-		
+//		model.addAttribute("test", getConfig().getAdminName());
+		model.addAttribute("testlist", _boardService.testList(search));
 		return "main";
 	}
 	
