@@ -15,9 +15,9 @@ public class AdminMainController {
 	
 	@RequestMapping("adminmain")
 	public String mainIndex(SearchVO search, Model model) throws Exception {
-		log.info(">>>>>>>>>>>>>>메인");
+		log.info(">>>>>>>>>>>>>>관리자 메인");
 //		model.addAttribute("test", getConfig().getAdminName());
-		return "adminindex";
+		return "admin/adminindex";
 	}
 
 }

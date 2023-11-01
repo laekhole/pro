@@ -7,7 +7,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-    <title>최종프로젝트</title>
+    <title>관리자페이지</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -29,10 +29,10 @@
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="/admintemplatecss/bootstrap.min.css" rel="stylesheet">
+    <link href="/admintemplate/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="/admintemplatecss/adminstyle.css" rel="stylesheet">
+    <link href="/admintemplate/css/adminstyle.css" rel="stylesheet">
 </head>
 
 <body>
@@ -54,7 +54,7 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+   <img class="rounded-circle" src="/admintemplate/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="/admintemplate/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">Admin</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -301,15 +301,15 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/admintemplate/lib/chart/chart.min.js"></script>
-    <script src="/admintemplatelib/easing/easing.min.js"></script>
-    <script src="/admintemplatelib/waypoints/waypoints.min.js"></script>
-    <script src="/admintemplatelib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="/admintemplatelib/tempusdominus/js/moment.min.js"></script>
-    <script src="/admintemplatelib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="/admintemplatelib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="/admintemplate/lib/easing/easing.min.js"></script>
+    <script src="/admintemplate/lib/waypoints/waypoints.min.js"></script>
+    <script src="/admintemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/admintemplate/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/admintemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/admintemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="/admintemplate/js/main.js"></script>
 </body>
 
 </html>
