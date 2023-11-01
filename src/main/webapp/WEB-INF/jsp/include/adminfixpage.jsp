@@ -31,10 +31,10 @@
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/admintemplate/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/adminstyle.css" rel="stylesheet">
+    <link href="/admintemplate/css/adminstyle.css" rel="stylesheet">
 </head>
 
 <body>
@@ -124,15 +124,12 @@
 
 
 
-            <!-- Blank Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
-                    <div class="col-md-6 text-center">
-                        <h3>This is blank page</h3>
-                    </div>
-                </div>
-            </div>
-            <!-- Blank End -->
+            <!-- 바디부분 여기 시작  -->
+ 
+ 
+            <!-- 바디 부분 여기 끝 -->
+ 
+ 
         </div>
         <!-- Content End -->
 
@@ -144,13 +141,13 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="/admintemplate/lib/chart/chart.min.js"></script>
+    <script src="/admintemplate/lib/easing/easing.min.js"></script>
+    <script src="/admintemplate/lib/waypoints/waypoints.min.js"></script>
+    <script src="/admintemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/admintemplate/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/admintemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/admintemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>

@@ -65,7 +65,7 @@
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="adminmanagement.html" class="nav-link dropdown-toggle1"><i class="fa fa-laptop me-2"></i>단체/회원관리</a>
+                        <a href="<c:url value ='adminmanagement'/>" class="nav-link dropdown-toggle1"><i class="fa fa-laptop me-2"></i>단체/회원관리</a>
                     </div>
                     <a href="adminnotice.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>공지사항</a>
                     <a href="adminboard.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>게시판</a>

@@ -6,19 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kosa.pro.model.common.SearchVO;
 
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AdminMainController {
+public class AdminManagementController {
 
-	
-	@RequestMapping("adminmain")
-	public String adminIndex(SearchVO search, Model model) throws Exception {
-		log.info(">>>>>>>>>>>>>>관리자 메인");
-//		model.addAttribute("test", getConfig().getAdminName());
-		return "admin/adminindex";
+	@RequestMapping("/adminmanagement")
+	public String adminMangementMain(SearchVO search, Model model) throws Exception {
+		log.info(">>>>>>>>>>>>>>관리자 회원/단체 관리");
+		return "admin/adminmanagement";
 	}
-
 }
-
