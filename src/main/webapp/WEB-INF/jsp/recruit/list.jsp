@@ -127,13 +127,82 @@
 						<div class="col-lg-8">
 							<div class="blog-entry d-flex blog-entry-search-item">
 								<div>
-									<span class="date">
+									<div class="date" style="margin-bottom: 10px;">
 										<ul class="tags">
 											<li><a href="#">모집중</a></li>
 											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
 											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
 										</ul>
-										</span>
+										</div>
+										<br>
+										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
+										<div>
+											<div class="data clear">
+													<dl>
+														<dt>신청/필요인원:</dt>
+														<dd>
+															<span>0/</span><span>3</span>
+														</dd>
+													</dl>
+													<dl>
+														<dt>봉사기간:</dt>
+														<dd>2023-10-30~ 2023-10-30</dd>
+													</dl>
+													<dl>
+														<dt>모집기관:</dt>
+														<dd>대한사회복지회 잉아터</dd>
+													</dl>
+													<p class="period">
+														</p>
+											</div>
+										</div>
+								</div>
+							</div>
+
+							<div class="blog-entry d-flex blog-entry-search-item">
+								<div>
+									<div class="date" style="margin-bottom: 10px;">
+										<ul class="tags">
+											<li><a href="#">모집중</a></li>
+											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
+											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
+										</ul>
+										</div>
+										<br>
+										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
+										<div>
+											<div class="data clear">
+													<dl>
+														<dt>신청/필요인원:</dt>
+														<dd>
+															<span>0/</span><span>3</span>
+														</dd>
+													</dl>
+													<dl>
+														<dt>봉사기간:</dt>
+														<dd>2023-10-30~ 2023-10-30</dd>
+													</dl>
+													<dl>
+														<dt>모집기관:</dt>
+														<dd>대한사회복지회 잉아터</dd>
+													</dl>
+													<p class="period">
+														</p>
+											</div>
+										</div>
+								</div>
+							</div>
+
+		
+							<div class="blog-entry d-flex blog-entry-search-item">
+								<div>
+									<div class="date" style="margin-bottom: 10px;">
+										<ul class="tags">
+											<li><a href="#">모집중</a></li>
+											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
+											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
+										</ul>
+										</div>
 										<br>
 										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
 										<div>
@@ -161,83 +230,15 @@
 		
 							<div class="blog-entry d-flex blog-entry-search-item">
 								<div>
-									<span class="date">
+									<div class="date" style="margin-bottom: 10px;">
 										<ul class="tags">
 											<li><a href="#">모집중</a></li>
-											<li><a href="#">대전</a></li>
-											<li><a href="#">D-5</a></li>
+											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
+											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
 										</ul>
-									</span>
-									<br>
-									<p><a href="single.html">[하계종합사회복지관] 음악연주회 무대 보조 자원봉사자 모집sssssssssssssssssssssssssss</a></p>
-									<div>
-										<div class="data clear">
-												<dl>
-													<dt>신청/필요인원:</dt>
-													<dd>
-														<span>0/</span><span>3</span>
-													</dd>
-												</dl>
-												<dl>
-													<dt>봉사기간:</dt>
-													<dd>2023-10-30~ 2023-10-30</dd>
-												</dl>
-												<dl>
-													<dt>모집기관:</dt>
-													<dd>대한사회복지회 잉아터</dd>
-												</dl>
-												<p class="period">
-													</p>
 										</div>
-									</div>
-								</div>
-							</div>
-		
-							<div class="blog-entry d-flex blog-entry-search-item">
-								<div>
-									<span class="date">
-										<ul class="tags">
-											<li><a href="#">모집중</a></li>
-											<li><a href="#">대전</a></li>
-											<li><a href="#">D-5</a></li>
-										</ul>
-										</span>
 										<br>
-										<p><a href="single.html">오뚝이 결연 봉사활동(매주 목요일 14:00~16:00)</a></p>
-										<div>
-											<div class="data clear">
-													<dl>
-														<dt>신청/필요인원:</dt>
-														<dd>
-															<span>0/</span><span>3</span>
-														</dd>
-													</dl>
-													<dl>
-														<dt>봉사기간:</dt>
-														<dd>2023-10-30~ 2023-10-30</dd>
-													</dl>
-													<dl>
-														<dt>모집기관:</dt>
-														<dd>대한사회복지회 잉아터</dd>
-													</dl>
-													<p class="period">
-														</p>
-											</div>
-										</div>
-									</div>
-							</div>
-		
-							<div class="blog-entry d-flex blog-entry-search-item">
-								<div>
-									<span class="date">
-										<ul class="tags">
-											<li><a href="#">모집완료</a></li>
-											<li><a href="#">대전</a></li>
-											<li><a href="#">D-Day</a></li>
-										</ul>
-										</span>
-										<br>
-										<p><a href="single.html">[연산복지관] 지역 경로잔치(11/11 토요일) 자원봉사자 모집</a></p>
+										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
 										<div>
 											<div class="data clear">
 													<dl>
@@ -263,37 +264,38 @@
 		
 							<div class="blog-entry d-flex blog-entry-search-item">
 								<div>
-									<span class="date">
+									<div class="date" style="margin-bottom: 10px;">
 										<ul class="tags">
-											<li><a href="#">모집마감</a></li>
-											<li><a href="#">대전</a></li>
-											<li><a href="#">D-5</a></li>
+											<li><a href="#">모집중</a></li>
+											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
+											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
 										</ul>
-									</span>
-									<br>
-									<p><a href="single.html">[강남세움복지관] 수서동 경로잔치 행사보조 봉사자모집</a></p>
-									<div>
-										<div class="data clear">
-												<dl>
-													<dt>신청/필요인원:</dt>
-													<dd>
-														<span>0/</span><span>3</span>
-													</dd>
-												</dl>
-												<dl>
-													<dt>봉사기간:</dt>
-													<dd>2023-10-30~ 2023-10-30</dd>
-												</dl>
-												<dl>
-													<dt>모집기관:</dt>
-													<dd>대한사회복지회 잉아터sdfsfsdfsfsd</dd>
-												</dl>
-												<p class="period">
-													</p>
 										</div>
-									</div>
+										<br>
+										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
+										<div>
+											<div class="data clear">
+													<dl>
+														<dt>신청/필요인원:</dt>
+														<dd>
+															<span>0/</span><span>3</span>
+														</dd>
+													</dl>
+													<dl>
+														<dt>봉사기간:</dt>
+														<dd>2023-10-30~ 2023-10-30</dd>
+													</dl>
+													<dl>
+														<dt>모집기관:</dt>
+														<dd>대한사회복지회 잉아터</dd>
+													</dl>
+													<p class="period">
+														</p>
+											</div>
+										</div>
 								</div>
 							</div>
+
 						</div>
 						<div class="row text-start pt-5 border-top">
 							<div class="col-md-12">
