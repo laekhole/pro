@@ -40,6 +40,7 @@
 <link rel="stylesheet" href="/template/css/flatpickr.min.css">
 <!-- 새로 추가 되는 CSS -->
 <link rel="stylesheet" href="/css/page/review.css">
+<link rel="stylesheet" href="/css/page/group.css">
 
 
 
