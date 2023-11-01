@@ -14,7 +14,7 @@
 <link rel="shortcut icon" href="/template/favicon.png">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" >
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" > -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -63,7 +63,7 @@
 			<div class="site-navigation">
 				<div class="row g-0 align-items-center">
 					<div class="col-2">
-						<a href="index.html" class="logo m-0 float-start">봉사활동커뮤니티<span class="text-primary">.</span></a>
+						<a href="/main" class="logo m-0 float-start">봉사활동커뮤니티<span class="text-primary">.</span></a>
 					</div>
 					<div class="col-8 text-center">
 
@@ -71,7 +71,7 @@
 							<li class="active"><a href="index.html">공지사항</a></li>
 							<li><a href="category.html" style="color: #fff;">봉사 안내</a></li>
 							<li><a href="category.html" style="color: #fff;">봉사 신청</a></li>
-							<li><a href="category.html" style="color: #fff;">봉사 후기</a></li>
+							<li><a href="/review/list" style="color: #fff;">봉사 후기</a></li>
 							<li><a href="category.html" style="color: #fff;">고객센터</a></li>						
 						</ul>
 					</div>
