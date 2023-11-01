@@ -26,7 +26,7 @@ public class CommonConfig {
 //    	tilesViewResolver.setOrder(0);
 //    	return tilesViewResolver;
 //    }
-	//////ㅇㅇㅇㅇㅇㅇㅇㅇ
+	//////ㅇㅇㅇㅇㅇㅇㅇㅇ아니 왜 안되냐고
 
 //    @Bean
 //    public TilesConfigurer tilesConfigurer() {
