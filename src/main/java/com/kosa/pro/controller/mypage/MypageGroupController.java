@@ -26,7 +26,7 @@ public class MypageGroupController extends PrtController {
 		log.info(">>>>>>>>>>>>>>봉사신청 등록하기");
 //		model.addAttribute("test", getConfig().getAdminName());
 		return "mypage/group/recruit_register";
-		//아ㅏ앆~~~아오
+		//아ㅏ앆~~~아오흐흑
 	}
 	
 	
