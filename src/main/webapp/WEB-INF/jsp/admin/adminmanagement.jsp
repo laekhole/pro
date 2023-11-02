@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-</head>
-<body>
-<%@ include file="/WEB-INF/jsp/include/adminfixpage.jsp"%>
+
+ <%@ include file="/WEB-INF/jsp/include/admintop.jsp"%>
 <!-- Chart Start -->
 <div class="container-fluid mt-3">
   <div class="row">
@@ -112,8 +109,5 @@
               
           </div>
       </div>
-  </div>
-</div>
+ <%@ include file="/WEB-INF/jsp/include/adminbottom.jsp"%>
 
-</body>
-</html>
