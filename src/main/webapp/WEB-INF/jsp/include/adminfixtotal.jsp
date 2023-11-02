@@ -5,11 +5,11 @@
 <%-- <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>     --%>
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>관리자 페이지</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -27,8 +27,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="/admintemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/admintemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/admintemplate/css/bootstrap.min.css" rel="stylesheet">
@@ -51,7 +51,7 @@
    <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href=""<c:url value='adminmain'/>"" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>관리자페이지</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -65,15 +65,15 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="<c:url value='adminmain'/>" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="adminmanagement.html" class="nav-link dropdown-toggle1"><i class="fa fa-laptop me-2"></i>단체/회원관리</a>
+                        <a href="<c:url value='adminmanagement'/>" class="nav-link dropdown-toggle1"><i class="fa fa-laptop me-2"></i>단체/회원관리</a>
                     </div>
-                    <a href="adminnotice.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>공지사항</a>
-                    <a href="adminboard.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>게시판</a>
-                    <a href="admininquiry.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>고객문의</a>
-                    <a href="admincodegroup.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>카테고리 관리</a>
-                </div>
+                    <a href="<c:url value='adminnotice'/>" class="nav-item nav-link"><i class="fa fa-th me-2"></i>공지사항</a>
+                    <a href="<c:url value='adminboard'/>" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>게시판</a>
+                    <a href="<c:url value='admininquiry'/>" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>고객문의</a>
+                    <a href="<c:url value='admincodemanagement'/>" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>카테고리 관리</a>
+                </div>					   
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -84,7 +84,7 @@
             <!-- Navbar Start -->
                       <!-- Navbar Start -->
           <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+            <a href="<c:url value='adminmain'/>" class="navbar-brand d-flex d-lg-none me-4">
                 <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
             </a>
             <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -125,12 +125,12 @@
 
 
             <!-- 바디부분 여기 시작  -->
- 
- 
+
+   
+        </div>
             <!-- 바디 부분 여기 끝 -->
  
  
-        </div>
         <!-- Content End -->
 
 
@@ -150,7 +150,7 @@
     <script src="/admintemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="/admintemplate/js/main.js"></script>
 </body>
 
 </html>
