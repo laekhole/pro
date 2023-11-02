@@ -117,6 +117,12 @@ public class SearchVO implements GeneralModel {
 	 */
 	private String orderBy = "";
 	
+	
+	/**
+	 * 정렬 문자열
+	 */
+	private String sort;
+	
 	/**
 	 * 날짜 검색 시작일 YYYY-MM-DD
 	 */
@@ -687,6 +693,22 @@ public class SearchVO implements GeneralModel {
 	 */
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	/**
+	 * 정렬 - 문자열
+	 * @return
+	 */
+	public String getSort() {
+		return sort;
+	}
+
+	/**
+	 * 정렬 - 문자열
+	 * @param sort
+	 */
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 	
 	

@@ -20,7 +20,7 @@ public class NoticeVO implements GeneralModel {
 	private int noticeSeq;
 	private String writeId;
 	private String title;
-	private Clob content;
+	private String content;
 	private String regDate;
 	private String modDate;
 	private int viewCount;

@@ -50,10 +50,9 @@
 
     <script src="/template/js/aos.js"></script>
     <script src="/template/js/glightbox.min.js"></script>
-    <script src="/template/js/navbar.js"></script>
+<!--     <script src="/template/js/navbar.js"></script> -->
     <script src="/template/js/counter.js"></script>
     <script src="/template/js/custom.js"></script>
-	<script src="/template/js/slideshow.js"></script>
 
     
   </body>
