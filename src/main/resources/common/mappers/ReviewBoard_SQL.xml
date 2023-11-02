@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+	<sql id="select">
+		review_seq, recruit_seq, review_title, review_content, write_id, reg_date, mod_date, recom_count, view_count, del_yn
+	</sql>
+	
+	<sql id="whereClause">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="searchWord != null and searchWord != ''">
+				<choose>
+					<when test="type1 == 'title'">
+						and review_title like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<when test="type1 == 'writeId'">
+						and write_id like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<when test="type1 == 'content'">
+						and review_content like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<otherwise>
+						and (review_title like concat(concat('%', #{searchWord}), '%') or write_id like concat(concat('%', #{searchWord}), '%') or review_content like concat(concat('%', #{searchWord}), '%'))
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="sUseYn != null and sUseYn != ''">
+					and (del_yn != 'Y' and del_yn = #{sUseYn})
+				</when>
+				<otherwise>
+					and del_yn = 'N'
+				</otherwise>
+			</choose>
+		</trim>
+	</sql>
+	
+	<select id="totalCount" parameterType="ReviewSearchVO" resultType="int">
+		select count(*)
+		from review_board
+		<include refid="whereClause" />
+	</select>
+
+	<select id="selectReviewList" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
+		<include refid="paging.top" />
+		select 
+    	<include refid="select" />
+		from review_board
+		<include refid="whereClause" />
+		<choose>
+			<when test="sort != null and sort != ''">
+				order by ${sort}
+			</when>
+			<otherwise>
+				order by review_seq desc
+			</otherwise>
+		</choose>
+		<include refid="paging.bottom" />
+	</select>
+	
+	
+	<select id="selectPopularList" resultType="ReviewBoardVO">
+		select review_title, mod_date
+		from (
+			select * from review_board
+			order by recom_count desc
+		)
+		<![CDATA[
+			where rownum <= 3
+		]]>
+	</select>
+	
+	
+</mapper>

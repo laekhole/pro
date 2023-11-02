@@ -20,7 +20,7 @@ public class ReviewBoardVO implements GeneralModel {
 	private int reviewSeq;
 	private int recruitSeq;
 	private String reviewTitle;
-	private Clob reviewContent;
+	private String reviewContent;
 	private String writeId;
 	private String regDate;
 	private String modDate;
