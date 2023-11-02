@@ -13,7 +13,7 @@
 					<br>
 					<!-- 검색 구간 -->
 					<div>※ [모집중] 이라도 **외 다른 경로를 통해 자원봉사자가 모집되는 경우 참여가 어려울 수 있습니다.</div>
-					<br>
+					<br><!-- 아아아앙ㄱ~~~ -->
 				<div class="search_section">
 					<form>
 						<div class="form-css">

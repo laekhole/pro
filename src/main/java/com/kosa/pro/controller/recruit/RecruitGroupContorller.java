@@ -26,6 +26,8 @@ public class RecruitGroupContorller extends PrtController {
 		log.info(">>>>>>>>>>>>>>리스트");
 //		model.addAttribute("test", getConfig().getAdminName());
 		return "recruit/recruit_list";
+		
+		//잉ㄲㄲ~~~
 	}
 	
 	

@@ -63,7 +63,7 @@
                                              </select>
                                           </td>
                                        </tr>
-                                       <tr>
+                                       <tr><!-- 아아아앙ㄱ~~~ -->
                                           <!-- 봉사단체는 로그인한 닉네임 바로가져올거임 -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사단체</th>
                                           <!-- ${loginMember.nickname} -->

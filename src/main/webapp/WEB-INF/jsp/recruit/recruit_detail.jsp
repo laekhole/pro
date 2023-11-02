@@ -9,7 +9,7 @@
 	<div class="section search-result-wrap">
 		<div class="container">
 			<br>
-			<br>
+			<br><!-- 아아아앙ㄱ~~~ -->
 			<div class="detail_section">
 			<div class="form-css">
 			<br>
