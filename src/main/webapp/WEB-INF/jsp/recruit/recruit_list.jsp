@@ -15,7 +15,7 @@
 					<div>※ [모집중] 이라도 **외 다른 경로를 통해 자원봉사자가 모집되는 경우 참여가 어려울 수 있습니다.</div>
 					<br>
 				<div class="search_section">
-					<form>
+					<form action="/recruit/list" >
 						<div class="form-css">
 	
 							<!-- 봉사 지역 -->
@@ -103,8 +103,9 @@
 							<label for="form-select">검색조건 </label>
 							<select class="form-select" id="acttype" name="acttype" title="활동분야 선택">
 								<option value="">선택</option>
-								<option value="01">제목</option>
-								<option value="01">내용</option>
+								<option value="recruitTitle">제목</option>
+								<option value="groupName">작성자</option>
+								<option value="recruitContent">내용</option>
 							</select>
 							<input type="type" class="form-keyword">
 						</div>

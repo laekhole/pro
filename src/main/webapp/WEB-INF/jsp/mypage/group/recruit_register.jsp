@@ -73,8 +73,9 @@
                                           <!-- ${loginMember.nickname} -->
                                           <td>혜화불주먹해적단</td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사시간</th>
-                                          <td><span><input type="time" id="start_time" class="form-keyword"></span>~<span><input type="time" id="end_time"  class="form-keyword"></span></td>
-                                          <input type="hidden" value=""  >
+                                          <td><span><input type="number" id=hours></span></td>
+                                          <!-- <input type="time" id="start_time" class="form-keyword"></span>~<span><input type="time" id="end_time"  class="form-keyword"> -->
+                                          <!-- <input type="hidden" name="diff_time" value="0"  > -->
                                        </tr>
       
                                           <!-- 봉사지역 -->
@@ -127,13 +128,12 @@
                                           <!-- 모집기간  -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>모집기간</th>
                                           <td><span><input type="date" class="form-keyword"></span>~<span><input type="date" class="form-keyword"></span></td>
-                                          <!-- ㅇㄹㅇㄴ -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>담당자</th>
                                           <td><input type="text" value="김권영"  class="form-keyword"></td>
                                        </tr>
       
                                        <tr>
-                                          <!-- 모집기간  -->
+                                          <!-- 담당자 안내  -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>연락처</th>
                                           <td><input type="text" value="010-2222-3333"  class="form-keyword"></td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>이메일</th>
@@ -309,15 +309,17 @@
      document.getElementById("currentTime").innerHTML = Date();
   </script>    
   
-  <!-- 시간 차 계산 -->
-  <script>
-	  var start = new Date($('#start_time').val());
-	  var end = new Date($('#end_time').val());
-	  
-	  var diffTime = (end.getTime() - start.getTime()) / (1000*60*60);
-	  
-	  
-  </script>
+<!--   <script>
+	  // 사용자가 입력한 시간을 변경할 때마다 시간 차이 계산
+	  $('#start_time, #end_time').on('input', function() {
+	      var start = new Date($('#start_time').val());
+	      var end = new Date($('#end_time').val());
+	
+	      var diffTime = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+	
+	      $("input[name='diff_time']").val(diffTime);
+	  });
+  </script> -->
 
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>
 
