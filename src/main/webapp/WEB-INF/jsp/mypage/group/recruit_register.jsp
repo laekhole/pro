@@ -8,10 +8,12 @@
 
    <div class="d-flex" id="wrapper">
       <!-- Sidebar-->
+      
       <div class="col-md-2 col-lg-3 col-xl-2 border-end bg-white" id="sidebar-wrapper" style="
-    margin-bottom: 50px;
-    border-bottom: 1px solid #dee2e6;">
-            <div class="list-group list-group-flush">
+	    margin-bottom: 50px;
+	    border-bottom: 1px solid #dee2e6;">
+	    
+        <div class="list-group list-group-flush">
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">마이 페이지</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 글 작성</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 목록/ 승인 및 거절</a>
@@ -20,7 +22,9 @@
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">캘린더 관리</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">개인 정보 및 프로필 수정</a>
          </div>
+         
       </div>
+      
       <!-- Page content wrapper-->
       <div>
 
@@ -63,14 +67,14 @@
                                              </select>
                                           </td>
                                        </tr>
-                                       <tr><!-- 아아아앙ㄱ~~~ -->
+                                       <tr>
                                           <!-- 봉사단체는 로그인한 닉네임 바로가져올거임 -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사단체</th>
                                           <!-- ${loginMember.nickname} -->
                                           <td>혜화불주먹해적단</td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사시간</th>
-                                          <td><span><input type="time" class="form-keyword"></span>~<span><input type="time" class="form-keyword"></span></td>
-                                          <input type="hidden"  class="form-keyword" value="">
+                                          <td><span><input type="time" id="start_time" class="form-keyword"></span>~<span><input type="time" id="end_time"  class="form-keyword"></span></td>
+                                          <input type="hidden" value=""  >
                                        </tr>
       
                                           <!-- 봉사지역 -->
@@ -304,6 +308,16 @@
   <script>
      document.getElementById("currentTime").innerHTML = Date();
   </script>    
+  
+  <!-- 시간 차 계산 -->
+  <script>
+	  var start = new Date($('#start_time').val());
+	  var end = new Date($('#end_time').val());
+	  
+	  var diffTime = (end.getTime() - start.getTime()) / (1000*60*60);
+	  
+	  
+  </script>
 
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>
 
