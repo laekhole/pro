@@ -26,5 +26,8 @@ public class MemberVO implements GeneralModel {
 	private String benYn;
 	private String joinDate;
 	
+	//VolunteerTimeVO 타입의 필드 추가
+	private VolunteerTimeVO volunteerTime;
+	
 
 }
