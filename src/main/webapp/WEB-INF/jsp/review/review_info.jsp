@@ -157,7 +157,7 @@
            <div class="bio text-center">
              <img src="images/person_2.jpg" alt="Image Placeholder" class="img-fluid mb-3">
              <div class="bio-body">
-               <h2>왕십리스킨헤드</h2>
+               <h2>${ }</h2>
                <p class="mb-4">이곳은 프로필 코멘트 남긴걸 보여주는곳 입니다.</p>
                <p class="figure ms-2"><a href="#" class="btn btn-primary btn-sm rounded px-2 py-2">쪽지보내기</a></p>
                <!-- <p class="figure ms-2"><a href="#" class="btn btn-primary btn-sm rounded px-2 py-2">글 좋아요</a></p> -->

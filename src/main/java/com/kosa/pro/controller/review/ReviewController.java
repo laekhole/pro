@@ -54,5 +54,11 @@ public class ReviewController extends PrtController {
 		
 		return "review/review_info";
 	}
+	
+	@RequestMapping("writeForm")
+	public String reviewWriteForm(Model model) {
+		
+		return "";
+	}
 
 }
