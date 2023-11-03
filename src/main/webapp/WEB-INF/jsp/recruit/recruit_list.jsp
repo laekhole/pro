@@ -13,9 +13,9 @@
 					<br>
 					<!-- 검색 구간 -->
 					<div>※ [모집중] 이라도 **외 다른 경로를 통해 자원봉사자가 모집되는 경우 참여가 어려울 수 있습니다.</div>
-					<br><!-- 아아아앙ㄱ~~~ -->
+					<br>
 				<div class="search_section">
-					<form>
+					<form action="/recruit/list" >
 						<div class="form-css">
 	
 							<!-- 봉사 지역 -->
@@ -103,14 +103,15 @@
 							<label for="form-select">검색조건 </label>
 							<select class="form-select" id="acttype" name="acttype" title="활동분야 선택">
 								<option value="">선택</option>
-								<option value="01">제목</option>
-								<option value="01">내용</option>
+								<option value="recruitTitle">제목</option>
+								<option value="groupName">작성자</option>
+								<option value="recruitContent">내용</option>
 							</select>
 							<input type="type" class="form-keyword">
 						</div>
 						
 						<!-- 검색 출력  -->
-						<input type="submit" value="검색">
+						<input class="form-control me-sm-2" name="searchWord" type="search" value="${search.searchWord }" >
 	
 					</div>
 					</form>
@@ -126,42 +127,44 @@
 					<div class="row posts-entry">
 						<div class="sss">
 						
-							
+							<c:forEach var="list" items="${list}">
 							<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
 								<div>
 									<div class="date" style="margin-bottom: 10px;">
 										<ul class="tags">
-											<li><a href="#">모집중</a></li>
-											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
+											<li><a href="#">${list.recruitState}</a></li>
+											<li><a href="#" style="background-color: #50a9ed;">${list.volunRegion}</a></li>
+											
+											<!-- 이거 디데이 자바스크립트로 설정하기 -->
 											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
 										</ul>
+									</div>
+									<br>
+									<p class="title"><a href="recruit/detail">${list.recruitTitle}</a></p>
+									<div>
+										<div class="data clear">
+												<dl>
+													<dt>신청/필요인원:</dt>
+													<dd>
+														<span>0/</span><span>${list.memCount}</span>
+													</dd>
+												</dl>
+												<dl>
+													<dt>봉사기간:</dt>
+													<dd><span>${list.volunStartDate}</span>~<span>${list.volunEndDate}</span></dd>
+												</dl>
+												<dl>
+													<dt>모집기관:</dt>
+													<dd>${list.groupName}</dd>
+												</dl>
+
 										</div>
-										<br>
-										<p class="title"><a href="recruit/detail">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
-										<div>
-											<div class="data clear">
-													<dl>
-														<dt>신청/필요인원:</dt>
-														<dd>
-															<span>0/</span><span>3</span>
-														</dd>
-													</dl>
-													<dl>
-														<dt>봉사기간:</dt>
-														<dd>2023-10-30~ 2023-10-30</dd>
-													</dl>
-													<dl>
-														<dt>모집기관:</dt>
-														<dd>대한사회복지회 잉아터</dd>
-													</dl>
-													<p class="period">
-														</p>
-											</div>
-										</div>
+									</div>
 								</div>
 							</div>
+							</c:forEach>
 
-							<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
+							<!-- <div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
 								<div>
 									<div class="date" style="margin-bottom: 10px;">
 										<ul class="tags">
@@ -297,7 +300,7 @@
 											</div>
 										</div>
 								</div>
-							</div>
+							</div> -->
 							
 		
 							
