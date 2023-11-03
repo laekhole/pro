@@ -16,7 +16,7 @@ public class VolunteerTimeVO implements GeneralModel {
 	private static final long serialVersionUID = -4784847271330187132L;
 	
 	private int memSeq;
-	private int volunHeat;
+	private double volunHeat;
 	private int volunAddtime;
 	private int volunNoshow;
 	
