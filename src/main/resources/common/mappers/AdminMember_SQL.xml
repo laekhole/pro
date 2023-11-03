@@ -9,7 +9,31 @@
 		
 		<sql id="selectVolunteerTime">
         volun_heat, volun_addtime, volun_noshow
-   		 </sql>
+   		</sql>
+   		
+   		<!-- 단체 회원 속성을 위한 sql 스니펫 -->
+<sql id="selectgroupmember">
+    group_mem_seq,
+    group_mem_id,
+    group_name,
+    group_pwd,
+    group_number,
+    group_phone,
+    group_auth,
+    group_del_yn,
+    group_join_date
+</sql>
+
+<!-- 평점 속성을 위한 sql 스니펫 -->
+<sql id="selectgrade">
+    grade_seq,
+    group_mem_seq
+    grade_count,
+    grade_add,
+    grade
+</sql>
+   		
+<!--    		개인회원검색조건 -->
 			<sql id="whereClause">
 		<trim prefix="where" prefixOverrides="and">
 			<if test="searchWord != null and searchWord != ''">
@@ -30,8 +54,30 @@
 			</if>
 		</trim>
 	</sql>
+	
+	<!-- 단체 회원 검색 조건 -->
+<sql id="whereClause2">
+    <trim prefix="where" prefixOverrides="and">
+        <if test="searchWord != null and searchWord != ''">
+            <choose>
+                <when test="type1 == 'group_mem_seq'">
+                    and group_mem_seq like concat(concat('%', #{searchWord}), '%')
+                </when>
+                <when test="type1 == 'group_mem_id'">
+                    and group_mem_id like concat(concat('%', #{searchWord}), '%')
+                </when>
+                <when test="type1 == 'group_name'">
+                    and group_name like concat(concat('%', #{searchWord}), '%')
+                </when>
+                <!-- 다른 검색 조건에 따른 필드 추가 가능 -->
+            </choose>
+        </if>
+    </trim>
+</sql>
+	
+	
 
-<!--  전체 카운트 -->
+<!--  개인 카운트 -->
 	<select id="totalCount" parameterType="MemberVO" resultType="int">
 		select count(*)
 		from member
@@ -60,6 +106,49 @@
     </choose>
     <include refid="paging.bottom" />
 </select>
+
+
+<!-- 단체 회원과 그들의 평점을 조인하는 전체 select 문 -->
+<!-- <select id="selectgroupmemberwithgradelist" parameterType="GroupMemberSearchVO" resultType="GroupMemberVO"> -->
+<!--     <include refid="paging.top" /> -->
+<!--     SELECT -->
+<!--         <include refid="selectgroupmember" />, -->
+<!--         <include refid="selectgrade" /> -->
+<!--     FROM admin.group_member GM -->
+<!--     LEFT JOIN admin.grade G ON GM.group_mem_seq = G.group_mem_seq -->
+<!--     <include refid="whereClause2" /> -->
+<!--     <choose> -->
+<!--         <when test="sort != null and sort != ''"> -->
+<!--             ORDER BY ${sort} -->
+<!--         </when> -->
+<!--         <otherwise> -->
+<!--             ORDER BY GM.group_mem_seq DESC -->
+<!--         </otherwise> -->
+<!--     </choose> -->
+<!--     <include refid="paging.bottom" /> -->
+<!-- </select> -->
+	
+<select id="selectgroupmemberwithgradelist" parameterType="GroupMemberSearchVO" resultType="GroupMemberVO">
+    SELECT
+        GM.group_mem_seq,
+        GM.group_mem_id,
+        GM.group_name,
+        GM.group_pwd,
+        GM.group_number,
+        GM.group_phone,
+        GM.group_auth,
+        GM.group_del_yn,
+        GM.group_join_date,
+        G.grade_seq,
+        GM.group_mem_seq AS grade_group_mem_seq,
+        G.grade_count,
+        G.grade_add,
+        G.grade
+    FROM admin.group_member GM
+    LEFT JOIN admin.grade G ON GM.group_mem_seq = G.group_mem_seq
+</select>
+
+
 
 </mapper>
 

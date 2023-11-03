@@ -132,19 +132,17 @@
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <c:forEach var="group" items="${grouplist}" varStatus="status">
+		            <c:forEach var="group" items="${groupList}" varStatus="status">
 		                <tr>
-		                    <td>${group.memSeq}</td>
-		                    <td>${group.memId}</td> <!-- 이메일을 memId라고 가정 -->
-		                    <td>${group.name}</td>
-		                    <td>${group.gender}</td> 
-		                    <td>${group.phone}</td> 
-							<td>${group.volunteerTime.volunAddtime}</td> <!-- 봉사시간 -->
-        					<td>${group.volunteerTime.volunHeat}</td> <!-- 온도 -->
-        					<td>${group.volunteerTime.volunNoshow}</td> <!-- 노쇼 횟수 -->
-		                    <td>${group.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
-		                    
-		                    <td>비고</td>
+		                     <td>${group.group_mem_seq}</td>
+                    <td>${group.group_mem_id}</td>
+                    <td>${group.group_name}</td>
+                    <td>${group.group_number}</td> 
+                    <td>${group.group_count}</td> <!-- 단체횟수 -->
+                    <td>${group.grade_add}</td> <!-- 누적점수 -->
+                    <td>${group.grade}</td> <!-- 평점 -->
+                    <td>${group.group_del_yn == 'N' ? '활성' : '비활성'}</td> <!-- 상태 -->
+                    <td>비고</td>
 		                </tr>
 		            </c:forEach>
 		        </tbody>
@@ -251,11 +249,17 @@
 
          // 받은 데이터로 테이블 내용을 채웁니다.
          $.each(groups, function(i, group) {
-             var row = '<tr>' +
-                       '<td>' + group.groupSeq + '</td>' +
-                       '<td>' + group.groupId + '</td>' +
-                       // ... 나머지 데이터 필드 ...
-                       '</tr>';
+        	   var row = '<tr>' +
+               '<td>' + group.group_mem_seq + '</td>' +
+               '<td>' + group.group_mem_id + '</td>' +
+               '<td>' + group.group_name + '</td>' +
+               '<td>' + group.group_number + '</td>' +
+               '<td>' + group.group_phone + '</td>' +
+               '<td>' + group.grade_add + '</td>' + // 누적점수
+               '<td>' + group.grade + '</td>' + // 평점
+               '<td>' + (group.group_del_yn === 'N' ? '활성' : '비활성') + '</td>' + // 상태
+               '<td>비고</td>' + // 비고 칼럼 내용 필요에 따라 추가
+               '</tr>';
              tableBody.append(row);
          });
      }
@@ -263,5 +267,4 @@
  
 </script>
  
-</script>
 
