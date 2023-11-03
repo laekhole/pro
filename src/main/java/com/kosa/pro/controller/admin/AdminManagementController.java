@@ -6,7 +6,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.search.MemberSearchVO;
@@ -31,4 +33,25 @@ public class AdminManagementController {
 		
 		return "admin/adminmanagement";
 	}
+	
+    // 개인 회원 목록을 가져오는 AJAX 처리 메서드
+    @GetMapping("/getIndividualMembers")
+    @ResponseBody
+    public List<MemberVO> getIndividualMembers(MemberSearchVO search) throws Exception {
+        log.info("Fetching individual member list for AJAX call");
+        Map<String, List<MemberVO>> map = _memberService.memberList(search);
+        return map.get("memberList");
+    }
+
+    // 단체 회원 목록을 가져오는 AJAX 처리 메서드
+    @GetMapping("/getGroupMembers")
+    @ResponseBody
+    public List<MemberVO> getGroupMembers(MemberSearchVO search) throws Exception {
+        log.info("Fetching group member list for AJAX call");
+        Map<String, List<MemberVO>> map = _memberService.memberList(search); // 임시로 같은 서비스 메서드 사용
+        return map.get("groupList"); // 'groupList' 키에 해당하는 리스트를 가져와야 함, 'groupList'는 단체 회원 리스트를 반환하는 키가 되어야 함
+    }
 }
+	
+	
+
