@@ -10,7 +10,6 @@
             <!-- Page content-->
             <div class="container-fluid">
                <div class="row" style="width: 1100px;">
-
                </div>
 
 
@@ -18,46 +17,72 @@
 
 
                 <div class="row posts-entry" style="margin-bottom: 2rem;">
-                    <div class="row col-lg-8" style="text-align: right;">
-                        <div class="btn btn-secondary my-2 my-sm-0 ms-auto" style="width: 5rem;">
-                            삭제
-                        </div>
+                
+                    <div class="col-lg-10" style="text-align: right;">
+						<%@ include file="/WEB-INF/jsp/include/searchformTemplate.jsp"%> 
                     </div>
 
-                    <div class="col-lg-8">
-                        <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                </label>
-                            </div>
-                            <a href="single.html" class="img-link me-4">
-                                <img src="images/img_1_sq.jpg" alt="Image" class="img-fluid">
-                            </a>
-                            <div>
-                                <span class="date">Apr. 14th, 2022</span>
-                                <h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-                                <p><a href="single.html" class="btn btn-sm btn-outline-primary">Read More</a></p>
-                            </div>
-                        </div>
+                    <div class="col-lg-10">
+                    
+			             <div class="blog-entry d-flex blog-entry-search-item border rounded" style="display: flex; align-items: center;">
+			               <div style="flex-grow: 1; margin-left: 1rem;">
+			                   <span class="date">Apr. 14th, 2022</span>
+			                   <h2><a href="single.html">1번째 샘플? 부트스트랩 : 테두리 컴포넌트 적용</a></h2>
+			                   <div class="d-flex justify-content-between align-items-center">
+			                       <div>
+			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+			                       </div>
+			                   </div>
+			               </div>
+			             </div>
 
-                        <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                </label>
-                            </div>
-                            <a href="single.html" class="img-link me-4">
-                                <img src="images/img_2_sq.jpg" alt="Image" class="img-fluid">
-                            </a>
-                            <div>
-                                <span class="date">Apr. 14th, 2022</span>
-                                <h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-                                <p><a href="single.html" class="btn btn-sm btn-outline-primary">Read More</a></p>
-                            </div>
-                        </div>
+			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
+			               <div style="flex-grow: 1; margin-left: 1rem;">
+			                   <span class="date">Apr. 14th, 2022</span>
+			                   <h2><a href="single.html">2번째 샘플? Wait until you meet Rust</a></h2>
+			                   <div class="d-flex justify-content-between align-items-center">
+			                       <div>
+			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+			                       </div>
+			                   </div>
+			               </div>
+			             </div>
+
+			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
+			               <div style="flex-grow: 1; margin-left: 1rem;">
+			                   <span class="date">Apr. 14th, 2022</span>
+			                   <h2><a href="single.html">3번째 샘플? Wait until you meet Rust</a></h2>
+			                   <div class="d-flex justify-content-between align-items-center">
+			                       <div>
+			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+			                       </div>
+			                   </div>
+			               </div>
+			             </div>
+
+			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
+			               <div style="flex-grow: 1; margin-left: 1rem;">
+			                   <span class="date">Apr. 14th, 2022</span>
+			                   <h2><a href="single.html">4번째 샘플? Wait until you meet Rust</a></h2>
+			                   <div class="d-flex justify-content-between align-items-center">
+			                       <div>
+			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+			                       </div>
+			                   </div>
+			               </div>
+			             </div>
+
+			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
+			               <div style="flex-grow: 1; margin-left: 1rem;">
+			                   <span class="date">Apr. 14th, 2022</span>
+			                   <h2><a href="single.html">5번째 샘플? Wait until you meet Rust</a></h2>
+			                   <div class="d-flex justify-content-between align-items-center">
+			                       <div>
+			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+			                       </div>
+			                   </div>
+			               </div>
+			             </div>
 
 
 
