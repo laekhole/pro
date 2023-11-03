@@ -22,7 +22,7 @@ public class MemberService extends BaseService {
 	public Map<String, List<MemberVO>> memberList(MemberSearchVO search) throws Exception {
 		
 		Map<String, List<MemberVO>> map = new HashMap<>();
-		map.put("memberList", (List<MemberVO>) getDAO().selectBySearch("member.selectMemberWithVolunteerTimeList", search, "totalCount"));
+		map.put("memberList", (List<MemberVO>) getDAO().selectBySearch("adminmember.selectMemberWithVolunteerTimeList", search, "totalCount"));
 		return map;															
 	}
 
