@@ -40,6 +40,8 @@
 <link rel="stylesheet" href="/template/css/flatpickr.min.css">
 <!-- 새로 추가 되는 CSS -->
 <link rel="stylesheet" href="/css/page/review.css">
+	<!-- FullCalendar CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
 
 
 
