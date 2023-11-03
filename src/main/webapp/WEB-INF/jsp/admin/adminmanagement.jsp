@@ -15,22 +15,24 @@
       </div>
          <!-- 검색 & 필터 & 버튼 -->
            <!-- 고객센터 검색 -->
-           <div class="management-container">
-            <div class="management-actions">
-                <div class="management-search">
-                 <select class="management-select" id="managementCategory">
-                     <option value="title">전체</option>
-                     <option value="author">회원</option>
-                     <option value="content">단체</option>
-                 </select>
-                 <input type="text" id="inquiryInput" class="search-input" placeholder="검색...">
-                 <button class="search-btn">검색</button>
-             </div>
-         </div>
-     </div>
+		<div class="management-container">
+			<div class="management-actions">
+				<div class="management-search">
+					<form id="searchForm" class="management-search" action="" method="get">
+						<select class="management-select" name="type1" id="managementCategory">
+							<option value="TopField" >전체</option>
+							<option value="name">회원이름</option>
+							<option value="group_id">단체이름</option>
+						</select> 
+						 <input type="text" name="searchWord" id="inquiryInput" class="search-input" placeholder="검색...">
+						<button type="submit" class="search-btn">검색</button>
+					</form>
+				</div>
+			</div>
+		</div>
 
 
-<!-- 쪽지 전송 & 일괄 제재 버튼 -->
+		<!-- 쪽지 전송 & 일괄 제재 버튼 -->
 <!-- <div class="mt-2 d-flex justify-content-end">
   <button class="btn btn-primary active-button" id="messageButton">쪽지 전송</button>
   <button class="btn btn-primary" id="sanctionButton">일괄 제재</button>
@@ -76,21 +78,42 @@
                   }
               </style>
               
-              <table class="table table-bordered" id="member-table">
-                  <thead>
-                      <tr>
-                          <th>번호</th>
-                          <th>이름</th>
-                          <th>이메일</th>
-                          <th>회원 타입</th>
-                          <th>봉사 시간</th>
-                          <th>온도</th>
-                          <th>상태</th>
-                          <th>비고</th>
-                      </tr>
-                  </thead>
-                  <tbody></tbody>
-              </table>
+<!-- 회원 리스트 출력 -->
+		<div class="container mt-4">
+		    <table class="table">
+		        <thead>
+		            <tr>
+		                <th scope="col">번호</th>
+		                <th scope="col">아이디</th>
+		                <th scope="col">이름</th>
+		                <th scope="col">성별</th>
+		                <th scope="col">연락처</th>
+		                <th scope="col">봉사시간</th>
+		                <th scope="col">온도</th>
+		                <th scope="col">무단불참</th>
+		                <th scope="col">상태</th>
+		                <th scope="col">비고</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <c:forEach var="member" items="${list}" varStatus="status">
+		                <tr>
+		                    <td>${member.memSeq}</td>
+		                    <td>${member.memId}</td> <!-- 이메일을 memId라고 가정 -->
+		                    <td>${member.name}</td>
+		                    <td>${member.gender}</td> 
+		                    <td>${member.phone}</td> 
+							<td>${member.volunteerTime.volunAddtime}</td> <!-- 봉사시간 -->
+        					<td>${member.volunteerTime.volunHeat}</td> <!-- 온도 -->
+        					<td>${member.volunteerTime.volunNoshow}</td> <!-- 노쇼 횟수 -->
+		                    <td>${member.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
+		                    
+		                    <td>비고</td>
+		                </tr>
+		            </c:forEach>
+		        </tbody>
+		    </table>
+		</div>
               
           
           <!-- 페이지네이션 -->
