@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+
+
+
+
 	<%@ include file="/WEB-INF/jsp/include/top.jsp"%>
+
+
+
+
+
 	<%@ include file="/WEB-INF/jsp/include/sidebar.jsp"%> 
     
       <!-- Page content wrapper-->
@@ -178,7 +189,7 @@
             position: map.getCenter() 
       }); 
       // 지도에 마커를 표시합니다
-      marker.setMap(map);
+      marker.setMap(map); 
 
       // 지도에 클릭 이벤트를 등록합니다
       // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
@@ -292,5 +303,3 @@
       </script>
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>   
 
-  </body>
-</html>
