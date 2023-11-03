@@ -16,10 +16,12 @@ public class MasterCodeVO implements GeneralModel {
 	private static final long serialVersionUID = 5601508389671979656L;
 	
 	private String codeGroup;
-	private String codeMember;
+	private String codeNumber;
 	private String codeName;
 	private String codeDetail;
 	private String codeYn;
+	
+	private int categoryCount; // 카테고리 테이블 조인용 결과 컬럼
 	
 
 }

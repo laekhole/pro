@@ -110,7 +110,10 @@ public class SearchVO implements GeneralModel {
 	private String groupCode = "";
 
 	
-	
+	/**
+	 * 사용여부
+	 */
+	private String useYn;
 	
 	/**
 	 * 정렬
@@ -709,6 +712,22 @@ public class SearchVO implements GeneralModel {
 	 */
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+
+	/**
+	 * 컬럼 - 사용 여부
+	 * @return
+	 */
+	public String getUseYn() {
+		return useYn;
+	}
+
+	/**
+	 * 컬럼 - 사용 여부
+	 * @param useYn
+	 */
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
 	}
 	
 	

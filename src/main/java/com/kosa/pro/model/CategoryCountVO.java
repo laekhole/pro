@@ -14,8 +14,7 @@ public class CategoryCountVO implements GeneralModel {
 	
 	private static final long serialVersionUID = -7824704516597753040L;
 	
-	private int reviewSeq;
-	private int categorySeq;
+	private String codeNumber;
 	private int categoryCount;
 
 }
