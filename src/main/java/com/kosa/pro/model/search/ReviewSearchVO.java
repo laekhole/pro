@@ -14,21 +14,7 @@ import lombok.Data;
 public class ReviewSearchVO extends SearchVO {
 	private static final long serialVersionUID = 8860661778683988628L;
 	
-	private String sUseYn;
-
-	
-	
-	
-	/**
-	 * 후기 게시판 삭제 사용 여부 값
-	 * @return
-	 */
-	public String getsUseYn() {
-		return sUseYn;
-	}
-
-	public void setsUseYn(String sUseYn) {
-		this.sUseYn = sUseYn;
-	}
+	private String codeNumber;
+	private int reviewSeq;
 	
 }

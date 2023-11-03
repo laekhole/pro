@@ -13,12 +13,12 @@
 
          <div class="post-content-body">
            <div class="review-list">
-             <h4 style="font-weight: bold;">[제주] 저는 자랑스러운 JDC 드림나눔 봉사단 담당자입니다</h4>
+             <h4 style="font-weight: bold;">${info.reviewTitle }</h4>
            </div>
 
              <ul class="review-ul">
-               <li>작성일 : 2023-10-26</li>
-               <li>조회수 : 3921</li>
+               <li>작성일 : ${info.modDate }</li>
+               <li>조회수 : ${info.viewCount }</li>
                <!-- <li>
                  <div class="icon-love">
                    <i class="bi bi-hand-thumbs-up-fill recommend"></i>
@@ -68,19 +68,18 @@
              </div>
            </div>
            <div>
-             안녕하십니까? 저는 JDC 드림나눔 봉사단를 담당하고 있는 강윤정입니다.
-             이 자리에 제가 서도 될까? 하는 부끄러운 마음이 크지만 ‘JDC 드림나눔 봉사단’을 소개하고 봉사활동이 얼마나 보람된 일인지 알려드리고 싶어 이 자리에 섰습니다.
-             제가 활동하고 있는 JDC 드림나눔 봉사단은 제주국제자유도시개발센터가 2002년에 창립되면서 복지나눔, 지역상생, 인재양성, 환경보전, 문화진흥 등 다방면으로 봉사활동을 해 오고 있습니다.       
-             경로당 마스크 지원, 독거노인 혹서기 물품 지원 
-             저는 작년에 회사 봉사단을 맡게 되었는데, 코로나19로 인하여 기존의 대면 봉사활동이 어려웠지만, 다양한 방법들을 모색하고 활동하게 되었습니다. 경로당 마스크 지원, 기부를 위한 걷기, 홀로 사시는 어르신을 위한 혹서기 물품 지원, AI돌봄 스피커 지원 등 다양한 활동을 하고 있습니다.
-             전통시장 상품권 구매, 화분 증정, 급식용 야채꾸러미 증정
-             그 가운데서도 어려움을 겪는 전통시장 상인분들을 돕기 위해 전 직원을 대상으로 전통시장 상품권 구매 캠페인을 벌였습니다. 그 상품권으로 점심 식사를 하고 장도 보는, 전통시장 방문 캠페인을 추진하였습니다. 
+           ${info.reviewContent }   
            </div>
          </div>
 
 
          <div class="pt-5">
-           <p>Categories:  <a href="#">시설봉사</a>, <a href="#">전문봉사</a></p>
+           <p>Categories:  
+           	<c:forEach var="category" items="${categoryName }">
+           		<a href="/review/list?codeNumber=${category.codeNumber }">${category.codeName }</a>, 
+           	</c:forEach>
+           
+           </p>
          </div>
 
          <div style="float: right;">
@@ -90,7 +89,7 @@
          <div class="icon-love">
            <i class="bi bi-hand-thumbs-up-fill recommend"></i>
          </div>
-         <span>550</span>  
+         <span>${info.recomCount }</span>  
  
          <div class="pt-5 comment-wrap">
            <h3 class="mb-5 heading">6 Comments</h3>
@@ -170,39 +169,20 @@
            <h3 class="heading">인기 후기글</h3>
            <div class="post-entry-sidebar">
              <ul>
-							<li>
-								<a href="">
-									<img src="images/img_1_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-									<div class="text">
-										<h4>[제주] 저는 자랑스러운 JDC 드림나눔 봉사단 담당자입니다</h4>
-										<div class="post-meta">
-											<span class="mr-2">2023-10-12 </span>
-										</div>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="images/img_2_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-									<div class="text">
-										<h4>[경북] 소소한 일상으로부터의 변화, 아무튼 봉사</h4>
-										<div class="post-meta">
-											<span class="mr-2">2023-10-23 </span>
-										</div>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="images/img_3_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-									<div class="text">
-										<h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-										<div class="post-meta">
-											<span class="mr-2">2023-10-30 </span>
-										</div>
-									</div>
-								</a>
-							</li>
+          	<c:forEach var="popular" items="${polist }">
+				<li>
+					<a href="/review/info?reviewSeq=${popular.reviewSeq }">
+						<img src="/template/images/img_1_sq.jpg" alt="Image placeholder" class="me-4 rounded">
+						<div class="text">
+							<h4>${popular.reviewTitle }</h4>
+							<div class="post-meta">
+								<span class="mr-2">${popular.modDate } </span>
+							</div>
+						</div>
+					</a>
+				</li>
+			</c:forEach>
+
              </ul>
            </div>
          </div>
@@ -211,14 +191,9 @@
          <div class="sidebar-box">
            <h3 class="heading">Categories</h3>
 					<ul class="categories">
-						<li><a href="#">시설봉사 <span>(12)</span></a></li>
-						<li><a href="#">전문봉사 <span>(22)</span></a></li>
-						<li><a href="#">지역사회봉사 <span>(37)</span></a></li>
-						<li><a href="#">금,물품봉사 <span>(37)</span></a></li>
-						<li><a href="#">해외봉사 <span>(42)</span></a></li>
-						<li><a href="#">기타봉사 <span>(5)</span></a></li>
-						<li><a href="#">재가봉사 <span>(14)</span></a></li>
-						<li><a href="#">헌혈 <span>(124)</span></a></li>
+					<c:forEach var="category" items="${categoryList }">
+						<li><a href="/review/list?codeNumber=${category.codeNumber }">${category.codeName } <span>(${category.categoryCount })</span></a></li>
+					</c:forEach>
 					</ul>
          </div>
          <!-- END sidebar-box -->

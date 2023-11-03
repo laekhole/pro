@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="code">
+	<resultMap id="BaseResultMap" type="com.kosa.pro.model.MasterCodeVO">
+		<result column="code_number" jdbcType="VARCHAR" property="codeNumber" />
+		<result column="code_name" jdbcType="VARCHAR" property="codeName" />
+		<result column="category_count" jdbcType="NUMERIC" property="categoryCount" />
+	</resultMap>
+
+	<sql id="select">
+		code_group, code_number, code_name, code_detail, code_yn
+	</sql>
+	
+<!-- 	<sql id="whereClause">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="searchWord != null and searchWord != ''">
+				<choose>
+					<when test="type1 == 'title'">
+						and code_name like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<otherwise>
+						and (review_title like concat(concat('%', #{searchWord}), '%') or write_id like concat(concat('%', #{searchWord}), '%') or review_content like concat(concat('%', #{searchWord}), '%'))
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="useYn != null and useYn != ''">
+					and (code_yn != 'N' and code_yn = #{useYn})
+				</when>
+				<otherwise>
+					and code_yn = 'Y'
+				</otherwise>
+			</choose>
+		</trim>
+	</sql> -->
+	
+<!-- 	<select id="totalCount" parameterType="ReviewSearchVO" resultType="int">
+		select count(*)
+		from review_board
+		<include refid="whereClause" />
+	</select>
+
+	<select id="selectReviewList" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
+		<include refid="paging.top" />
+		select 
+    	<include refid="select" />
+		from review_board
+		<include refid="whereClause" />
+		<choose>
+			<when test="sort != null and sort != ''">
+				order by ${sort}
+			</when>
+			<otherwise>
+				order by review_seq desc
+			</otherwise>
+		</choose>
+		<include refid="paging.bottom" />
+	</select> -->
+	
+	<select id="selectGroupCode" parameterType="SearchVO" resultType="MasterCodeVO">
+		select
+		<include refid="select" />
+		from master_code
+		where code_group = #{groupCode}
+	</select>
+	
+	<!-- 카테고리 이름 가져오기 -->
+	<select id="selectCodeName" parameterType="ReviewSearchVO" resultType="MasterCodeVO">
+		select
+		<include refid="select" />
+		from master_code
+		where code_group = #{groupCode}
+		and code_number = #{codeNumber}
+	</select>
+	
+	<!-- 카테고리에 대한 카운트(후기게시판에서 사용) -->
+	<select id="selectCategoryCode" resultMap="BaseResultMap">
+		select m.code_number, m.code_name, c.category_count
+		from master_code m inner join category_count c
+		on m.code_number = c.code_number
+		where m.code_group = '0001'
+		order by c.category_count desc
+	</select>
+	
+	<!-- 후기 게시판 글 상세 정보 카테고리 이름 가져오기 -->
+	<select id="selectCategoryCodeName" parameterType="ReviewSearchVO" resultType="MasterCodeVO">
+		select m.code_name, m.code_number
+		from review_board r 
+		inner join category c
+		on r.review_seq = c.review_seq
+		inner join master_code m
+		on c.code_number = m.code_number
+		where r.review_seq = #{reviewSeq}
+	</select>
+	
+</mapper>

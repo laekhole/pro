@@ -20,23 +20,29 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<div class="heading">Category: 시설봉사</div>
+				<div class="heading">
+				Category:
+				<c:if test="${empty categoryName }">
+					전체
+				</c:if>
+					 ${categoryName.codeName }
+				</div>
 			</div>
 		</div>
 		<div class="row posts-entry">
 			<div class="col-lg-8">
 			 <c:forEach var="review" items="${list }">
 			 	<div class="blog-entry d-flex blog-entry-search-item">
-					<a href="#" class="img-link me-4">
+					<a href="/review/info?reviewSeq=${review.reviewSeq }" class="img-link me-4">
 						<img src="/template/images/img_1_sq.jpg" alt="Image" class="img-fluid">
 					</a>
 					<div>
 						<span class="date">${review.modDate }  <span style="float:right;">조회수 : ${review.viewCount }</span></span>
-						<h2 class="mt-1"><a href="#">${review.reviewTitle }</a></h2>
+						<h2 class="mt-1"><a href="/review/info?reviewSeq=${review.reviewSeq }">${review.reviewTitle }</a></h2>
 						<div class="review-text-area">
 							<span>${review.reviewContent }<span>
 						</div>
-						<a href="#" class="btn btn-sm btn-outline-primary mt-3">Read More</a>
+						<a href="/review/info?reviewSeq=${review.reviewSeq }" class="btn btn-sm btn-outline-primary mt-3">Read More</a>
 						<div class="love-list">
 							<i class="bi bi-hand-thumbs-up-fill recommend-list"></i>
 							<span>${review.recomCount }</span>
@@ -59,7 +65,7 @@
 						<ul>
 						<c:forEach var="popular" items="${polist }">
 							<li>
-								<a href="">
+								<a href="/review/info?reviewSeq=${popular.reviewSeq }">
 									<img src="/template/images/img_1_sq.jpg" alt="Image placeholder" class="me-4 rounded">
 									<div class="text">
 										<h4>${popular.reviewTitle }</h4>
@@ -79,14 +85,9 @@
 				<div class="sidebar-box">
 					<h3 class="heading">Categories</h3>
 					<ul class="categories">
-						<li><a href="#">시설봉사 <span>(12)</span></a></li>
-						<li><a href="#">전문봉사 <span>(22)</span></a></li>
-						<li><a href="#">지역사회봉사 <span>(37)</span></a></li>
-						<li><a href="#">금,물품봉사 <span>(37)</span></a></li>
-						<li><a href="#">해외봉사 <span>(42)</span></a></li>
-						<li><a href="#">기타봉사 <span>(5)</span></a></li>
-						<li><a href="#">재가봉사 <span>(14)</span></a></li>
-						<li><a href="#">헌혈 <span>(124)</span></a></li>
+					<c:forEach var="category" items="${categoryList }">
+						<li><a href="/review/list?codeNumber=${category.codeNumber }">${category.codeName } <span>(${category.categoryCount })</span></a></li>
+					</c:forEach>
 					</ul>
 				</div>
 				

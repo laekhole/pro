@@ -27,8 +27,11 @@
 				</choose>
 			</if>
 			<choose>
-				<when test="sUseYn != null and sUseYn != ''">
-					and (del_yn != 'Y' and del_yn = #{sUseYn})
+				<when test="useYn != null and useYn != ''">
+					and (del_yn != 'Y' and del_yn = #{useYn})
+				</when>
+				<when test="codeNumber != null and codeNumber != ''">
+					and (code_number = #{codeNumber} and del_yn = 'N')				
 				</when>
 				<otherwise>
 					and del_yn = 'N'
@@ -39,22 +42,46 @@
 	
 	<select id="totalCount" parameterType="ReviewSearchVO" resultType="int">
 		select count(*)
-		from review_board
+		<choose>
+    		<when test="codeNumber != null and codeNumber != ''">
+    			from review_board r inner join category c
+				on r.review_seq = c.review_seq
+    		</when>
+    		<otherwise>
+    			from review_board
+    		</otherwise>
+    	</choose>
 		<include refid="whereClause" />
 	</select>
 
 	<select id="selectReviewList" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
 		<include refid="paging.top" />
-		select 
-    	<include refid="select" />
-		from review_board
+		select *
+    	<choose>
+    		<when test="codeNumber != null and codeNumber != ''">
+    			from review_board r inner join category c
+				on r.review_seq = c.review_seq
+    		</when>
+    		<otherwise>
+    			from review_board
+    		</otherwise>
+    	</choose>
 		<include refid="whereClause" />
 		<choose>
 			<when test="sort != null and sort != ''">
 				order by ${sort}
 			</when>
 			<otherwise>
-				order by review_seq desc
+				<choose>
+					<when test="codeNumber != null and codeNumber != ''">
+						order by r.review_seq desc
+					</when>
+					<otherwise>
+						order by review_seq desc
+					</otherwise>
+			
+				</choose>
+				
 			</otherwise>
 		</choose>
 		<include refid="paging.bottom" />
@@ -70,6 +97,12 @@
 		<![CDATA[
 			where rownum <= 3
 		]]>
+	</select>
+	
+	<select id="selectOne" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
+		select *
+		from review_board
+		where review_seq = #{reviewSeq}
 	</select>
 	
 	
