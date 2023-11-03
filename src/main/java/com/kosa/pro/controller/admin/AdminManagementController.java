@@ -48,9 +48,12 @@ public class AdminManagementController {
     @ResponseBody
     public List<MemberVO> getGroupMembers(MemberSearchVO search) throws Exception {
         log.info("Fetching group member list for AJAX call");
-        Map<String, List<MemberVO>> map = _memberService.memberList(search); // 임시로 같은 서비스 메서드 사용
-        return map.get("groupList"); // 'groupList' 키에 해당하는 리스트를 가져와야 함, 'groupList'는 단체 회원 리스트를 반환하는 키가 되어야 함
+        List<MemberVO> groupList = _memberService.groupMemberList(search);
+        return groupList;
     }
+    
+    
+    
 }
 	
 	
