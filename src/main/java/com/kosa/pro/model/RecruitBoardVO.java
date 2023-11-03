@@ -18,7 +18,8 @@ public class RecruitBoardVO implements GeneralModel {
 	private int recruitSeq;			// 봉사신청글 번호
 	private int groupMemSeq;		// 단체회원번호
 	private String groupName;		// 단체 이름
-	private String volunRegion;		// 봉사 지역
+	private String volunRegion1;	// 봉사 지역
+	private String volunRegion2;	// 봉사 지역
 	private String volunStartDate;	// 봉사 시작일
 	private String volunEndDate;	// 봉사 종료일
 	private String recruitState;	// 모집 현황(모집중/모집종료/종료)

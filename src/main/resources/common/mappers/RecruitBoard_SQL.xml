@@ -6,94 +6,176 @@
 <mapper namespace="recruit">
 	<sql id="select">
 	
-			recruitSeq
-			,groupMemSeq
-			,groupName
-			,volunRegion
-			,volunStartDate
-			,volunEndDate
-			,recruitState
-			,volunCode
-			,volunTime
-			,recruitStartDate
-			,recruitEndDate
-			,memCount
-			,volunTarget
-			,recruitTitle
-			,recruitContent
-			,viewCount
-			,regDate
-			,modDate
-			,delYn
-			,manager
-			,email
-			,phone
-			
+		RECRUIT_SEQ
+		,GROUP_MEM_SEQ
+		,GROUP_NAME
+		,VOLUN_REGION1
+		,VOLUN_REGION2
+		,VOLUN_START_DATE
+		,VOLUN_END_DATE
+		,RECRUIT_STATE
+		,VOLUN_CODE
+		,VOLUN_TIME
+		,RECRUIT_START_DATE
+		,RECRUIT_END_DATE
+		,MEM_COUNT
+		,VOLUN_TARGET
+		,RECRUIT_TITLE
+		,RECRUIT_CONTENT
+		,VIEW_COUNT
+		,REG_DATE
+		,MOD_DATE
+		,DEL_YN
+		,MANAGER
+		,EMAIL
+		,PHONE
+
 	</sql>
 	
 	<sql id="whereClause">
 		<trim prefix="where" prefixOverrides="and">
-			<if test="searchWord != null and searchWord != ''">
+			<if test="searchWord != null and searchWord != ''"> 
 				<choose>
 					<when test="type1 == 'title'">
-						and review_title like concat(concat('%', #{searchWord}), '%')
+						and recruit_title like concat(concat('%', #{searchWord}), '%')
 					</when>
 					<when test="type1 == 'writeId'">
-						and write_id like concat(concat('%', #{searchWord}), '%')
+						and group_name like concat(concat('%', #{searchWord}), '%')
 					</when>
 					<when test="type1 == 'content'">
-						and review_content like concat(concat('%', #{searchWord}), '%')
+						and recruit_content like concat(concat('%', #{searchWord}), '%')
 					</when>
 					<otherwise>
-						and (review_title like concat(concat('%', #{searchWord}), '%') or write_id like concat(concat('%', #{searchWord}), '%') or review_content like concat(concat('%', #{searchWord}), '%'))
+						and (recruit_title like concat(concat('%', #{searchWord}), '%') or write_id like concat(concat('%', #{searchWord}), '%') or recruit_content like concat(concat('%', #{searchWord}), '%'))
 					</otherwise>
 				</choose>
 			</if>
-			<choose>
-				<when test="sUseYn != null and sUseYn != ''">
-					and (del_yn != 'Y' and del_yn = #{sUseYn})
-				</when>
-				<otherwise>
-					and del_yn = 'N'
-				</otherwise>
-			</choose>
 		</trim>
 	</sql>
 	
-	<select id="totalCount" parameterType="ReviewSearchVO" resultType="int">
+	<select id="totalCount" parameterType="SearchVO" resultType="int">
 		select count(*)
-		from review_board
+		from recruit_board
 		<include refid="whereClause" />
 	</select>
 
-	<select id="selectReviewList" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
+
+	<!-- 봉사 신청 게시판 목록보기 -->
+	<select id="selectRecruitList" parameterType="SearchVO" resultType="RecruitBoardVO">
 		<include refid="paging.top" />
-		select 
-    	<include refid="select" />
-		from review_board
+			select 
+	    	<include refid="select" />
+			from recruit_board
 		<include refid="whereClause" />
 		<choose>
 			<when test="sort != null and sort != ''">
 				order by ${sort}
 			</when>
 			<otherwise>
-				order by review_seq desc
+				order by recruit_seq desc
 			</otherwise>
 		</choose>
 		<include refid="paging.bottom" />
 	</select>
 	
 	
-	<select id="selectPopularList" resultType="ReviewBoardVO">
-		select review_title, mod_date
-		from (
-			select * from review_board
-			order by recom_count desc
-		)
-		<![CDATA[
-			where rownum <= 3
-		]]>
+	<!-- 봉사 신청 게시판 상세보기 -->
+	<select id="selectRecruitGet" resultType="RecruitBoardVO">
+		select 
+    	<include refid="select" />
+		from recruit_board
+		where
+			recruit_seq = #{recruitSeq}
 	</select>
+	
+	
+	<!-- 봉사 신청 게시판 글 작성 하기 -->
+	<insert id="insertRecruit" >
+		<selectKey keyProperty="boardNum" resultType="int"  order="BEFORE">
+			select 
+				RECRUIT_BOARD_SEQ.NEXTVAL recruit_seq <!--시퀀스 생성하기? -->
+			from dual
+		</selectKey>
+		INSERT INTO recruit_board (
+
+			GROUP_MEM_SEQ
+			,GROUP_NAME
+			,VOLUN_REGION1
+			,VOLUN_REGION2
+			,VOLUN_START_DATE
+			,VOLUN_END_DATE
+			,RECRUIT_STATE <!-- 모집현황 나중에 '모집중'으로 디폴트넣을것 -->
+			,VOLUN_CODE  <!-- 봉사분야 -->
+			,VOLUN_TIME	 <!-- 봉사 당일에 몇시간 할건지 -->
+			,RECRUIT_START_DATE
+			,RECRUIT_END_DATE
+			,MEM_COUNT	
+			,VOLUN_TARGET
+			,RECRUIT_TITLE
+			,RECRUIT_CONTENT
+			,MANAGER
+			,EMAIL
+			,PHONE
+
+		) VALUES (
+		
+			#{groupMemSeq}
+			,#{groupName}
+			,#{volunRegion1}
+			,#{volunRegion2}			
+			,#{volunStartDate}
+			,#{volunEndDate}
+			,#{recruitState}
+			,#{volunCode}
+			,#{volunTime}
+			,#{recruitStartDate}
+			,#{recruitEndDate}
+			,#{memCount}
+			,#{volunTarget}
+			,#{recruitTitle}
+			,#{recruitContent}
+			,#{manager}
+			,#{email}
+			,#{phone}
+		)
+	</insert>
+	
+	
+	<!-- 봉사 신청 게시판 글 수정하기 -->
+	<update id="updateRecruit" >
+		update 
+			recruit_board
+		set 
+			,GROUP_MEM_SEQ	 	 = #{groupMemSeq}
+			,GROUP_NAME			 = #{groupName}
+			,VOLUN_REGION1		 = #{volunRegion1}
+			,VOLUN_REGION2		 = #{volunRegion2}
+			,VOLUN_START_DATE	 = #{volunStartDate}
+			,VOLUN_END_DATE		 = #{volunEndDate}
+			,RECRUIT_STATE		 = #{recruitState}
+			,VOLUN_CODE			 = #{volunCode}
+			,VOLUN_TIME			 = #{volunTime}
+			,RECRUIT_START_DATE	 = #{recruitStartDate}
+			,RECRUIT_END_DATE	 = #{recruitEndDate}
+			,MEM_COUNT			 = #{memCount}
+			,VOLUN_TARGET		 = #{volunTarget}
+			,RECRUIT_TITLE		 = #{recruitTitle}
+			,RECRUIT_CONTENT	 = #{recruitContent}
+			,MANAGER			 = #{manager}
+			,EMAIL				 = #{email}
+			,PHONE				 = #{phone}
+		where 
+			board_num 			 = #{boardNum}
+	</update>
+	
+	
+	<!-- 봉사 신청 게시판 글 삭제하기 -->
+	<delete id="deleteRecruit">
+		delete
+		 	from recruit_board
+		where
+			recruit_seq = #{recruitSeq}
+	</delete>
 	
 	
 </mapper>
