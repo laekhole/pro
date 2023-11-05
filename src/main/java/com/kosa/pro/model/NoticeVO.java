@@ -24,7 +24,7 @@ public class NoticeVO implements GeneralModel {
 	private String regDate;
 	private String modDate;
 	private int viewCount;
-	private String pixedYn;
+	private String pixedYn; // db에는 fix인데 여기는 pix임
 	private String delYn;
 
 }
