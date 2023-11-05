@@ -15,15 +15,15 @@ public class GroupMemberVO implements GeneralModel {
 
 	private static final long serialVersionUID = -6872886920468343674L;
 	
-	private int groupMemSeq;
-	private String groupMemId;
-	private String groupName;
-	private String groupPwd;
-	private String groupNumber;
-	private String groupPhone;
-	private String groupAuth;
-	private String groupDelYn;
-	private String groupJoinDate;
+	private int groupMemSeq;		// 그룹 번호
+	private String groupMemId;		// 그룹 아이디
+	private String groupName;		// 그룹 이름
+	private String groupPwd;		// 그룹 비번
+	private String groupNumber;		// 그룹 비영리단체번호
+	private String groupPhone;		// 그룹 연락처
+	private String groupAuth;		// 그룹 권한
+	private String groupDelYn;		// 그룹 삭제여부
+	private String groupJoinDate;	// 그룹 가입일
 	
 
 }

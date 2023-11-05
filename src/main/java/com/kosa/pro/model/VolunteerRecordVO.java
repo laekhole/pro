@@ -26,6 +26,8 @@ public class VolunteerRecordVO implements GeneralModel {
 	private int realAddtime;
 	private String volunLocation;
 	
+//	[별이] 11/05 추가
+	private String name;
 	
 
 }
