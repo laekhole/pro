@@ -26,9 +26,12 @@ public class AdminNoticeController {
 
 	@RequestMapping("/adminnotice")
 	public String adminMangementMain(NoticeSearchVO search, Model model) throws Exception {
-		Map<String, List<NoticeVO>> map = _adminnoticeService.AdminNoticeList(search);
-		model.addAttribute("search", search);
 		log.info(">>>>>>>>>>>>>>관리자 공지사항");
+		
+		List<NoticeVO> adminnoticeList = _adminnoticeService.AdminNoticeList(search).get("noticeList");
+		System.out.println("--noticeList-- : " + adminnoticeList);
+		model.addAttribute("adminnoticeList", adminnoticeList);
+		model.addAttribute("search", search);
 		return "admin/adminnotice";
 	}
 }

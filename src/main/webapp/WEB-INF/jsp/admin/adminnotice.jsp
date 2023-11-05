@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
  <%@ include file="/WEB-INF/jsp/include/admintop.jsp"%>
        
@@ -40,6 +40,7 @@
 		    <table class="table">
 		        <thead>
 		            <tr>
+		            	<th><input type="checkbox" id="selectAll" onclick="noticeselectAllCheckboxes()"></th>
 		                <th scope="col">공지번호</th>
 		                <th scope="col">작성자</th>
 		                <th scope="col">제목</th>
@@ -52,21 +53,35 @@
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <c:forEach var="notice" items="${map.noticelist}" varStatus="status">
+		            <c:forEach var="notice" items="${adminnoticeList}" varStatus="status">
 		                <tr>
 			              <td><input type="checkbox"></td>
 			              <th scope="row">${notice.noticeSeq}</th>
-			              <td>${notice.title}</td>
 			              <td>${notice.writeId}</td>
-<%-- 			              <td><fmt:formatDate value="${notice.regDate}" pattern="yyyy-MM-dd HH:mm"/></td> --%>
+			              <td>${notice.title}</td>
+			              <td>${notice.regDate}</td>
+			              <td>${notice.modDate}</td>
 			              <td>${notice.viewCount}</td>
 			              <td>${notice.pixedYn}</td>
 			              <td>${notice.delYn eq 'N' ? 'Active' : 'Deleted'}</td>
+			              <td></td>
 			            </tr>
 		            </c:forEach>
 		        </tbody>
 		    </table>
 		</div>
-        
+ <%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
  <%@ include file="/WEB-INF/jsp/include/adminbottom.jsp"%>
+
+<script type="text/javascript">
+
+// 모든 체크박스 선택/해제 함수
+function noticeselectAllCheckboxes() {
+    var checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = document.getElementById('selectAll').checked;
+    }
+}
+
+</script>
 

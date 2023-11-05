@@ -4,14 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.kosa.pro.model.NoticeVO;
 import com.kosa.pro.model.common.SearchVO;
 import com.kosa.pro.model.search.NoticeSearchVO;
 import com.kosa.pro.service.common.BaseService;
 
+@Service
 public class AdminNoticeService extends BaseService {
 
-	// 회원리스트
+	// 공지사항리스트
 	public Map<String, List<NoticeVO>> AdminNoticeList(NoticeSearchVO search) throws Exception {
 
 		Map<String, List<NoticeVO>> map = new HashMap<>();

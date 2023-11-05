@@ -49,9 +49,10 @@ public class AdminManagementController {
     // 단체 회원 목록을 가져오는 AJAX 처리 메서드
     @GetMapping("/getGroupMembers")
     @ResponseBody
-    public List<GroupMemberVO> getGroupMembers(GroupMemberSearchVO search) throws Exception {
+    public List<GroupMemberVO> getGroupMembers(GroupMemberSearchVO search, Model model) throws Exception {
     	   log.info("Fetching 단체 AJAX call");
         Map<String, List<GroupMemberVO>> map = _memberService.groupMemberList(search);
+        model.addAttribute("search", search);
         System.out.println(map + "뭐들어있음");
         return map.get("groupList");
     }
