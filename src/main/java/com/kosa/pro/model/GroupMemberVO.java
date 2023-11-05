@@ -25,8 +25,8 @@ public class GroupMemberVO implements GeneralModel {
 	private String groupDelYn;
 	private String groupJoinDate;
 	
-	// 평점 테이블 추가
-	private GradeVO gradeVO; 
 	
+	// 평점 테이블 추가
+	private GradeVO grade;
 
 }

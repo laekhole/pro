@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosa.pro.model.GroupMemberVO;
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.search.GroupMemberSearchVO;
 import com.kosa.pro.model.search.MemberSearchVO;
@@ -41,19 +42,20 @@ public class AdminManagementController {
     public List<MemberVO> getIndividualMembers(MemberSearchVO search) throws Exception {
         log.info("Fetching 개인 회원 AJAX call");
         Map<String, List<MemberVO>> map = _memberService.memberList(search);
+        System.out.println("개인---------------------------" + map);
         return map.get("memberList");
     }
 
     // 단체 회원 목록을 가져오는 AJAX 처리 메서드
     @GetMapping("/getGroupMembers")
     @ResponseBody
-    public List<MemberVO> getGroupMembers(GroupMemberSearchVO search) throws Exception {
-        log.info("Fetching 단체 AJAX call");
-        System.out.println("여기까지는 타는듯");
-        Map<String, List<MemberVO>> map = _memberService.groupMemberList(search);
-        System.out.println(map + "뭐있음");
-        return  map.get("groupList");
+    public List<GroupMemberVO> getGroupMembers(GroupMemberSearchVO search) throws Exception {
+    	   log.info("Fetching 단체 AJAX call");
+        Map<String, List<GroupMemberVO>> map = _memberService.groupMemberList(search);
+        System.out.println(map + "뭐들어있음");
+        return map.get("groupList");
     }
+    
     
     
     

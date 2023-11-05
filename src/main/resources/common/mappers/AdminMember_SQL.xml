@@ -3,7 +3,37 @@
 
 <mapper namespace="adminmember">
 
-		<sql id="select">
+<!-- GradeVO 객체를 위한 resultMap -->
+  <resultMap id="GradeResultMap" type="GradeVO">
+    <id property="gradeSeq" column="grade_seq" />
+    <result property="groupMemSeq" column="group_mem_seq" />
+    <result property="gradeCount" column="grade_count" />
+    <result property="gradeAdd" column="grade_add" />
+    <result property="grade" column="grade" />
+  </resultMap>
+
+  <!-- GroupMemberVO 객체와 GradeVO 객체를 매핑하기 위한 resultMap -->
+  <resultMap id="GroupMemberResultMap" type="GroupMemberVO">
+    <id property="groupMemSeq" column="group_mem_seq" />
+    <result property="groupMemId" column="group_mem_id" />
+    <result property="groupName" column="group_name" />
+    <result property="groupPwd" column="group_pwd" />
+    <result property="groupNumber" column="group_number" />
+    <result property="groupPhone" column="group_phone" />
+    <result property="groupAuth" column="group_auth" />
+    <result property="groupDelYn" column="group_del_yn" />
+    <result property="groupJoinDate" column="group_join_date" />
+    
+    <!-- GradeVO와의 1:1 관계를 위한 association -->
+    <association property="grade" resultMap="GradeResultMap" />
+  </resultMap>
+
+
+
+
+
+
+	<sql id="select">
 		mem_seq, mem_id, name, gender, phone, platform, auth, del_yn, ben_yn, join_date
 		</sql>
 		
@@ -109,27 +139,9 @@
 
 
 <!-- 단체 회원과 그들의 평점을 조인하는 전체 select 문 -->
-<!-- <select id="selectgroupmemberwithgradelist" parameterType="GroupMemberSearchVO" resultType="GroupMemberVO"> -->
-<!--     <include refid="paging.top" /> -->
-<!--     SELECT -->
-<!--         <include refid="selectgroupmember" />, -->
-<!--         <include refid="selectgrade" /> -->
-<!--     FROM admin.group_member GM -->
-<!--     LEFT JOIN admin.grade G ON GM.group_mem_seq = G.group_mem_seq -->
-<!--     <include refid="whereClause2" /> -->
-<!--     <choose> -->
-<!--         <when test="sort != null and sort != ''"> -->
-<!--             ORDER BY ${sort} -->
-<!--         </when> -->
-<!--         <otherwise> -->
-<!--             ORDER BY GM.group_mem_seq DESC -->
-<!--         </otherwise> -->
-<!--     </choose> -->
-<!--     <include refid="paging.bottom" /> -->
-<!-- </select> -->
-	
-<select id="selectgroupmemberwithgradelist" parameterType="GroupMemberSearchVO" resultType="GroupMemberVO">
-    SELECT
+<select id="selectgroupmemberwithgradelist" parameterType="GroupMemberSearchVO" resultMap="GroupMemberResultMap">
+    <include refid="paging.top" />
+        SELECT
         GM.group_mem_seq,
         GM.group_mem_id,
         GM.group_name,
@@ -146,8 +158,18 @@
         G.grade
     FROM admin.group_member GM
     LEFT JOIN admin.grade G ON GM.group_mem_seq = G.group_mem_seq
+    <include refid="whereClause2" />
+    <choose>
+        <when test="sort != null and sort != ''">
+            ORDER BY ${sort}
+        </when>
+        <otherwise>
+            ORDER BY GM.group_mem_seq DESC
+        </otherwise>
+    </choose>
+    <include refid="paging.bottom" />
 </select>
-
+	
 
 
 </mapper>
