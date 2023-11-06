@@ -9,6 +9,7 @@ import com.kosa.pro.controller.PrtController;
 import com.kosa.pro.model.common.SearchVO;
 import com.kosa.pro.model.search.BoardSearchVO;
 import com.kosa.pro.service.BoardService;
+import com.kosa.pro.service.PersonalService;
 
 /**메인 컨트롤러
  * @author kky
@@ -19,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/mypage/personal")
 public class MypagePersonalController extends PrtController {
+
+	@Autowired
+	private PersonalService _personalService;
 	
 	@RequestMapping(value={"/", "/main"})
 	public String myPageMain(SearchVO search, Model model) throws Exception {
