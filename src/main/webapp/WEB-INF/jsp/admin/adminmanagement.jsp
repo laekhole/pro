@@ -107,8 +107,20 @@
         					<td>${member.volunteerTime.volunHeat}</td> <!-- 온도 -->
         					<td>${member.volunteerTime.volunNoshow}</td> <!-- 노쇼 횟수 -->
 		                    <td>${member.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
-		                    
-		                    <td>비고</td>
+			  				
+			  				<!-- 제재 버튼, 온도가 30도 미만일 때만 보임 -->
+							<td>
+							    <c:choose>
+							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'Y'}">
+							        <button type="button" class="btn btn-warning btn-sm">제재함</button> 
+							        </c:when>
+							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'N'}">
+							            <button type="button" class="btn btn-danger btn-sm">제재가능</button>
+							        </c:when>
+							        <c:otherwise>
+							        </c:otherwise>
+							    </c:choose>
+							</td>
 		                </tr>
 		            </c:forEach>
 		        </tbody>
@@ -123,8 +135,8 @@
 		                <th scope="col">단체번호</th>
 		                <th scope="col">단체아이디</th>
 		                <th scope="col">단체명</th>
-		                <th scope="col">그룹넘버</th>
-		                <th scope="col">단체횟수</th>
+		                <th scope="col">봉사횟수</th>
+		                <th scope="col">연락처</th>
 		                <th scope="col">누적점수</th>
 		                <th scope="col">평점</th>
 		                <th scope="col">상태</th>
@@ -132,20 +144,31 @@
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <c:forEach var="group" items="${grouplist}" varStatus="status">
-		                <tr>
-		                    <td>${group.memSeq}</td>
-		                    <td>${group.memId}</td> <!-- 이메일을 memId라고 가정 -->
-		                    <td>${group.name}</td>
-		                    <td>${group.gender}</td> 
-		                    <td>${group.phone}</td> 
-							<td>${group.volunteerTime.volunAddtime}</td> <!-- 봉사시간 -->
-        					<td>${group.volunteerTime.volunHeat}</td> <!-- 온도 -->
-        					<td>${group.volunteerTime.volunNoshow}</td> <!-- 노쇼 횟수 -->
-		                    <td>${group.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
-		                    
-		                    <td>비고</td>
-		                </tr>
+		            <c:forEach var="group" items="${groupmap.groupList}" varStatus="status">
+		           	<tr>
+		            <td>${group.groupMemSeq}</td>
+		            <td>${group.groupMemId}</td>
+		            <td>${group.groupName}</td>
+		            <td>${group.grade.gradeCount}</td> <!-- 봉사횟수 -->
+		            <td>${group.groupNumber}</td> 
+		            <td>${group.grade.gradeAdd}</td> <!-- 누적점수 -->
+		            <td>${group.grade.grade}</td> <!-- 평점 -->
+		            <td>${group.groupDelYn == 'N' ? '활성' : '비활성'}</td> <!-- 상태 -->
+		            	 <!-- 제재 버튼, 온도가 30도 미만일 때만 보임 -->
+					</td>
+					<td>
+							    <c:choose>
+							        <c:when test="${group.grade.grade <= 1 && group.groupDelYn == 'Y'}">
+							        <button type="button" class="btn btn-warning btn-sm">제재함</button> 
+							        </c:when>
+							        <c:when test="${group.grade.grade <= 1 && group.groupDelYn == 'N'}">
+							            <button type="button" class="btn btn-danger btn-sm">제재가능</button>
+							        </c:when>
+							        <c:otherwise>
+							        </c:otherwise>
+							    </c:choose>
+							</td>
+		        	</tr>
 		            </c:forEach>
 		        </tbody>
 		    </table>
@@ -153,21 +176,22 @@
               
           
           <!-- 페이지네이션 -->
-          <div class="d-flex justify-content-center mt-4">
-              <button class="btn btn-light">
-                  <i class="bi bi-arrow-left"></i>
-              </button>                
-              <button class="btn btn-light">1</button>
-              <button class="btn btn-light">2</button>
-              <button class="btn btn-light">3</button>
-              <button class="btn btn-light">4</button>
-              <button class="btn btn-light">10</button>
-              <button class="btn btn-light">
-                  <i class="bi bi-arrow-right"></i>
-              </button>
-              
-          </div>
+<!--           <div class="d-flex justify-content-center mt-4"> -->
+<!--               <button class="btn btn-light"> -->
+<!--                   <i class="bi bi-arrow-left"></i> -->
+<!--               </button>                 -->
+<!--               <button class="btn btn-light">1</button> -->
+<!--               <button class="btn btn-light">2</button> -->
+<!--               <button class="btn btn-light">3</button> -->
+<!--               <button class="btn btn-light">4</button> -->
+<!--               <button class="btn btn-light">10</button> -->
+<!--               <button class="btn btn-light"> -->
+<!--                   <i class="bi bi-arrow-right"></i> -->
+<!--               </button> -->
+<!--           </div> -->
+          
       </div>
+ <%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
  <%@ include file="/WEB-INF/jsp/include/adminbottom.jsp"%>
  
  <script type="text/javascript">
@@ -230,6 +254,12 @@
 
          // 받은 데이터로 테이블 내용을 채웁니다.
          $.each(members, function(i, member) {
+        	 var statusButton = '';
+             if (member.volunteerTime.volunHeat < 30 && member.benYn === 'Y') {
+                 statusButton = '<button type="button" class="btn btn-warning btn-sm">제재함</button>';
+             } else if (member.volunteerTime.volunHeat < 30 && member.benYn === 'N') {
+                 statusButton = '<button type="button" class="btn btn-danger btn-sm">제재가능</button>';
+             }
              var row = '<tr>' +
 			             '<td>' + member.memSeq + '</td>' +
 			             '<td>' + member.memId + '</td>' +
@@ -240,22 +270,36 @@
 			             '<td>' + member.volunteerTime.volunHeat + '</td>' +
 			             '<td>' + member.volunteerTime.volunNoshow + '</td>' +
 			             '<td>' +(member.benYn === 'N' ? '활성' : '비활성') + '</td>' +
+			             '<td>' + statusButton + '</td>' + // 비고 컬럼에 상태 버튼을 추가합니다.
 			             '</tr>';
              tableBody.append(row);
          });
      }
 
+     //단체클릭 업데이트
      function updateGroupTable(groups) {
          var tableBody = $('#groupTableContainer tbody');
          tableBody.empty(); // 테이블의 기존 내용을 비웁니다.
 
          // 받은 데이터로 테이블 내용을 채웁니다.
          $.each(groups, function(i, group) {
-             var row = '<tr>' +
-                       '<td>' + group.groupSeq + '</td>' +
-                       '<td>' + group.groupId + '</td>' +
-                       // ... 나머지 데이터 필드 ...
-                       '</tr>';
+        	 var sanctionButton = '';
+        	 if (group.grade.grade <= 1 && group.groupDelYn === 'Y') {
+        		 sanctionButton = '<button type="button" class="btn btn-warning btn-sm">제재함</button>';
+             } else if (group.grade.grade <= 1 && group.groupDelYn === 'N') {
+            	 sanctionButton = '<button type="button" class="btn btn-danger btn-sm">제재가능</button>';
+             }
+        	 var row = '<tr>' +
+             '<td>' + group.groupMemSeq + '</td>' +
+             '<td>' + group.groupMemId + '</td>' +
+             '<td>' + group.groupName + '</td>' + 
+             '<td>' + group.grade.gradeCount + '</td>' +
+             '<td>' + group.groupPhone + '</td>' +
+             '<td>' + group.grade.gradeAdd + '</td>' + // 누적점수
+             '<td>' + group.grade.grade + '</td>' + // 평점
+             '<td>' + (group.groupDelYn === 'N' ? '활성' : '비활성') + '</td>' + // 상태
+             '<td>' + sanctionButton + '</td>' + // 비고 칼럼 내용
+             '</tr>';
              tableBody.append(row);
          });
      }
@@ -263,5 +307,4 @@
  
 </script>
  
-</script>
 
