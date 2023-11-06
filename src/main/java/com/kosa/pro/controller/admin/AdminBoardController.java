@@ -37,7 +37,7 @@ public class AdminBoardController {
 	public String admingetMainBoard(BoardSearchVO search, Model model) throws Exception {
 		log.info(">>>>>>>>>>>>>>관리자 회원/단체 관리");
 		Map<String, List<RecruitBoardVO>> map = _boardService.adminRecruitboardList(search);
-		model.addAttribute("list", map.get("adminboardList"));
+		model.addAttribute("list", map.get("adminRecruitList"));
 		model.addAttribute("search", search);
 		return "admin/adminboard";
 	}

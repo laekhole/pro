@@ -46,7 +46,7 @@ public class AdminMemberService extends BaseService {
 		return groupmap;
 	}
 
-		// 리스트를 돌면서 특정 평점이 50점이 되면 쪽지 발송되게 끔!
+		// 리스트를 돌면서 특정 온도,평점이 이하 점수가 되면 쪽지 발송되게 끔!
 //	 	@Scheduled(fixedRate = 5000) // 5초마다 실행
 	 	@Scheduled(fixedRate = 43200000) // 12시간마다 실행
 	    public void sendMessagesToUsers() {

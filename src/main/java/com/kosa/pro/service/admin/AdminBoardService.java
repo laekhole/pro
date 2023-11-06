@@ -25,7 +25,7 @@ public class AdminBoardService  extends BaseService{
 
 		Map<String, List<RecruitBoardVO>> map = new HashMap<>();
 		map.put("adminRecruitList", (List<RecruitBoardVO>) getDAO().selectBySearch("adminboard.selectRecruitBoardList",
-				search, "totalCount"));
+				search, "totalCountrecruit"));
 		return map;
 	}
 
@@ -38,9 +38,9 @@ public class AdminBoardService  extends BaseService{
 		Map<String, List<ReviewBoardVO>> groupmap = new HashMap<>();
 		
 		groupmap.put("adminReviewList", (List<ReviewBoardVO>) getDAO().selectBySearch("adminboard.selectReviewBoardList",
-				search, "totalCount"));
+				search, "ReviewtotalCount"));
 		
-		System.out.println("서비스 groupList 이거");
+		System.out.println("후기 게시판 -->" + groupmap);
 	
 		return groupmap;
 	}

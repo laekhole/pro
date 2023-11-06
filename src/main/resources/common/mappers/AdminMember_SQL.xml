@@ -105,8 +105,6 @@
     </trim>
 </sql>
 	
-	
-
 <!--  개인 카운트 -->
 	<select id="totalCount" parameterType="MemberVO" resultType="int">
 		select count(*)
