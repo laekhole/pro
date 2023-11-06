@@ -5,7 +5,7 @@
 
 <mapper namespace="review">
 	<sql id="select">
-		review_seq, recruit_seq, review_title, review_content, write_id, reg_date, mod_date, recom_count, view_count, del_yn
+		review_seq, recruit_seq, review_title, review_content, write_id, reg_date, mod_date, recom_count, view_count, del_yn, image_seq
 	</sql>
 	
 	<sql id="whereClause">
@@ -104,6 +104,73 @@
 		from review_board
 		where review_seq = #{reviewSeq}
 	</select>
+	
+	
+	<insert id="merge" parameterType="ReviewBoardVO">
+		<selectKey keyProperty="reviewSeq" resultType="int" order="BEFORE" statementType="PREPARED">
+			<if test="reviewSeq == null or reviewSeq == 0">
+				select review_board_seq.nextval from dual
+			</if>
+			<if test="reviewSeq > 0">
+				select #{reviewSeq} from dual
+			</if>
+		</selectKey>
+		merge into review_board a
+		using dual
+            on (review_seq = #{reviewSeq})
+            when matched then
+            	update
+           		<set>
+					<if test="recruitSeq != null and recruitSeq > 0">
+						review_seq = #{recruitSeq,jdbcType=NUMERIC},
+					</if>
+					<if test="reviewTitle != null">
+						review_title = #{reviewTitle,jdbcType=VARCHAR},
+					</if>
+					<if test="reviewContent != null">
+						review_content = #{reviewContent,jdbcType=VARCHAR},
+					</if>
+					<if test="writeId != null">
+						write_id = #{writeId,jdbcType=VARCHAR},
+					</if>
+					<if test="regDate != null">
+						reg_date = #{regDate,jdbcType=VARCHAR},
+					</if>
+					<if test="modDate != null">
+						mod_date = #{modDate,jdbcType=VARCHAR},
+					</if>
+					<if test="recomCount != null">
+						recom_count = #{recomCount,jdbcType=NUMERIC},
+					</if>
+					<if test="viewCount != null">
+						view_count = #{viewCount,jdbcType=NUMERIC},
+					</if>
+					<if test="delYn != null">
+						del_yn = #{delYn,jdbcType=VARCHAR}, 
+					</if>
+					<if test="delYn != null">
+						del_yn = #{delYn,jdbcType=VARCHAR}, 
+					</if>
+					<if test="imageSeq != null">
+						image_seq = #{imageSeq,jdbcType=NUMERIC}, 
+					</if>
+				</set>
+				where review_seq = #{reviewSeq,jdbcType=NUMERIC}
+				
+            when not matched then
+            	insert (
+					review_seq, recruit_seq,
+					review_title, review_content,
+					write_id, recom_count,
+					view_count, image_seq
+				)
+				values (
+					#{reviewSeq,jdbcType=NUMERIC}, #{recruitSeq,jdbcType=NUMERIC}, 
+					#{reviewTitle,jdbcType=VARCHAR}, #{reviewContent,jdbcType=VARCHAR}, 
+					#{writeId,jdbcType=VARCHAR}, #{recomCount,jdbcType=NUMERIC}, 
+					#{viewCount,jdbcType=NUMERIC}, #{imageSeq,jdbcType=NUMERIC}
+				)
+	</insert>
 	
 	
 </mapper>

@@ -2,6 +2,7 @@ package com.kosa.pro.model;
 
 import java.sql.Clob;
 
+import com.kosa.pro.model.common.FileAttacheVO;
 import com.kosa.pro.model.general.GeneralModel;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +28,17 @@ public class ReviewBoardVO implements GeneralModel {
 	private int recomCount;
 	private int viewCount;
 	private String delYn;
+	private int imageSeq;
 	
+	public static ReviewBoardVO of(int recruitSeq, String reviewTitle, String reviewContent, String writeId, int imageSeq) {
+		return ReviewBoardVO.builder()
+				.recruitSeq(recruitSeq)
+				.reviewTitle(reviewTitle)
+				.reviewContent(reviewContent)
+				.writeId(writeId)
+				.imageSeq(imageSeq)
+				.build();
+	}
 	
 
 }

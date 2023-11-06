@@ -210,3 +210,104 @@ td {
 .icon-container:hover .mypage {
 	color: black;
 }
+
+
+#review-root {
+  width: 30%;
+  margin: 0 auto;
+  max-width: 800px;
+  margin-top: 10px;
+}
+
+.review-title {
+  text-align: center;
+}
+
+.review-contents {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+}
+.review-contents .review-upload-box {
+  width: 100%;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-contents .review-upload-box .review-drag-file {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #dbdbdb;
+}
+.review-contents .review-upload-box .review-drag-file .review-highlight {
+  border: 3px dashed red;
+}
+.review-contents .review-upload-box .review-drag-file .review-image {
+  width: 40px;
+}
+.review-contents .review-upload-box .review-drag-file .review-message {
+  margin-bottom: 0;
+}
+.review-contents .review-upload-box .review-drag-file .review-preview {
+  display: none;
+  position: absolute;
+  left: 0;
+  height: 0;
+  width: 100%;
+  height: 100%;
+}
+.review-contents .review-upload-box .review-file-label {
+  margin-top: 30px;
+  background-color: #5b975b;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  width: 65%;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.review-contents .review-upload-box .review-file {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .review-contents {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .review-contents .review-upload-box {
+    width: 100%;
+    box-sizing: border-box;
+    margin-right: 0;
+  }
+  .review-contents .review-upload-box .review-drag-file {
+    height: 150px;
+  }
+  .review-contents .review-files {
+    width: 100%;
+    box-sizing: border-box;
+    margin-right: 0;
+    overflow: initial;
+  }
+}
+
+.ck-form-review{
+	margin-top: 20px;
+}
+
+.ck-editor__editable {
+	height: 50vh;
+}
+
+.ck-form-review {
+	width:68%;
+}

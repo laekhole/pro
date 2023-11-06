@@ -27,13 +27,13 @@ public class CKEditorController extends PrtController {
 	private final FileTokenService fileTokenService;
 	private final FileUploadService fileUploadService;
 
-	@GetMapping(value={"/ckeditorForm"})
-	public String ckeditorForm(Model model) throws IOException {
-		final String token = fileTokenService.getToken();
-		log.debug("token = ", token);
-		model.addAttribute("token", token);
-		return "test/ckeditorForm";
-	}
+//	@GetMapping(value={"/ckeditorForm"})
+//	public String ckeditorForm(Model model) throws IOException {
+//		final String token = fileTokenService.getToken();
+//		log.debug("token = ", token);
+//		model.addAttribute("token", token);
+//		return "test/ckeditorForm";
+//	}
 
 	@PostMapping(value = "/imageUpload")
 	@ResponseBody
@@ -42,15 +42,13 @@ public class CKEditorController extends PrtController {
 		// ckeditor는 이미지 업로드 후 이미지 표시하기 위해 uploaded 와 url을 json 형식으로 받아야 함
 		// ckeditor 에서 파일을 보낼 때 upload : [파일] 형식으로 해서 넘어옴, upload라는 키 이용하여 파일을 저장 한다
 		MultipartFile file = request.getFile("upload");
-		String token = request.getParameter("token");
 		SearchVO search = new SearchVO();
-		search.setToken(token);
-		System.out.println("token = " + token);
+		search.setTableName(request.getParameter("tableName"));
+		search.setToken(request.getParameter("token"));
 
 		//이미지 첨부 파일을 저장한다 
 		long file_id = fileUploadService.fileUploadProcess(search, file);
 		
-
 		// 이미지를 현재 경로와 연관된 파일에 저장하기 위해 현재 경로를 알아냄
 		String uploadPath = request.getServletContext().getContextPath() + "/files/" + file_id;
 		log.info("업로드경로 >>>>>>>>>> " + uploadPath);
@@ -60,21 +58,25 @@ public class CKEditorController extends PrtController {
 
 		return result;
 	}
-	
-	@PostMapping(value = "/ckeditorWrite")
-	@ResponseBody
-	public Map<String, Object> ckeditorWrite(@RequestBody Map<String, Object> param) throws Exception {
-		
-		System.out.println(param);
-		
 
-		fileUploadService.updateUseStatus(param);
-		
-		Map<String, Object> result = new HashMap<>();
-		result.put("uploaded", true); // 업로드 완료
-
-		return result;
-	}
+	/* 글쓰기 CK에디터 사용시 
+	fileUploadService.updateUseStatus(param);
+	이부분 필수로 추가
+	 */
+//	@PostMapping(value = "/ckeditorWrite")
+//	@ResponseBody
+//	public Map<String, Object> ckeditorWrite(@RequestBody Map<String, Object> param) throws Exception {
+//		
+//		System.out.println(param);
+//		
+//
+//		fileUploadService.updateUseStatus(param);
+//		
+//		Map<String, Object> result = new HashMap<>();
+//		result.put("uploaded", true); // 업로드 완료
+//
+//		return result;
+//	}
 	
 	
 }

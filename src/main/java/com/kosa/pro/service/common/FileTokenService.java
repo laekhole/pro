@@ -8,13 +8,16 @@ import com.kosa.pro.model.common.FileTokenVO;
 import com.kosa.pro.model.common.SearchVO;
 import com.kosa.pro.utils.StringUtil;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class FileTokenService extends BaseService {
 
 	@Transactional
 	public String getToken() {
 		final String token = StringUtil.getRandomStringByUUID();
+		log.info("토큰= " + token);
 		SearchVO search = new SearchVO();
 		search.setToken(token);
 		

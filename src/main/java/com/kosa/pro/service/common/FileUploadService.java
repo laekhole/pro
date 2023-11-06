@@ -47,15 +47,15 @@ public class FileUploadService extends BaseService {
 		
 		file.transferTo(realFile);
 
-		FileAttacheVO fileAttacheVO = FileAttacheVO.of(search.getToken(), fileNameReal, file);
+		FileAttacheVO fileAttacheVO = FileAttacheVO.of(search.getToken(), realFile.getAbsolutePath(), file, search.getRefSeq(), search.getTableName());
 		getDAO().insert("fileattache.merge", fileAttacheVO);
 		
 		return fileAttacheVO.getFileSeq();
 	}
 	
-//	public FileUploadVO findById(int file_id) {
-//		return fileUploadDAO.findById(file_id);
-//	}
+	public FileAttacheVO findById(int file_id) {
+		return (FileAttacheVO) getDAO().selectOne("fileattache.findById", file_id);
+	}
 
 	@Transactional
 	public void updateUseStatus(Map<String, Object> param) {
