@@ -98,6 +98,7 @@
 							</select>
 						</div>
 						<br>
+						
 						<!-- 검색 조건 -->
 						<div class="form-search">
 							<label for="form-select">검색조건 </label>
@@ -127,35 +128,36 @@
 					<div class="row posts-entry">
 						<div class="sss">
 						
-							<c:forEach var="list" items="${list}">
+							<c:forEach var="recruit" items="${list}">
 							<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
 								<div>
 									<div class="date" style="margin-bottom: 10px;">
 										<ul class="tags">
-											<li><a href="#">${list.recruitState}</a></li>
-											<li><a href="#" style="background-color: #50a9ed;">${list.volunRegion}</a></li>
+											<li><a href="#">${recruit.recruitState}</a></li>
+											<li><a href="#" style="background-color: #50a9ed;">${recruit.volunRegion1}</a></li>
 											
 											<!-- 이거 디데이 자바스크립트로 설정하기 -->
 											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
 										</ul>
 									</div>
 									<br>
-									<p class="title"><a href="recruit/detail">${list.recruitTitle}</a></p>
+<%-- 									<a href="/exam/get.do?boardNum=${board.boardNum}">${board.title}</a> --%>
+									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}">${recruit.recruitTitle}</a></p>
 									<div>
 										<div class="data clear">
 												<dl>
 													<dt>신청/필요인원:</dt>
 													<dd>
-														<span>0/</span><span>${list.memCount}</span>
+														<span>0/</span><span>${recruit.memCount}</span>
 													</dd>
 												</dl>
 												<dl>
 													<dt>봉사기간:</dt>
-													<dd><span>${list.volunStartDate}</span>~<span>${list.volunEndDate}</span></dd>
+													<dd><span>${recruit.volunStartDate}</span>~<span>${recruit.volunEndDate}</span></dd>
 												</dl>
 												<dl>
 													<dt>모집기관:</dt>
-													<dd>${list.groupName}</dd>
+													<dd>${recruit.groupName}</dd>
 												</dl>
 
 										</div>
@@ -163,146 +165,6 @@
 								</div>
 							</div>
 							</c:forEach>
-
-							<!-- <div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
-								<div>
-									<div class="date" style="margin-bottom: 10px;">
-										<ul class="tags">
-											<li><a href="#">모집중</a></li>
-											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
-											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
-										</ul>
-										</div>
-										<br>
-										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
-										<div>
-											<div class="data clear">
-													<dl>
-														<dt>신청/필요인원:</dt>
-														<dd>
-															<span>0/</span><span>3</span>
-														</dd>
-													</dl>
-													<dl>
-														<dt>봉사기간:</dt>
-														<dd>2023-10-30~ 2023-10-30</dd>
-													</dl>
-													<dl>
-														<dt>모집기관:</dt>
-														<dd>대한사회복지회 잉아터</dd>
-													</dl>
-													<p class="period">
-														</p>
-											</div>
-										</div>
-								</div>
-							</div>
-
-							<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
-								<div>
-									<div class="date" style="margin-bottom: 10px;">
-										<ul class="tags">
-											<li><a href="#">모집중</a></li>
-											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
-											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
-										</ul>
-										</div>
-										<br>
-										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
-										<div>
-											<div class="data clear">
-													<dl>
-														<dt>신청/필요인원:</dt>
-														<dd>
-															<span>0/</span><span>3</span>
-														</dd>
-													</dl>
-													<dl>
-														<dt>봉사기간:</dt>
-														<dd>2023-10-30~ 2023-10-30</dd>
-													</dl>
-													<dl>
-														<dt>모집기관:</dt>
-														<dd>대한사회복지회 잉아터</dd>
-													</dl>
-													<p class="period">
-														</p>
-											</div>
-										</div>
-								</div>
-							</div>
-							
-		
-							<div class="blog-entry d-flex blog-entry-search-item">
-								<div>
-									<div class="date" style="margin-bottom: 10px;">
-										<ul class="tags">
-											<li><a href="#">모집중</a></li>
-											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
-											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
-										</ul>
-										</div>
-										<br>
-										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
-										<div>
-											<div class="data clear">
-													<dl>
-														<dt>신청/필요인원:</dt>
-														<dd>
-															<span>0/</span><span>3</span>
-														</dd>
-													</dl>
-													<dl>
-														<dt>봉사기간:</dt>
-														<dd>2023-10-30~ 2023-10-30</dd>
-													</dl>
-													<dl>
-														<dt>모집기관:</dt>
-														<dd>대한사회복지회 잉아터</dd>
-													</dl>
-													<p class="period">
-														</p>
-											</div>
-										</div>
-								</div>
-							</div>
-							
-							
-							<div class="blog-entry d-flex blog-entry-search-item">
-								<div>
-									<div class="date" style="margin-bottom: 10px;">
-										<ul class="tags">
-											<li><a href="#">모집중</a></li>
-											<li><a href="#" style="background-color: #50a9ed;">대전</a></li>
-											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
-										</ul>
-										</div>
-										<br>
-										<p class="title"><a href="single.html">바우뫼주간보호센터 이미용 자원봉사자 모집</a></p>
-										<div>
-											<div class="data clear">
-													<dl>
-														<dt>신청/필요인원:</dt>
-														<dd>
-															<span>0/</span><span>3</span>
-														</dd>
-													</dl>
-													<dl>
-														<dt>봉사기간:</dt>
-														<dd>2023-10-30~ 2023-10-30</dd>
-													</dl>
-													<dl>
-														<dt>모집기관:</dt>
-														<dd>대한사회복지회 잉아터</dd>
-													</dl>
-													<p class="period">
-														</p>
-											</div>
-										</div>
-								</div>
-							</div> -->
-							
-		
 							
 
 						</div>
