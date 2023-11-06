@@ -12,7 +12,7 @@ import com.kosa.pro.service.common.BaseService;
 
 import lombok.extern.slf4j.Slf4j;
 
-/** 후기 게시판 
+/** 봉사 신청 목록 게시판 
  * @author kky
  *
  */
@@ -31,18 +31,19 @@ public class RecruitBoardService extends BaseService {
 		
 	}
 	
-//	// 신청 상세 페이지
-//	public Object recruitDetail(RecruitBoardVO recruit)  throws Exception {
-//		
-//		return getDAO().selectOne("recruit.selectRecruitGet", recruit);
-//	}
-//	
-//	
-//	// 신청 등록 페이지
-//	public Object recruitInsert(RecruitBoardVO recruit)  throws Exception {
-//		
-//		return getDAO().selectOne("recruit.insertRecruit", recruit);
-//	}
+	// 신청 상세 페이지
+	public Object recruitDetail(RecruitBoardVO recruit)  throws Exception {
+		
+		return getDAO().selectOne("recruit.selectRecruitGet", recruit);
+	}
+	
+	
+	// 신청 등록 페이지
+	public int recruitInsert(RecruitBoardVO recruit)  throws Exception {
+		
+		return getDAO().insert("recruit.insertRecruit", recruit);
+	}
+	
 //	
 //	
 //	// 신청 수정 페이지

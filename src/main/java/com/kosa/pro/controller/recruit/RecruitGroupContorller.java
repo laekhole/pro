@@ -29,7 +29,7 @@ public class RecruitGroupContorller extends PrtController {
 	
 	
 	// 봉사활동 - 목록 페이지
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	public String recruitList(BoardSearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사신청 목록 페이지", model);
 //		log.info(">>>>>>>>>>>>>>서치 = " + search.);
@@ -44,53 +44,67 @@ public class RecruitGroupContorller extends PrtController {
 	
 	
 	// 봉사활동 - 상세페이지
-	@RequestMapping("/detail")
+	@GetMapping("/detail")
 	public String recruitDetail(RecruitBoardVO recruit, Model model) throws Exception {
 		super.setPageSubTitle("봉사활동 상세페이지", model);
 		log.info(">>>>>>>>>>>>>>상세보기");
-//		model.addAttribute("test", getConfig().getAdminName());
+
+		model.addAttribute("recruit", _recruitBoardService.recruitDetail(recruit));
+		
 		return "recruit/recruit_detail";
 	}
 	
 	
-// ============================ 마이페이지 ============================
+// ============================ 마이페이지 내 있는 신청글 작성 부분 ============================
 
 	// 봉사활동 - 신청 등록 페이지
-	@GetMapping("/register")
+	@GetMapping("/registerForm")
 	public String recruitRegisterForm(RecruitBoardVO recruit, Model model) throws Exception {
 		super.setPageSubTitle("봉사활동 등록 페이지 - GET", model);
 		log.info(">>>>>>>>>>>>>>봉사신청 등록하기");
-//		model.addAttribute("test", getConfig().getAdminName());
-		return "mypage/group/recruit_register";
-	}
+
+		return "mypage/group/recruit_registerForm";
+	} //recruitRegisterForm
+	
 	
 	// 봉사활동 - 신청 등록
 	@PostMapping("/register")
 	public String recruitRegister(RecruitBoardVO recruit, Model model) throws Exception {
 		super.setPageSubTitle("봉사활동 등록 페이지", model);
 		log.info(">>>>>>>>>>>>>>봉사신청 등록하기 - POST");
-//		model.addAttribute("test", getConfig().getAdminName());
-		return "redirect:/list";
-	}
+		
+		try {
+			int success = _recruitBoardService.recruitInsert(recruit);
+			log.info("봉사활동 등록 성공 여부 : ", success);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/recruit/list";
+	} // recruitRegister
 	
 	
-	// 봉사활동 - 신청 수정 페이지
-	@GetMapping("/modify")
-	public String recruitModifyForm(RecruitBoardVO recruit, Model model) throws Exception {
-		super.setPageSubTitle("봉사활동 등록 페이지", model);
-		log.info(">>>>>>>>>>>>>>봉사신청 등록하기 - GET");
-//		model.addAttribute("test", getConfig().getAdminName());
-		return "mypage/group/recruit_modify";
-	}
 	
-	// 봉사활동 - 신청 수정
-	@PostMapping("/modify")
-	public String recruitModify(RecruitBoardVO recruit, Model model) throws Exception {
-		super.setPageSubTitle("봉사활동 등록 페이지", model);
-		log.info(">>>>>>>>>>>>>>봉사신청 등록하기");
-//		model.addAttribute("test", getConfig().getAdminName());
-		return "redirect:/list";
-	}
+	
+//	--> 시연 안 할 것은 구현안해도 됨
+//	
+//	// 봉사활동 - 신청 수정 페이지
+//	@GetMapping("/modify")
+//	public String recruitModifyForm(RecruitBoardVO recruit, Model model) throws Exception {
+//		super.setPageSubTitle("봉사활동 등록 페이지", model);
+//		log.info(">>>>>>>>>>>>>>봉사신청 등록하기 - GET");
+////		model.addAttribute("test", getConfig().getAdminName());
+//		return "mypage/group/recruit_modify";
+//	}
+//	
+//	// 봉사활동 - 신청 수정
+//	@PostMapping("/modify")
+//	public String recruitModify(RecruitBoardVO recruit, Model model) throws Exception {
+//		super.setPageSubTitle("봉사활동 등록 페이지", model);
+//		log.info(">>>>>>>>>>>>>>봉사신청 등록하기");
+////		model.addAttribute("test", getConfig().getAdminName());
+//		return "redirect:/list";
+//	}
 	
 	
 } // end class

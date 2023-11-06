@@ -27,5 +27,8 @@ public class VolunteerRecordVO implements GeneralModel {
 	private String volunLocation;
 
 	
+//	[별이] 11/05 추가
+	private String name;
+
 
 }
