@@ -18,7 +18,7 @@ public class PersonalService extends BaseService {
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("personalInfo", (MemberVO) getDAO().selectOne("personal.personalInfo", search));
-		map.put("volunteerList", (List<VolunteerProceedVO>) getDAO().selectList("personal.selectVolunteerProceedList", search, ));
+//		map.put("volunteerList", (List<VolunteerProceedVO>) getDAO().selectList("personal.selectVolunteerProceedList", search, ));
 		return map;
 	}
 	
