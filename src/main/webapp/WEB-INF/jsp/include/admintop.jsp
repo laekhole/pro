@@ -8,7 +8,7 @@
 <html lang="ko">
 
 <head>
-<script src="/js/common/jquery.locator.js"></script>
+
     <meta charset="utf-8">
     <title>관리자 페이지</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
