@@ -3,53 +3,23 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="recruit">
-	<sql id="select">
-	
-		RECRUIT_SEQ
-		,GROUP_MEM_SEQ
-		,GROUP_NAME
-		,VOLUN_REGION1
-		,VOLUN_REGION2
-		,VOLUN_START_DATE
-		,VOLUN_END_DATE
-		,RECRUIT_STATE
-		,VOLUN_CODE
-		,VOLUN_TIME
-		,RECRUIT_START_DATE
-		,RECRUIT_END_DATE
-		,MEM_COUNT
-		,VOLUN_TARGET
-		,RECRUIT_TITLE
-		,RECRUIT_CONTENT
-		,VIEW_COUNT
-		,REG_DATE
-		,MOD_DATE
-		,DEL_YN
-		,MANAGER
-		,EMAIL
-		,PHONE
-		,VOLUN_ADDR
-        ,LATITUDE
-        ,LONGITUDE
-        
-	</sql>
-	
+<mapper namespace="mypage">
+
 	<sql id="whereClause">
 		<trim prefix="where" prefixOverrides="and">
-			<if test="searchWord != null and searchWord != ''"> 
+			<if test="searchWord != null and searchWord != ''">
 				<choose>
 					<when test="type1 == 'title'">
-						and recruit_title like concat(concat('%', #{searchWord}), '%')
+						and review_title like concat(concat('%', #{searchWord}), '%')
 					</when>
 					<when test="type1 == 'writeId'">
-						and group_name like concat(concat('%', #{searchWord}), '%')
+						and write_id like concat(concat('%', #{searchWord}), '%')
 					</when>
 					<when test="type1 == 'content'">
-						and recruit_content like concat(concat('%', #{searchWord}), '%')
+						and review_content like concat(concat('%', #{searchWord}), '%')
 					</when>
 					<otherwise>
-						and (recruit_title like concat(concat('%', #{searchWord}), '%') or write_id like concat(concat('%', #{searchWord}), '%') or recruit_content like concat(concat('%', #{searchWord}), '%'))
+						and (review_title like concat(concat('%', #{searchWord}), '%') or write_id like concat(concat('%', #{searchWord}), '%') or review_content like concat(concat('%', #{searchWord}), '%'))
 					</otherwise>
 				</choose>
 			</if>
@@ -61,39 +31,114 @@
 		from recruit_board
 		<include refid="whereClause" />
 	</select>
-
-
-	<!-- 봉사 신청 게시판 목록보기 -->
-	<select id="selectRecruitList" parameterType="SearchVO" resultType="RecruitBoardVO">
+	
+	<!-- 봉사 신청내역(승인/거절) 게시판 목록보기 -->
+	<select id="selectVolunteerProceedList" parameterType="SearchVO" resultType="VolunteerProceedVO">
 		<include refid="paging.top" />
-			select 
-	    	<include refid="select" />
-			from recruit_board
-		<include refid="whereClause" />
-		<choose>
-			<when test="sort != null and sort != ''">
-				order by ${sort}
-			</when>
-			<otherwise>
-				order by recruit_seq desc
-			</otherwise>
-		</choose>
+			
+			SELECT
+			    vp.volun_proceed_seq,
+			    vp.recruit_seq,
+			    vp.mem_seq,
+			    m.name,
+			    m.gender,
+			    vp.state,
+			    vp.start_date,
+			    vp.end_date
+			FROM
+			    volunteer_proceed vp
+			JOIN
+			    recruit_board r ON vp.recruit_seq = r.recruit_seq
+			JOIN
+			    member m ON vp.mem_seq = m.mem_seq
+			WHERE
+			    vp.group_mem_seq = 4
+    
+
 		<include refid="paging.bottom" />
+	</select>
+
+	<!-- 봉사활동 신청 목록/승인 및 거절 -->
+	<!-- 승인 -->
+	<update id="updateApprove">
+		update
+			volunteer_proceed
+		set
+			state = #{state}
+			,start_date = #{startDate}
+			,end_date = #{startDate}
+		where volun_proceed_seq = #{volunProceedSeq}	
+		
+	</update>
+	
+	<!-- 거절 -->
+	<update id="updateReject">
+		update
+			volunteer_proceed
+		set
+			state = #{state}
+			,end_date = #{endDate}
+			,reject_message = #{rejectMessage}
+		where volun_proceed_seq = #{volunProceedSeq}	
+		
+	</update>
+	
+	
+	
+<!-- 	5마이페이지 메인
+끝)봉사활동 신청 글 작성
+1봉사활동 신청 목록/승인 및 거절
+2진행중인 봉사
+4봉사활동 후기글
+3캘린더 확인
+6개인정보 및 프로필 수정 -->
+
+
+	<!-- 진행중인 봉사 게시판 목록보기 -->
+	<select id="selectVolunteeringdList" parameterType="SearchVO" resultType="VolunteeringVO">
+			
+			<![CDATA[
+			SELECT 
+				r.recruit_seq
+				, r.volun_start_date
+				, r.volun_end_date
+				, r.volun_addr
+				, r.volun_target
+				, r.mem_count
+				, r.group_name
+				, v.mem_seq
+				, v.name
+				, v.timein
+			FROM 
+				recruit_board r, volunteer_record v
+			WHERE 
+				r.recruit_seq = v.recruit_seq
+			AND 
+				r.recruit_seq = 31
+			AND 
+				r.volun_start_date <= '2023-11-27'
+			AND 
+				r.volun_end_date >= '2023-12-03'
+    		]]>
+
 	</select>
 	
 	
+	
+	
+	
 	<!-- 봉사 신청 게시판 상세보기 -->
-	<select id="selectRecruitGet" resultType="RecruitBoardVO">
+<!-- 	<select id="selectRecruitGet" resultType="RecruitBoardVO">
 		select 
     	<include refid="select" />
 		from recruit_board
 		where
 			recruit_seq = #{recruitSeq}
-	</select>
+	</select> -->
 	
 	
 	<!-- 봉사 신청 게시판 글 작성 하기 -->
-<insert id="insertRecruit">
+<!-- <insert id="insertRecruit">
     <selectKey keyProperty="recruitSeq" resultType="int" order="BEFORE">
         select RECRUIT_BOARD_SEQ.NEXTVAL recruit_seq from dual
     </selectKey>
@@ -142,13 +187,13 @@
         ,#{latitude}
         ,#{longitude}
     )
-</insert>
+</insert> -->
 
 
 	
 	
 	<!-- 봉사 신청 게시판 글 수정하기 -->
-	<update id="updateRecruit" >
+<!-- 	<update id="updateRecruit" >
 		update 
 			recruit_board
 		set 
@@ -173,15 +218,15 @@
 		where 
 			board_num 			 = #{boardNum}
 	</update>
-	
+	 -->
 	
 	<!-- 봉사 신청 게시판 글 삭제하기 -->
-	<delete id="deleteRecruit">
+<!-- 	<delete id="deleteRecruit">
 		delete
 		 	from recruit_board
 		where
 			recruit_seq = #{recruitSeq}
 	</delete>
-	
+	 -->
 	
 </mapper>
