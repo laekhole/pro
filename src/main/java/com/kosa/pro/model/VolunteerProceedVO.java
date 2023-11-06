@@ -23,6 +23,8 @@ public class VolunteerProceedVO implements GeneralModel {
 	private String rejectMessage;
 	private String startDate;
 	private String endDate;
-	
+	private String lat; // 위도
+	private String lon; // 경도	
+	private int realAddtime; // 실제봉사시간
 
 }
