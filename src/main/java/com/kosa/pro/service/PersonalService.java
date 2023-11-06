@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.kosa.pro.model.MasterCodeVO;
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.ReviewBoardVO;
-import com.kosa.pro.model.VolunteerProceedVO;
 import com.kosa.pro.model.search.ReviewSearchVO;
 import com.kosa.pro.service.common.BaseService;
 
+@Service
 public class PersonalService extends BaseService {
 	
 	// [개인] 마이페이지 메인 화면 출력 메소드
@@ -37,6 +39,5 @@ public class PersonalService extends BaseService {
 		
 		return map;
 	}
-
 
 }
