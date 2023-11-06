@@ -24,7 +24,7 @@
 
                     <div class="col-lg-10">
                     
-			             <div class="blog-entry d-flex blog-entry-search-item border rounded" style="display: flex; align-items: center;">
+			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
 			               <div style="flex-grow: 1; margin-left: 1rem;">
 			                   <span class="date">Apr. 14th, 2022</span>
 			                   <h2><a href="single.html">1번째 샘플? 부트스트랩 : 테두리 컴포넌트 적용</a></h2>
