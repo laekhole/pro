@@ -56,7 +56,7 @@
            </table>
 
 
-           <div class="row my-4">
+ <!--           <div class="row my-4">
              <div class="col-md-12 mb-4">
                <img src="images/hero_1.jpg" alt="Image placeholder" class="img-fluid rounded">
              </div>
@@ -66,7 +66,7 @@
              <div class="col-md-6 mb-4">
                <img src="images/img_3_horizontal.jpg" alt="Image placeholder" class="img-fluid rounded">
              </div>
-           </div>
+           </div> -->
            <div>
            ${info.reviewContent }   
            </div>
@@ -157,7 +157,7 @@
            <div class="bio text-center">
              <img src="images/person_2.jpg" alt="Image Placeholder" class="img-fluid mb-3">
              <div class="bio-body">
-               <h2>왕십리스킨헤드</h2>
+               <h2></h2>
                <p class="mb-4">이곳은 프로필 코멘트 남긴걸 보여주는곳 입니다.</p>
                <p class="figure ms-2"><a href="#" class="btn btn-primary btn-sm rounded px-2 py-2">쪽지보내기</a></p>
                <!-- <p class="figure ms-2"><a href="#" class="btn btn-primary btn-sm rounded px-2 py-2">글 좋아요</a></p> -->
@@ -203,6 +203,34 @@
      </div>
    </div>
  </section>
+<script>
+function resizeImages() {
+    const images = document.querySelectorAll('img'); // 모든 이미지 요소 선택
+    const maxWidth = 400; // 원하는 최대 가로 폭
+    const maxHeight = 500; // 원하는 최대 세로 높이
+
+    images.forEach(img => {
+      // 이미지 크기가 최대 크기를 넘어가면 조절
+      if (img.width > maxWidth || img.height > maxHeight) {
+        if (img.width > maxWidth) {
+          img.height = (maxWidth / img.width) * img.height;
+          img.width = maxWidth;
+        }
+        if (img.height > maxHeight) {
+          img.width = (maxHeight / img.height) * img.width;
+          img.height = maxHeight;
+        }
+      }
+    });
+  }
+
+  // 페이지 로드 시 이미지 크기 조절 함수 실행
+  window.addEventListener('load', resizeImages);
+
+  // 화면 크기가 변경될 때도 이미지 크기 조절 함수 실행
+  window.addEventListener('resize', resizeImages);
+
+</script>
 
 
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>

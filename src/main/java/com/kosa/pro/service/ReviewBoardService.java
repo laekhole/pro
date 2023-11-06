@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosa.pro.model.BoardVO;
 import com.kosa.pro.model.CategoryVO;
@@ -34,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewBoardService extends BaseService {
 	public Map<String, Object> reviewList(ReviewSearchVO search) throws Exception {
 		Map<String, Object> map = new HashMap<>();
-		
+	
 		map.put("reviewList", (List<ReviewBoardVO>) getDAO().selectBySearch("review.selectReviewList", search, "totalCount"));
 		map.put("popularList", (List<ReviewBoardVO>) getDAO().selectList("review.selectPopularList", search));
 		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
@@ -56,7 +57,20 @@ public class ReviewBoardService extends BaseService {
 		return map;
 	}
 	
+	public Map<String, Object> reviewWriteForm(ReviewSearchVO search) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
+		
+		return map;
+	}
 	
+	@Transactional
+	public int reviewInsert(ReviewBoardVO reviewBoard) {
+		log.info("등록 전 게시판 시퀀스 = " + reviewBoard.getReviewSeq());
+		getDAO().insert("review.merge", reviewBoard);
+		log.info("등록 후 게시판 시퀀스 = " + reviewBoard.getReviewSeq());
+		return reviewBoard.getReviewSeq();
+	}
 	
 	
 	

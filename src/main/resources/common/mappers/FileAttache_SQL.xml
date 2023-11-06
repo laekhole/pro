@@ -67,16 +67,10 @@
 	</insert>
 	
 
-	<select id="findById" resultType="FileUploadVO">
-		SELECT  
-			 file_id 
-			 token
-			,original_filename
-			,real_filename
-			,content_type
-			,size
-		FROM  file_upload 
-		where file_id = #{file_id}
+	<select id="findById" resultType="FileAttacheVO">
+		select *
+		from  file_attache 
+		where file_seq = #{file_id}
 	</select>
 	
 	
@@ -97,7 +91,7 @@
 
 
 	
-	<select id="deleteFileList" resultType="FileUploadVO">
+	<select id="deleteFileList" resultType="FileAttacheVO">
 		select
 			*
 		from file_attache  

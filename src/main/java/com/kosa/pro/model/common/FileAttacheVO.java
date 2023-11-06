@@ -28,13 +28,15 @@ public class FileAttacheVO implements GeneralModel {
 	private String regDate;
 	private String fileToken;
 	
-	public static FileAttacheVO of(String token, String fileName, MultipartFile file) {
+	public static FileAttacheVO of(String token, String fileName, MultipartFile file, String refSeq, String tableName ) {
 		return FileAttacheVO.builder()
 				.fileToken(token)
-				.physicalName(file.getOriginalFilename())
-				.fileName(fileName)
+				.physicalName(fileName)
+				.fileName(file.getOriginalFilename())
 				.contentType(file.getContentType())
 				.fileSize(String.valueOf(file.getSize()))
+				.refSeq(refSeq)
+				.tableName(tableName)
 				.build();
 	}
 

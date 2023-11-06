@@ -34,7 +34,7 @@
 			 <c:forEach var="review" items="${list }">
 			 	<div class="blog-entry d-flex blog-entry-search-item">
 					<a href="/review/info?reviewSeq=${review.reviewSeq }" class="img-link me-4">
-						<img src="/template/images/img_1_sq.jpg" alt="Image" class="img-fluid">
+						<img src="/files/${review.imageSeq}" alt="Image" class="img-fluid">
 					</a>
 					<div>
 						<span class="date">${review.modDate }  <span style="float:right;">조회수 : ${review.viewCount }</span></span>
