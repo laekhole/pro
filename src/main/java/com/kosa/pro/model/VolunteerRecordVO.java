@@ -21,13 +21,14 @@ public class VolunteerRecordVO implements GeneralModel {
 	private int recruitSeq;
 	private String volunStartDate;
 	private String volunEndDate;
-	private String timein;
-	private String timeout;
-	private int realAddtime;
+	private String timein; // 삭제 필요
+	private String timeout; // 삭제 필요
+	private int realAddtime; 
 	private String volunLocation;
+
 	
 //	[별이] 11/05 추가
 	private String name;
-	
+
 
 }
