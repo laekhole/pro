@@ -13,7 +13,7 @@ import com.kosa.pro.service.common.BaseService;
 
 public class PersonalService extends BaseService {
 	
-	// [개인] 마이페이지 메인 화면 출력
+	// [개인] 마이페이지 메인 화면 출력 메소드
 	public Map<String, Object> personalMain(ReviewSearchVO search) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		
