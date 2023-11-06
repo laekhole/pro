@@ -8,6 +8,7 @@
 <html lang="ko">
 
 <head>
+
     <meta charset="utf-8">
     <title>관리자 페이지</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -35,6 +36,10 @@
 
     <!-- Template Stylesheet -->
     <link href="/admintemplate/css/adminstyle.css" rel="stylesheet">
+    
+    <!--  권형이 추가한  -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/common/jquery.locator.js"></script>
 </head>
 
 <body>
