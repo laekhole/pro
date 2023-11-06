@@ -18,7 +18,6 @@ import com.kosa.pro.model.VolunteerProceedVO;
 import com.kosa.pro.model.VolunteeringVO;
 import com.kosa.pro.model.search.BoardSearchVO;
 import com.kosa.pro.service.MypageGroupService;
-import com.kosa.pro.service.admin.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,9 +28,7 @@ public class MypageGroupController extends PrtController {
 
 	@Autowired
 	private MypageGroupService _mypageGroupService;
-	
-	@Autowired
-	private MemberService _memberService;
+
 
 //	5마이페이지 메인
 //	끝)봉사활동 신청 글 작성
