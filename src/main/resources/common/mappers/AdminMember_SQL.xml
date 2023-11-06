@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+		<sql id="select">
+		mem_seq, mem_id, name, gender, phone, platform, auth, del_yn, ben_yn, join_date
+		</sql>
+		
+		<sql id="selectVolunteerTime">
+        volun_heat, volun_addtime, volun_noshow
+   		 </sql>
+			<sql id="whereClause">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="searchWord != null and searchWord != ''">
+				<choose>
+					<when test="type1 == 'TopField'">
+						and mem_seq like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<when test="type1 == 'mem_id'">
+						and name like concat(concat('%', #{searchWord}), '%')
+					</when>
+					<when test="type1 == 'group_id'">
+						and group_id like concat(concat('%', #{searchWord}), '%')
+					</when>
+<!-- 					<otherwise> -->
+<!-- 						and (title like concat(concat('%', #{searchWord}), '%') or mem_id like concat(concat('%', #{searchWord}), '%')) -->
+<!-- 					</otherwise> -->
+				</choose>
+			</if>
+		</trim>
+	</sql>
+
+<!--  전체 카운트 -->
+	<select id="totalCount" parameterType="MemberVO" resultType="int">
+		select count(*)
+		from member
+		<include refid="whereClause" />
+	</select>
+
+	
+<!-- 개인회원과 봉사시간 정보 리스트 -->
+<select id="selectMemberWithVolunteerTimeList" parameterType="MemberSearchVO" resultType="MemberVO">
+    <include refid="paging.top" />
+    select 
+        M.*,
+        V.VOLUN_ADDTIME as "volunteerTime.volunAddtime",
+        V.VOLUN_HEAT as "volunteerTime.volunHeat",
+        V.VOLUN_NOSHOW as "volunteerTime.volunNoshow"
+    from member M
+    inner join ADMIN.VOLUNTEER_TIME V on M.mem_seq = V.MEM_SEQ
+    <include refid="whereClause" />
+    <choose>
+        <when test="sort != null and sort != ''">
+            order by ${sort}
+        </when>
+        <otherwise>
+            order by M.mem_seq desc
+        </otherwise>
+    </choose>
+    <include refid="paging.bottom" />
+</select>
+
+</mapper>
+
