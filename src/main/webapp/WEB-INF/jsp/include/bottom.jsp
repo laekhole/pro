@@ -41,7 +41,11 @@
     	</div>
     </div>
 
-
+<!-- 	권형 페이징 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/js/common/jquery.locator.js"></script>
+	<!-- 	--권형 페이징 -->
+	
     <script src="/template/js/bootstrap.bundle.min.js"></script>
     <script src="/template/js/tiny-slider.js"></script>
 
