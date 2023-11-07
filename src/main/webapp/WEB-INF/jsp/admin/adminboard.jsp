@@ -35,7 +35,7 @@
 		    <table class="table">
 		        <thead>
 		            <tr>
-		           		 <th scope="col"><input type="checkbox" id="selectAll" onclick="selectAllCheckboxes()"></th>
+		           		<th scope="col"><input type="checkbox" id="selectAll" onclick="selectAllCheckboxes()"></th>
 		                <th scope="col">번호</th>
 		                <th scope="col">제목</th>
 		                <th scope="col">작성자</th>
@@ -129,7 +129,7 @@
                 // 모집 데이터 AJAX 호출
                 $('#recruitButton').click(function() {
                     $.ajax({
-                        url: '/getRecruitBoard', // 모집 데이터를 가져오는 URL
+                        url: '/admin/getRecruitBoard', // 모집 데이터를 가져오는 URL
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {
@@ -145,7 +145,7 @@
                 // 리뷰 데이터 AJAX 호출
                 $('#reviewButton').click(function() {
                     $.ajax({
-                        url: '/getReviewBoard', // 리뷰 데이터를 가져오는 URL
+                        url: '/admin/getReviewBoard', // 리뷰 데이터를 가져오는 URL
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {
