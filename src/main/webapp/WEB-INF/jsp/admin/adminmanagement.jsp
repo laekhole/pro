@@ -108,7 +108,7 @@
 							<td>${member.volunteerTime.volunAddtime}</td> <!-- 봉사시간 -->
         					<td>${member.volunteerTime.volunHeat}</td> <!-- 온도 -->
         					<td>${member.volunteerTime.volunNoshow}</td> <!-- 노쇼 횟수 -->
-		                    <td>${member.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
+		                    <td id="status${member.memSeq}">${member.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
 			  				
 			  				<!-- 제재 버튼, 온도가 30도 미만일 때만 보임 -->
 							<td>
@@ -117,7 +117,7 @@
 							        <button type="button" class="btn btn-danger btn-sm">제재함</button> 
 							        </c:when>
 							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'N'}">
-							            <button type="button" class="btn btn-warning btn-sm" id="adminBlockButton" onclick="adminBlockBut(${member.memSeq})">제재가능</button>
+							            <button type="button" class="btn btn-warning btn-sm" id="adminBlockButton${member.memSeq}" onclick="adminBlockBut(${member.memSeq})">제재가능</button>
 							        </c:when>
 							        <c:otherwise>
 							        </c:otherwise>
@@ -235,7 +235,7 @@
      });
 
      //회원클릭 업데이트
-     function updateMemberTable(members) {
+      function updateMemberTable(members) {
          var tableBody = $('#memberTableContainer tbody');
          tableBody.empty(); // 테이블의 기존 내용을 비웁니다.
 
@@ -245,7 +245,7 @@
              if (member.volunteerTime.volunHeat < 30 && member.benYn === 'Y') {
                  statusButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
              } else if (member.volunteerTime.volunHeat < 30 && member.benYn === 'N') {
-                 statusButton = '<button type="button" class="btn btn-warning btn-sm" id="adminBlockButton" onclick="adminBlockBut(${member.memSeq})">제재가능</button>';
+                 statusButton = '<button type="button" class="btn btn-warning btn-sm"  id="adminBlockButton' + member.memSeq + '" onclick="adminBlockBut(' + member.memSeq + ')">제재가능</button>';
              }
              var row = '<tr>' +
             			 '<td><input type="checkbox" name="selectRow" /></td>' + 
@@ -257,13 +257,13 @@
 			             '<td>' + member.volunteerTime.volunAddtime + '</td>' +
 			             '<td>' + member.volunteerTime.volunHeat + '</td>' +
 			             '<td>' + member.volunteerTime.volunNoshow + '</td>' +
-			             '<td>' +(member.benYn === 'N' ? '활성' : '비활성') + '</td>' +
+			             '<td id="status' + member.memSeq + '">'  +(member.benYn === 'N' ? '활성' : '비활성') + '</td>' +
 			             '<td>' + statusButton + '</td>' + // 비고 컬럼에 상태 버튼을 추가합니다.
 			             '</tr>';
              tableBody.append(row);
          });
-     }
-
+     } 
+     
      //단체클릭 업데이트
      function updateGroupTable(groups) {
          var tableBody = $('#groupTableContainer tbody');
@@ -294,32 +294,39 @@
  });
  
   // adminBlockBut() 함수 정의
-// 제재 버튼 클릭 시 AJAX 요청을 보내는 함수
-function adminBlockBut(member) {
-    // MemberVO 객체 생성 및 데이터 설정
-    var memberVO = {
-        memSeq: member
-    };
+//제재 버튼 클릭 시 AJAX 요청을 보내는 함수
+ function adminBlockBut(member) {
+   // MemberVO 객체 생성 및 데이터 설정
+   var memberVO = {
+       memSeq: member
+   };
 
-    $.ajax({
-        url: '/admin/adminBlockMember', 
-        method: 'POST', 
-        contentType: 'application/json', // Content-Type 설정
-        data: JSON.stringify(memberVO), // JSON 데이터로 변환
-        success: function(response) {
-            if (response.status === 'success') {
-                // 성공적으로 처리된 경우 버튼 스타일 변경
-                $('#adminBlockButton' + member).removeClass('btn btn-warning btn-sm').addClass('btn btn-danger btn-sm');
-                alert("제재 성공");
-                console.info('회원 제재 성공 로그: ' + response.message);
-            }
-        },
-        error: function(error) {
-            console.error('제제 에러 :', error);
-        }
-    });
+   $.ajax({
+       url: '/admin/adminBlockMember', 
+       method: 'POST', 
+       contentType: 'application/json', // Content-Type 설정
+       data: JSON.stringify(memberVO), // JSON 데이터로 변환
+       success: function(response) {
+    	   if (response.status === 'success') {
+    	        // 버튼 스타일 변경
+    	        var button = $('#adminBlockButton' + member);
+    	        button.removeClass('btn btn-warning btn-sm').addClass('btn btn-danger btn-sm');
+    	        button.text('제재함'); // 버튼 텍스트 변경
+    	        
+    	        // 상태 텍스트 변경
+    	        var statusText = $('#status' + member);
+    	        statusText.text('비활성'); // 상태를 비활성으로 변경
+
+    	        console.info('회원 제재 성공 로그: ' + response.message);
+    	    }
+    	},
+       error: function(error) {
+           console.error('제제 에러 :', error);
+       }
+   });
 } 
- 
+
+
  
  // 모든 체크박스 선택/해제 함수
  function selectAllCheckboxes() {
