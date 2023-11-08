@@ -5,7 +5,7 @@
 
 <div class="login-form">
 <div class="container-login" id="container-login">
-  <form action="#" method="post" action="/auth/login">
+  <form method="post" action="/auth/login">
   <div class="form-container-login sign-up-container-login">
     
       <h1 class="mb-5">단체 로그인</h1>
