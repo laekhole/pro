@@ -27,15 +27,19 @@
 			    <h2 style="color: black; font-size: 25px; font-weight: bold;">봉사활동 정보</h2>
 			    <div id="volunteer-details">
 			        <!-- 봉사활동 정보 표시 -->
-			        <h1 style="color: black; font-size: 30px; font-weight: bold; margin-top:50px;">봉사활동 A</h1>
-			        <p><strong>글번호:</strong>${list[0].recruitSeq}</p>
-			        <p><strong>봉사기간: </strong>${list[0].volunStartDate} ~ ${list[0].volunEndDate}</p>
-			        <p><strong>봉사지역: </strong>${list[0].volunRegion1}${list[0].volunRegion2}</p>
-			        <p><strong>봉사장소: </strong>${list[0].volunAddr}</p>
-			        <p><strong>봉사대상: </strong>${list[0].volunTarget}</p>
-			        <p><strong>모집인원: </strong> 3명 / ${list[0].memCount}명</p>
-			        <p><strong>봉사단체: </strong>${list[0].groupName}</p>
+			        <h1 style="color: black; font-size: 30px; font-weight: bold; margin-top:50px;">${recruit.recruitTitle}</h1>
+			        <p><strong>글번호:</strong>${recruit.recruitSeq}</p>
+			        <p><strong>봉사기간: </strong>${recruit.volunStartDate} ~ ${recruit.volunEndDate}</p>
+			        <p><strong>봉사장소: </strong>${recruit.volunAddr}</p>
+			        <p><strong>봉사대상: </strong>${recruit.volunTarget}</p>
+			        <p><strong>모집인원: </strong> 3명 / ${recruit.memCount}명</p>
+			        <p><strong>봉사단체: </strong>${recruit.groupName}</p>
 			    </div>
+			    
+
+			    <div class="map">
+					<div id="map" style="width:100%;height:350px;"></div>
+				</div>
 			</div>
 
     
@@ -48,16 +52,18 @@
 					    <tr>
 					        <th>회원번호</th>
 					        <th>이름</th>
+					        <th>승인여부</th>
 					        <th>출석여부</th>
 					    </tr>
 					
-					    <c:forEach items="${list}" var="volunteer">
+					    <c:forEach items="${volunteer}" var="volunteer">
 					        <tr>
-					            <th>${volunteer.memSeq}</th>
-					            <th>${volunteer.name}</th>
-					            <th>${volunteer.timein}</th>
+					            <td>${volunteer.memSeq}</td>
+					            <td>${volunteer.name}</td>
+					            <td>${volunteer.state}</td>
+					            <td></td>
 					        </tr>
-					    </c:forEach>
+ 					    </c:forEach>
 					</table>
 
                 </div>
@@ -69,3 +75,46 @@
 
       </div>
    </div>
+   
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=259b6e4c0775108f360aa1e89a7a9d32"></script>
+   <script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = { 
+		        center: new kakao.maps.LatLng(${recruit.latitude}, ${recruit.longitude}), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };
+		
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		// 마커가 표시될 위치입니다 
+		var markerPosition  = new kakao.maps.LatLng(${recruit.latitude}, ${recruit.longitude}); 
+		
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition
+		});
+		
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+		
+		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+		// marker.setMap(null);    
+    </script>
+    <script>
+    	$(function() {
+    		
+    		let webSocket = new WebSocket("ws//localhost/websocket/applicant.do");
+    		
+    		// 서버로부터 메시지를 통지받으면 자동으로 실행될 콜백함수를 등록함
+    		webSocket.onmessage = function(event) {
+    			alert(event.data)
+    		}
+    		
+    		$(
+    				
+    		
+    		)
+    	
+    	})
+    	
+    </script>
