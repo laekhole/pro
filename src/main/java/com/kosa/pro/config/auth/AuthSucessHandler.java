@@ -50,7 +50,7 @@ public class AuthSucessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		
 		System.out.println("authentication ->" + authentication);
 		
-        setDefaultTargetUrl("/");
+        setDefaultTargetUrl("/main");
         
         super.onAuthenticationSuccess(request, response, authentication);
     }
