@@ -42,6 +42,7 @@ public class RecruitBoardVO implements GeneralModel {
 	private String latitude;     	// 위도
 	private String longitude;    	// 경도
 
+	private String state;
 	
 
 }

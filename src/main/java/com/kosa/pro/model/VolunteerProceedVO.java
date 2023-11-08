@@ -24,11 +24,6 @@ public class VolunteerProceedVO implements GeneralModel {
 	private int groupMemSeq;		// 단체회원 번호
 	private String state;			// 상태(신청중/승인/거절)
 	private String rejectMessage;	// 거절 메시지
-	private Date startDate;			// 신청일
-	private Date endDate;			// 확정일
-	private String lat; // 위도
-	private String lon; // 경도	
-	private int realAddtime; // 실제봉사시간
     
 	private String name;
     private String gender;

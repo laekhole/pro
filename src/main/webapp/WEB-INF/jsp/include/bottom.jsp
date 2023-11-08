@@ -57,6 +57,9 @@
 <!--     <script src="/template/js/navbar.js"></script> -->
     <script src="/template/js/counter.js"></script>
     <script src="/template/js/custom.js"></script>
+    <!-- FullCalendar JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" crossorigin="anonymous"></script>
 
     
   </body>
