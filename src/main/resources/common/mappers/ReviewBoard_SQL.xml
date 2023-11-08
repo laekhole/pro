@@ -106,6 +106,13 @@
 	</select>
 	
 	
+	<update id="updateViewCount" parameterType="ReviewSearchVO">
+		update review_board
+		set 
+		view_count = view_count + 1
+		where review_seq = #{reviewSeq}
+	</update>
+	
 	<insert id="merge" parameterType="ReviewBoardVO">
 		<selectKey keyProperty="reviewSeq" resultType="int" order="BEFORE" statementType="PREPARED">
 			<if test="reviewSeq == null or reviewSeq == 0">

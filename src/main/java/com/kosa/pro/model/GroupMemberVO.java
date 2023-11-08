@@ -1,5 +1,10 @@
 package com.kosa.pro.model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.kosa.pro.model.general.GeneralModel;
 
 import lombok.AllArgsConstructor;
@@ -25,8 +30,11 @@ public class GroupMemberVO implements GeneralModel {
 	private String groupDelYn;		// 그룹 삭제여부
 	private String groupJoinDate;	// 그룹 가입일
 	
+	private int loginCount;
+	private LocalDateTime lastLoginTime;
 	
 	// 평점 테이블 추가
 	private GradeVO grade;
+	
 
 }

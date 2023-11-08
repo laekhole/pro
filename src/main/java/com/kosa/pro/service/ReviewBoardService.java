@@ -35,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewBoardService extends BaseService {
 	public Map<String, Object> reviewList(ReviewSearchVO search) throws Exception {
 		Map<String, Object> map = new HashMap<>();
-	
 		map.put("reviewList", (List<ReviewBoardVO>) getDAO().selectBySearch("review.selectReviewList", search, "totalCount"));
 		map.put("popularList", (List<ReviewBoardVO>) getDAO().selectList("review.selectPopularList", search));
 		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
@@ -70,6 +69,12 @@ public class ReviewBoardService extends BaseService {
 		getDAO().insert("review.merge", reviewBoard);
 		log.info("등록 후 게시판 시퀀스 = " + reviewBoard.getReviewSeq());
 		return reviewBoard.getReviewSeq();
+	}
+	
+	public void reviewViewCount(ReviewSearchVO search) {
+		
+		getDAO().update("review.updateViewCount", search);
+		
 	}
 	
 	

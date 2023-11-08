@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
 <%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>     --%>
 <%-- <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>     --%>
 <!DOCTYPE html>
@@ -60,6 +61,9 @@
 
 </head>
 <body>
+<sec:authorize access="isAuthenticated()">
+   <sec:authentication property="principal" var="principal"/>
+</sec:authorize>
 
 <nav class="site-nav">
 	<div class="container">
@@ -67,7 +71,7 @@
 			<div class="site-navigation">
 				<div class="row g-0 align-items-center">
 					<div class="col-2">
-						<a href="/main" class="logo m-0 float-start">봉사활동커뮤니티<span class="text-primary">.</span></a>
+						<a href="/main" class="logo m-0 float-start">VolunTree<span class="text-primary">.</span></a>
 					</div>
 					<div class="col-8 text-center">
 
@@ -82,33 +86,38 @@
 					
 					<div class="col-2 text-end">
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-						<!-- <div class="icon-container">
-							<i class="custom-icon fas fa-sign-in-alt"></i>
-						</div> -->
+					<c:if test="${empty principal }">	
+						<div class="icon-container">
+							<a href="/auth/loginForm" style="color:white;"><i class="custom-icon fas fa-sign-in-alt login-icon"></i></a>
+						</div>
+					</c:if>
+					<c:if test="${!empty principal }">
 						<div class="icon-container me-4">
 							<span class="notification-badge">3</span>
 							<i class="icon-message"></i>
 						</div>
-							<li class="has-children">
-
+						
+						<li class="has-children">
 						<div class="icon-container me-4">
-							<i class="custom-icon fas fa-user mypage"></i>
+							<a href="" style="color:white;">
+								<i class="custom-icon fas fa-user mypage"></i>
+							</a>
 						</div>
-							
 							<ul class="dropdown">
-								<li><a href="search-result.html">1:1 쪽지함</a></li>
-								<li><a href="blog.html">내가 쓴 글</a></li>
-								<li><a href="single.html">신청한 봉사 목록</a></li>
-								<li class="has-children">
-									<a href="#">테스트</a>
-									<ul class="dropdown">
-										<li><a href="#">Sub Menu One</a></li>
-										<li><a href="#">Sub Menu Two</a></li>
-										<li><a href="#">Sub Menu Three</a></li>
-									</ul>
-								</li>
+								<li><a href="/logout">로그아웃</a></li>
+<!-- 								<li><a href="blog.html">내가 쓴 글</a></li> -->
+<!-- 								<li><a href="single.html">신청한 봉사 목록</a></li> -->
+<!-- 								<li class="has-children"> -->
+<!-- 									<a href="#">테스트</a> -->
+<!-- 									<ul class="dropdown"> -->
+<!-- 										<li><a href="#">Sub Menu One</a></li> -->
+<!-- 										<li><a href="#">Sub Menu Two</a></li> -->
+<!-- 										<li><a href="#">Sub Menu Three</a></li> -->
+<!-- 									</ul> -->
+<!-- 								</li> -->
 							</ul>
 							</li>
+					</c:if>
 						</ul>
 					</div>
 				</div>

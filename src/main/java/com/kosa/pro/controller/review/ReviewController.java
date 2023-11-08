@@ -59,7 +59,11 @@ public class ReviewController extends PrtController {
 	
 	@RequestMapping("info")
 	public String reviewInfo(ReviewSearchVO search, Model model) {
+		//조회수 증가
+		_reviewBoardService.reviewViewCount(search);
+		
 		Map<String, Object> map = _reviewBoardService.reviewInfo(search);
+		
 		model.addAttribute("info", map.get("reviewInfo"));
 		model.addAttribute("polist", map.get("popularList"));
 		model.addAttribute("categoryList", map.get("categoryList"));

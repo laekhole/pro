@@ -49,6 +49,9 @@
     <logger name="egovframework.*" level="off">
     </logger>
     
+    <logger name="oracle.jdbc" level="off">
+    </logger>
+    
     <logger name="java.sql" level="debug">
     </logger>
     

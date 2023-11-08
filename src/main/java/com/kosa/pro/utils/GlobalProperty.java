@@ -46,14 +46,23 @@ public class GlobalProperty {
 	@Value("${url.admin.main}")
 	String _sAdminMainURL;
 	
+	@Value("${url.user.root}")
+	String _sUserRoot;
+	
 	@Value("${url.front.login}")
 	String _sFrontLoginURL;
 	
 	@Value("${url.front.main}")
 	String _sFrontMainURL;
 	
+	@Value("${url.manager.root}")
+	String _sManagerRoot;
+	
 	@Value("${view.alert}")
 	String _sViewAlert;
+	
+	@Value("${view.error}")
+	String _sViewError;
 	
 	@Value("${common.date.type}")
 	String _sDateFormat;
@@ -158,6 +167,20 @@ public class GlobalProperty {
 	}
 	
 	/**
+	 * @return 사용자 루트
+	 */
+	public String getUserRoot() {
+		return _sUserRoot;
+	}
+	
+	/**
+	 * @return 매니저 루트
+	 */
+	public String getManagerRoot() {
+		return _sManagerRoot;
+	}
+	
+	/**
 	 * @return 사용자 로그인 URL
 	 */
 	public String getFrontLoginURL() {
@@ -177,6 +200,13 @@ public class GlobalProperty {
 	 */
 	public String getViewAlert() {
 		return _sViewAlert;
+	}
+	
+	/**
+	 * @return 스프링 컨트롤러 error 출력용 URL
+	 */
+	public String getViewError() {
+		return _sViewError;
 	}
 	
 	/**

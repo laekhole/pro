@@ -18,8 +18,8 @@
 				<div class="featured-img" style="background-image: url('/template/images/img_3_horizontal.jpg');"></div>
 
 				<div class="text">
-					<span class="date">10월 이달의 봉사왕</span>
-					<h2>후기 보러 가기</h2>
+					<span class="date">10월 이달의 봉사왕 ${principal.user.loginId }</span>
+					<h2>후기 보러 가기${principal.user.loginName}/${principal.user.loginAuth }</h2>
 				</div>
 			</a>
 			<a href="single.html" class="h-entry v-height gradient">

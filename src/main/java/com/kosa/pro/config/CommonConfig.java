@@ -11,6 +11,9 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
@@ -49,6 +52,19 @@ public class CommonConfig {
         
         configurer.setLocations(resources);
         return configurer;
+    }
+    
+    @Bean
+    public CorsFilter corsFilter() {
+       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+       CorsConfiguration config = new CorsConfiguration();
+       config.setAllowCredentials(true);
+       config.addAllowedOrigin("*"); // e.g. http://domain1.com
+       config.addAllowedHeader("*");
+       config.addAllowedMethod("*");
+
+       source.registerCorsConfiguration("/api/**", config);
+       return new CorsFilter(source);
     }
     
 //    @Bean
