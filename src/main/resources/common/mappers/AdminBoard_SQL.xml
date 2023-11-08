@@ -86,7 +86,7 @@
 		view_count,
 		del_yn
 		<!-- image_seq mapping DTO에는 없는데 DB 테이블에는 있음 -->
-		image_seq
+		<!-- 		image_seq -->
 	</sql>
 
 	<!-- recruit 검색 조건 -->

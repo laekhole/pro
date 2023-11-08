@@ -168,6 +168,12 @@
     <include refid="paging.bottom" />
 </select>
 	
+<!-- 	회원 제제 버튼  -->
+	<update id="AdminBlockMember" parameterType="int">
+    UPDATE member
+    SET ben_yn = 'Y'
+    WHERE mem_seq = #{memSeq}
+	</update>	
 
 
 </mapper>

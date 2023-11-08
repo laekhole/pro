@@ -1,5 +1,6 @@
 package com.kosa.pro.service.admin;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,27 @@ public class AdminMemberService extends BaseService {
 		return groupmap;
 	}
 
+	//제재 버튼 클릭시 제제함으로 변경되는 메소드
+	public Map<String, Object> adminBlockMember(MemberVO memberVO) {
+		
+		System.out.println("제재 버튼 ajax 서비스");
+		System.out.println("뭐들어있어 : ------"+memberVO.toString()+ memberVO);
+		
+		Map<String, Object> MemberBlock = new HashMap<>();
+		int updateResult = getDAO().update("adminmember.AdminBlockMember", memberVO);
+		MemberBlock.put("status", (updateResult > 0) ? "success" : "error");
+		
+		if (updateResult > 0) {
+	        MemberBlock.put("message", "회원에게 제재를 하였습니다");
+	    } else {
+	        MemberBlock.put("message", "회원에게 제재 실패");
+	    }
+	    
+	    return MemberBlock;
+	}
+	
+	
+	
 		// 리스트를 돌면서 특정 온도,평점이 이하 점수가 되면 쪽지 발송되게 끔!
 //	 	@Scheduled(fixedRate = 5000) // 5초마다 실행
 	 	@Scheduled(fixedRate = 43200000) // 12시간마다 실행
