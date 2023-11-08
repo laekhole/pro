@@ -32,56 +32,102 @@
 		<include refid="whereClause" />
 	</select>
 	
-	<!-- 봉사 신청내역(승인/거절) 게시판 목록보기 -->
-	<select id="selectVolunteerProceedList" parameterType="SearchVO" resultType="VolunteerProceedVO">
-		<include refid="paging.top" />
+	<!-- 봉사 신청내역(신청중) 게시판 목록보기 -->
+	<select id="volunteerProceedList" resultType="VolunteerProceedVO">
 			
 			SELECT
 			    vp.volun_proceed_seq,
 			    vp.recruit_seq,
 			    vp.mem_seq,
 			    m.name,
-			    m.gender,
 			    vp.state,
-			    vp.start_date,
 			    vp.end_date
 			FROM
 			    volunteer_proceed vp
 			JOIN
-			    recruit_board r ON vp.recruit_seq = r.recruit_seq
+			    member m ON vp.mem_seq = m.mem_seq
+			WHERE
+			    vp.group_mem_seq = 4
+			AND
+				vp.state = '신청중'
+			ORDER BY
+				recruit_seq asc
+    
+<!-- vp.group_mem_seq = #{groupMemSeq} -->
+	</select>
+	
+	<!-- 봉사 신청내역(승인) 게시판 목록보기 -->
+	<select id="selectApprove" resultType="VolunteerProceedVO">
+			
+			SELECT
+			    vp.volun_proceed_seq,
+			    vp.recruit_seq,
+			    vp.mem_seq,
+			    m.name,
+			    vp.state,
+			    vp.end_date
+			FROM
+			    volunteer_proceed vp
 			JOIN
 			    member m ON vp.mem_seq = m.mem_seq
 			WHERE
 			    vp.group_mem_seq = 4
-    
+			AND
+				vp.state = '승인'
+			ORDER BY 
+				vp.end_date desc
+<!-- vp.group_mem_seq = #{groupMemSeq} -->    
 
-		<include refid="paging.bottom" />
 	</select>
+	
+	<!-- 봉사 신청내역(거절) 게시판 목록보기 -->
+	<select id="selectreject" resultType="VolunteerProceedVO">
+			
+			SELECT
+			    vp.volun_proceed_seq,
+			    vp.recruit_seq,
+			    vp.mem_seq,
+			    m.name,
+			    vp.state,
+			    vp.end_date
+			FROM
+			    volunteer_proceed vp
+			JOIN
+			    member m ON vp.mem_seq = m.mem_seq
+			WHERE
+			    vp.group_mem_seq = 4
+			AND
+				vp.state = '거절'
+			ORDER BY 
+				vp.end_date desc
+ <!-- vp.group_mem_seq = #{groupMemSeq} -->   
+	</select>
+	
+	
 
-	<!-- 봉사활동 신청 목록/승인 및 거절 -->
+	<!-- 봉사활동 신청 목록/승인 및 거절 업데이트 -->
 	<!-- 승인 -->
 	<update id="updateApprove">
 		update
 			volunteer_proceed
 		set
-			state = #{state}
-			,start_date = #{startDate}
-			,end_date = #{startDate}
+			state = '승인'
+			,end_date = to_char(sysdate, 'YYYY-MM-DD')
 		where volun_proceed_seq = #{volunProceedSeq}	
-		
 	</update>
 	
+
 	<!-- 거절 -->
 	<update id="updateReject">
-		update
-			volunteer_proceed
-		set
-			state = #{state}
-			,end_date = #{endDate}
-			,reject_message = #{rejectMessage}
-		where volun_proceed_seq = #{volunProceedSeq}	
-		
+	    update
+	        volunteer_proceed
+	    set
+	        state = '거절',
+	        reject_message = #{rejectMessage},
+	        end_date = to_char(sysdate, 'YYYY-MM-DD')
+	    where volun_proceed_seq = #{volunProceedSeq}
 	</update>
+
 	
 	
 	
@@ -94,34 +140,119 @@
 6개인정보 및 프로필 수정 -->
 
 
-	<!-- 진행중인 봉사 게시판 목록보기 -->
-	<select id="selectVolunteeringdList" parameterType="SearchVO" resultType="VolunteeringVO">
+	<!-- 진행 중인 봉사 게시판 -->
+	<!-- 오늘!! 진행중인 봉사 신청글 목록보기 -->
+	<select id="selectVolunteeringList" parameterType="SearchVO" resultType="RecruitBoardVO">
 			
-			<![CDATA[
-			SELECT 
-				r.recruit_seq
-				, r.volun_start_date
-				, r.volun_end_date
-				, r.volun_addr
-				, r.volun_target
-				, r.mem_count
-				, r.group_name
-				, v.mem_seq
-				, v.name
-				, v.timein
-			FROM 
-				recruit_board r, volunteer_record v
-			WHERE 
-				r.recruit_seq = v.recruit_seq
-			AND 
-				r.recruit_seq = 31
-			AND 
-				r.volun_start_date <= '2023-11-27'
-			AND 
-				r.volun_end_date >= '2023-12-03'
-    		]]>
+		<![CDATA[
+            SELECT
+				 *
+			FROM
+				 recruit_board
+			WHERE trunc(volun_start_date) = trunc(sysdate)
+            AND group_mem_seq = 4
+		]]>
 
 	</select>
+	
+	<!-- 7일안에 !!시작하는 봉사 신청글 목록보기 -->
+	<select id="selectVolunteeringListWithinAWeek" parameterType="SearchVO" resultType="RecruitBoardVO">
+			
+		<![CDATA[
+			SELECT
+				 *
+			FROM
+				 recruit_board
+			WHERE trunc(volun_start_date) BETWEEN trunc(sysdate + 1) AND trunc(sysdate + 7)
+            AND group_mem_seq = 4
+		]]>
+			
+	</select>
+	
+	
+	<!-- 진행중 봉사가 승인인 사람이 있어야 출력됨.................. -->
+	<!-- 진행중인 봉사 게시판 상세보기 -> 회원목록 -->
+	<select id="selectVolunteeringMember" resultType="VolunteeringVO">
+			
+			SELECT 
+				v.recruit_seq,
+			    v.mem_seq,
+			    m.name,
+			    v.state
+			FROM 
+			    volunteer_proceed v
+			JOIN 
+			    member m ON v.mem_seq = m.mem_seq
+			WHERE 
+			    recruit_seq = #{recruitSeq}
+			AND
+                state = '승인'	
+            ORDER BY
+            	v.mem_seq asc
+
+	</select>
+	
+	
+	
+	<!-- 진행 중인 봉사 조회 -->
+	<select id="selectAttendance" resultType="VolunteerRecordVO">
+		select
+			 * 
+		from 
+			volunteer_record
+		WHERE
+			recruit_seq = #{recruitSeq}
+			
+	</select>
+	
+	<!-- 진행 중인 봉사 출석체크 -->
+	<insert id="attendance" >
+	    <selectKey keyProperty="volunSeq" resultType="int" order="BEFORE">
+        	select VOLUNTEER_RECORD_SEQ.NEXTVAL volun_seq from dual
+    	</selectKey>
+			INSERT INTO
+				VOLUNTEER_RECORD
+			(
+				VOLUN_SEQ
+				,MEM_SEQ
+				,RECRUIT_SEQ
+				,GROUP_MEM_SEQ
+				,TIMEIN
+			) VALUES (
+				#{volunSeq}
+				,#{memSeq}
+				,#{recruitSeq}
+				,#{groupMemSeq}
+				,#{timein}
+			)
+			
+	</insert>
+	<!-- <select id="selectVolunteering" resultType="VolunteeringVO">
+			    
+			SELECT 
+			    r.recruit_seq,
+			    r.volun_start_date,
+			    r.volun_end_date,
+			    r.volun_addr,
+			    r.latitude,
+			    r.longitude,
+			    r.recruit_title,
+			    r.volun_target,
+			    r.mem_count,
+			    r.group_name,
+			    v.mem_seq,
+			    v.state
+			FROM 
+			    recruit_board r
+			JOIN 
+			    volunteer_proceed v ON r.recruit_seq = v.recruit_seq
+			WHERE 
+			    r.recruit_seq = #{recruitSeq}
+            AND
+                v.state = '승인'
+
+	</select> -->
+
 	
 	
 	
