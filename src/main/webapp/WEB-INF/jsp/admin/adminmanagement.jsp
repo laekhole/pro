@@ -296,7 +296,10 @@
   // adminBlockBut() 함수 정의
 //제재 버튼 클릭 시 AJAX 요청을 보내는 함수
  function adminBlockBut(member) {
+	  
+	 var confirmAction = confirm("회원을 제재하시겠습니까?");
    // MemberVO 객체 생성 및 데이터 설정
+   if(confirmAction){
    var memberVO = {
        memSeq: member
    };
@@ -324,7 +327,10 @@
            console.error('제제 에러 :', error);
        }
    });
-} 
+} else{
+	console.log('회원 제재가 취소되었습니다.')
+	}
+}
 
 
  

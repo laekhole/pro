@@ -71,6 +71,8 @@
 		    <table class="table">
 		        <thead>
 		            <tr>
+		            	
+		            	<th scope="col"><input type="checkbox" id="selectAll" onclick="selectAllCheckboxesReview()"></th>
 		                <th scope="col">후기번호</th>
 		                <th scope="col">봉사번호</th>
 		                <th scope="col">제목</th>
@@ -85,6 +87,7 @@
 		        <tbody>
 		            <c:forEach var="review" items="${groupmap.adminReviewList}" varStatus="status">
 		                <tr>
+		               	    <td><input type="checkbox" name="selectRow" /></td>
 		                    <td>${review.reviewSeq}</td>
 		                    <td>${review.recruitSeq}</td>
 		                    <td>${review.reviewTitle}</td>
@@ -92,7 +95,7 @@
 		                    <td>${review.regDate}</td>
 		                    <td>${review.recomCount}</td>
 		                    <td>${review.viewCount}</td>
-		                    <td>${review.delYn == 'Y' ? '활성' : '비활성'}</td>
+		                    <td>${review.delYn == 'N' ? '활성' : '비활성'}</td>
 		                    <td>
 		                        <!-- 여기에 필요한 버튼이나 추가 정보를 넣을 수 있습니다. -->
 		                        <button type="button" class="btn btn-info btn-sm">상세보기</button>
@@ -106,7 +109,7 @@
                 <!-- 선택한 항목을 삭제할 버튼 -->
             <!-- 선택한 항목을 삭제할 둥글게 디자인된 버튼 -->
             <button onclick="deleteRows()" class="btn btn-primary rounded">선택 항목 삭제</button>
-            </div>
+            <%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
 
             
             <script type="text/javascript">
@@ -166,6 +169,7 @@
                     // 받은 데이터로 테이블 내용을 채웁니다.
                     $.each(recruits, function(i, recruit) {
                         var row = '<tr>' +
+                        '<td><input type="checkbox" name="selectRow" /></td>' + 
                         '<td>' + recruit.recruitSeq + '</td>' +
                         '<td>' + recruit.recruitTitle + '</td>' +
                         '<td>' + recruit.manager + '</td>' +
@@ -186,8 +190,9 @@
 
                     // 받은 데이터로 테이블 내용을 채웁니다.
                     $.each(reviews, function(i, review) {
-                    	var activeStatus = review.delYn == 'Y' ? '활성' : '비활성';
+                    	var activeStatus = review.delYn == 'N' ? '활성' : '비활성';
                         var row = '<tr>' +
+                        '<td><input type="checkbox" name="selectRow" /></td>' + 
                         '<td>' + review.reviewSeq + '</td>' +
                         '<td>' + review.recruitSeq + '</td>' +
                         '<td>' + review.reviewTitle + '</td>' +
@@ -224,13 +229,23 @@
 //                     }
 //                 }
             
-                // 모든 체크박스 선택/해제 함수
+                // 모집 모든 체크박스 선택/해제 함수
                 function selectAllCheckboxes() {
                     var checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
                     for (var i = 0; i < checkboxes.length; i++) {
                         checkboxes[i].checked = document.getElementById('selectAll').checked;
                     }
                 }
+                
+                // 리뷰 모든 체크박스 선택/해제 함수
+                function selectAllCheckboxesReview() {
+                    var checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+                    console.log(checkboxes);
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        checkboxes[i].checked = document.getElementById('selectAll').checked;
+                    }
+                }
+            
             
                 // 선택된 행 삭제 함수
                 function deleteRows() {
