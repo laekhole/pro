@@ -108,7 +108,7 @@ public class MypageGroupController extends PrtController {
     		result.put("message", "오류가 발생했습니다. 다시 시도해주세요.");
     	}
     	
-    	
+//    	똑같나~
 		return result;
 	} //approve
 	
