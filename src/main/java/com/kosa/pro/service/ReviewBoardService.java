@@ -35,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewBoardService extends BaseService {
 	public Map<String, Object> reviewList(ReviewSearchVO search) throws Exception {
 		Map<String, Object> map = new HashMap<>();
+
 		map.put("reviewList", (List<ReviewBoardVO>) getDAO().selectBySearch("review.selectReviewList", search, "totalCount"));
 		map.put("popularList", (List<ReviewBoardVO>) getDAO().selectList("review.selectPopularList", search));
 		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
