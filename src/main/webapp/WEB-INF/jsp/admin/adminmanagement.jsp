@@ -49,7 +49,7 @@
               <div class="mt-2 d-flex justify-content-end">
                 <!-- 쪽지 전송 & 일괄 제재 버튼 -->
                 <button class="btn btn-primary active-button" id="messageButton">쪽지 전송</button>
-                <button class="btn btn-primary" id="sanctionButton">일괄 제재</button>
+                <button onclick="adminCheckBlockMember()" class="btn btn-primary" id="sanctionButton">일괄 제재</button>
         
                 <!-- 정렬 드롭다운 -->
                 <div class="dropdown">
@@ -83,6 +83,7 @@
 		    <table class="table">
 		        <thead>
 		            <tr>
+		            	<th scope="col"><input type="checkbox" id="selectAll" onclick="selectAllCheckboxes()"></th>
 		                <th scope="col">번호</th>
 		                <th scope="col">아이디</th>
 		                <th scope="col">이름</th>
@@ -98,6 +99,7 @@
 		        <tbody>
 		            <c:forEach var="member" items="${list}" varStatus="status">
 		                <tr>
+		                	<td><input type="checkbox" name="selectRow" /></td>
 		                    <td>${member.memSeq}</td>
 		                    <td>${member.memId}</td> <!-- 이메일을 memId라고 가정 -->
 		                    <td>${member.name}</td>
@@ -106,16 +108,16 @@
 							<td>${member.volunteerTime.volunAddtime}</td> <!-- 봉사시간 -->
         					<td>${member.volunteerTime.volunHeat}</td> <!-- 온도 -->
         					<td>${member.volunteerTime.volunNoshow}</td> <!-- 노쇼 횟수 -->
-		                    <td>${member.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
+		                    <td id="status${member.memSeq}">${member.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
 			  				
 			  				<!-- 제재 버튼, 온도가 30도 미만일 때만 보임 -->
 							<td>
 							    <c:choose>
 							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'Y'}">
-							        <button type="button" class="btn btn-warning btn-sm">제재함</button> 
+							        <button type="button" class="btn btn-danger btn-sm">제재함</button> 
 							        </c:when>
 							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'N'}">
-							            <button type="button" class="btn btn-danger btn-sm">제재가능</button>
+							            <button type="button" class="btn btn-warning btn-sm" id="adminBlockButton${member.memSeq}" onclick="adminBlockBut(${member.memSeq})">제재가능</button>
 							        </c:when>
 							        <c:otherwise>
 							        </c:otherwise>
@@ -135,7 +137,7 @@
 		                <th scope="col">단체번호</th>
 		                <th scope="col">단체아이디</th>
 		                <th scope="col">단체명</th>
-		                <th scope="col">봉사횟수</th>
+		                <th scope="col">주최봉사수</th>
 		                <th scope="col">연락처</th>
 		                <th scope="col">누적점수</th>
 		                <th scope="col">평점</th>
@@ -159,10 +161,10 @@
 					<td>
 							    <c:choose>
 							        <c:when test="${group.grade.grade <= 1 && group.groupDelYn == 'Y'}">
-							        <button type="button" class="btn btn-warning btn-sm">제재함</button> 
+							        <button type="button" class="btn btn-danger btn-sm">제재함</button> 
 							        </c:when>
 							        <c:when test="${group.grade.grade <= 1 && group.groupDelYn == 'N'}">
-							            <button type="button" class="btn btn-danger btn-sm">제재가능</button>
+							            <button type="button" class="btn btn-warning btn-sm">제재가능</button>
 							        </c:when>
 							        <c:otherwise>
 							        </c:otherwise>
@@ -173,22 +175,7 @@
 		        </tbody>
 		    </table>
 		</div>
-              
-          
-          <!-- 페이지네이션 -->
-<!--           <div class="d-flex justify-content-center mt-4"> -->
-<!--               <button class="btn btn-light"> -->
-<!--                   <i class="bi bi-arrow-left"></i> -->
-<!--               </button>                 -->
-<!--               <button class="btn btn-light">1</button> -->
-<!--               <button class="btn btn-light">2</button> -->
-<!--               <button class="btn btn-light">3</button> -->
-<!--               <button class="btn btn-light">4</button> -->
-<!--               <button class="btn btn-light">10</button> -->
-<!--               <button class="btn btn-light"> -->
-<!--                   <i class="bi bi-arrow-right"></i> -->
-<!--               </button> -->
-<!--           </div> -->
+
           
       </div>
  <%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
@@ -218,7 +205,7 @@
      // 개인 버튼 클릭 이벤트
      $('#personalButton').click(function() {
          $.ajax({
-             url: '/getIndividualMembers', // 개인 회원 데이터를 가져오는 URL
+             url: '/admin/getIndividualMembers', // 개인 회원 데이터를 가져오는 URL
              type: 'GET',
              dataType: 'json',
              success: function(data) {
@@ -234,7 +221,7 @@
      // 단체 버튼 클릭 이벤트
      $('#groupButton').click(function() {
          $.ajax({
-             url: '/getGroupMembers', // 단체 회원 데이터를 가져오는 URL
+             url: '/admin/getGroupMembers', // 단체 회원 데이터를 가져오는 URL
              type: 'GET',
              dataType: 'json',
              success: function(data) {
@@ -248,7 +235,7 @@
      });
 
      //회원클릭 업데이트
-     function updateMemberTable(members) {
+      function updateMemberTable(members) {
          var tableBody = $('#memberTableContainer tbody');
          tableBody.empty(); // 테이블의 기존 내용을 비웁니다.
 
@@ -256,11 +243,12 @@
          $.each(members, function(i, member) {
         	 var statusButton = '';
              if (member.volunteerTime.volunHeat < 30 && member.benYn === 'Y') {
-                 statusButton = '<button type="button" class="btn btn-warning btn-sm">제재함</button>';
+                 statusButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
              } else if (member.volunteerTime.volunHeat < 30 && member.benYn === 'N') {
-                 statusButton = '<button type="button" class="btn btn-danger btn-sm">제재가능</button>';
+                 statusButton = '<button type="button" class="btn btn-warning btn-sm"  id="adminBlockButton' + member.memSeq + '" onclick="adminBlockBut(' + member.memSeq + ')">제재가능</button>';
              }
              var row = '<tr>' +
+            			 '<td><input type="checkbox" name="selectRow" /></td>' + 
 			             '<td>' + member.memSeq + '</td>' +
 			             '<td>' + member.memId + '</td>' +
 			             '<td>' + member.name + '</td>' +
@@ -269,13 +257,13 @@
 			             '<td>' + member.volunteerTime.volunAddtime + '</td>' +
 			             '<td>' + member.volunteerTime.volunHeat + '</td>' +
 			             '<td>' + member.volunteerTime.volunNoshow + '</td>' +
-			             '<td>' +(member.benYn === 'N' ? '활성' : '비활성') + '</td>' +
+			             '<td id="status' + member.memSeq + '">'  +(member.benYn === 'N' ? '활성' : '비활성') + '</td>' +
 			             '<td>' + statusButton + '</td>' + // 비고 컬럼에 상태 버튼을 추가합니다.
 			             '</tr>';
              tableBody.append(row);
          });
-     }
-
+     } 
+     
      //단체클릭 업데이트
      function updateGroupTable(groups) {
          var tableBody = $('#groupTableContainer tbody');
@@ -285,9 +273,9 @@
          $.each(groups, function(i, group) {
         	 var sanctionButton = '';
         	 if (group.grade.grade <= 1 && group.groupDelYn === 'Y') {
-        		 sanctionButton = '<button type="button" class="btn btn-warning btn-sm">제재함</button>';
+        		 sanctionButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
              } else if (group.grade.grade <= 1 && group.groupDelYn === 'N') {
-            	 sanctionButton = '<button type="button" class="btn btn-danger btn-sm">제재가능</button>';
+            	 sanctionButton = '<button type="button" class="btn btn-warning btn-sm">제재가능</button>';
              }
         	 var row = '<tr>' +
              '<td>' + group.groupMemSeq + '</td>' +
@@ -298,12 +286,71 @@
              '<td>' + group.grade.gradeAdd + '</td>' + // 누적점수
              '<td>' + group.grade.grade + '</td>' + // 평점
              '<td>' + (group.groupDelYn === 'N' ? '활성' : '비활성') + '</td>' + // 상태
-             '<td>' + sanctionButton + '</td>' + // 비고 칼럼 내용
+             '<td>' + sanctionButton + '</td>' + //  중복 ID를 사용하면 안 되므비고 칼럼 내용
              '</tr>';
              tableBody.append(row);
          });
      }
  });
+ 
+  // adminBlockBut() 함수 정의
+//제재 버튼 클릭 시 AJAX 요청을 보내는 함수
+ function adminBlockBut(member) {
+	  
+	 var confirmAction = confirm("회원을 제재하시겠습니까?");
+   // MemberVO 객체 생성 및 데이터 설정
+   if(confirmAction){
+   var memberVO = {
+       memSeq: member
+   };
+
+   $.ajax({
+       url: '/admin/adminBlockMember', 
+       method: 'POST', 
+       contentType: 'application/json', // Content-Type 설정
+       data: JSON.stringify(memberVO), // JSON 데이터로 변환
+       success: function(response) {
+    	   if (response.status === 'success') {
+    	        // 버튼 스타일 변경
+    	        var button = $('#adminBlockButton' + member);
+    	        button.removeClass('btn btn-warning btn-sm').addClass('btn btn-danger btn-sm');
+    	        button.text('제재함'); // 버튼 텍스트 변경
+    	        
+    	        // 상태 텍스트 변경
+    	        var statusText = $('#status' + member);
+    	        statusText.text('비활성'); // 상태를 비활성으로 변경
+
+    	        console.info('회원 제재 성공 로그: ' + response.message);
+    	    }
+    	},
+       error: function(error) {
+           console.error('제제 에러 :', error);
+       }
+   });
+} else{
+	console.log('회원 제재가 취소되었습니다.')
+	}
+}
+
+
+ 
+ // 모든 체크박스 선택/해제 함수
+ function selectAllCheckboxes() {
+     var checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+     for (var i = 0; i < checkboxes.length; i++) {
+         checkboxes[i].checked = document.getElementById('selectAll').checked;
+     }
+ }
+ 
+ // 선택된 행 삭제 함수
+ function adminCheckBlockMember() {
+     var checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+     for (var i = 0; i < checkboxes.length; i++) {
+         if (checkboxes[i].checked) {
+             checkboxes[i].closest('tr').remove();
+         }
+     }
+ }
  
 </script>
  
