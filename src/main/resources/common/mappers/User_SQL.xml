@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+<!--
+    <sql id="select">
+       memSeq, memId, name, gender, phone, platform, auth, delYn, benYn, joinDate
+    </sql>
+-->
+
+<!--    동적으로 구현해야 할 때 쓸 SQL문 // 까먹을까 미리 작성
+    <select id="selectFinishedList" resultType="RecruitBoardVO"> 
+		select
+		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
+		    TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
+		    r.recruit_title, 
+		    r.recruit_content, 
+		    r.group_name 
+		from 
+		    recruit_board r 
+		join
+		    volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
+		join 
+		    member m ON vr.mem_seq = m.mem_seq  
+		where 
+		    m.mem_seq = ${loginMember.memSeq}
+   </select>
+     -->
+    <select id="selectFinishedList" resultType="RecruitBoardVO"> 
+		select
+		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
+		    TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
+		    r.recruit_title, 
+		    r.recruit_content, 
+		    r.group_name 
+		from 
+		    recruit_board r 
+		join
+		    volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
+		join 
+		    member m ON vr.mem_seq = m.mem_seq  
+		where 
+		    m.mem_seq = 1
+   </select> 
+
+
+	<select id="selectRecruitList" resultType="RecruitBoardVO">	
+		select
+		    vp.state,
+		    r.volun_start_date,
+		    r.volun_end_date,
+		    r.recruit_end_date,
+		    r.recruit_title,
+		    r.mem_count,
+		    r.group_name
+		from 
+		    recruit_board r 
+		join
+		    volunteer_proceed vp ON r.recruit_seq = vp.recruit_seq 
+		join 
+		    member m ON vp.mem_seq = m.mem_seq  
+		where 
+		    m.mem_seq = 1
+	</select>
+
+
+	<select id="selectReviewList" resultType="ReviewBoardVO">
+		select
+		    review_title,
+		    reg_date,
+		    SUBSTR(review_content, 1, 10) AS review_content
+		from review_board
+		where mem_seq = 1
+		order by reg_date desc
+	</select>
+     
+<!-- selectPersonal, selectVolunteerProceedList, timeRecord   
+   <select id="selectVolunteerProceedList" parameterType="MemberVO" resultType="VolunteerProceedVO">
+      select *
+         from volunteer_proceed
+         where mem_seq= ${memSeq}
+   </select>
+ -->
+ 
+<!-- 
+<select id="selectFinsihedList" parameterType="map" resultType="">
+    SELECT 
+        r.volun_start_date, 
+        r.volun_end_date, 
+        r.recruit_title, 
+        r.group_name 
+    FROM 
+        recruit_board r 
+    JOIN 
+        volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
+    JOIN 
+        member m ON vr.mem_seq = m.mem_seq 
+    WHERE 
+        m.mem_seq = ${loginMember.memSeq}
+</select>
+
+ -->
+ 
+<!-- <select id="selectReviewList" parameterType="ReviewSearchVO" resultType="ReviewBoardVO"> 
+      <include refid="paging.top" />
+      select *
+       <choose>
+          <when test="codeNumber != null and codeNumber != ''">
+             from review_board r inner join category c
+            on r.review_seq = c.review_seq
+          </when>
+          <otherwise>
+             from review_board
+          </otherwise>
+       </choose>
+      <include refid="whereClause" />
+      <choose>
+         <when test="sort != null and sort != ''">
+            order by ${sort}
+         </when>
+         <otherwise>
+            <choose>
+               <when test="codeNumber != null and codeNumber != ''">
+                  order by r.review_seq desc
+               </when>
+               <otherwise>
+                  order by review_seq desc
+               </otherwise>
+         
+            </choose>
+            
+         </otherwise>
+      </choose>
+      <include refid="paging.bottom" />
+   </select>
+   
+   
+   <select id="selectPopularList" resultType="ReviewBoardVO">
+      select review_title, mod_date
+      from (
+         select * from review_board
+         order by recom_count desc
+      )
+      <![CDATA[
+         where rownum <= 3
+      ]]>
+   </select>
+   
+   <select id="selectOne" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
+      select *
+      from review_board
+      where review_seq = #{reviewSeq}
+   </select> -->
+   
+   
+</mapper> 
