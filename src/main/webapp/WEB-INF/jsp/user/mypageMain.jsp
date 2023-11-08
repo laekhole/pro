@@ -2,18 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-
-
-
-
-	<%@ include file="/WEB-INF/jsp/include/top.jsp"%>
-
-
-
-
-
+	<%@ include file="/WEB-INF/jsp/include/top.jsp"%> 
 	<%@ include file="/WEB-INF/jsp/include/sidebar.jsp"%> 
+
+    <input type="hidden" id="pageName" value="main">
     
       <!-- Page content wrapper-->
       <div class="col-md-10 col-lg-9 col-xl-10" id="page-content-wrapper" style="margin-top: 1rem;">
@@ -125,7 +117,7 @@
 
 
 
-<!-- 	마이 페이지 날짜 획득용JS -->
+    <!-- 	마이 페이지 날짜 획득용JS -->
 	<script>
 	function getKoreanDate() {
 	   const now = new Date();
@@ -208,8 +200,8 @@
       ////////////// 지도 표시 api //////////////
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = { 
-                  center: new kakao.maps.LatLng(37.29297, 127.0486), // 지도의 중심좌표 광교 좌표
-//                  center: new kakao.maps.LatLng(37.61625, 127.0656), // 지도의 중심좌표 동적으로 변환해야 함
+//                  center: new kakao.maps.LatLng(37.29297, 127.0486), // 지도의 중심좌표 광교 좌표
+                  center: new kakao.maps.LatLng(37.61625, 127.0656), // 지도의 중심좌표 동적으로 변환해야 함
 //                  center: new kakao.maps.LatLng(37.61625, 127.0656), // 지도의 중심좌표 석계 좌표
 
                   level: 4 // 지도의 확대 레벨
@@ -288,10 +280,10 @@
 //        if (distance <= 100) { // 의도대로 짠 거리 로직
         if (distance <= 1000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
            document.getElementById('btnTimeRecord').classList.add('btn-secondary');
-           document.getElementById('btnTimeRecord').classList.remove('btn-primary');
+           document.getElementById('btnTimeRecord').classList.remove('btn-gray');
            } else {
            document.getElementById('btnTimeRecord').classList.remove('btn-secondary');
-           document.getElementById('btnTimeRecord').classList.add('btn-primary');
+           document.getElementById('btnTimeRecord').classList.add('btn-gray');
 
            }
         
@@ -368,19 +360,20 @@
 
       </script>
 
+
       
     <!-- jQuery, Popper.js, Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
+
     <!-- FullCalendar JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" crossorigin="anonymous"></script>
 
-      <!-- FullCalendar JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" crossorigin="anonymous"></script>
+
+
       <script>
          // 여기에 JavaScript 코드를 작성하세요.
  
@@ -449,11 +442,6 @@
          }
      </script>
 
-
-      <script>
-     </script>
-
-
       <!-- 탭 만들기 부트스트랩 링크 -->
       <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -462,6 +450,5 @@
       <script>
          document.getElementById("currentTime").innerHTML = Date();
       </script>
-      
-<%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>   
 
+	<%@ include file="/WEB-INF/jsp/include/bottom.jsp"%> 
