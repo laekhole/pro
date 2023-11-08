@@ -108,7 +108,7 @@
 								<option value="groupName">작성자</option>
 								<option value="recruitContent">내용</option>
 							</select>
-							<input type="type" class="form-keyword">
+							<input type="text" class="form-keyword">
 						</div>
 						
 						<!-- 검색 출력  -->
