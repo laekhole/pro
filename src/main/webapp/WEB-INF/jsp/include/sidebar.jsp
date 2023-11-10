@@ -27,13 +27,13 @@
     	    var myReview = document.getElementById('myReview');
 
     	    if (pageName === 'list') {
-    	        myList.style.backgroundColor = '#45a7d7f7';
+    	        myList.style.backgroundColor = '#3ab41cb5';
     	    } else if (pageName === 'finish') {
-    	        myFinish.style.backgroundColor = '#45a7d7f7';
+    	        myFinish.style.backgroundColor = '#3ab41cb5';
     	    } else if (pageName === 'main') {
-    	        myMain.style.backgroundColor = '#45a7d7f7';
+    	        myMain.style.backgroundColor = '#3ab41cb5';
     	    } else if (pageName === 'review') {
-    	        myReview.style.backgroundColor = '#45a7d7f7';
+    	        myReview.style.backgroundColor = '#3ab41cb5';
     	    }
     	});
       </script>
