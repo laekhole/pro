@@ -100,21 +100,5 @@
 		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 		// marker.setMap(null);    
     </script>
-    <script>
-    	$(function() {
-    		
-    		let webSocket = new WebSocket("ws//localhost/websocket/applicant.do");
-    		
-    		// 서버로부터 메시지를 통지받으면 자동으로 실행될 콜백함수를 등록함
-    		webSocket.onmessage = function(event) {
-    			alert(event.data)
-    		}
-    		
-    		$(
-    				
-    		
-    		)
-    	
-    	})
-    	
-    </script>
+
+    <scrpit></scrpit>

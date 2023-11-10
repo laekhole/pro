@@ -115,7 +115,7 @@ public class MypageGroupController extends PrtController {
 	// 3-2. 거절하기
 	@ResponseBody
 	@PostMapping("/reject")
-	public Map<String, Object> reject (@RequestBody VolunteerProceedVO vpvo) throws Exception {
+	public Map<String, Object> reject (@RequestBody VolunteerProceedVO vpvo, Model model) throws Exception {
 		log.info(">>>>>>>>>>>>>>단체 신청 거절 컨트롤러");
 		
 		Map<String, Object> result = new HashMap<>();
@@ -125,6 +125,7 @@ public class MypageGroupController extends PrtController {
     	if(status > 0) {
     		result.put("status", true);
     		result.put("message", "봉사신청 '거절' 처리 되었습니다.");
+    		result.put("reject", _mypageGroupService.reject(vpvo));
     	} else {
     		result.put("status", false);
     		result.put("message", "오류가 발생했습니다. 다시 시도해주세요.");
@@ -193,8 +194,6 @@ public class MypageGroupController extends PrtController {
 	    return "mypage/group/mypage_volunteering";
 	}
 
-	
-	
 	
 	
 	// 5. 봉사활동 후기 글 =================================================================================

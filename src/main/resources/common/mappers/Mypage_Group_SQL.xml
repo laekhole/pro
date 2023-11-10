@@ -76,7 +76,7 @@
 				vp.state = '승인'
 			ORDER BY 
 				vp.end_date desc
-<!-- vp.group_mem_seq = #{groupMemSeq} -->    
+	<!-- vp.group_mem_seq = #{groupMemSeq} -->    
 
 	</select>
 	
@@ -100,7 +100,7 @@
 				vp.state = '거절'
 			ORDER BY 
 				vp.end_date desc
- <!-- vp.group_mem_seq = #{groupMemSeq} -->   
+ 	<!-- vp.group_mem_seq = #{groupMemSeq} -->   
 	</select>
 	
 	
@@ -122,10 +122,10 @@
 	    update
 	        volunteer_proceed
 	    set
-	        state = '거절',
-	        reject_message = #{rejectMessage},
-	        end_date = to_char(sysdate, 'YYYY-MM-DD')
-	    where volun_proceed_seq = #{volunProceedSeq}
+	        state = '거절'
+	        ,reject_message = #{rejectMessage}
+	        ,end_date = to_char(sysdate, 'YYYY-MM-DD')
+		where volun_proceed_seq = #{volunProceedSeq}	
 	</update>
 
 	
@@ -178,7 +178,8 @@
 				v.recruit_seq,
 			    v.mem_seq,
 			    m.name,
-			    v.state
+			    v.state,
+			    v.attendance
 			FROM 
 			    volunteer_proceed v
 			JOIN 
