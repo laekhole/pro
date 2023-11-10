@@ -35,13 +35,14 @@
 		 	<td>부족한친구들</td>
 		 	
 			 <th style="background-color: #fff;">
-				<select class="form-select">
+				<select class="form-select" id="categorySelect">
+					<option value="">전체</option>
 				  <c:forEach var="category" items="${categoryList }">
 				  	<option value="${category.codeNumber }">${category.codeName }</option>
 				  </c:forEach>
 				</select>
 		  	</th>
-		   	<td>카테고리선택한데이터</td>
+		   	<td id="categoryData"></td>
 		  </tr>
 		  <tr>
 		   <th>제목</th>
@@ -82,7 +83,7 @@
 
 
 	
-	
+		<input type="hidden" id="arrCategory" value="">
 		<button class="btn btn-secondary my-2 my-sm-0" id="write-button" style="float:right;">등록</button>
 	 </div>
 
@@ -94,7 +95,8 @@
   </div>
 </section>
 
-<script>		
+<script>
+
 let editor;
 ClassicEditor
 .create(document.querySelector('#editor'),{
@@ -114,6 +116,7 @@ ClassicEditor
 
 document.querySelector('#write-button').addEventListener("click", e => {
 	e.preventDefault();
+	const arrCategory = document.querySelector("#arrCategory").value;
 	const fileInput = document.querySelector("#chooseFile");
 	const tableName = document.querySelector("#tableName").value;
 	const titleValue = document.querySelector("#write-title").value;
@@ -126,13 +129,15 @@ document.querySelector('#write-button').addEventListener("click", e => {
     if (fileInput.files.length > 0) {
         formData.append('file', fileInput.files[0]);
     }
+	
+    formData.append('arrCategory', arrCategory);
     formData.append('editor', editorValue);
     formData.append('tableName', tableName);
     formData.append('token', token);
     formData.append('title', titleValue);
 
     // 서버로 데이터 전송
-    fetch("/review/write", {
+    fetch("/review/write/", {
         method: "POST",
         body: formData
     })
@@ -146,6 +151,25 @@ document.querySelector('#write-button').addEventListener("click", e => {
     
     
 });
+
+var selectedValues = [];
+var realValues = [];
+$("#categorySelect").on("change", function() {
+    var selectedOption = $(this).find("option:selected");
+    if (selectedOption) {
+        const selectedValue = selectedOption.text();
+        selectedValues.push(selectedValue);
+        const newValue = selectedValues.join(", ");
+        $("#categoryData").text(newValue);
+        
+        const realValue = selectedOption.val();
+        realValues.push(realValue);
+        $("#arrCategory").val(realValues);
+        console.log(">>실제데이터 = " + realValues);
+        
+    }
+});
+
 
 let timer = setTimeout(function() {
     alert("시간이 만료되었습니다.");

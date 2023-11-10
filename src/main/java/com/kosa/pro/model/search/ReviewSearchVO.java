@@ -2,6 +2,8 @@ package com.kosa.pro.model.search;
 
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kosa.pro.model.common.SearchVO;
 
 import lombok.Data;
@@ -16,5 +18,15 @@ public class ReviewSearchVO extends SearchVO {
 	
 	private String codeNumber;
 	private int reviewSeq;
+	
+	//댓글 스크롤
+	private int start;
+	
+	//글쓰기
+	private MultipartFile file;
+//	private String editor;
+	private String title;
+	private String[] arrCategory;
+	
 	
 }

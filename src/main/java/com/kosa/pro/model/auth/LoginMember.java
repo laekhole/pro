@@ -25,6 +25,11 @@ public class LoginMember implements GeneralModel {
 	private String loginAuth;
 	private int loginCount;
 	private String benYn;
+	private int memSeq;
+	
+	//구글 로그인
+	private String provider;
+	private String providerId;
 	
 	// ENUM으로 안하고 ,로 해서 구분해서 ROLE을 입력 -> 그걸 파싱!!
 	// 예제 ROLL 값 : "ROLE_USER","ROLE_MANAGER","ROLE_ADMIN"  

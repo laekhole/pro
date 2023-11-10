@@ -2,9 +2,11 @@ package com.kosa.pro.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.kosa.pro.model.GroupMemberVO;
 import com.kosa.pro.model.auth.LoginMember;
@@ -25,13 +27,16 @@ isEnabled(): 이 메서드는 사용자 계정이 활성화되었는지 확인�
 데이터베이스에서 계정의 활성화 상태를 가져와 비교하여 계정이 활성화된 상태인지 확인할 수 있습니다.
  * */
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private static final long serialVersionUID = -951226953749557253L;
 	private LoginMember user;
+	private Map<String, Object> attributes; // 구글 로그인 정보
 
-    public PrincipalDetails(LoginMember user) {
+
+    public PrincipalDetails(LoginMember user, Map<String, Object> attributes) {
         this.user = user;
+        this.attributes = attributes;
     }
     
     public LoginMember getUser() {
@@ -55,7 +60,8 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+    	return !"Y".equals(user.getBenYn());
+
     }
 
     @Override
@@ -65,10 +71,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-    	if (user.getBenYn().equals("Y")) {
-    		return false;
-    	}
-        return true;
+    	return !"Y".equals(user.getBenYn());
     }
 
     @Override
@@ -81,4 +84,21 @@ public class PrincipalDetails implements UserDetails {
         });
         return authorities;
     }
+
+	@Override
+	public String toString() {
+		return "PrincipalDetails [user=" + user + "]";
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
 }

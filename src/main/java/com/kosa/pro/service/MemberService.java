@@ -8,8 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.kosa.pro.config.exception.ExistMemberException;
+import com.kosa.pro.config.exception.LoginBenException;
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.VolunteerTimeVO;
 import com.kosa.pro.model.auth.LoginMember;
@@ -38,6 +40,11 @@ public class MemberService extends BaseService {
 //				throw new Exception("비밀번호는 필수 정보입니다");
 //			}
 			LoginMember existMember = findMemid(memberVO.getMemId());
+			
+			if ("Y".equals(existMember.getBenYn())) {
+				throw new LoginBenException("정지된 계정 입니다.");
+			}
+			
 			if (existMember != null && !Objects.isNull(memberVO.getMemId())) {
 				throw new ExistMemberException(memberVO.getMemId());
 			}
@@ -59,6 +66,7 @@ public class MemberService extends BaseService {
 			ex.printStackTrace();
 			throw ex;
 		}
+		
 	}
 	
 //	public boolean updateMember(MemberVO memberVO)  {

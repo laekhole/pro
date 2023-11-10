@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -30,24 +31,26 @@ public class AuthSucessHandler extends SimpleUrlAuthenticationSuccessHandler {
     		) throws IOException, ServletException {
         
 		System.out.println(">>>>권한 체크 = " + authentication.getAuthorities().toString());
-		if (authentication.getAuthorities().toString().contains("MANAGER")) {
-			GroupMemberVO gmember = GroupMemberVO.builder()
-					.groupMemId(authentication.getName())
-					.build();
-			_gDao.update("member.updateGroupMemberLastLogin", gmember);
-			_gDao.update("member.loginGroupCountClear", gmember);
-			
-		} else {
-			MemberVO member = MemberVO.builder()
-					.memId(authentication.getName())
-					.build();
-			_gDao.update("member.", member);
-			_gDao.update("member.", member);
+		for (GrantedAuthority authority : authentication.getAuthorities()) {
+		    if (authority.getAuthority().contains("MANAGER")) {
+		    	System.out.println(">>>단체회원 ");
+				GroupMemberVO gmember = GroupMemberVO.builder()
+						.groupMemId(authentication.getName())
+						.build();
+				_gDao.update("member.updateGroupMemberLastLogin", gmember);
+				_gDao.update("member.loginGroupCountClear", gmember);
+				System.out.println(">>>>>그룹멤버 = " + gmember);
+			} else {
+				System.out.println(">>일반회원");
+				MemberVO member = MemberVO.builder()
+						.memId(authentication.getName())
+						.build();
+				_gDao.update("member.updateMemberLastLogin", member);
+				_gDao.update("member.loginCountClear", member);
+				System.out.println(">>>>>멤버 = " + member);
+			}
 		}
-		
-		
-		
-		
+			
 		System.out.println("authentication ->" + authentication);
 		
         setDefaultTargetUrl("/main");

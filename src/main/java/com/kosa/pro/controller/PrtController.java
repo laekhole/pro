@@ -11,6 +11,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import com.kosa.pro.config.auth.PrincipalDetails;
+import com.kosa.pro.model.auth.LoginMember;
 import com.kosa.pro.utils.GlobalProperty;
 
 
@@ -37,6 +39,7 @@ public class PrtController {
 	@Autowired
 	HttpSession session;
 	
+	
 	public GlobalProperty getConfig()
 	{
 		return this.configBean;
@@ -56,7 +59,7 @@ public class PrtController {
 	
 //	/**
 //	 * 관리자 세션 - 관리자 모델로 형변환하여 사용
-//	 * 			- 관리자 모델이 정의되면 해당 모델로 변환
+//	 * 			- 관리자 모델이 정의되면 해당 모델로 변환 (스프링 시큐리티로 인해 사용 X)
 //	 * @return
 //	 */
 //	public MemberVO getAdminSession() {
@@ -65,7 +68,7 @@ public class PrtController {
 	
 //	/**
 //	 * 사용자 세션 - 사용자 모델로 형변환하여 사용
-//	 * 			- 사용자 모델이 정의되면 해당 모델로 변환
+//	 * 			- 사용자 모델이 정의되면 해당 모델로 변환 (스프링 시큐리티로 인해 사용 X)
 //	 * @return
 //	 */
 //	 public MemberInfoVO getUserSession() {

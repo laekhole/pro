@@ -43,13 +43,10 @@
     <logger name="org.apache.commons" level="off">
     </logger>
     
-    <logger name="org.springframework" level="off" >
-    </logger>
+<!--     <logger name="org.springframework" level="off" > -->
+<!--     </logger> -->
     
     <logger name="egovframework.*" level="off">
-    </logger>
-    
-    <logger name="oracle.jdbc" level="off">
     </logger>
     
     <logger name="java.sql" level="debug">

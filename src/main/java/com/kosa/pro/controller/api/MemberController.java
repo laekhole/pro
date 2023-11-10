@@ -1,10 +1,17 @@
 package com.kosa.pro.controller.api;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,6 +30,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kosa.pro.config.auth.PrincipalDetails;
 import com.kosa.pro.config.exception.ExistMemberException;
+import com.kosa.pro.config.exception.LoginBenException;
+import com.kosa.pro.controller.PrtController;
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.auth.KakaoProfile;
 import com.kosa.pro.model.auth.LoginMember;
@@ -29,7 +40,7 @@ import com.kosa.pro.service.MemberService;
 
 
 @Controller
-public class MemberController {
+public class MemberController extends PrtController {
 	
 	@Autowired
 	MemberService memberService;
@@ -45,6 +56,11 @@ public class MemberController {
 		model.addAttribute("exception", exception);
 		return "member/loginForm";
 	}
+	@GetMapping("/login/oauth2/code/google")
+	public String googleLogin(Model model) {
+		System.out.println("여기왔냐 구글로그인");
+		return "index";
+	}
 
 //	//회원 가입 양식 
 //	@GetMapping("/auth/joinForm.do")
@@ -58,7 +74,7 @@ public class MemberController {
 //		return "member/updateForm";
 //	}
 	
-	
+	@ExceptionHandler(LoginBenException.class)
 	@GetMapping("/auth/kakao/callback")
 	public String kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
 		System.out.println("카카오로그인 컨트롤러 url : /auth/kakao/callback ");
@@ -158,22 +174,27 @@ public class MemberController {
 		try {
 			memberService.insertMember(kakaoMember);
 			System.out.println("기존 회원이 아니기에 자동 회원가입을 진행함");
+		} catch (LoginBenException e) {
+			String msg;
+			try {
+				msg = URLEncoder.encode("정지된 계정 입니다.", "UTF-8");
+				return "redirect:/auth/loginForm?error=true&exception=" + msg;
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		} catch (ExistMemberException e) {
 			System.out.println("기존에 회원 가입된 경우 다음으로 진행함");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("자동 로그인을 진행합니다.");
+		LoginMember kakaoLoginMember = memberService.findMemid(kakaoMember.getMemId());
 		
-		LoginMember kakaoLoginMember = LoginMember.builder()
-										.loginId(kakaoMember.getMemId())
-										.loginPwd(kakaoMember.getPwd())
-										.loginName(kakaoMember.getName())
-										.loginAuth(kakaoMember.getAuth())
-										.build();
+		System.out.println("자동 로그인을 진행합니다.");
+		System.out.println("카카오정보 = " + kakaoLoginMember);
 		// 로그인 처리 
-		PrincipalDetails principalDetails = new PrincipalDetails(kakaoLoginMember);
+		PrincipalDetails principalDetails = new PrincipalDetails(kakaoLoginMember, null);
 		Authentication authentication = new UsernamePasswordAuthenticationToken(
 				principalDetails, // 나중에 컨트롤러에서 DI해서 쓸 때 사용하기 편함.
 				null, // 토큰 인증시 패스워드는 알수 없어 null 값을 전달하는 것임  

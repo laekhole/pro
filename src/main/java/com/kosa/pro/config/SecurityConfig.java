@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private PrincipalDetailsService principalDetailsService;
+
 	@Autowired
 	private AuthSucessHandler authSucessHandler;
 	@Autowired
@@ -87,7 +87,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .and().rememberMe() // 로그인 유지
 	        .alwaysRemember(false) // 항상 기억할 것인지 여부
 	        .tokenValiditySeconds(43200) // in seconds, 12시간 유지
-	        .rememberMeParameter("remember-me");
+	        .rememberMeParameter("remember-me")
+        .and()
+        	.oauth2Login()
+        	.loginPage("/auth/loginForm")
+        	.defaultSuccessUrl("/main")
+        	.userInfoEndpoint()
+        	.userService(principalDetailsService);
+        
     }
 	
 //	public static void main(String [] args) {

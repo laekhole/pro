@@ -14,6 +14,7 @@
 		from member
 		where mem_id = #{memId}
 	</select>
+	
 
  	<update id="updateGroupMemberLastLogin">
 		update group_member set 
@@ -53,14 +54,9 @@
 		</choose>
 		set
 			login_count = login_count + 1
-			<choose>
-				<when test="loginCount > 3">
-					, ben_yn = 'Y'
-				</when>
-				<otherwise>
-					, ben_yn = 'N'
-				</otherwise>
-			</choose>
+			<if test="loginCount > 3">
+				, ben_yn = 'Y'
+			</if>
 			<choose>
 				<when test="loginAuth == 'MANAGER'">
 					where group_mem_id = #{loginId}

@@ -22,5 +22,9 @@ public class ReviewCommentVO implements GeneralModel {
 	private String regDate;
 	private String modDate;
 	private String delYn;
+	private int memSeq;
+	private String memAuth;
+	
+	private MemberVO member;
 
 }

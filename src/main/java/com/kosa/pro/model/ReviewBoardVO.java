@@ -29,14 +29,18 @@ public class ReviewBoardVO implements GeneralModel {
 	private int viewCount;
 	private String delYn;
 	private int imageSeq;
+	private int memSeq;
 	
-	public static ReviewBoardVO of(int recruitSeq, String reviewTitle, String reviewContent, String writeId, int imageSeq) {
+	private MemberVO member;
+	
+	public static ReviewBoardVO of(int recruitSeq, String reviewTitle, String reviewContent, String writeId, int imageSeq, int memSeq) {
 		return ReviewBoardVO.builder()
 				.recruitSeq(recruitSeq)
 				.reviewTitle(reviewTitle)
 				.reviewContent(reviewContent)
 				.writeId(writeId)
 				.imageSeq(imageSeq)
+				.memSeq(memSeq)
 				.build();
 	}
 	

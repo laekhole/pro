@@ -32,6 +32,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-taglibs' //시큐리티
 	
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 구글 로그인 
+	
 	compileOnly 'org.projectlombok:lombok'
 	
 //	implementation files('lib/ojdbc6.jar')

@@ -42,8 +42,11 @@
     </div>
 
 <!-- 	권형 페이징 -->
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 	<script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+<!-- 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 	<script src="/js/common/jquery.locator.js"></script>
+	<script src="/js/common/jsrender.js"></script>
+	<script src="/js/common/jsviews.js"></script>
 	<!-- 	--권형 페이징 -->
 	
     <script src="/template/js/bootstrap.bundle.min.js"></script>

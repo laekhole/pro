@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 public class ResponseVO {
     private HttpStatus httpStatus;
     private String message;
-    private List<Object> result;
+    private List<?> result;
+    private int count;
     
     public int getCode() {
     	return httpStatus.value();
