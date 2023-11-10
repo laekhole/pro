@@ -139,23 +139,10 @@
       <!-- 거리계산용 JS -->
       <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
       <script src='/js/map/distance.js'></script>
-<!-- 	  <script src="js/common/distance.js"></script> -->
       <!-- kakaoMap SDK -->
       <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=08d20e40da94696ee7b9ff3a47add144"></script>
       <script>
 
-      // distance.js import 성공하면 삭제할 코드
-      function calculateDistance(coord1, coord2) {
-    	  const point1 = turf.point(coord1);
-    	  const point2 = turf.point(coord2);
-
-    	  const options = { units: 'meters' };
-    	  const distance = turf.distance(point1, point2, options);
-
-    	  return distance;
-    	}
-      
-      
       
 	  // 봉사활동 센터 위치 얻기 위한 함수
       function getInfo() {
@@ -170,17 +157,17 @@
          
          // 지도의 현재 영역을 얻어옵니다 
          var bounds = map.getBounds();
-         
+
          // 영역의 남서쪽 좌표를 얻어옵니다 
          var swLatLng = bounds.getSouthWest(); 
-         
+
          // 영역의 북동쪽 좌표를 얻어옵니다 
          var neLatLng = bounds.getNorthEast(); 
-         
+
          // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
          var boundsStr = bounds.toString();
-         
-         
+
+
          var message = '봉사활동 위치 좌표는 위도 ' + center.getLat() + ', <br>';
          message += '경도 ' + center.getLng() + '이고 <br>';
          // message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
@@ -190,13 +177,13 @@
          // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
          // ex) console.log(message);
          console.log(message);
-       
+
        return {
          center : {lat : center.getLat(), lng : center.getLng()},
          bounds : bounds
        }
       }
-     
+
       ////////////// 지도 표시 api //////////////
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = { 
@@ -234,16 +221,16 @@
       }); 
       // 지도에 마커를 표시합니다
       marker2.setMap(map);
- 
+
 
 
 
       // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
       if (navigator.geolocation) {
-         
+
          // GeoLocation을 이용해서 접속 위치를 얻어옵니다
          var coord1 = navigator.geolocation.getCurrentPosition(function(position) {
-            
+
             var userlat = position.coords.latitude; // 위도
             var userlon = position.coords.longitude; // 경도
 
@@ -251,13 +238,13 @@
           console.log("사용자 위치[경도] -> " + userlon);
 
          const gpsInfo =  getInfo();
-         
+
 //            console.log("gpsInfo -> " + gpsInfo);
 //            console.log("gpsInfo.center -> " + gpsInfo.center);
 //            console.log("gpsInfo.center.lat -> " + gpsInfo.center.lat);
 //            console.log("gpsInfo.center.lng -> " + gpsInfo.center.lng);
           
-         // 이부분에서 거리 계산하면 됨 
+         // 이부분에서 거리 계산하면 됨
 
          const coord1 = [userlon, userlat];
          const coord2 = [gpsInfo.center.lng, gpsInfo.center.lat];
@@ -357,7 +344,6 @@
          map.setCenter(locPosition);      
       }  
 
-
       </script>
 
 
@@ -374,9 +360,7 @@
 
 
 
-      <script>
-         // 여기에 JavaScript 코드를 작성하세요.
- 
+      <script> 
          // 변수 선언
          var calendar;
          var event;
