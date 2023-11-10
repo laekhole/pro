@@ -6,7 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
    <div class="d-flex" id="wrapper">
       <!-- Sidebar-->
       
@@ -46,21 +45,22 @@
                         </tr>
                         
                         <c:forEach var="state" items="${state}">
-                        <div id="stateList">
+                        <tbody id="stateList">
 	                        <tr id="statestateList">
-	                            <td class="volunProceedSeq">${state.volunProceedSeq}</td>
+	                            <td class="volunProceedSeq" id="volun_proceed_seq">${state.volunProceedSeq}</td>
 	                            <td id="recruitSeq">${state.recruitSeq}</td>
 	                            <td id="memSeq">${state.memSeq}</td>
 	                            <td id="name">${state.name}</td>                                           
 	                            <td id="statestate">
 	                                <div class="button-container">
 	                                   <input type="hidden" value="${state.state}" id="state">
-	                                   <button onclick="moveToAccepted(this)" >승인</button>
-	                                   <button onclick="openRejectDialog(this)" >거절</button>
+	                                   
+		                                   <button onclick="moveToAccepted(this)" >승인</button>
+		                                   <button onclick="openRejectDialog(${state.volunProceedSeq})">거절</button>
 	                                </div>
 	                            </td>
 	                        </tr>
-                        </div>
+                        </tbody>
                         </c:forEach>
                         
                     </table>
@@ -84,16 +84,25 @@
                             <th>상태</th>
                         </tr>
                         
-                        <c:forEach var="approve" items="${approve}">
-                        <tr id="approveList">
-                            <td class="approveVolunProceedSeq">${approve.volunProceedSeq}</td>
-                            <td id="approveRecruitSeq">${approve.recruitSeq}</td>
-                            <td id="approveMemSeq">${approve.memSeq}</td>
-                            <td id="approveName">${approve.name}</td>                                           
-                            <td id="approveState">${approve.state}</td>
-                        </tr>
-                        </c:forEach>
-                     	
+                        <tbody id="approveList">
+	                        <c:forEach var="approve" items="${approve}">
+		                        	<tr id="approveDetail">
+			                            <td class="approveVolunProceedSeq">${approve.volunProceedSeq}</td>
+			                            <td id="approveRecruitSeq">${approve.recruitSeq}</td>
+			                            <td id="approveMemSeq">${approve.memSeq}</td>
+			                            <td id="approveName">${approve.name}</td>                                           
+			                            <td id="approveState">${approve.state}</td>
+			                        </tr>
+	                        </c:forEach>
+                        </tbody>
+                        
+                     	<tr id="approveapproveList" style="display: none;">
+                            <td class="approveVolunProceedSeq"></td>
+                            <td id="approveRecruitSeq"></td>
+                            <td id="approveMemSeq"></td>
+                            <td id="approveName"></td>                                           
+                            <td id="approveState"></td>
+	                    </tr>
                     </table>
                 </div>
                 
@@ -110,15 +119,25 @@
                             <th>상태</th>
                         </tr>
                         
-                        <c:forEach var="reject" items="${reject}">
-                        <tr>
-                            <td>${reject.volunProceedSeq}</td>
-                            <td>${reject.recruitSeq}</td>
-                            <td>${reject.memSeq}</td>
-                            <td>${reject.name}</td>                                           
-                            <td >${reject.state}</td>
-                        </tr>
-                        </c:forEach>
+                        <tbody id="rejectList">
+	                        <c:forEach var="reject" items="${reject}">
+		                        	<tr id="rejectDetail">
+			                            <td class="rejectVolunProceedSeq">${reject.volunProceedSeq}</td>
+			                            <td id="rejectRecruitSeq">${reject.recruitSeq}</td>
+			                            <td id="rejectMemSeq">${reject.memSeq}</td>
+			                            <td id="rejectName">${reject.name}</td>                                           
+			                            <td id="rejectState">${reject.state}</td>
+			                        </tr>
+	                        </c:forEach>
+                        </tbody>
+                        
+                     	<tr id="rejectrejectList" style="display: none;">
+	                            <td class="rejectVolunProceedSeq"></td>
+	                            <td id="rejectRecruitSeq"></td>
+	                            <td id="rejectMemSeq"></td>
+	                            <td id="rejectName"></td>                                           
+	                            <td id="rejectState"></td>
+	                    </tr>
                      	
                     </table>
                 </div>
@@ -127,22 +146,26 @@
 
         
         </div>
-    
+
+        
         <div id="rejectDialog" class="modal">
+        <input type="hidden" id="volunSeq" value="">
             <div class="modal-content">
-                <span class="close" onclick="closeRejectDialog()">&times;</span>
-                <h2>거절 사유 입력</h2>
-                <textarea id="rejectionReason" rows="4" cols="50"></textarea>
-                <button onclick="sendRejectionReason()">전송</button>
+               <span class="close" onclick="closeRejectDialog()">&times;</span>
+               <h2>거절 사유 입력</h2>
+               <textarea id="rejectMessage" rows="4" cols="50"></textarea>
+               <button onclick="sendRejectionReason(this)">전송</button>
             </div>
         </div>
-      
-      </div>
-      
 
-      </div>
+	  
+    </div>
+</div>
+ 
 
 <script>
+
+
 function moveToAccepted(button) {
     button.disabled = true;
 
@@ -171,26 +194,33 @@ function moveToAccepted(button) {
             row.remove();
             console.log("성공3");
             
-            
             const approveList = $("#approveList"); // 댓글 목록 요소 (전체 데이터)
             approveList.empty();
             
             // 승인 데이터를 가져오는 방식에 따라서 아래 코드 수정이 필요합니다.
-            const approve = json.approve; // 승인 데이터 가져오기
-           	console.log(approve);
+            const approves = json.approve.approve; // 승인 데이터 가져오기
+           	console.log(approves);
+           	console.log("성공4");
             
-            console.log("->"+approve.volunProceedSeq);
-            
-            // 새로운 행 생성
-            const newRow = $("<tr>");
-            newRow.append("<td class='approveVolunProceedSeq'>" + approve.volunProceedSeq + "</td>");
-            newRow.append("<td id='approveRecruitSeq'>" + approve.recruitSeq + "</td>");
-            newRow.append("<td id='approveMemSeq'>" + approve.memSeq + "</td>");
-            newRow.append("<td id='approveName'>" + approve.name + "</td>");
-            newRow.append("<td id='approveState'>" + approve.state + "</td>");
+           	approves.forEach((approve) => {
+	       		const approveapproveList = $("#approveapproveList").clone();
+	            
+	       		console.log("성공5");
+	            console.log(approve);
+	            
+	            approveapproveList.find(".approveVolunProceedSeq").text(approve.volunProceedSeq);
+	            approveapproveList.find("#approveRecruitSeq").text(approve.recruitSeq);
+	            approveapproveList.find("#approveMemSeq").text(approve.memSeq);
+	            approveapproveList.find("#approveName").text(approve.name);
+	            approveapproveList.find("#approveState").text(approve.state);
+        	   
 
-            // 목록에 새로운 행 추가
-            approveList.append(newRow);
+                // 목록에 새로운 행 추가
+               	approveapproveList.show();
+               	approveList.append(approveapproveList);
+           
+           	
+           	})
            
         } else {
             alert('승인에 실패했습니다: ' + json.message);
@@ -202,8 +232,125 @@ function moveToAccepted(button) {
     });
 }
 
-</script>
 
+ function sendRejectionReason(button) {
+
+	    const state = document.getElementById('state').value;
+	    const rejectMessage = document.getElementById('rejectMessage').value;
+	   /*  const volunProceedSeq = document.getElementById('volun_proceed_seq').textContent; */
+	    const volunProceedSeq = $("#volunSeq").val();
+	   
+	    console.log("state: " + state);
+ 	    console.log("거절 사유: " + rejectMessage);
+	    console.log("volunProceedSeq: " + volunProceedSeq);
+
+	    const param = {
+	        state: state,
+ 	        rejectMessage: rejectMessage,
+	        volunProceedSeq: volunProceedSeq,
+	    };
+	    
+	    console.log("state2: " + state);
+ 	    console.log("거절 사유2: " + rejectMessage);
+	    console.log("volunProceedSeq2: " + volunProceedSeq);
+
+	    fetch("<c:url value='/manager/reject'/>", {
+	        method: "POST",
+	        headers: {
+	            "Content-Type": "application/json; charset=UTF-8",
+	        },
+	        body: JSON.stringify(param),
+	    })
+	    .then((response) => response.json())
+	    .then((json) => {
+	        if (json.status) {
+
+	        	const volunProceedSeq = $("#volunSeq").val(); // 서버에서 받은 값
+
+	        	// volunProceedSeq 값을 가진 행을 찾아서 삭제
+	        	$("#stateList .volunProceedSeq").filter(function() {
+	        	    return $(this).text() === volunProceedSeq;
+	        	}).closest("tr").remove();
+
+	        	
+
+	            const rejectList = $("#rejectList"); // 거절 목록 요소 (전체 데이터)
+	            rejectList.empty();
+
+	            // 거절 데이터를 가져오는 방식에 따라서 아래 코드 수정이 필요합니다.
+	            const rejects = json.reject.reject; // 거절 데이터 가져오기
+	            console.log(rejects);
+	            console.log("성공4");
+
+	            rejects.forEach((reject) => {
+	                const rejectrejectList = $("#rejectrejectList").clone();
+
+	                console.log("성공5");
+	                console.log(reject);
+
+	                rejectrejectList.find(".rejectVolunProceedSeq").text(reject.volunProceedSeq);
+	                rejectrejectList.find("#rejectRecruitSeq").text(reject.recruitSeq);
+	                rejectrejectList.find("#rejectMemSeq").text(reject.memSeq);
+	                rejectrejectList.find("#rejectName").text(reject.name);
+	                rejectrejectList.find("#rejectState").text(reject.state);
+
+	                // 목록에 새로운 행 추가
+	                rejectrejectList.show();
+	                rejectList.append(rejectrejectList);
+
+	             	// 모달 대화 상자 닫기
+	                const rejectDialog = document.getElementById('rejectDialog');
+	                rejectDialog.style.display = "none";
+
+
+	                // 모달 대화 상자 내용 초기화
+	                document.getElementById('rejectMessage').value = "";
+
+	            })
+	            
+	            
+	            
+	            
+	            
+	        } else {
+	            alert('거절에 실패했습니다: ' + json.message);
+	            console.log(json.message);
+	        }
+	    })
+	    .catch(error => {
+	        console.error('오류 발생:', error);
+	    });
+	}
+
+ 
+ 
+ 
+ /* 거절폼 */
+
+function openRejectDialog(seq) {
+    const rejectDialog = document.getElementById('rejectDialog');
+    console.log("뭐가쓰이는걸까1");
+    $("#volunSeq").val(seq);
+    
+    rejectDialog.style.display = "block";
+}
+
+
+
+function closeRejectDialog() {
+    const rejectDialog = document.getElementById('rejectDialog');
+    rejectDialog.style.display = "none";
+}
+
+	
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/tiny-slider.js"></script>
