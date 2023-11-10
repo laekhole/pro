@@ -1,7 +1,5 @@
 package com.kosa.pro.model;
 
-import java.sql.Date;
-
 import com.kosa.pro.model.general.GeneralModel;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +22,7 @@ public class VolunteerProceedVO implements GeneralModel {
 	private int groupMemSeq;		// 단체회원 번호
 	private String state;			// 상태(신청중/승인/거절)
 	private String rejectMessage;	// 거절 메시지
-    
+	private String attendance;		// 출석여부
 	private String name;
     private String gender;
 	
