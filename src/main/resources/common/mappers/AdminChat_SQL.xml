@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminchat">
+
+<!-- 	봉사 이력 관리 테이블 resultMap -->
+  <resultMap id="VolunteerProceedResultMap" type="VolunteerProceedVO">
+        <id column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
+        <result column="RECRUIT_SEQ" property="recruitSeq"/>
+        <result column="MEM_SEQ" property="memSeq"/>
+        <result column="GROUP_MEM_SEQ" property="groupMemSeq"/>
+        <result column="STATE" property="state"/>
+        <result column="REJECT_MESSAGE" property="rejectMessage"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="ATTENDANCE" property="attendance"/>
+        <result column="NAME" property="name"/>
+        <result column="GENDER" property="gender"/>
+    </resultMap>
+    
+<!--     채팅방 테이블 resultMap -->
+     <resultMap id="ChatRoomResultMap" type="ChatRoomVO">
+        <id column="CHAT_ROOM_ID" property="chatRoomId"/>
+        <result column="ROOM_NAME" property="roomName"/>
+        <result column="CREATED_ROOM_TIME" property="createdRoomTime"/>
+        <result column="CLOSED" property="closed"/>
+        <result column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
+          			 <!-- VolunteerProceedVO와의  관계를 위한 association -->
+    	<association property="volunteerProceedVO" resultMap="VolunteerProceedResultMap" />
+     </resultMap>
+    
+    <!--  채팅 카운트 -->
+	<select id="totalCountChatrecruit" parameterType="MemberVO" resultType="int">
+		select count(*)
+		from chat_room
+	</select>
+	
+	<!-- 채팅방 정보와 관련된 봉사 신청 정보를 가져오는 쿼리 -->
+<!--   	<select id="findAllRecruitChatRoom" resultMap="ChatRoomResultMap"> -->
+<!--      SELECT cr.* -->
+<!--     FROM ADMIN.CHAT_ROOM cr -->
+<!--     JOIN ( -->
+<!--         SELECT vp.VOLUN_PROCEED_SEQ -->
+<!--         FROM ADMIN.VOLUNTEER_PROCEED vp -->
+<!--         WHERE vp.STATE = '승인' -->
+<!--           AND vp.RECRUIT_SEQ = #{recruitSeq} -->
+<!--     ) approved_vp ON cr.VOLUN_PROCEED_SEQ = approved_vp.VOLUN_PROCEED_SEQ -->
+<!-- 	</select> -->
+
+	<!-- 채팅방 정보와 관련된 봉사 신청 정보를 가져오는 쿼리 -->
+  	<select id="findAllRecruitChatRoom" resultMap="ChatRoomResultMap">
+     SELECT cr.*
+    FROM ADMIN.CHAT_ROOM cr
+    JOIN ADMIN.VOLUNTEER_PROCEED vp ON cr.VOLUN_PROCEED_SEQ = vp.VOLUN_PROCEED_SEQ
+    WHERE vp.STATE = '승인'
+	</select>
+
+
+
+
+</mapper>
