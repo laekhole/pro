@@ -50,15 +50,6 @@ public class MsgController extends PrtController {
 		return "msg";
 	}
 	
-//	// 보류, 보여줄지 아닐지 모름	
-	// 쪽지 삭제, JS에서 비동기로 작업
-	@RequestMapping("/delete")
-	public String msgDelete(SearchVO search, Model model) throws Exception {
-		super.setPageSubTitle("채팅/쪽지", model);
-		log.info(">>>>>>>>>>>>>>채팅/쪽지");
-//		model.addAttribute("test", getConfig().getAdminName());
-		return "msg";
-	}
 	
 	
 }

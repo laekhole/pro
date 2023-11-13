@@ -1,42 +1,33 @@
-//package com.kosa.pro.service.test;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import javax.servlet.ServletContext;
-//
-//import org.apache.commons.lang3.StringUtils;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.kosa.pro.config.test.MqttConfig;
-//
-//import lombok.RequiredArgsConstructor;
-//
-//@Service
-//@RequiredArgsConstructor
-//@SuppressWarnings("unchecked")
-//public class MqttService {
-//	@Autowired
-//	MqttConfig.OutboundGateway outboundGateway;
-//	@Autowired
-//	ServletContext app;
-//	
-//	public void publishMessage(String message, String topic) throws Exception {
-//		outboundGateway.sendToMqtt(message, topic);
-//    }
-//	
-//	public void execute(String topic, String payload) throws Exception {
-//    String [] cmdParams = StringUtils.split(topic, "/");
-//    List<ChatDTO> chatList = (List<ChatDTO>) app.getAttribute("chatList");
-//    ChatDTO chat=  new ObjectMapper().readValue(payload, ChatDTO.class);
-//    if(chatList != null && chat.getType().equals("CHAT")) {
-//        chatList.add(chat);
-//        	app.setAttribute("chatList", chatList);
-//    }else if(chatList == null && chat.getType().equals("CHAT")) {
-//    	chatList = new ArrayList<>();
-//    	chatList.add(chat);
-//    	app.setAttribute("chatList", chatList);
-//    }
-//	}
-//}
+package com.kosa.pro.service.test;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class MqttService {
+
+	private final ChatRoomDAO chatRoomDAO;
+	
+	public List<ChatRoom> findAllRoom() {
+		return chatRoomDAO.findAllRoom();
+	}
+
+	public ChatRoom createChatRoom(String name) {
+		return chatRoomDAO.createChatRoom(name);
+	}
+
+	public ChatRoom findRoomById(String roomId) {
+		return chatRoomDAO.findRoomById(roomId);
+	}
+
+	public void execute(String topic, String payload) {
+    String [] cmdParams = StringUtils.split(topic, "/");
+    System.out.println("topic = " + topic);
+    System.out.println("payload = " + payload);
+	}
+}

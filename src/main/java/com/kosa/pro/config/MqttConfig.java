@@ -25,7 +25,9 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.Header;
 
-import com.kosa.pro.service.admin.MqttService;
+import com.kosa.pro.service.test.MqttService;
+
+//import com.kosa.pro.service.admin.MqttService;
 
 //MQTT 메시지를 수신하고 처리하기 위한 구성 설정
 //MQTT 메시지를 발신하고 관리하기 위한 구성 설정
