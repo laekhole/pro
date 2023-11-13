@@ -119,6 +119,7 @@
         ,VOLUN_ADDR
         ,LATITUDE
         ,LONGITUDE
+        ,GROUP_MEM_SEQ
     ) VALUES (
         #{recruitSeq}
         ,#{groupName}
@@ -141,6 +142,7 @@
         ,#{volunAddr}
         ,#{latitude}
         ,#{longitude}
+        ,#{groupMemSeq}
     )
 </insert>
 
