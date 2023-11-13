@@ -29,29 +29,18 @@
      </resultMap>
     
     <!--  채팅 카운트 -->
-	<select id="totalCountChatrecruit" parameterType="MemberVO" resultType="int">
+	<select id="totalCountChatroom" parameterType="ChatRoomVO" resultType="int">
 		select count(*)
 		from chat_room
-	</select>
-	
-	<!-- 채팅방 정보와 관련된 봉사 신청 정보를 가져오는 쿼리 -->
-<!--   	<select id="findAllRecruitChatRoom" resultMap="ChatRoomResultMap"> -->
-<!--      SELECT cr.* -->
-<!--     FROM ADMIN.CHAT_ROOM cr -->
-<!--     JOIN ( -->
-<!--         SELECT vp.VOLUN_PROCEED_SEQ -->
-<!--         FROM ADMIN.VOLUNTEER_PROCEED vp -->
-<!--         WHERE vp.STATE = '승인' -->
-<!--           AND vp.RECRUIT_SEQ = #{recruitSeq} -->
-<!--     ) approved_vp ON cr.VOLUN_PROCEED_SEQ = approved_vp.VOLUN_PROCEED_SEQ -->
-<!-- 	</select> -->
+	</select>	
 
 	<!-- 채팅방 정보와 관련된 봉사 신청 정보를 가져오는 쿼리 -->
   	<select id="findAllRecruitChatRoom" resultMap="ChatRoomResultMap">
-     SELECT cr.*
-    FROM ADMIN.CHAT_ROOM cr
-    JOIN ADMIN.VOLUNTEER_PROCEED vp ON cr.VOLUN_PROCEED_SEQ = vp.VOLUN_PROCEED_SEQ
-    WHERE vp.STATE = '승인'
+     SELECT vp.recruit_seq, LISTAGG(vp.mem_seq, ',') WITHIN GROUP (ORDER BY vp.mem_seq) AS mem_seq_list,
+               cr.chat_room_id, cr.room_name, cr.created_at, cr.closed
+        FROM volunteer_proceed vp
+        JOIN chat_room cr ON vp.volun_proceed_seq = cr.volun_proceed_seq
+        GROUP BY vp.recruit_seq, cr.chat_room_id, cr.room_name, cr.created_at, cr.closed
 	</select>
 
 
