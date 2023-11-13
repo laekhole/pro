@@ -5,7 +5,7 @@
 
 <mapper namespace="recommend">
 	
-	<select id="recommendCount" parameterType="ReviewSearchVO" resultType="int">
+	<select id="recommendCount"  resultType="int">
 		select count(*)
 		from recommend
 		where review_seq = #{reviewSeq}
@@ -20,6 +20,11 @@
 		(recommend_seq.nextval, #{reviewSeq}, #{memSeq}, #{memAuth})
 		
 	</insert>
+	
+	<delete id="delete">
+		delete from recommend
+		where review_seq = #{reviewSeq}
+	</delete>
 	
 	
 </mapper>

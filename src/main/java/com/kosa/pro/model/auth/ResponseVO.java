@@ -18,6 +18,7 @@ public class ResponseVO {
     private String message;
     private List<?> result;
     private int count;
+    private boolean status;
     
     public int getCode() {
     	return httpStatus.value();
