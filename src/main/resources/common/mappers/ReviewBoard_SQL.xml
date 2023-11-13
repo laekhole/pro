@@ -153,6 +153,13 @@
 		where review_seq = #{reviewSeq}
 	</update>
 	
+	<update id="updateRecommendCountMinus">
+		update review_board
+		set
+		recom_count = recom_count - 1
+		where review_seq = #{reviewSeq}
+	</update>
+	
 	
 	<insert id="merge" parameterType="ReviewBoardVO">
 		<selectKey keyProperty="reviewSeq" resultType="int" order="BEFORE" statementType="PREPARED">

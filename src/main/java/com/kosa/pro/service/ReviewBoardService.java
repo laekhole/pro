@@ -75,6 +75,10 @@ public class ReviewBoardService extends BaseService {
 		return (int) getDAO().selectOne("review.selectRecommend", seq);
 	}
 	
+	public int reviewRecommendFlag(RecommendVO recommend) {
+		return (int) getDAO().selectOne("recommend.recommendCount", recommend);
+	}
+	
 	
 	@Transactional
 	public int reviewInsert(ReviewBoardVO reviewBoard) {
@@ -114,5 +118,13 @@ public class ReviewBoardService extends BaseService {
 		getDAO().insert("recommend.insert", recommend);
 		getDAO().update("review.updateRecommendCount", recommend);
 	}
+	
+	@Transactional
+	public void recommendUpdate(RecommendVO recommend) {
+		getDAO().delete("recommend.delete", recommend);
+		getDAO().update("review.updateRecommendCountMinus", recommend);
+	}
+	
+	
 	
 }

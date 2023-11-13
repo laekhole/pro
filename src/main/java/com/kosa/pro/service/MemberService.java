@@ -40,9 +40,10 @@ public class MemberService extends BaseService {
 //				throw new Exception("비밀번호는 필수 정보입니다");
 //			}
 			LoginMember existMember = findMemid(memberVO.getMemId());
-			
-			if ("Y".equals(existMember.getBenYn())) {
-				throw new LoginBenException("정지된 계정 입니다.");
+			if (existMember != null) {
+				if ("Y".equals(existMember.getBenYn())) {
+					throw new LoginBenException("정지된 계정 입니다.");
+				}
 			}
 			
 			if (existMember != null && !Objects.isNull(memberVO.getMemId())) {
