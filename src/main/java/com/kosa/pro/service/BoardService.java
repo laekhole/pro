@@ -42,7 +42,5 @@ public class BoardService extends BaseService {
 		return (List<TestVO>) getDAO().selectBySearch("test.selectTest", search);
 	}
 	
-	
-	
-	
+
 }

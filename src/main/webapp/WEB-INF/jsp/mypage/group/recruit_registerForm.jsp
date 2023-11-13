@@ -199,7 +199,7 @@
 
   /* 위지윅 적용 */
         ClassicEditor
-              .create(document.querySelector('#recruitContent'))
+              .create(document.querySelector('#recruit_content'))
               .catch(error=>{
                     console.error(error);
               });
