@@ -98,8 +98,7 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="nav-item dropdown">                        
                         <i class="fa fa-envelope me-lg-2"></i>
-                        <span class="d-none d-lg-inline-flex">채팅방입장</span>
-                    
+                        <a href="<c:url value='adminchat'/>"><span class="d-none d-lg-inline-flex">채팅방입장</span></a>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
