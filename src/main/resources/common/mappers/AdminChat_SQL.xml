@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminchat">
+
+<!-- 	봉사 이력 관리 테이블 resultMap -->
+  <resultMap id="VolunteerProceedResultMap" type="VolunteerProceedVO">
+        <id column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
+        <result column="RECRUIT_SEQ" property="recruitSeq"/>
+        <result column="MEM_SEQ" property="memSeq"/>
+        <result column="GROUP_MEM_SEQ" property="groupMemSeq"/>
+        <result column="STATE" property="state"/>
+        <result column="REJECT_MESSAGE" property="rejectMessage"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="ATTENDANCE" property="attendance"/>
+        <result column="NAME" property="name"/>
+        <result column="GENDER" property="gender"/>
+    </resultMap>
+    
+<!--     채팅방 테이블 resultMap -->
+     <resultMap id="ChatRoomResultMap" type="ChatRoomVO">
+        <id column="CHAT_ROOM_ID" property="chatRoomId"/>
+        <result column="ROOM_NAME" property="roomName"/>
+        <result column="CREATED_ROOM_TIME" property="createdRoomTime"/>
+        <result column="CLOSED" property="closed"/>
+        <result column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
+          			 <!-- VolunteerProceedVO와의  관계를 위한 association -->
+    	<association property="volunteerProceedVO" resultMap="VolunteerProceedResultMap" />
+     </resultMap>
+    
+    <!--  채팅 카운트 -->
+	<select id="totalCountChatroom" parameterType="ChatRoomVO" resultType="int">
+		select count(*)
+		from chat_room
+	</select>	
+
+	<!-- 채팅방 정보와 관련된 봉사 신청 정보를 가져오는 쿼리 -->
+  	<select id="findAllRecruitChatRoom" resultMap="ChatRoomResultMap">
+     SELECT vp.recruit_seq, LISTAGG(vp.mem_seq, ',') WITHIN GROUP (ORDER BY vp.mem_seq) AS mem_seq_list,
+               cr.chat_room_id, cr.room_name, cr.created_at, cr.closed
+        FROM volunteer_proceed vp
+        JOIN chat_room cr ON vp.volun_proceed_seq = cr.volun_proceed_seq
+        GROUP BY vp.recruit_seq, cr.chat_room_id, cr.room_name, cr.created_at, cr.closed
+	</select>
+
+
+
+
+</mapper>

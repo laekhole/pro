@@ -30,9 +30,6 @@
 
 
 
-
-
-
 	<sql id="select">
 		mem_seq, mem_id, name, gender, phone, platform, auth, del_yn, ben_yn, join_date
 		</sql>
