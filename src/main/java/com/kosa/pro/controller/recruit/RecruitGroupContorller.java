@@ -44,6 +44,18 @@ public class RecruitGroupContorller extends PrtController {
 	
 	
 	// 봉사활동 - 상세페이지
+	/*
+	 * @PostMapping("/add") public String add(RecruitBoardVO recruit, Model model)
+	 * throws Exception { super.setPageSubTitle("봉사활동 상세페이지", model);
+	 * log.info(">>>>>>>>>>>>>>상세보기");
+	 * 
+	 * 
+	 * 
+	 * return "recruit/recruit_detail"; }
+	 */
+	
+	
+	// 봉사활동 - 신청
 	@GetMapping("/detail")
 	public String recruitDetail(RecruitBoardVO recruit, Model model) throws Exception {
 		super.setPageSubTitle("봉사활동 상세페이지", model);

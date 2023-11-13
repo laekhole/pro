@@ -56,6 +56,49 @@
 <!-- vp.group_mem_seq = #{groupMemSeq} -->
 	</select>
 	
+	
+	<!-- 봉사활동 개인이 신청하기!! -->	
+	<insert id="insertAdd">
+		<selectKey keyProperty="volunProceedSeq" resultType="int" order="BEFORE">
+	        select VOLUN_PROCEED_SEQ.NEXTVAL recruit_seq from dual
+	    </selectKey>
+	    
+	    INSERT INTO volunteer_procee (
+	    	VOLUN_PROCEED_SEQ
+	        ,RECRUIT_SEQ
+	        ,MEM_SEQ
+	        ,GROUP_MEM_SEQ
+	        ,STATE
+	        ,REJECT_MESSAGE
+	        ,START_DATE
+	        ,END_DATE
+	        ,ATTENDANCE
+	    ) VALUES (
+	        #{recruitSeq}
+	        ,#{groupName}
+	        ,#{volunRegion1}
+	        ,#{volunRegion2}
+	        ,#{volunStartDate}
+	        ,#{volunEndDate}
+	        ,#{recruitState}
+	        ,#{volunCode}
+	        ,#{volunTime}
+	        ,#{recruitStartDate}
+	        ,#{recruitEndDate}
+	        ,#{memCount}
+	        ,#{volunTarget}
+	        ,#{recruitTitle}
+	        ,#{recruitContent}
+	        ,#{manager}
+	        ,#{email}
+	        ,#{phone}
+	        ,#{volunAddr}
+	        ,#{latitude}
+	        ,#{longitude}
+	    )
+	</insert>
+	
+	
 	<!-- 봉사 신청내역(승인) 게시판 목록보기 -->
 	<select id="selectApprove" resultType="VolunteerProceedVO">
 			

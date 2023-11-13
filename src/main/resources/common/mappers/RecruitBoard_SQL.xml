@@ -93,58 +93,59 @@
 	
 	
 	<!-- 봉사 신청 게시판 글 작성 하기 -->
-<insert id="insertRecruit">
-    <selectKey keyProperty="recruitSeq" resultType="int" order="BEFORE">
-        select RECRUIT_BOARD_SEQ.NEXTVAL recruit_seq from dual
-    </selectKey>
-    INSERT INTO recruit_board (
-        RECRUIT_SEQ
-        ,GROUP_NAME
-        ,VOLUN_REGION1
-        ,VOLUN_REGION2
-        ,VOLUN_START_DATE
-        ,VOLUN_END_DATE
-        ,RECRUIT_STATE
-        ,VOLUN_CODE
-        ,VOLUN_TIME
-        ,RECRUIT_START_DATE
-        ,RECRUIT_END_DATE
-        ,MEM_COUNT
-        ,VOLUN_TARGET
-        ,RECRUIT_TITLE
-        ,RECRUIT_CONTENT
-        ,MANAGER
-        ,EMAIL
-        ,PHONE
-        ,VOLUN_ADDR
-        ,LATITUDE
-        ,LONGITUDE
-    ) VALUES (
-        #{recruitSeq}
-        ,#{groupName}
-        ,#{volunRegion1}
-        ,#{volunRegion2}
-        ,#{volunStartDate}
-        ,#{volunEndDate}
-        ,#{recruitState}
-        ,#{volunCode}
-        ,#{volunTime}
-        ,#{recruitStartDate}
-        ,#{recruitEndDate}
-        ,#{memCount}
-        ,#{volunTarget}
-        ,#{recruitTitle}
-        ,#{recruitContent}
-        ,#{manager}
-        ,#{email}
-        ,#{phone}
-        ,#{volunAddr}
-        ,#{latitude}
-        ,#{longitude}
-    )
-</insert>
+	<insert id="insertRecruit">
+	    <selectKey keyProperty="recruitSeq" resultType="int" order="BEFORE">
+	        select RECRUIT_BOARD_SEQ.NEXTVAL recruit_seq from dual
+	    </selectKey>
+	    INSERT INTO recruit_board (
+	        RECRUIT_SEQ
+	        ,GROUP_NAME
+	        ,VOLUN_REGION1
+	        ,VOLUN_REGION2
+	        ,VOLUN_START_DATE
+	        ,VOLUN_END_DATE
+	        ,RECRUIT_STATE
+	        ,VOLUN_CODE
+	        ,VOLUN_TIME
+	        ,RECRUIT_START_DATE
+	        ,RECRUIT_END_DATE
+	        ,MEM_COUNT
+	        ,VOLUN_TARGET
+	        ,RECRUIT_TITLE
+	        ,RECRUIT_CONTENT
+	        ,MANAGER
+	        ,EMAIL
+	        ,PHONE
+	        ,VOLUN_ADDR
+	        ,LATITUDE
+	        ,LONGITUDE
+	    ) VALUES (
+	        #{recruitSeq}
+	        ,#{groupName}
+	        ,#{volunRegion1}
+	        ,#{volunRegion2}
+	        ,#{volunStartDate}
+	        ,#{volunEndDate}
+	        ,#{recruitState}
+	        ,#{volunCode}
+	        ,#{volunTime}
+	        ,#{recruitStartDate}
+	        ,#{recruitEndDate}
+	        ,#{memCount}
+	        ,#{volunTarget}
+	        ,#{recruitTitle}
+	        ,#{recruitContent}
+	        ,#{manager}
+	        ,#{email}
+	        ,#{phone}
+	        ,#{volunAddr}
+	        ,#{latitude}
+	        ,#{longitude}
+	    )
+	</insert>
 
 
+	
 	
 	
 	<!-- 봉사 신청 게시판 글 수정하기 -->
