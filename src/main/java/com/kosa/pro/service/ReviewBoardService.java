@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kosa.pro.model.MasterCodeVO;
 import com.kosa.pro.model.MemberVO;
+import com.kosa.pro.model.RecommendVO;
 import com.kosa.pro.model.ReviewBoardVO;
 import com.kosa.pro.model.ReviewCommentVO;
 import com.kosa.pro.model.search.ReviewSearchVO;
@@ -38,12 +39,16 @@ public class ReviewBoardService extends BaseService {
 	public Map<String, Object> reviewInfo(ReviewSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
 		
+		//봉사모집 데이터 가져오기 로직 작성 필요
+		
 		
 		map.put("popularList", (List<ReviewBoardVO>) getDAO().selectList("review.selectPopularList", search));
 		map.put("reviewInfo", getDAO().selectOne("review.selectOne", search));
 		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
 		map.put("categoryName", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCodeName", search));
 		
+		//추천 여부
+		map.put("recommend", (int) getDAO().selectOne("recommend.recommendCount", search));
 		//댓글
 		search.setRecordCount(5);
 		map.put("commentList", (List<ReviewCommentVO>) getDAO().selectBySearch("comment.selectCommentList", search, "totalCount"));
@@ -54,6 +59,9 @@ public class ReviewBoardService extends BaseService {
 	
 	public Map<String, Object> reviewWriteForm(ReviewSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
+		
+		//봉사모집 데이터 가져오기 로직 작성 필요
+		
 		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
 		
 		return map;
@@ -62,6 +70,11 @@ public class ReviewBoardService extends BaseService {
 	public MemberVO reviewLoginUser(String memId) {
 		return (MemberVO) getDAO().selectOne("member.selectMemId", memId);
 	}
+	
+	public int reviewRecommendCount(int seq) {
+		return (int) getDAO().selectOne("review.selectRecommend", seq);
+	}
+	
 	
 	@Transactional
 	public int reviewInsert(ReviewBoardVO reviewBoard) {
@@ -84,18 +97,22 @@ public class ReviewBoardService extends BaseService {
 	public List<ReviewCommentVO> commentScrollList(ReviewSearchVO search) {
 		return (List<ReviewCommentVO>) getDAO().selectBySearch("comment.selectCommentList", search, "totalCount");
 	}
+	
 	@Transactional
 	public Map<String, Object> commentSave(ReviewCommentVO comment) {
 		Map<String, Object> map = new HashMap<>();
-		log.info("등록 전 댓글 시퀀스 = " + comment.getCommentSeq());
 		getDAO().insert("comment.insert", comment);
-		log.info("등록 후 댓글 시퀀스 = " + comment.getCommentSeq());
 		
-		map.put("comment", comment);
+		map.put("comment", getDAO().selectByKey("comment.selectByNew", comment.getReviewSeq()));
 		map.put("count", getDAO().selectOne("comment.totalCount", comment.getReviewSeq()));
 		
 		return map;
 	}
 	
+	@Transactional
+	public void recommendProcess(RecommendVO recommend) {
+		getDAO().insert("recommend.insert", recommend);
+		getDAO().update("review.updateRecommendCount", recommend);
+	}
 	
 }

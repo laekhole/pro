@@ -41,13 +41,6 @@ public class PrincipalDetailsService extends DefaultOAuth2UserService implements
 		//로그인 카운트 증가
 		_gDao.update("member.loginCountInc", member);
 		
-		System.out.println("PrincipalDetailsService : member -> " + member);
-
-//		if ("Y".equals(member.getBenYn())) {
-//			System.out.println(">>>>>정지 확인");
-//			throw new LoginBenException("정지 된 계정 입니다.");
-//		}
-		System.out.println("마지막리턴진입확인");
 		log.info(">>>>>>최종 로그인 회원 정보 = " + member);
 		return new PrincipalDetails(member, null);
 	}
@@ -60,7 +53,6 @@ public class PrincipalDetailsService extends DefaultOAuth2UserService implements
 		log.info("구글 정보 : getAttributes : {}", oAuth2User.getAttributes());
 		
 		String provider = userRequest.getClientRegistration().getRegistrationId(); // 값 : google
-        String providerId = oAuth2User.getAttribute("sub"); // 숫자 형태
         String profileImage = oAuth2User.getAttribute("picture");
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name"); 

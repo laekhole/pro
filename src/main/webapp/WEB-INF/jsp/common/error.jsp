@@ -1,30 +1,30 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- 
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Kanit:200" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/css/error/font-awesome.min.css" />
+	<link type="text/css" rel="stylesheet" href="/css/error/style.css" />
+</head>
+<body>
 
-	<c:out value="${requestScope['javax.servlet.error.status_code'] }" />
-	<c:out value="${requestScope['javax.servlet.error.exception'] }" />
-	<c:out value="${requestScope['javax.servlet.error.message'] }" />
-	<c:out value="${requestScope['javax.servlet.error.request_url'] }" />
-	<c:out value="${requestScope['javax.servlet.error.servlet_name'] }" />
-	
-	오류 페이지 : ErrorController 참조
---%>
-	
-	<div id="wrapper">
-		<div id="container">
-			<div class="content">
-				
-				<p style="margin-top:250px; margin-bottom:15px; font-size:30px;  text-align:center; font-weight:600;">페이지 오류입니다.</p>
-				<p style="font-size:15px;  text-align:center; font-weight:600;">
-					<c:out value="${requestScope['javax.servlet.error.status_code'] }" /> : ${message }
-				</p>
-				
-				<div class="mT20">
-					<div class="mB20" style="color: #fff;">- <c:out value="${requestScope['javax.servlet.error.status_code'] }" /></div>
-					<div class="mB20" style="color: #fff;">- <c:out value="${requestScope['javax.servlet.error.exception'] }" /></div>
-				</div>
+	<div id="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>${statusCode}</h1>
 			</div>
+			<h2>${message }</h2>
+			<h2>${messageEng }</h2>
+			<p>현재 페이지는 동작 하지 않습니다. 관리자에게 문의 하세요. </p>
+			<a href="/">Return Home</a>
 		</div>
-	</div>	
+	</div>
+</body>
+</html>
+	
+		
     

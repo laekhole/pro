@@ -18,6 +18,6 @@ public class RecommendVO implements GeneralModel {
 	private int recomSeq;
 	private int reviewSeq;
 	private int memSeq;
-	private int groupMemSeq;
+	private String memAuth;
 
 }
