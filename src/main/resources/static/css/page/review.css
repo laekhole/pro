@@ -162,6 +162,7 @@ td {
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
+	font-size: 30px;
 
 }
 
@@ -171,9 +172,9 @@ td {
 	margin-top: 15px;
 }
 
-.recommend {
-	font-size: 40px;
-	color: black;
+#recommend {
+	font-size: 30px;
+	color: #3ab41cb5;
 }
 
 .recommend-list {

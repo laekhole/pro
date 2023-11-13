@@ -70,6 +70,7 @@ public class ReviewController extends PrtController {
 	
 	@RequestMapping("info")
 	public String reviewInfo(ReviewSearchVO search, Model model, Authentication authentication) {
+		super.setPageSubTitle("후기 상세 보기", model);
 		//조회수 증가
 		_reviewBoardService.reviewViewCount(search);
 		
@@ -101,6 +102,7 @@ public class ReviewController extends PrtController {
 	
 	@RequestMapping("writeForm")
 	public String reviewWriteForm(ReviewSearchVO search, Model model) {
+		super.setPageSubTitle("후기 글쓰기", model);
 		final String token = _fileFileTokenService.getToken();
 		log.debug("token = ", token);
 		search.setTableName("review");
@@ -211,14 +213,29 @@ public class ReviewController extends PrtController {
 	@PostMapping("recommend")
 	public ResponseEntity<ResponseVO> recommend(@RequestBody RecommendVO recommend) throws Exception {
 		log.info("추천수 ajax 진입 확인 = " + recommend);
-		//추천수 증가
-		_reviewBoardService.recommendProcess(recommend);
 		
-		int recommendCount = _reviewBoardService.reviewRecommendCount(recommend.getReviewSeq());
+		int recommendCount = _reviewBoardService.reviewRecommendFlag(recommend);
+		
+		String msg = "추천 취소!";
+		boolean status = false;
+		
+		if (recommendCount > 0) {
+			//추천수 감소
+			_reviewBoardService.recommendUpdate(recommend);
+		} else {
+			//추천수 증가
+			_reviewBoardService.recommendProcess(recommend);
+			msg = "추천 완료!";
+			status = true;
+		}
+		
+		int recommendTotalCount = _reviewBoardService.reviewRecommendCount(recommend.getReviewSeq());
 		
 		ResponseVO responseVO = ResponseVO.builder()
 				.httpStatus(HttpStatus.OK)
-				.count(recommendCount)
+				.count(recommendTotalCount)
+				.status(status)
+				.message(msg)
 				.build();
 		
 		

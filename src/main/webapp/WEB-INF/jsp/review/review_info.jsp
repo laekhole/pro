@@ -88,12 +88,9 @@
          </div>
         </c:if>
          <div class="icon-love">
-         	<c:if test="${!empty principal }">
-         		<a href="" id="recommend"><i class="bi bi-hand-thumbs-up-fill recommend"></i></a>
-         	</c:if>
-           	<c:if test="${empty principal }">
-           		<i class="bi bi-hand-thumbs-up-fill recommend"></i>
-           	</c:if>
+        	<a href="" id="recommend">
+<!--          			<i class="bi bi-hand-thumbs-up recommend"></i> -->
+        	</a>
          </div>
          <span id="recommendCount">${info.recomCount }</span>  
  
@@ -208,6 +205,15 @@
 </script>
 <script>
 $(document).ready(function () {
+	const recommendInt = "${recommendInt}";
+	const thumbsUpIcon = $("#recommend");
+	
+	if (recommendInt > 0) {
+		thumbsUpIcon.removeClass("bi-hand-thumbs-up").addClass("bi-hand-thumbs-up-fill");
+	} else {
+		thumbsUpIcon.removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
+	}
+	
     var start = 1; // 시작 위치
 
     $(window).scroll(e => {
@@ -276,36 +282,37 @@ $(document).ready(function () {
     	e.preventDefault();
         var recommendInt = "${recommendInt}";
         console.log(recommendInt);
-        if (recommendInt > 0) {
-        	Swal.fire({
-        		  title: "이미 추천 하셨습니다.",
-        		  icon: "error"
-        		});
-        } else {
-	    	const param = {
-	    			memSeq: "${principal.user.memSeq}",
-	    			memAuth: "${principal.user.loginAuth}",
-	    			reviewSeq: "${search.reviewSeq}"
-	    	}
-	        $.ajax({
-	            url: "/review/recommend", 
-	            type: "POST",
-	            contentType: "application/json; charset=UTF-8",
-				data: JSON.stringify(param),
-				dataType: "json",
-	            success: function (json) {
-	            	
-	            	$("#recommendCount").text(json.count);
-	            	
-	            	$("#recommend").off("click"); // 클릭 이벤트 제거
-	                $("#recommend").addClass("disabled"); // 링크 비활성화 스타일 적용
-	                Swal.fire({
-	          		  title: "추천!",
-	          		  icon: "success"
-	          		});
-	            }
-	        });
-        }
+    	const thumbsUpIcon = $("#recommend");
+    	const principal = "${principal.user}";
+    	if (principal == "") {
+    		return false;
+    	}
+    	const param = {
+    			memSeq: "${principal.user.memSeq}",
+    			memAuth: "${principal.user.loginAuth}",
+    			reviewSeq: "${search.reviewSeq}"
+    	}
+        $.ajax({
+            url: "/review/recommend", 
+            type: "POST",
+            contentType: "application/json; charset=UTF-8",
+			data: JSON.stringify(param),
+			dataType: "json",
+            success: function (json) {
+            	$("#recommendCount").text(json.count);
+				
+				if (json.status) {
+					thumbsUpIcon.removeClass("bi-hand-thumbs-up").addClass("bi-hand-thumbs-up-fill");
+				} else {
+					thumbsUpIcon.removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
+				}
+				
+                Swal.fire({
+          		  title: json.message,
+          		  icon: "success"
+          		});
+            }
+        });
     });
     
 });
