@@ -23,6 +23,7 @@ import com.kosa.pro.config.auth.PrincipalDetails;
 import com.kosa.pro.controller.PrtController;
 import com.kosa.pro.model.MasterCodeVO;
 import com.kosa.pro.model.MemberVO;
+import com.kosa.pro.model.RecommendVO;
 import com.kosa.pro.model.ReviewBoardVO;
 import com.kosa.pro.model.ReviewCommentVO;
 import com.kosa.pro.model.auth.LoginMember;
@@ -68,9 +69,18 @@ public class ReviewController extends PrtController {
 	}
 	
 	@RequestMapping("info")
-	public String reviewInfo(ReviewSearchVO search, Model model) {
+	public String reviewInfo(ReviewSearchVO search, Model model, Authentication authentication) {
 		//조회수 증가
 		_reviewBoardService.reviewViewCount(search);
+		
+		
+		//로그인 유저 데이터 구성
+		if (authentication != null) {
+			PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+			search.setMemAuth(principal.getUser().getLoginAuth());
+			search.setMemSeq(principal.getUser().getMemSeq());
+		}
+		
 		log.info("서치데이터 = " + search);
 		
 		Map<String, Object> map = _reviewBoardService.reviewInfo(search);
@@ -81,8 +91,10 @@ public class ReviewController extends PrtController {
 		model.addAttribute("categoryName", map.get("categoryName"));
 		model.addAttribute("commentList", map.get("commentList"));
 		model.addAttribute("commentCount", map.get("commentCount"));
+		model.addAttribute("recommendInt", map.get("recommend"));
 		model.addAttribute("search", search);
 		
+		log.info("이미추천한수 카운트 = " + map.get("recommend"));
 		
 		return "review/review_info";
 	}
@@ -169,10 +181,12 @@ public class ReviewController extends PrtController {
 		return ResponseEntity.status(responseVO.getHttpStatus()).body(responseVO);
 	}
 	@ResponseBody
-	@PostMapping(value = "commentWrite")
+	@PostMapping(value = "comment")
 	public ResponseEntity<ResponseVO> commentWrite(@RequestBody ReviewCommentVO comment, Authentication authentication) throws Exception {
 		//로그인 유저 데이터
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+		
+		log.info("서치데이터 뭔데 = " + comment.getReviewSeq());
 		
 		comment.setWriteId(principal.getUser().getLoginName());
 		comment.setMemAuth(principal.getUser().getLoginAuth());
@@ -193,9 +207,27 @@ public class ReviewController extends PrtController {
 		return ResponseEntity.status(responseVO.getHttpStatus()).body(responseVO);
 	}
 	
+	@ResponseBody
+	@PostMapping("recommend")
+	public ResponseEntity<ResponseVO> recommend(@RequestBody RecommendVO recommend) throws Exception {
+		log.info("추천수 ajax 진입 확인 = " + recommend);
+		//추천수 증가
+		_reviewBoardService.recommendProcess(recommend);
+		
+		int recommendCount = _reviewBoardService.reviewRecommendCount(recommend.getReviewSeq());
+		
+		ResponseVO responseVO = ResponseVO.builder()
+				.httpStatus(HttpStatus.OK)
+				.count(recommendCount)
+				.build();
+		
+		
+		return ResponseEntity.status(responseVO.getHttpStatus()).body(responseVO);
+	}
+	
 	
 //	@ResponseBody
-//	@GetMapping("")
+//	@PostMapping("")
 //	public ResponseEntity<ResponseVO> test(@RequestBody ReviewSearchVO search) throws Exception {
 //		//.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //		ResponseVO responseVO = ResponseVO.builder()

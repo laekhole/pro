@@ -88,9 +88,14 @@
          </div>
         </c:if>
          <div class="icon-love">
-           <i class="bi bi-hand-thumbs-up-fill recommend"></i>
+         	<c:if test="${!empty principal }">
+         		<a href="" id="recommend"><i class="bi bi-hand-thumbs-up-fill recommend"></i></a>
+         	</c:if>
+           	<c:if test="${empty principal }">
+           		<i class="bi bi-hand-thumbs-up-fill recommend"></i>
+           	</c:if>
          </div>
-         <span>${info.recomCount }</span>  
+         <span id="recommendCount">${info.recomCount }</span>  
  
          <div class="pt-5 comment-wrap">
            <h3 class="mb-5 heading" id="comment-count">${commentCount } Comments</h3>
@@ -114,7 +119,7 @@
            <div class="comment-form-wrap pt-5">
              <h3 class="mb-5" style="display: inline-block;">Leave a comment</h3>
              <a href="#" class="btn btn-primary btn-sm rounded px-2 py-2" style="float:right;">Top</a>
-             <form action="#" class="p-5 bg-light">
+             <form class="p-5 bg-light">
                <div class="form-group">
                  <label for="name">Name : </label>
                  <span>${principal.user.loginName }</span>
@@ -238,14 +243,15 @@ $(document).ready(function () {
         });
     }
     
-    $("#comment-write").on("click", () => {
+    $("#comment-write").on("click", (e) => {
+    	e.preventDefault();
     	const reviewSeq = "${search.reviewSeq}";
     	const param = {
     			reviewSeq: reviewSeq,
     			comContent: $("#message").val()
     	}
         $.ajax({
-            url: "/review/commentWrite", 
+            url: "/review/comment", 
             type: "POST",
             contentType: "application/json; charset=UTF-8",
 			data: JSON.stringify(param),
@@ -258,13 +264,49 @@ $(document).ready(function () {
 				const renderedcomment = tmpl.render(commentData);
 				  
 // 				const commentListHTML = $("#comment-form");
-// 				commentListHTML.empty();
+				$("#message").val("");
 				$("#comment-form").append(renderedcomment);
 				$("#comment-count").text(json.count + " Comments");
             }
         });
     	
     })
+    
+    $("#recommend").on("click", (e) => {
+    	e.preventDefault();
+        var recommendInt = "${recommendInt}";
+        console.log(recommendInt);
+        if (recommendInt > 0) {
+        	Swal.fire({
+        		  title: "이미 추천 하셨습니다.",
+        		  icon: "error"
+        		});
+        } else {
+	    	const param = {
+	    			memSeq: "${principal.user.memSeq}",
+	    			memAuth: "${principal.user.loginAuth}",
+	    			reviewSeq: "${search.reviewSeq}"
+	    	}
+	        $.ajax({
+	            url: "/review/recommend", 
+	            type: "POST",
+	            contentType: "application/json; charset=UTF-8",
+				data: JSON.stringify(param),
+				dataType: "json",
+	            success: function (json) {
+	            	
+	            	$("#recommendCount").text(json.count);
+	            	
+	            	$("#recommend").off("click"); // 클릭 이벤트 제거
+	                $("#recommend").addClass("disabled"); // 링크 비활성화 스타일 적용
+	                Swal.fire({
+	          		  title: "추천!",
+	          		  icon: "success"
+	          		});
+	            }
+	        });
+        }
+    });
     
 });
 

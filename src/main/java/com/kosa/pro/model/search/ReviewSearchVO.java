@@ -19,6 +19,10 @@ public class ReviewSearchVO extends SearchVO {
 	private String codeNumber;
 	private int reviewSeq;
 	
+	//유저정보
+	private int memSeq;
+	private String memAuth = "";
+	
 	//댓글 스크롤
 	private int start;
 	

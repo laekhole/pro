@@ -47,11 +47,19 @@
 		<include refid="paging.bottom" />
 	</select>
 	
+	<select id="selectByNew" resultMap="commentResultMap">
+		select * 
+		from review_comment r inner join member m
+		on r.mem_seq = m.mem_seq
+		where r.review_seq = #{reviewSeq}
+		order by comment_seq desc
+	</select>
+	
 	<insert id="insert">
 		insert into review_comment
-		(com_content, write_id, mem_seq, mem_auth)
+		(com_content, write_id, mem_seq, mem_auth, review_seq)
 		values
-		(#{comContent}, #{writeId}, #{memSeq}, #{memAuth})
+		(#{comContent}, #{writeId}, #{memSeq}, #{memAuth}, #{reviewSeq})
 	</insert>
 	
 	

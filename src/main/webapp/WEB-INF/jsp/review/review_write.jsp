@@ -144,7 +144,10 @@ document.querySelector('#write-button').addEventListener("click", e => {
     .then(response => response.json())
     .then(result => {
         console.log(result);
-        alert("업로드 확인");
+        Swal.fire({
+    		  title: "글 등록 완료!",
+    		  icon: "success"
+    		});
         
         window.location.href = "/review/list";
     });

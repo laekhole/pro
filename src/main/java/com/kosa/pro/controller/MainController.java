@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MainController extends PrtController {
 	
-	@RequestMapping("main")
+	@RequestMapping(value = {"/", "main"})
 	public String mainIndex(SearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 메인", model);
 		log.info(">>>>>>>>>>>>>>메인");

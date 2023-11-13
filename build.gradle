@@ -68,6 +68,11 @@ dependencies {
     implementation 'com.oracle.database.security:osdt_core'
 	
 	
+	//mqtt
+	implementation 'org.springframework.integration:spring-integration-core:5.5.0'
+    implementation 'org.springframework.integration:spring-integration-mqtt:5.5.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+	
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
