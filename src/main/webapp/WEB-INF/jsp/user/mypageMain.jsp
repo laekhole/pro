@@ -44,10 +44,10 @@
                   <div class="row" style="width:1300px; margin-bottom: 2rem;" >
                      <div class="col-md-11" >
                      <ul class="nav nav-pills nav-fill">
-                        <li class="nav-item">
+                        <li class="nav-item border rounded-2">
                           <a class="nav-link active" data-toggle="tab" href="#mapTab">지도</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border rounded-2">
                           <a class="nav-link" data-toggle="tab" href="#calendarTab">내 일정</a>
                         </li>
                       </ul>
