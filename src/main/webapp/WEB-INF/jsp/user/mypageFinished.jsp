@@ -22,19 +22,7 @@
                     <div class="col-lg-10" style="text-align: right;">
 						<%@ include file="/WEB-INF/jsp/include/searchformTemplate.jsp"%> 
                     </div>
-                    <div class="col-lg-10" style="text-align: right;">
-       		            <div class="d-flex justify-content-between">
-			               <div class="form-check">
-			                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-			                   <label class="form-check-label" for="flexCheckDefault"></label>
-			                   전체 선택
-			               </div>
-	                    
-	                        <div class="btn btn-secondary my-2 my-sm-0 ms-auto" style="width: 5rem;">
-	                            삭제
-	                        </div>
-           		         </div>
-                    </div>
+
                     <div class="col-lg-10">
                     
 			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
@@ -52,7 +40,8 @@
 			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 			                       </div>
 			                       <div class="btn-container">
-			                           <div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</div>
+			                       
+			                           <a href="#"><div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</div></a>
 			                           <div class="btn btn-secondary my-2 my-sm-0"> 평가<br>하기</div>
 			                       </div>
 			                   </div>
@@ -75,7 +64,7 @@
 										<p>${finished.recruitContent }</p>
 									</div>
 									<div class="btn-container">
-										<div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</a></div>
+										<a href="#"><div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</div></a>
 										<div class="btn btn-secondary my-2 my-sm-0"> 평가<br>하기</div>
 									</div>
 								</div>
@@ -96,8 +85,10 @@
 			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 			                       </div>
 			                       <div class="btn-container">
-			                           <div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</div>
-			                           <div class="btn btn-secondary my-2 my-sm-0"> 평가<br>하기</div>
+
+ 		                            <a href="#"><div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</div></a>   
+			                        <div class="btn btn-secondary my-2 my-sm-0"> 평가<br>하기</div>
+                              
 			                       </div>
 			                   </div>
 			               </div>

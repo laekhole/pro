@@ -31,19 +31,19 @@ public class MsgController extends PrtController {
 		return "msg";
 	}
 
-	// 4-1. 게시판 글 삭제
-	@ResponseBody
-	@RequestMapping(value = "/board/delete.do", method = RequestMethod.POST)
-	public Map<String,Object> delete(@RequestBody BoardDTO board, HttpServletRequest req, HttpServletResponse res) throws Exception {
-		System.out.println("board.controller.delete() invoked.");
-		Map<String,Object> jsonResult=new HashMap<>();
-		boolean status = boardService.boardDelete(board.getBoardid());
-		
-		jsonResult.put("status", status);
-		jsonResult.put("message", status ? "글이 삭제되었습니다" : "오류가 발생하였습니다. 다시 시도해주세요.");
-		
-		return jsonResult;
-	} // delete
+//	// 4-1. 게시판 글 삭제
+//	@ResponseBody
+//	@RequestMapping(value = "/board/delete.do", method = RequestMethod.POST)
+//	public Map<String,Object> delete(@RequestBody BoardDTO board, HttpServletRequest req, HttpServletResponse res) throws Exception {
+//		System.out.println("board.controller.delete() invoked.");
+//		Map<String,Object> jsonResult=new HashMap<>();
+//		boolean status = boardService.boardDelete(board.getBoardid());
+//		
+//		jsonResult.put("status", status);
+//		jsonResult.put("message", status ? "글이 삭제되었습니다" : "오류가 발생하였습니다. 다시 시도해주세요.");
+//		
+//		return jsonResult;
+//	} // delete
 
 	// 쪽지 작성, JS에서 비동기로 작업
 	@RequestMapping("/writeInForm")

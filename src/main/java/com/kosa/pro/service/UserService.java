@@ -14,20 +14,32 @@ import com.kosa.pro.service.common.BaseService;
 @Service
 public class UserService extends BaseService {
 	
-//	// [개인] 마이페이지 메인 화면 출력 메소드
-//	public Map<String, Object> userMain(ReviewSearchVO search) throws Exception {
-//		Map<String, Object> map = new HashMap<>();
-//		
-////		map.put("userInfo", (MemberVO) getDAO().selectOne("user.userInfo", search));
-////		map.put("volunteerList", (List<VolunteerProceedVO>) getDAO().selectList("personal.selectVolunteerProceedList", search, ));
-//		return map;
-//	}
+	// [개인] 마이페이지 메인 화면 출력 메소드
+	public Map<String, Object> userMain(SearchVO search) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		
+//		map.put("userInfo", (MemberVO) getDAO().selectOne("user.userInfo", search)); // 프사 획득하기
+		map.put("volunteerProceed", getDAO().selectOne("user.selectVolunteerProceed", search));
+		map.put("volunteerTime", getDAO().selectOne("user.selectVolunteerTime", search));
+		return map;
+	}
 	
-//	// 봉사활동 출근/퇴근 시 봉사활동 누적 총 시간(실제 시간) 업데이트
-//	public int timeRecord(ReviewSearchVO search) {
-//		return getDAO().update("personal.timeRecord", search);
-//	}
+	// 봉사활동 출석 시 데이터 insert. volunteer_proceed->volunteer_record
+	public int attend(SearchVO search) {
+		return getDAO().insert("user.volunteerAttend", search);
+	}
+	
+	// 봉사활동 종료 시 시간 업데이트
+	public int timeRecord(SearchVO search) {
+		return getDAO().update("user.timeRecord", search);
+	}
+	
+	// 봉사활동 종료 시 시간 업데이트
+	public int updateTemperature(SearchVO search) {
+		return getDAO().update("user.updateTemperature", search);
+	}
 
+	
 	// [개인] 종료된 봉사
 	public Map<String, Object> finishedList(SearchVO search) {
 		Map<String, Object> map = new HashMap<>();
