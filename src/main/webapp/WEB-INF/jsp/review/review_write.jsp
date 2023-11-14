@@ -149,9 +149,9 @@ document.querySelector('#write-button').addEventListener("click", e => {
         Swal.fire({
     		  title: "글 등록 완료!",
     		  icon: "success"
+    		}).then(() => {
+    			window.location.href = "/review/list";
     		});
-        
-        window.location.href = "/review/list";
     });
     
     
@@ -177,16 +177,25 @@ $("#categorySelect").on("change", function() {
 
 
 let timer = setTimeout(function() {
-    alert("시간이 만료되었습니다.");
-    window.location.href = "/review/list"; 
+    Swal.fire({
+		  title: "시간이 만료되었습니다.",
+		  icon: "error"
+		}).then(() => {
+			window.location.href = "/review/list"; 
+		});
+    
 }, 10 * 60 * 1000); // 10분 
 
 // 사용자의 상호 작용을 감지하면 타이머 재설정
 document.addEventListener("mousemove", function() {
     clearTimeout(timer); // 이전 타이머 제거
     timer = setTimeout(function() {
-        alert("시간이 만료되었습니다.");
-        window.location.href = "/review/list";
+        Swal.fire({
+  		  title: "시간이 만료되었습니다.",
+  		  icon: "error"
+  		}).then(() => {
+  			window.location.href = "/review/list"; 
+  		});
     }, 10 * 60 * 1000); // 10분 
 });
 	

@@ -21,6 +21,13 @@
 		where code_group = #{groupCode}
 	</select>
 	
+	<select id="selectGroupList" resultType="MasterCodeVO">
+		select code_group
+		from master_code
+        group by code_group
+        order by code_group
+	</select>
+	
 	<!-- 카테고리 이름 가져오기 -->
 	<select id="selectCodeName" parameterType="ReviewSearchVO" resultType="MasterCodeVO">
 		select
