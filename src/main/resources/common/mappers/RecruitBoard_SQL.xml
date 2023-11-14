@@ -32,7 +32,7 @@
 		,VOLUN_ADDR
         ,LATITUDE
         ,LONGITUDE
-        
+<!--         trunc(volun_start_date) = trunc(sysdate) -->
 	</sql>
 	
 	<sql id="whereClause">
@@ -91,8 +91,7 @@
 			recruit_seq = #{recruitSeq}
 	</select>
 	
-	
-	<!-- 봉사 신청 게시판 글 작성 하기 -->
+
 <insert id="insertRecruit">
     <selectKey keyProperty="recruitSeq" resultType="int" order="BEFORE">
         select RECRUIT_BOARD_SEQ.NEXTVAL recruit_seq from dual
@@ -147,6 +146,7 @@
 </insert>
 
 
+	
 	
 	
 	<!-- 봉사 신청 게시판 글 수정하기 -->
