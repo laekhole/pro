@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 마이페이지(단체) 게시판
  * 
- * @author kky
+ * @author 
  *
  */
 @Service

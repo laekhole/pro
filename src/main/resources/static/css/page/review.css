@@ -179,7 +179,7 @@ td {
 
 .recommend-list {
 	font-size: 30px;
-	color: black;
+	color: #5b975b;
 }
 
 .notification-badge {
@@ -201,7 +201,7 @@ td {
 }
 
 .icon-love:hover .recommend {
-	color: blue;
+	color: #5b975b;
 }
 
 .icon-container:hover .icon-message {

@@ -15,9 +15,9 @@
 	    
         <div class="list-group list-group-flush">
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">마이 페이지</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 글 작성</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 목록/ 승인 및 거절</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">진행 중인 봉사</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState">신청 목록/ 승인 및 거절</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList">진행 중인 봉사</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">봉사활동 후기글</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">캘린더 관리</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">개인 정보 및 프로필 수정</a>
@@ -33,7 +33,7 @@
                <br>
                <br>
                <div class="search_section">
-                  <form action="/recruit/register" method="post">
+<!--                   <form action="/recruit/register" method="post"> -->
                      <div class="form-css">
                         <br>
       
@@ -54,23 +54,20 @@
                                           <td><span><input type="date"  class="form-keyword" id="volun_start_date" name="volunStartDate"></span>~<span><input type="date"  class="form-keyword" id="volun_end_date" name="volunEndDate"></span></td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사분야</th>
                                           <td>
-                                             <select class="form-select" id="volun_code" name="volunCode" title="활동분야 선택">
-                                                <option value="">선택</option>
-                                                <option value="0010">시설봉사</option>
-                                                <option value="0020">재가봉사</option>
-                                                <option value="0030">전문봉사</option>
-                                                <option value="0040">지역사회봉사</option>
-                                                <option value="0050">금,물품봉사</option>
-                                                <option value="0060">해외봉사</option>
-                                                <option value="0070">헌혈</option>
-                                                <option value="0080">기타봉사</option>
-                                             </select>
+                                          
+                                        <select class="form-select" id="categorySelect">
+											<option value="">선택</option>
+										  <c:forEach var="category" items="${groupCodeList }">
+										  	<option value="${category.codeNumber }">${category.codeName }</option>
+										  </c:forEach>
+										</select>
+										
                                           </td>
                                        </tr>
                                        <tr>
                                           <!-- 봉사단체는 로그인한 닉네임 바로가져올거임 -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사단체</th>
-                                          <td><input type="text" class="form-keyword" id="group_name" name="groupName"></td>
+                                          <td>${principal.user.loginName }</td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사시간</th>
                                           <td><span><input type="number" id=volun_time  name="volunTime"></span></td>
                                        </tr>
@@ -144,15 +141,6 @@
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>이메일</th>
                                           <td><input type="text" class="form-keyword" id="email" name="email"></td>
                                        </tr>
-                                       
-                                       <tr>
-                                          <!-- 모집상태  -->
-                                          <th><span style="color:rgb(255, 97, 97);">·  </span>모집상태</th>
-                                          <td><input type="text" class="form-keyword" id="recruit_state" name="recruitState" value="모집중"></td>
-                                          <th><span style="color:rgb(255, 97, 97);">·  </span></th>
-                                          <td><input type="hidden" class="form-keyword" id="group_mem_seq" name="groupMemSeq" value="1"></td>
-                                       </tr>
-                  
                                     </table>
       
                                     <br>
@@ -164,14 +152,17 @@
                                        <br>
                                        <br>
                                        <div class="contents-frame">
-                                          <textarea name="recruitContent" id="recruit_content" placeholder="내용" style="border-radius: 4px;"></textarea>
+                                        <form id="mForm" method="post">
+											<input type="hidden" id="tableName" name="tableName" value="${search.tableName }">
+											<textarea id="editor" name="editor"></textarea><br/>
+										</form>
                                        </div>
                                     </div>
                                     <br>
                                     <br>
                                     <!-- 신청하기 버튼 -->
                                     <div class="btn-frame">
-                                       <button class="btn" onclick="registerBtn()" type="submit">등록</button>
+                                       <button class="btn" id="recruit-write">등록</button>
                                        <button class="btn">취소</button>
                                     </div>
       
@@ -184,7 +175,7 @@
                      </div>
                      </div>
                   </div>
-                  </form>
+<!--                   </form> -->
                </div>
             </div>
          </div>
@@ -195,17 +186,107 @@
    </div>
 				
 <script>
+let editor;
+ClassicEditor
+.create(document.querySelector('#editor'),{
+	ckfinder: {
+		uploadUrl : '/imageUpload?token=${token}&tableName=${search.tableName }'
+	}
+})
+.then(editor => {
+	console.log('Editor was initialized');
+	window.editor = editor;
+	writeeditorValue = editor;
+})
+.catch(error => {
+	console.error(error);
+});
 
 
-  /* 위지윅 적용 */
-        ClassicEditor
-              .create(document.querySelector('#recruit_content'))
-              .catch(error=>{
-                    console.error(error);
-              });
+document.querySelector('#recruit-write').addEventListener("click", e => {
+	e.preventDefault();
+	const formData = new FormData();
+	
+	const volunStartDate = document.querySelector("#volun_start_date").value;
+	const volunEndDate = document.querySelector("#volun_end_date").value;
+	const volunTime = document.querySelector("#volun_time").value;
+	const volunAddr = document.querySelector("#volun_addr").value;
+	const latitude = document.querySelector("#latitude").value;
+	const longitude = document.querySelector("#longitude").value;
+	const volunTarget = document.querySelector("#volun_target").value;
+	const memCount = document.querySelector("#mem_count").value;
+	const recruitStartDate = document.querySelector("#recruit_start_date").value;
+	const recruitEndDate = document.querySelector("#recruit_end_date").value;
+	const manager = document.querySelector("#manager").value;
+	const phone = document.querySelector("#phone").value;
+	const email = document.querySelector("#email").value;
+	const title = document.querySelector("#recruit_title").value;
+	
+	
+	
+	const selectedCategory = $("#categorySelect").find("option:selected");
+    if (selectedCategory) {
+        const CategoryValue = selectedCategory.text();
+        formData.append("volunCode", CategoryValue);
+    }
+    const selectedRegion1 = $("#volun_region1").find("option:selected");
+    if (selectedRegion1) {
+    	const Region1Value = selectedRegion1.text();
+    	formData.append("volunRegion1", Region1Value);
+    }
+    const selectedRegion2 = $("#volun_region2").find("option:selected");
+    if (selectedRegion2) {
+    	const Region2Value = selectedRegion2.text();
+    	formData.append("volunRegion2", Region2Value);
+    }
+	
+	
+	const tableName = document.querySelector("#tableName").value;
+	const token = "${token}";
+	editorValue = writeeditorValue.getData();
+	
+	
+    formData.append('editor', editorValue);
+    formData.append('tableName', tableName);
+    formData.append('token', token);
+
+    formData.append('volunStartDate', volunStartDate);
+    formData.append('volunEndDate', volunEndDate);
+    formData.append('volunTime', volunTime);
+    formData.append('volunAddr', volunAddr);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+    formData.append('volunTarget', volunTarget);
+    formData.append('memCount', memCount);
+    formData.append('recruitStartDate', recruitStartDate);
+    formData.append('recruitEndDate', recruitEndDate);
+    formData.append('manager', manager);
+    formData.append('phone', phone);
+    formData.append('email', email);
+    formData.append('recruitTitle', title);
+    
+    // 서버로 데이터 전송
+    fetch("/recruit/write", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+        Swal.fire({
+    		  title: "글 등록 완료!",
+    		  icon: "success"
+    		});
+        
+        window.location.href = "/recruit/list";
+    });
+    
+    
+});
 
 </script> 
 <script>
+$("#recruit-write").on()
   function registerBtn() {
 	  alert("등록되었습니다.");
 	  
