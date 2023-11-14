@@ -5,7 +5,7 @@
    <!-- Sidebar -->
    <div class="d-flex" id="wrapper">
       <!-- Sidebar-->
-      <div class="col-md-2 col-lg-3 col-xl-2 border-end bg-white" id="sidebar-wrapper">
+      <div class="col-md-2 col-lg-3 col-xl-2 border-end bg-white " id="sidebar-wrapper">
             <div class="list-group list-group-flush border-top">
                   <a id="myMain" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/' />">마이 페이지</a>
                   <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="#">즐겨찾기 목록</a>
@@ -27,14 +27,18 @@
     	    var myFinish = document.getElementById('myFinish');
     	    var myReview = document.getElementById('myReview');
 
-    	    if (pageName === 'list') {
-    	        myList.style.backgroundColor = '#3ab41cb5';
-    	    } else if (pageName === 'finish') {
-    	        myFinish.style.backgroundColor = '#3ab41cb5';
-    	    } else if (pageName === 'main') {
-    	        myMain.style.backgroundColor = '#3ab41cb5';
-    	    } else if (pageName === 'review') {
-    	        myReview.style.backgroundColor = '#3ab41cb5';
-    	    }
+            if (pageName === 'list') {
+                myList.classList.add('text-light');
+                myList.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'finish') {
+                myFinish.classList.add('text-light');
+                myFinish.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'main') {
+                myMain.classList.add('text-light');
+                myMain.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'review') {
+                myReview.classList.add('text-light');
+                myReview.style.backgroundColor = '#3ab41cb5';
+            }
     	});
       </script>

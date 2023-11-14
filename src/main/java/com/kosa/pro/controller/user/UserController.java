@@ -38,8 +38,6 @@ public class UserController extends PrtController {
 		model.addAttribute("temperature", map.get("volunteerTime")); // 봉사 온도 획득 용도
 		model.addAttribute("timeinout", map.get("volunteerRecord")); // 타임인 타임아웃 시간 획득 용도
 		
-		
-//		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 		return "user/mypageMain";
 	}
 
@@ -57,7 +55,7 @@ public class UserController extends PrtController {
 	@RequestMapping("/recordUpdate")
 	public void recordUpdate(SearchVO search, Model model) throws Exception {
 		log.info(">>>>>>>>>>>>>>record 테이블 시간 업데이트");
-		_userService.timeRecord(search);
+		_userService.recordUpdate(search);
 		}
 
 	@RequestMapping("/finished")
@@ -65,19 +63,12 @@ public class UserController extends PrtController {
 		super.setPageSubTitle("봉사커뮤니티 종료된 봉사", model);
 		log.info(">>>>>>>>>>>>>>개인 종료된 봉사");
 		search.setRecordCount(5);
-<<<<<<< HEAD
-
-=======
 		log.info("시퀀스 오냐 = " + search.getMemSeq());
->>>>>>> branch 'develop' of https://github.com/laekhole/pro.git
+
 		Map<String, Object> map = _userService.finishedList(search);
 		model.addAttribute("list", map.get("finishedList"));
-<<<<<<< HEAD
-
-=======
 		model.addAttribute("search", search);
 		
->>>>>>> branch 'develop' of https://github.com/laekhole/pro.git
 		return "user/mypageFinished";
 	}
 

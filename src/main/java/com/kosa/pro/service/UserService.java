@@ -30,9 +30,9 @@ public class UserService extends BaseService {
 		return getDAO().insert("user.volunteerAttend", search);
 	}
 	
-	// 봉사활동 종료 시 시간 업데이트
-	public int timeRecord(SearchVO search) {
-		return getDAO().update("user.timeRecord", search);
+	// 봉사활동 종료 시 시간 업데이트 // 봉사활동 종료 시 퇴근 찍으면 timeout 찍히는 용도
+	public int recordUpdate(SearchVO search) {
+		return getDAO().update("user.recordUpdate", search); 
 	}
 	
 	// 봉사활동 종료 시 시간 업데이트

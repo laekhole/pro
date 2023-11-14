@@ -72,7 +72,7 @@
                                     <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> IN</h5>
-                                          <p class="card-text" style="text-align:right">날짜 및 시간</p>
+                                          <p class="card-text" id="arrivalDateTime" style="text-align:right">날짜 및 시간</p>
                                           <p class="card-text" id="arrival" style="text-align:right">${timeinout.timein}</p>
                                        </div>
                                     </div>
@@ -80,8 +80,8 @@
                                     <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
-                                          <p class="card-text" style="text-align:right">날짜 및 시간</p>
-                                          <p class="card-text" id="departure" style="text-align:right">${timeinout.timeout}</p>
+                                          <p class="card-text" id="departureDateTime" style="text-align:right">날짜 및 시간</p>
+                                          <p class="card-text" id="departure" style="text-align:right">${timeinout.timeout }</p>
                                        </div>
                                     </div>
             
@@ -150,6 +150,7 @@
       <script>
 
       
+      
 	  // 봉사활동 센터 위치 얻기 위한 함수
       function getInfo() {
          // 지도의 현재 중심좌표를 얻어옵니다 
@@ -192,6 +193,7 @@
 
       ////////////// 지도 표시 api //////////////
       // 금일 봉사의 좌표를 동적으로 받아오기 위해 좌표 선언
+      // 금일 봉사 없을 땐 지도가 깨짐
    	  var latitude = document.getElementById('latitude').value;
   	  var longitude = document.getElementById('longitude').value;
     
@@ -306,6 +308,25 @@
                 });
         }
         
+        function finishCheck() {
+            // 서버에 출석 체크 요청을 보내는 비동기 요청
+            fetch('<c:url value="/user/recordUpdate" />')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('서버 오류');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('퇴근 체크 성공:', data);
+                    // 여기서 필요한 UI 업데이트 등을 수행
+                })
+                .catch(error => {
+                    console.error('에러 발생:', error);
+                    // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+                });
+        }
+        
         
         
         // 버튼 클릭 시 시간 기록 및 출석 체크
@@ -313,17 +334,22 @@
             if (this.classList.contains('btn-secondary')) {
                 if (document.getElementById('arrival').textContent.trim() === '') {
                     document.getElementById('arrival').textContent = await getKoreanStandardTime();
-                    
                     // 시간 기록 후 출석 체크 함수 호출
                     attendCheck();
                 } else {
                     if (document.getElementById('departure').textContent.trim() === '') {
                         document.getElementById('departure').textContent = await getKoreanStandardTime();
+                    	// 시간 기록 후 퇴근 체크 함수 호출
+                        finishCheck();
                     }
                 }
 
             }
         });
+        
+        
+        
+        
 
         // sysdate를 한국 표준시로 얻기
         async function getKoreanStandardTime() {
@@ -331,6 +357,38 @@
             const koreanDate = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
             return koreanDate;
         }
+      
+
+        // 데이터가 있는지 확인하고 적절한 내용으로 변경하는 함수
+        function updateArrivalDeparture() {
+            const arrivalElement = document.getElementById('arrival');
+            const departureElement = document.getElementById('departure');
+
+            const arrivalDataTimeElement = document.getElementById('arrivalDateTime');
+            const departureDataTimeElement = document.getElementById('departureDateTime');
+
+            // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
+            if (arrivalElement.innerText.trim() != '') {
+                arrivalDataTimeElement.innerHTML = '출석하셨습니다. 고맙습니다!';
+                arrivalElement.innerHTML = '보람찬 봉사, 감사합니다! <i class="bi bi-thermometer"></i>';
+            }
+
+            // Departure 데이터가 있으면 업데이트, 없으면 기본값으로 유지
+            if (departureElement.innerText.trim() !== '') {
+                departureDataTimeElement.innerHTML = '끝마쳤습니다. 고맙습니다!';
+                departureElement.innerHTML = '덕분에 더 따뜻해졌어요! <i class="bi bi-thermometer-sun"></i>';
+            }
+        }
+        
+        // 페이지 로드 시 실행
+        window.onload = function () {
+            // 데이터 업데이트 함수 호출
+            updateArrivalDeparture();
+        };
+        
+        
+
+        
         
       
 //             console.log("if문 안에 함수 안에 userlon"+userlon);
