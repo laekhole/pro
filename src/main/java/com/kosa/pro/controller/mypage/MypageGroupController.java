@@ -5,17 +5,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosa.pro.config.auth.PrincipalDetails;
 import com.kosa.pro.controller.PrtController;
 import com.kosa.pro.model.RecruitBoardVO;
 import com.kosa.pro.model.VolunteerProceedVO;
+import com.kosa.pro.model.VolunteeringVO;
+import com.kosa.pro.model.auth.LoginMember;
 import com.kosa.pro.model.search.BoardSearchVO;
 import com.kosa.pro.service.MypageGroupService;
 import com.kosa.pro.service.RecruitBoardService;
@@ -46,10 +51,25 @@ public class MypageGroupController extends PrtController {
 	
 	// 1. 마이 페이지(메인)
 	@GetMapping("/main")
-	public String main(BoardSearchVO search, Model model) throws Exception {
+	public String main(@RequestParam int groupSeq, BoardSearchVO search, Model model, Authentication authentication) throws Exception {
 		super.setPageSubTitle("봉사활동 등록 페이지", model);
-		log.info(">>>>>>>>>>>>>>단체 메인페이지");
-//		model.addAttribute("test", getConfig().getAdminName());
+
+		
+		/*GroupMemberVO member, 
+		 * Map<String, List<GroupMemberVO>> map1 = _mypageGroupService.memberVO(member);
+		 * 
+		 * model.addAttribute("main", map1.get("member"));
+		 */
+		/* model.addAttribute("member", authentication.); */
+		
+		if (authentication != null) {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			if (principalDetails != null) {
+				LoginMember loginMember = principalDetails.getUser();
+				model.addAttribute("loginMember", loginMember);
+			}
+		}
+		
 		return "mypage/group/mypage_main";
 		
 	}
@@ -74,8 +94,10 @@ public class MypageGroupController extends PrtController {
 	
 	// 3. 신청 목록/승인 및 거절
 	@GetMapping("/updateState")
-	public String updateState(VolunteerProceedVO proceed, Model model) throws Exception {
+	public String updateState(@RequestParam int groupSeq, VolunteerProceedVO proceed, Model model) throws Exception {
 		super.setPageSubTitle("봉사활동 신청목록관리 승인/거절 페이지", model);
+		
+		proceed.setGroupMemSeq(groupSeq);
 		
 		Map<String, List<VolunteerProceedVO>> map1 = _mypageGroupService.volunteerProceedList(proceed);
 		Map<String, List<VolunteerProceedVO>> map2 = _mypageGroupService.approve(proceed);
@@ -142,14 +164,15 @@ public class MypageGroupController extends PrtController {
 	
 	// 4-1. 진행 중인 봉사 목록(당일, 일주일 내)
 	@GetMapping("/volunteeringList")
-	public String volunteeringList(BoardSearchVO search, Model model) throws Exception {
+	public String volunteeringList(@RequestParam int groupSeq, RecruitBoardVO vo, BoardSearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("진행 중인 봉사 목록 페이지", model);
 		log.info(">>>>>>>>>>>>>>진행 중인 봉사 목록 페이지");
 		
 		try {
+			vo.setGroupMemSeq(groupSeq);
 			
 			// 4-1-1. 당일 봉사활동 목록
-			Map<String, List<RecruitBoardVO>> map1 = _mypageGroupService.selectVolunteeringList(search);
+			Map<String, List<RecruitBoardVO>> map1 = _mypageGroupService.selectVolunteeringList(vo);
 			model.addAttribute("today", map1.get("today")); 
 			
 			System.out.println("map1 : " + map1);
@@ -157,7 +180,7 @@ public class MypageGroupController extends PrtController {
 			System.out.println("전달잘됐나1");
 			
 			// 4-1-2. 일주일 이내 봉사활동 목록
-			Map<String, List<RecruitBoardVO>> map2 = _mypageGroupService.selectVolunteeringListWithinAWeek(search);
+			Map<String, List<RecruitBoardVO>> map2 = _mypageGroupService.selectVolunteeringListWithinAWeek(vo);
 			model.addAttribute("withinAWeek", map2.get("withinAWeek"));
 			
 			System.out.println("map2 : " + map2);
@@ -179,6 +202,8 @@ public class MypageGroupController extends PrtController {
 	    super.setPageSubTitle("진행 중인 봉사 상세 페이지", model);
 	    log.info(">>>>>>>>>>>>>>진행 중인 봉사 상세 페이지");
 
+		/* vo.setGroupMemSeq(groupSeq); */
+	    
 	    try {
 	    	
 	    	Map<String, List<VolunteerProceedVO>> map =  _mypageGroupService.volunteering(vo);
@@ -201,9 +226,14 @@ public class MypageGroupController extends PrtController {
 	
 	// 5. 봉사활동 후기 글
 	@GetMapping("/review")
-	public String review(BoardSearchVO search, Model model) throws Exception {
+	public String review(@RequestParam int groupSeq, BoardSearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사활동 후기 페이지", model);
 		log.info(">>>>>>>>>>>>>>단체 봉사활동 후기 글");
+		
+		/*
+		 * vo.setGroupMemSeq(groupSeq);
+		 */
+		
 //		model.addAttribute("test", getConfig().getAdminName());
 		return "mypage/group/mypage_review_list";
 		
@@ -211,7 +241,7 @@ public class MypageGroupController extends PrtController {
 	
 	// 6. 캘린더 관리
 	@GetMapping("/calendar")
-	public String calender(BoardSearchVO search, Model model) throws Exception {
+	public String calender(@RequestParam int groupSeq, BoardSearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("캘린더 페이지", model);
 		log.info(">>>>>>>>>>>>>>단체 캘린더");
 //		model.addAttribute("test", getConfig().getAdminName());
@@ -221,7 +251,7 @@ public class MypageGroupController extends PrtController {
 	
 	// 7. 개인 정보 및 프로필 수정
 	@GetMapping("/profile")
-	public String profile(BoardSearchVO search, Model model) throws Exception {
+	public String profile(@RequestParam int groupSeq,BoardSearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("단체 개인 정보 및 프로필 수정 페이지", model);
 		log.info(">>>>>>>>>>>>>>단체 개인 정보 및 프로필 수정");
 //		model.addAttribute("test", getConfig().getAdminName());

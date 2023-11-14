@@ -113,7 +113,7 @@
 										<li><a href="/admin/adminmain">관리자페이지</a></li>
 									</c:when>
 									<c:when test="${principal.user.loginAuth eq 'MANAGER' }">
-										<li><a href="/manager/updateState">단체마이페이지</a></li>
+										<li><a href="/manager/updateState?groupSeq=${principal.user.memSeq}">단체마이페이지</a></li>
 									</c:when>
 									<c:otherwise>
 										<li><a href="/user/main">마이페이지</a></li>
