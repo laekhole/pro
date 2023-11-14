@@ -30,27 +30,25 @@
            <table class="table-review">
              <tr>
                <th>봉사기간</th>
-               <td>2023-10-21 ~ 2023-10-29</td>
+               <td>${recruit.volunStartDate } ~ ${recruit.volunEndDate }</td>
                <th>봉사분야</th>
-               <td>시설봉사</td>
+               <td>${recruit.volunCode }</td>
              </tr>
              <tr>
                <th>봉사단체</th>
-               <td>혜화불주먹해적단</td>
+               <td>${recruit.groupName }</td>
                <th>봉사시간</th>
-               <td>8시간</td>
+               <td>${recruit.volunTime }</td>
              </tr>
              <tr>
                <th>봉사지역</th>
-               <td>서울시 종로구</td>
+               <td>${recruit.volunRegion1 } ${recruit.volunRegion2 }</td>
                <th>봉사장소</th>
-               <td>혜화역</td>
+               <td>${recruit.volunAddr }</td>
              </tr>
              <tr>
                <th>봉사대상</th>
-               <td>부족한친구들</td>
-               <th>뭐넣지</th>
-               <td>데이터</td>
+               <td colspan="3">${recruit.volunTarget }</td>
              </tr>
 
            </table>

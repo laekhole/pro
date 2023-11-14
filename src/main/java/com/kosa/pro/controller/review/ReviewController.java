@@ -93,6 +93,7 @@ public class ReviewController extends PrtController {
 		model.addAttribute("commentList", map.get("commentList"));
 		model.addAttribute("commentCount", map.get("commentCount"));
 		model.addAttribute("recommendInt", map.get("recommend"));
+		model.addAttribute("recruit", map.get("recruit"));
 		model.addAttribute("search", search);
 		
 		log.info("이미추천한수 카운트 = " + map.get("recommend"));
@@ -108,6 +109,7 @@ public class ReviewController extends PrtController {
 		search.setTableName("review");
 		Map<String, Object> map = _reviewBoardService.reviewWriteForm(search);
 		
+		model.addAttribute("recruit", map.get("recruit"));
 		model.addAttribute("categoryList", map.get("categoryList"));
 		model.addAttribute("search", search);
 		model.addAttribute("token", token);
@@ -136,7 +138,9 @@ public class ReviewController extends PrtController {
 		log.info("회원 데이터 체크 = " + mem);
 		
 		//insert 데이터 구성(봉사게시판번호, 글제목, 글내용, 작성자, 이미지파일번호, 회원번호)
-		ReviewBoardVO reviewBoard = ReviewBoardVO.of(0, search.getTitle(), editorValue, principal.getUser().getLoginName(), 0, mem.getMemSeq());
+		ReviewBoardVO reviewBoard = ReviewBoardVO.of(search.getRecruitSeq(), search.getTitle(), editorValue, principal.getUser().getLoginName(), 0, mem.getMemSeq());
+		
+		log.info("구성된 리뷰보드 = " + reviewBoard);
 		int refSeq = _reviewBoardService.reviewInsert(reviewBoard);
 		
 		search.setRefSeq(String.valueOf(refSeq));

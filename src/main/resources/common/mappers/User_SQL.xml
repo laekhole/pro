@@ -30,13 +30,16 @@
    </select>
      -->
 
-    <select id="selectFinishedList" resultType="RecruitBoardVO"> 
+    <select id="selectFinishedList" resultType="RecruitBoardVO">
+    	<include refid="paging.top" /> 
 		select
 		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
 		    TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
 		    r.recruit_title, 
 		    r.recruit_content, 
-		    r.group_name 
+		    r.group_name,
+		    r.recruit_seq,
+		    r.group_mem_seq
 		from 
 		    recruit_board r 
 		join
@@ -44,7 +47,8 @@
 		join 
 		    member m ON vr.mem_seq = m.mem_seq  
 		where 
-		    m.mem_seq = 1
+		    m.mem_seq = #{memSeq}
+		<include refid="paging.bottom" />
    </select> 
 
 
