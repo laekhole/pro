@@ -33,8 +33,9 @@ public class UserController extends PrtController {
 		super.setPageSubTitle("봉사커뮤니티 마이페이지", model);
 		log.info(">>>>>>>>>>>>>>개인 메인");
 		Map<String, Object> map = _userService.userMain(search);
-		model.addAttribute("todayProceed", map.get("volunteerProceed"));
-		model.addAttribute("temperature", map.get("volunteerTime"));
+		model.addAttribute("todayProceed", map.get("volunteerProceed")); // 진행중 봉사 획득 용도
+		model.addAttribute("temperature", map.get("volunteerTime")); // 봉사 온도 획득 용도
+		model.addAttribute("timeinout", map.get("volunteerRecord")); // 타임인 타임아웃 시간 획득 용도
 		
 		
 //		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");

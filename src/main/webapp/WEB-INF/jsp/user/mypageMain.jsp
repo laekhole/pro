@@ -15,7 +15,7 @@
                <div class="row" style="width: 1300px; height: 16rem; margin-bottom: 2rem;">
                   <div class="col-md-2">
                      <img src="images/person_1.jpg" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
-                     <div class="btn btn-secondary my-2 my-sm-0"  style="width:100%">변경</div>
+
                      <div class="col-md-2border" style="margin: 0;"><i class="bi bi-thermometer-high"></i>${temperature.volunHeat}</div>
                  </div>
                   <div class="col-md-6">
@@ -73,7 +73,7 @@
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> IN</h5>
                                           <p class="card-text" style="text-align:right">날짜 및 시간</p>
-                                          <p class="card-text" id="arrival" style="text-align:right"></p>
+                                          <p class="card-text" id="arrival" style="text-align:right">${timeinout.timein}</p>
                                        </div>
                                     </div>
             
@@ -81,7 +81,7 @@
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
                                           <p class="card-text" style="text-align:right">날짜 및 시간</p>
-                                          <p class="card-text" id="departure" style="text-align:right"></p>
+                                          <p class="card-text" id="departure" style="text-align:right">${timeinout.timeout}</p>
                                        </div>
                                     </div>
             

@@ -19,8 +19,9 @@ public class UserService extends BaseService {
 		Map<String, Object> map = new HashMap<>();
 		
 //		map.put("userInfo", (MemberVO) getDAO().selectOne("user.userInfo", search)); // 프사 획득하기
-		map.put("volunteerProceed", getDAO().selectOne("user.selectVolunteerProceed", search));
-		map.put("volunteerTime", getDAO().selectOne("user.selectVolunteerTime", search));
+		map.put("volunteerProceed", getDAO().selectOne("user.selectVolunteerProceed", search)); // 진행중 봉사 획득 용도
+		map.put("volunteerTime", getDAO().selectOne("user.selectVolunteerTime", search)); // 봉사 온도 획득 용도
+		map.put("volunteerRecord", getDAO().selectOne("user.volunteerRecord", search)); // 타임인 타임아웃 시간 획득 용도
 		return map;
 	}
 	
