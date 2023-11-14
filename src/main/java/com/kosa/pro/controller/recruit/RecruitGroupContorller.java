@@ -7,9 +7,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +20,7 @@ import com.kosa.pro.config.auth.PrincipalDetails;
 import com.kosa.pro.controller.PrtController;
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.RecruitBoardVO;
+import com.kosa.pro.model.VolunteerProceedVO;
 import com.kosa.pro.model.ReviewBoardVO;
 import com.kosa.pro.model.search.BoardSearchVO;
 import com.kosa.pro.model.search.RecruitSearchVO;
@@ -57,6 +60,7 @@ public class RecruitGroupContorller extends PrtController {
 	}
 	
 	
+	
 	// 봉사활동 - 상세페이지
 	@GetMapping("/detail")
 	public String recruitDetail(RecruitBoardVO recruit, Model model) throws Exception {
@@ -67,6 +71,42 @@ public class RecruitGroupContorller extends PrtController {
 		
 		return "recruit/recruit_detail";
 	}
+	
+	
+	// 봉사활동 - 신청하는 메서드
+	@ResponseBody
+	@PostMapping("/add") 
+	@Transactional
+	public Map<String, Object> add(@RequestBody VolunteerProceedVO add, Model model) throws Exception {
+	    super.setPageSubTitle("봉사활동 상세페이지", model);
+	    log.info(">>>>>>>>>>>>>> 봉사활동 신청하기");
+
+	    Map<String, Object> result = new HashMap<>();
+
+	    // 이미 신청한 상태 확인
+	    int count = _recruitBoardService.insertAddCk(add);
+	    System.out.println("신청가능여부 : " + count);
+
+	    if (count < 1) {
+	        // 조회 0건이면 신청하지 않은 상태이므로 신청 가능
+	        int status = _recruitBoardService.add(add);
+
+	        if (status > 0) {
+	            result.put("status", true);
+	            result.put("message", "봉사신청이 완료되었습니다.");
+	        } else {
+	            result.put("status", false);
+	            result.put("message", "오류가 발생했습니다. 다시 시도해주세요.");
+	        }
+	    } else {
+	        // 조회 1건 이상이면 이미 신청된 상태
+	        result.put("status", false);
+	        result.put("message", "이미 신청되었습니다.");
+	    }
+
+	    return result;
+	}
+
 	
 	
 // ============================ 마이페이지 내 있는 신청글 작성 부분 ============================
@@ -118,6 +158,21 @@ public class RecruitGroupContorller extends PrtController {
 	
 	
 	// 봉사활동 - 신청 등록
+	@ResponseBody
+	@PostMapping("/register")
+	public String recruitRegister(RecruitBoardVO recruit, Model model) throws Exception {
+		super.setPageSubTitle("봉사활동 등록 페이지", model);
+		log.info(">>>>>>>>>>>>>>봉사신청 등록하기 - POST");
+		
+		try {
+			int success = _recruitBoardService.recruitInsert(recruit);
+			log.info("봉사활동 등록 성공 여부 : ", success);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/recruit/list";
+	} // recruitRegister
 //	@PostMapping("/register")
 //	public String recruitRegister(RecruitBoardVO recruit, Model model) throws Exception {
 //		super.setPageSubTitle("봉사활동 등록 페이지", model);
@@ -135,6 +190,8 @@ public class RecruitGroupContorller extends PrtController {
 	
 	
 	
+
+
 	
 //	--> 시연 안 할 것은 구현안해도 됨
 //	

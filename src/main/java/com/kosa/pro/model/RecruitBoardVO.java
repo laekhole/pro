@@ -1,5 +1,7 @@
 package com.kosa.pro.model;
 
+import java.sql.Date;
+
 import com.kosa.pro.model.general.GeneralModel;
 
 import lombok.AllArgsConstructor;
@@ -21,20 +23,20 @@ public class RecruitBoardVO implements GeneralModel {
 	private String volunRegion1;	// 봉사 지역
 	private String volunRegion2;	// 봉사 지역
 	private String volunAddr;		// 봉사 장소
-	private String volunStartDate;	// 봉사 시작일
-	private String volunEndDate;	// 봉사 종료일
+	private Date volunStartDate;	// 봉사 시작일
+	private Date volunEndDate;		// 봉사 종료일
 	private String recruitState;	// 모집 현황(모집중/모집종료/종료)
 	private String volunCode;		// 봉사 분야
 	private int volunTime;			// 봉사 시간
-	private String recruitStartDate;// 모집 시작일
-	private String recruitEndDate;	// 모집 종료일
+	private Date recruitStartDate;	// 모집 시작일
+	private Date recruitEndDate;	// 모집 종료일
 	private int memCount;			// 모집 인원
 	private String volunTarget;		// 봉사 대상(신청 가능 대상..? 그런거같음 다시보니)
 	private String recruitTitle;	// 글 제목
 	private String recruitContent;	// 글 내용
 	private int viewCount;			// 조회수
-	private String regDate;			// 작성일
-	private String modDate;			// 수정일
+	private Date regDate;			// 작성일
+	private Date modDate;			// 수정일
 	private String delYn;			// 삭제여부
 	private String manager;			// 담당자
 	private String email;			// 담당자 이메일

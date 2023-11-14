@@ -5,23 +5,25 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
-	<div class="search-result-wrap">
+
+	<div class="search-result-wrap" style="margin-top:50px; margin-bottom:50px;">
 		<div class="container">
 			<div style="display: flex; justify-content: center;">
 				<div style="width:75%;">
-					<div class="recuit">봉사 신청</div>
+					<div class="recuit">봉사자모집 및 신청</div>
 					<br>
 					<!-- 검색 구간 -->
-					<div>※ [모집중] 이라도 **외 다른 경로를 통해 자원봉사자가 모집되는 경우 참여가 어려울 수 있습니다.</div>
+					<div>※ [모집중] 이라도 VolunTree 외 다른 경로를 통해 자원봉사자가 모집되는 경우 참여가 어려울 수 있습니다.</div>
 					<br>
 				<div class="search_section">
 					<form action="/recruit/list" >
-						<div class="form-css">
+						<div class="form-css" style="width:100%;">
 	
 							<!-- 봉사 지역 -->
-						<div class="form-region">
+						<div style="width:100%;">
+						<div class="form-region" style="margin-right:7%;">
 							<label for="form-select">봉사지역 </label>
-							<select class="form-select" name="area"  title="활동지역 선택" onchange="drawAreaList(this);">
+							<select class="form-select" name="area"  title="활동지역 선택" onchange="drawAreaList(this);" style="width:170px;">
 								<option value="">선택1</option>
 								<option value="0100">중앙</option>
 								<option value="0101">서울</option>
@@ -43,7 +45,7 @@
 								<option value="0116">제주</option>
 							</select>
 	
-							<select class="form-select" name="area"  title="활동지역 선택" onchange="drawAreaList(this);">
+							<select class="form-select" name="area"  title="활동지역 선택" onchange="drawAreaList(this);" style="width:170px;">
 								<option value="">선택2</option>
 								<option value="0100">중앙</option>
 								<option value="0101">서울</option>
@@ -69,7 +71,8 @@
 							<!-- 봉사 기간 -->
 						<div class="form-calendar">
 							<label for="date-select">봉사기간 </label>
-							<input type="date" class="form-date" name="sttdte" title="봉사기간 시작일" ><span class="dash">~</span><input type="date" class="form-date" name="enddte" title="봉사기간 종료일" >
+							<input type="date" class="form-keyword" name="sttdte" title="봉사기간 시작일"  style="width:170px;"><span class="dash"> ~ </span><input type="date" class="form-keyword" name="enddte" title="봉사기간 종료일"  style="width:170px;" >
+						</div>
 						</div>
 						<br>
 						<!-- 모집 현황 -->
@@ -97,10 +100,9 @@
 								<option value="99">기타봉사</option>
 							</select>
 						</div>
-						<br>
-						
+
 						<!-- 검색 조건 -->
-						<div class="form-search">
+						<div class="form-search" style="float:right;">
 							<label for="form-select">검색조건 </label>
 							<select class="form-select" id="acttype" name="acttype" title="활동분야 선택">
 								<option value="">선택</option>
@@ -108,11 +110,12 @@
 								<option value="groupName">작성자</option>
 								<option value="recruitContent">내용</option>
 							</select>
-							<input type="text" class="form-keyword">
+							<input class="form-keyword" name="searchWord" type="search" value="${search.searchWord }" >
+							<button type="submit" id="search" style="font-size: 17px;width: 70px;height: 40px;background-color: black;">검색</button>
+
 						</div>
 						
 						<!-- 검색 출력  -->
-						<input class="form-control me-sm-2" name="searchWord" type="search" value="${search.searchWord }" >
 	
 					</div>
 					</form>
@@ -122,44 +125,51 @@
 			</div>
 
 
-			
-			<div class="inner1">
+			<div class="innerinner" style="width: 100%;margin: 0;padding: 0;display:flex;justify-content:center;">
+			<div class="inner1" style="width: 100%;">
+    
 				<div class="inner2">
 					<div class="row posts-entry">
-						<div class="sss">
+						<div class="sss" style="margin-bottom:50px;">
 						
 							<c:forEach var="recruit" items="${list}">
 							<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
-								<div>
+								<div style="width:100%;">
 									<div class="date" style="margin-bottom: 10px;">
 										<ul class="tags">
-											<li><a href="#">${recruit.recruitState}</a></li>
-											<li><a href="#" style="background-color: #50a9ed;">${recruit.volunRegion1}</a></li>
+											<li style="font-size:18px;"><a href="#">${recruit.recruitState}</a></li>
+											<li id="recruitList"><a href="#" style="background-color: #50a9ed;">${recruit.volunRegion1}</a></li>
 											
 											<!-- 이거 디데이 자바스크립트로 설정하기 -->
-											<li><a href="#" style="background-color: #ffea61;">D-5</a></li>
+											<li id="recruitList"><a href="#" style="background-color: #ffea61;">D-5</a></li>
 										</ul>
 									</div>
 									<br>
 <%-- 									<a href="/exam/get.do?boardNum=${board.boardNum}">${board.title}</a> --%>
-									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}">${recruit.recruitTitle}</a></p>
-									<div>
+									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}" style="font-size:30px;">${recruit.recruitTitle}</a></p>
+									<div style="margin-top:10px;">
 										<div class="data clear">
-												<dl>
+										<div style="width:100%;">
+												<dl style="width:20%; font-size:18px;">
 													<dt>신청/필요인원:</dt>
 													<dd>
 														<span>0/</span><span>${recruit.memCount}</span>
 													</dd>
 												</dl>
-												<dl>
+												<dl style="width:35%; font-size:18px;">
 													<dt>봉사기간:</dt>
-													<dd><span>${recruit.volunStartDate}</span>~<span>${recruit.volunEndDate}</span></dd>
+													<dd>
+													
+													  <span><fmt:formatDate value="${recruit.volunStartDate}" pattern="yyyy-MM-dd" /></span>~
+													  <span><fmt:formatDate value="${recruit.volunEndDate}" pattern="yyyy-MM-dd" /></span>
+
+													</dd>
 												</dl>
-												<dl>
+												<dl style="width:35%; font-size:18px;" >
 													<dt>모집기관:</dt>
 													<dd>${recruit.groupName}</dd>
 												</dl>
-
+										</div>
 										</div>
 									</div>
 								</div>
@@ -168,23 +178,19 @@
 							
 
 						</div>
-						<div class="row text-start pt-5 border-top">
-							<div class="col-md-12">
-								<div class="custom-pagination" style="margin-bottom: 2rem;">
-									<span>1</span>
-									<a href="#">2</a>
-									<a href="#">3</a>
-									<a href="#">4</a>
-									<span>...</span>
-									<a href="#">15</a>
-								</div>
-							</div>
-						</div>
+						
 		
 					</div>
 				</div>
 			</div>
 		</div>
+	
+		
+			<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
+		</div>
+		
 	</div>
-
+	
+	
+	
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>
