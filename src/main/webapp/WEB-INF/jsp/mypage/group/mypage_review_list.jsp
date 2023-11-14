@@ -1,12 +1,61 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ include file="/WEB-INF/jsp/include/top.jsp"%>
+<link rel="stylesheet" type="text/css" href="/css/page/group.css" />
 
-</body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+   <div class="d-flex" id="wrapper">
+      <!-- Sidebar-->
+      
+      <div class="col-md-2 col-lg-3 col-xl-2 border-end bg-white" id="sidebar-wrapper" style="
+       margin-bottom: 50px;
+       border-bottom: 1px solid #dee2e6;">
+       
+        <div class="list-group list-group-flush">
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">마이 페이지</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 글 작성</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 목록/ 승인 및 거절</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">진행 중인 봉사</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">봉사활동 후기글</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">캘린더 관리</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">개인 정보 및 프로필 수정</a>
+         </div>
+         
+     	</div>
+      
+      	<div style="width:100%">
+      
+
+		</div>
+	</div>
+ 
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/tiny-slider.js"></script>
+
+<script src="js/flatpickr.min.js"></script>
+
+
+<script src="js/aos.js"></script>
+<script src="js/glightbox.min.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/counter.js"></script>
+<script src="js/custom.js"></script>
+
+
+
+
+
+
+
+<%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>

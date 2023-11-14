@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.kosa.pro.model.RecommendVO;
 import com.kosa.pro.model.RecruitBoardVO;
+import com.kosa.pro.model.VolunteerProceedVO;
 import com.kosa.pro.model.search.BoardSearchVO;
 import com.kosa.pro.model.search.RecruitSearchVO;
 import com.kosa.pro.service.common.BaseService;
@@ -35,12 +37,26 @@ public class RecruitBoardService extends BaseService {
 	}
 	
 	
+	// 개인이 신청 등록
+	public int add(VolunteerProceedVO add)  throws Exception {
+		
+		return getDAO().insert("mypage.insertAdd", add);
+	}
+	
+	
 	// 신청 등록 페이지
 	public int recruitInsert(RecruitBoardVO recruit)  throws Exception {
 		
 		return getDAO().insert("recruit.insertRecruit", recruit);
 	}
 	
+
+	// 개인 중복 신청 금지
+    public int insertAddCk(VolunteerProceedVO add) {
+    	
+        return (int) getDAO().selectOne("mypage.insertAddCk", add);
+    }
+    
 	public Map<String, Object> recruitWriteForm(RecruitSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
 		

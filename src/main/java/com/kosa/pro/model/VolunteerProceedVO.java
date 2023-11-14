@@ -23,11 +23,14 @@ public class VolunteerProceedVO implements GeneralModel {
 	private String state;			// 상태(신청중/승인/거절)
 	private String rejectMessage;	// 거절 메시지
 	private String attendance;		// 출석여부
-	private String name;
-    private String gender;
+	
+	// [별이] 11/13 - 봉사활동 신청내역 승인/거절 페이지에서 필요해서 멤버테이블에서 조인한 필드들임
+	private String name;			//	(멤버)이름
+    private String gender;			//	(멤버)성별
 	
     // [user] 마이페이지 메인 조인 용도 필드
 	private String latitude;     	// 위도
 	private String longitude;    	// 경도
+
 
 }

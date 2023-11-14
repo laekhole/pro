@@ -56,6 +56,37 @@
 <!-- vp.group_mem_seq = #{groupMemSeq} -->
 	</select>
 	
+	
+	<!-- 봉사활동 개인이 신청하기!! -->	
+	<insert id="insertAdd">
+		<selectKey keyProperty="volunProceedSeq" resultType="int" order="BEFORE">
+	        select VOLUNTEER_PROCEED_SEQ.NEXTVAL VOLUN_PROCEED_SEQ from dual
+	    </selectKey>
+	    
+	    INSERT INTO volunteer_proceed (
+	    	VOLUN_PROCEED_SEQ
+	        ,RECRUIT_SEQ
+	        ,MEM_SEQ
+	        ,GROUP_MEM_SEQ
+	    ) VALUES (
+	        #{volunProceedSeq}
+	        ,#{recruitSeq}
+	        ,#{memSeq}
+	        ,#{groupMemSeq}
+	    )
+	</insert>
+	
+	<!-- 봉사활동 개인의 중복신청 막기!! -->	
+ 	<select id="insertAddCk" resultType="int">
+	    SELECT COUNT(*)
+	    FROM volunteer_proceed
+	    WHERE 
+	    	RECRUIT_SEQ = #{recruitSeq}
+	    AND
+	    	MEM_SEQ = #{memSeq}
+	</select>
+	
+	
 	<!-- 봉사 신청내역(승인) 게시판 목록보기 -->
 	<select id="selectApprove" resultType="VolunteerProceedVO">
 			
@@ -64,8 +95,7 @@
 			    vp.recruit_seq,
 			    vp.mem_seq,
 			    m.name,
-			    vp.state,
-			    vp.end_date
+			    vp.state
 			FROM
 			    volunteer_proceed vp
 			JOIN
@@ -75,7 +105,7 @@
 			AND
 				vp.state = '승인'
 			ORDER BY 
-				vp.end_date desc
+				vp.volun_proceed_seq desc
 	<!-- vp.group_mem_seq = #{groupMemSeq} -->    
 
 	</select>
@@ -88,8 +118,7 @@
 			    vp.recruit_seq,
 			    vp.mem_seq,
 			    m.name,
-			    vp.state,
-			    vp.end_date
+			    vp.state
 			FROM
 			    volunteer_proceed vp
 			JOIN
@@ -99,7 +128,7 @@
 			AND
 				vp.state = '거절'
 			ORDER BY 
-				vp.end_date desc
+				vp.volun_proceed_seq desc
  	<!-- vp.group_mem_seq = #{groupMemSeq} -->   
 	</select>
 	
@@ -112,7 +141,6 @@
 			volunteer_proceed
 		set
 			state = '승인'
-			,end_date = to_char(sysdate, 'YYYY-MM-DD')
 		where volun_proceed_seq = #{volunProceedSeq}	
 	</update>
 	
@@ -124,7 +152,6 @@
 	    set
 	        state = '거절'
 	        ,reject_message = #{rejectMessage}
-	        ,end_date = to_char(sysdate, 'YYYY-MM-DD')
 		where volun_proceed_seq = #{volunProceedSeq}	
 	</update>
 
