@@ -39,11 +39,11 @@ public class ReviewBoardService extends BaseService {
 	public Map<String, Object> reviewInfo(ReviewSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
 		
-		//봉사모집 데이터 가져오기 로직 작성 필요
-		
-		
+		ReviewBoardVO info = (ReviewBoardVO) getDAO().selectOne("review.selectOne", search);
+		search.setRecruitSeq(info.getRecruitSeq());
+		map.put("reviewInfo", info);
+		map.put("recruit", getDAO().selectOne("recruit.selectRecruitGet", search));
 		map.put("popularList", (List<ReviewBoardVO>) getDAO().selectList("review.selectPopularList", search));
-		map.put("reviewInfo", getDAO().selectOne("review.selectOne", search));
 		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
 		map.put("categoryName", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCodeName", search));
 		
@@ -60,8 +60,7 @@ public class ReviewBoardService extends BaseService {
 	public Map<String, Object> reviewWriteForm(ReviewSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
 		
-		//봉사모집 데이터 가져오기 로직 작성 필요
-		
+		map.put("recruit", getDAO().selectOne("recruit.selectRecruitGet", search));
 		map.put("categoryList", (List<MasterCodeVO>)getDAO().selectList("code.selectCategoryCode", search));
 		
 		return map;
