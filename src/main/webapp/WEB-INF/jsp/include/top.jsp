@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
-<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>     --%>
+<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> --%>
 <%-- <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>     --%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -81,7 +81,7 @@
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
 							<li class="active"><a href="index.html">공지사항</a></li>
 							<li><a href="category.html" style="color: #fff;">봉사 안내</a></li>
-							<li><a href="category.html" style="color: #fff;">봉사 신청</a></li>
+							<li><a href="/recruit/list" style="color: #fff;">봉사 신청</a></li>
 							<li><a href="/review/list" style="color: #fff;">봉사 후기</a></li>
 							<li><a href="category.html" style="color: #fff;">고객센터</a></li>						
 						</ul>
@@ -109,13 +109,13 @@
 							<ul class="dropdown">
 								<c:choose>
 									<c:when test="${principal.user.loginAuth eq 'ADMIN' }">
-										<li><a href="">관리자페이지</a></li>
+										<li><a href="/admin/adminmain">관리자페이지</a></li>
 									</c:when>
 									<c:when test="${principal.user.loginAuth eq 'MANAGER' }">
-										<li><a href="">단체마이페이지</a></li>
+										<li><a href="/manager/updateState">단체마이페이지</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="">마이페이지</a></li>
+										<li><a href="/user/main">마이페이지</a></li>
 									</c:otherwise>
 								</c:choose>
 								

@@ -14,53 +14,7 @@
 		code_group, code_number, code_name, code_detail, code_yn
 	</sql>
 	
-<!-- 	<sql id="whereClause">
-		<trim prefix="where" prefixOverrides="and">
-			<if test="searchWord != null and searchWord != ''">
-				<choose>
-					<when test="type1 == 'title'">
-						and code_name like concat(concat('%', #{searchWord}), '%')
-					</when>
-					<otherwise>
-						and (review_title like concat(concat('%', #{searchWord}), '%') or write_id like concat(concat('%', #{searchWord}), '%') or review_content like concat(concat('%', #{searchWord}), '%'))
-					</otherwise>
-				</choose>
-			</if>
-			<choose>
-				<when test="useYn != null and useYn != ''">
-					and (code_yn != 'N' and code_yn = #{useYn})
-				</when>
-				<otherwise>
-					and code_yn = 'Y'
-				</otherwise>
-			</choose>
-		</trim>
-	</sql> -->
-	
-<!-- 	<select id="totalCount" parameterType="ReviewSearchVO" resultType="int">
-		select count(*)
-		from review_board
-		<include refid="whereClause" />
-	</select>
-
-	<select id="selectReviewList" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
-		<include refid="paging.top" />
-		select 
-    	<include refid="select" />
-		from review_board
-		<include refid="whereClause" />
-		<choose>
-			<when test="sort != null and sort != ''">
-				order by ${sort}
-			</when>
-			<otherwise>
-				order by review_seq desc
-			</otherwise>
-		</choose>
-		<include refid="paging.bottom" />
-	</select> -->
-	
-	<select id="selectGroupCode" parameterType="SearchVO" resultType="MasterCodeVO">
+	<select id="selectGroupCode" resultType="MasterCodeVO">
 		select
 		<include refid="select" />
 		from master_code

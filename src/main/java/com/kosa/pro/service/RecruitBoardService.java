@@ -8,14 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.kosa.pro.model.RecruitBoardVO;
 import com.kosa.pro.model.search.BoardSearchVO;
+import com.kosa.pro.model.search.RecruitSearchVO;
 import com.kosa.pro.service.common.BaseService;
 
 import lombok.extern.slf4j.Slf4j;
 
-/** 봉사 신청 목록 게시판 
- * @author kky
- *
- */
 @Service
 @Slf4j
 public class RecruitBoardService extends BaseService {
@@ -42,6 +39,16 @@ public class RecruitBoardService extends BaseService {
 	public int recruitInsert(RecruitBoardVO recruit)  throws Exception {
 		
 		return getDAO().insert("recruit.insertRecruit", recruit);
+	}
+	
+	public Map<String, Object> recruitWriteForm(RecruitSearchVO search) {
+		Map<String, Object> map = new HashMap<>();
+		
+		search.setTableName("recruit"); //봉사모집 게시판
+		search.setGroupCode("0001");
+		map.put("groupCodeList", getDAO().selectList("code.selectGroupCode", search));
+		
+		return map;
 	}
 	
 //	
