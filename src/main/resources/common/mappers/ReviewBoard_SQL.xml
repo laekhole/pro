@@ -177,7 +177,7 @@
             	update
            		<set>
 					<if test="recruitSeq != null and recruitSeq > 0">
-						review_seq = #{recruitSeq,jdbcType=NUMERIC},
+						recruit_seq = #{recruitSeq,jdbcType=NUMERIC},
 					</if>
 					<if test="reviewTitle != null">
 						review_title = #{reviewTitle,jdbcType=VARCHAR},

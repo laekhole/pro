@@ -46,5 +46,6 @@ public class RecruitBoardVO implements GeneralModel {
 
 	private String state;
 	
+	
 
 }
