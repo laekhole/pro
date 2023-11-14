@@ -28,4 +28,9 @@ public class VolunteerProceedVO implements GeneralModel {
 	private String name;			//	(멤버)이름
     private String gender;			//	(멤버)성별
 	
+    // [user] 마이페이지 메인 조인 용도 필드
+	private String latitude;     	// 위도
+	private String longitude;    	// 경도
+
+
 }
