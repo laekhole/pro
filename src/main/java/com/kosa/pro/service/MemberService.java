@@ -45,23 +45,23 @@ public class MemberService extends BaseService {
 					throw new LoginBenException("정지된 계정 입니다.");
 				}
 			}
-			
+
 			if (existMember != null && !Objects.isNull(memberVO.getMemId())) {
 				throw new ExistMemberException(memberVO.getMemId());
 			}
 			//비밀번호 암호화 한다
 //			memberVO.setPwd(passwordEncoder.encode(memberVO.getPwd()));
 			getDAO().insert("member.insert", memberVO);
-			
+
 			//insert후 seq를 불러오는데 문제 존재
 			MemberVO mem = (MemberVO) getDAO().selectOne("member.selectMemId", memberVO.getMemId());
-			
+
 			VolunteerTimeVO voluntime = VolunteerTimeVO.builder()
 										.memSeq(mem.getMemSeq())
 										.build();
 			System.out.println(">>>>" + voluntime);
 			getDAO().insert("member.insertVolunteerTime", voluntime);
-			
+
 			System.out.println(memberVO);
 		} catch (Exception ex) {
 			ex.printStackTrace();

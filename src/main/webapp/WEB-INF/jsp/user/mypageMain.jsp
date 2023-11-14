@@ -16,7 +16,7 @@
                   <div class="col-md-2">
                      <img src="images/person_1.jpg" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
                      <div class="btn btn-secondary my-2 my-sm-0"  style="width:100%">변경</div>
-                     <div class="col-md-2border" style="margin: 0;"><i class="bi bi-thermometer-high"></i>36.5˚C</div>
+                     <div class="col-md-2border" style="margin: 0;"><i class="bi bi-thermometer-high"></i>${temperature.volunHeat}</div>
                  </div>
                   <div class="col-md-6">
                      <div class="border">
@@ -28,7 +28,7 @@
                               <div>
 	                              <span class="date"> 오늘의 봉사 </span>
 	                              <span class="date float-end" id="mypageDate" ></span>
-	                              <h2><a href="single.html">봉사 리스트 얻을 자리</a></h2>
+	                              <h2><a href="single.html">${todayProceed.recruitTitle}</a></h2>
                               </div>
                            </div>
                         </div>
@@ -36,7 +36,13 @@
                   </div>
                   <div class="col-md-3 border d-flex align-items-center">
                      <p class="text-md-start">
-						개인 봉사온도
+	                     <div>
+	               	        <div>오늘의 봉사 온도</div>
+							<i class="bi bi-thermometer-high"></i>${temperature.volunHeat}
+	                     	<div>축하드려요</div>
+	                     	<div>내일의 봉사 온도</div>
+	                     </div>
+
                      </p>
                   </div>
                </div>
@@ -112,10 +118,10 @@
 
       </div>
    </div>
-
-
-
-
+   
+	<!-- 오늘의 봉사 좌표 획득용 hidden input 태그 -->
+	<input type="hidden" id="latitude" value="${todayProceed.latitude}">
+	<input type="hidden" id="longitude" value="${todayProceed.longitude}">
 
     <!-- 	마이 페이지 날짜 획득용JS -->
 	<script>
@@ -185,10 +191,14 @@
       }
 
       ////////////// 지도 표시 api //////////////
+      // 금일 봉사의 좌표를 동적으로 받아오기 위해 좌표 선언
+   	  var latitude = document.getElementById('latitude').value;
+  	  var longitude = document.getElementById('longitude').value;
+    
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = { 
 //                  center: new kakao.maps.LatLng(37.29297, 127.0486), // 지도의 중심좌표 광교 좌표
-                  center: new kakao.maps.LatLng(37.61625, 127.0656), // 지도의 중심좌표 동적으로 변환해야 함
+                  center: new kakao.maps.LatLng(parseFloat(latitude), parseFloat(longitude)), // 지도 좌표 동적 처리
 //                  center: new kakao.maps.LatLng(37.61625, 127.0656), // 지도의 중심좌표 석계 좌표
 
                   level: 4 // 지도의 확대 레벨
@@ -265,7 +275,7 @@
 
         // 거리에 따라 버튼 눌렀을 때 버튼 활성화/비활성화
 //        if (distance <= 100) { // 의도대로 짠 거리 로직
-        if (distance <= 1000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
+        if (distance <= 1000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
            document.getElementById('btnTimeRecord').classList.add('btn-secondary');
            document.getElementById('btnTimeRecord').classList.remove('btn-gray');
            } else {
@@ -274,24 +284,53 @@
 
            }
         
-        // 버튼 활성화 돼있을 때 시간 값 넣기
-		document.getElementById('btnTimeRecord').addEventListener('click', async function() {
-		    if (this.classList.contains('btn-secondary')) {
-		        if (document.getElementById('arrival').textContent.trim() === '') {
-		            document.getElementById('arrival').textContent = await getKoreanStandardTime();
-		        } else {
-		            if (document.getElementById('departure').textContent.trim() === '') {
-		                document.getElementById('departure').textContent = await getKoreanStandardTime();
-		            }
-		        }
-		    }
-		});
-		
-		async function getKoreanStandardTime() {
-		    const now = new Date();
-		    const koreanDate = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-		    return koreanDate;
-		}
+        
+        
+        // 출석 체크 했을 때 백엔드와 통신하기 위한 함수
+        function attendCheck() {
+            // 서버에 출석 체크 요청을 보내는 비동기 요청
+            fetch('<c:url value="/user/attend" />')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('서버 오류');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('출석 체크 성공:', data);
+                    // 여기서 필요한 UI 업데이트 등을 수행
+                })
+                .catch(error => {
+                    console.error('에러 발생:', error);
+                    // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+                });
+        }
+        
+        
+        
+        // 버튼 클릭 시 시간 기록 및 출석 체크
+        document.getElementById('btnTimeRecord').addEventListener('click', async function() {
+            if (this.classList.contains('btn-secondary')) {
+                if (document.getElementById('arrival').textContent.trim() === '') {
+                    document.getElementById('arrival').textContent = await getKoreanStandardTime();
+                    
+                    // 시간 기록 후 출석 체크 함수 호출
+                    attendCheck();
+                } else {
+                    if (document.getElementById('departure').textContent.trim() === '') {
+                        document.getElementById('departure').textContent = await getKoreanStandardTime();
+                    }
+                }
+
+            }
+        });
+
+        // sysdate를 한국 표준시로 얻기
+        async function getKoreanStandardTime() {
+            const now = new Date();
+            const koreanDate = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+            return koreanDate;
+        }
         
       
 //             console.log("if문 안에 함수 안에 userlon"+userlon);

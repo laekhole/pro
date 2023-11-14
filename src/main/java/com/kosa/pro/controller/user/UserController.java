@@ -32,11 +32,33 @@ public class UserController extends PrtController {
 	public String myPageMain(SearchVO search, Model model, HttpSession session) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 마이페이지", model);
 		log.info(">>>>>>>>>>>>>>개인 메인");
-//		model.addAttribute("test", getConfig().getAdminName());
-		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
+		Map<String, Object> map = _userService.userMain(search);
+		model.addAttribute("todayProceed", map.get("volunteerProceed"));
+		model.addAttribute("temperature", map.get("volunteerTime"));
+		
+		
+//		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 		return "user/mypageMain";
 	}
 
+	
+	// void로 할 지, 실패했을 때 로그든 에러메세지든 보여줘야 하는지 모르겠음
+	// 출석 체크 시 table insert 메소드
+	@RequestMapping("/attend")
+	public void volunteerAttend(SearchVO search, Model model) throws Exception {
+		log.info(">>>>>>>>>>>>>>출석 체크");
+		_userService.attend(search);
+		}
+	
+	// void로 할 지, 실패했을 때 로그든 에러메세지든 보여줘야 하는지 모르겠음
+	// 퇴근 버튼 클릭 시 update 메소드
+	@RequestMapping("/recordUpdate")
+	public void recordUpdate(SearchVO search, Model model) throws Exception {
+		log.info(">>>>>>>>>>>>>>record 테이블 시간 업데이트");
+		_userService.timeRecord(search);
+		}
+
+	
 	@RequestMapping("/finished")
 	public String mypageFinished(SearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 종료된 봉사", model);
