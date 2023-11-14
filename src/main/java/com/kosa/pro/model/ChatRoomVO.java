@@ -21,7 +21,7 @@ public class ChatRoomVO implements Comparable<ChatRoomVO>{
   private String roomName; // 채팅방 이름
   private Date createdRoomTime; // 방 생성 시간
   private char closed; // 방이 닫혔는지 여부 (Y/N)
-  private Long volunProceedSeq;
+  private Long recruitSeq;
   
   private VolunteerProceedVO volunteerProceedVO;
   private String recruitTitle;

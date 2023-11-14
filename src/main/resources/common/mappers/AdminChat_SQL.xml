@@ -20,7 +20,7 @@
     <result column="ROOM_NAME" property="roomName"/>
     <result column="CREATED_AT" property="createdRoomTime"/>
     <result column="CLOSED" property="closed"/>
-    <result column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
+    <result column="RECRUIT_SEQ" property="recruitSeq"/>
     	<!-- title을 RECRUIT_BOARD 테이블의 title 열과 매핑 -->
     <result column="recruit_title" property="recruitTitle"/>
     
@@ -43,25 +43,19 @@
         cr.room_name,
         cr.created_at,
         cr.closed,
-<!--         cr.volun_proceed_seq, -->
-        vp.recruit_seq,
+        vp.mem_seq,
+        vp.group_mem_seq,
+        vp.state,
+        rb.recruit_seq,
         rb.recruit_title
     FROM
         CHAT_ROOM cr
     JOIN
-        VOLUNTEER_PROCEED vp ON cr.volun_proceed_seq = vp.volun_proceed_seq
+        VOLUNTEER_PROCEED vp ON cr.recruit_seq = vp.recruit_seq
     JOIN
         RECRUIT_BOARD rb ON vp.recruit_seq = rb.recruit_seq
     WHERE
         vp.state = '승인'
-    GROUP BY
-        cr.chat_room_id,
-        cr.room_name,
-        cr.created_at,
-        cr.closed,
-<!--         cr.volun_proceed_seq, -->
-        vp.recruit_seq,
-        rb.recruit_title
 
 	</select>
 
