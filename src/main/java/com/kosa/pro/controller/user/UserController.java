@@ -58,20 +58,19 @@ public class UserController extends PrtController {
 		_userService.timeRecord(search);
 		}
 
-	
 	@RequestMapping("/finished")
 	public String mypageFinished(SearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 종료된 봉사", model);
 		log.info(">>>>>>>>>>>>>>개인 종료된 봉사");
 		search.setRecordCount(5);
-		
+
 		Map<String, Object> map = _userService.finishedList(search);
 		model.addAttribute("list", map.get("finishedList"));
-		
+
 		return "user/mypageFinished";
 	}
-	
-	
+
+
 	@RequestMapping("/list")
 	public String myPageList(SearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 나의 봉사 목록", model);
