@@ -108,7 +108,7 @@
 					<div class="input_msg_write" style="height: 194px;">
 						<input type="text" class="write_msg" style="height: 100%;"
 							placeholder="Type a message" />
-						<button class="msg_send_btn" type="button">
+						<button class="msg_send_btn" id="send_message_button" type="button">
 							<i class="fa fa-paper-plane" aria-hidden="true"></i>
 						</button>
 
@@ -124,6 +124,163 @@
 <%@ include file="/WEB-INF/jsp/include/adminbottom.jsp"%>
 <script type="text/javascript">
 
+	//MQTT 송수신 상태 설정
+	const mqtt_host = "www.amond.store";
+	const mqtt_port = 9001;
+	const mqtt_topic = "/test/sub/" + chatRoomId;
+	
+    const options = {
+//배포시->  	 protocol : 'wss',
+  		hostname : mqtt_host,
+        port: mqtt_port,
+        username : 'kosa',
+        password : '1004',
+        clean: true,
+    }
+        console.log('연결중 - mqtt client');
+        console.log('mqtt_topic -> ', mqtt_topic);
+        
+        const mqttClient = mqtt.connect(options);
+        console.log('mqttClient -> ', mqttClient);
+	
+        const disconnect = () => {
+            console.log('mqtt 연결 끊음');
+            mqttClient.end();
+       }  
+        
+        
+        mqttClient.on('error', (err) => {
+            console.log('Connection error: ', err)
+            mqttClient.end()
+        });
+          
+        mqttClient.on('reconnect', () => {
+            console.log('재연결중이다..')
+        });
+          
+        mqttClient.on('connect', () => {
+        	  console.log('연결됐다')
+            //구독 메시지 등록 
+            //메시지 수신 이벤트 핸들러 등록
+            subscribe();
+              
+            //채팅방에 입장 메시지를 서버에 전송한다
+            enterSendMessage();
+        });
+	
+        // 구독 메시지 수신 
+        mqttClient.on('message', function (topic, message) {
+            // message is Buffer
+            console.log("mqtt message 수신 :", message.toString())
+            recvMessage(JSON.parse(message.toString()))
+        })
+          
+        $("#message").on("keydown", e => {
+        	  if (e.keyCode == 13) {
+        		  sendMessage();
+            }
+        });
+	
+        $("#send_message_button").on("click", e => {
+            sendMessage();
+        });
+            
+        $("#leave_button").on("click", e => {
+        	  $("#leave_button,#send_message_button").addClass("disabled");
+            $("#reenter_button").removeClass("disabled");
+            
+            //잠시 나간다 . 메시지 수신을 하는 않는다
+            unsubscribe();
+                   
+            //채팅방에 퇴장메시지를 서버에 전송한다
+            leaveSendMessage();
 
+        });
+            
+        $("#reenter_button").on("click", e => {
+        	  $("#reenter_button").addClass("disabled");
+            $("#leave_button,#send_message_button").removeClass("disabled");
+            
+            //채팅방에 입장한다
+            //구독을 신청한다 
+            subscribe();
+                
+            //채팅방에 입장 메시지를 서버에 전송한다
+            enterSendMessage();
+        });
+
+            
+        $(document).ready(()=>{
+        	  //채팅방의 정보를 얻는다
+            console.log("before getRoomInfo");            
+            getRoomInfo();
+                
+            $(window).on("beforeunload", e => {
+            	  //구독을 해제 한다
+                unsubscribe();
+                mqttClient.disconnect();
+            })
+        });
+
+        //메시지 수신 이벤트 핸들러 등록
+        //구독을 등록한다
+        const subscribe = () => {
+        	  mqttClient.subscribe(mqtt_topic, err => {
+        		  console.log("Subscribe to a topic 생성");
+        		  if (!err) {
+        			  console.log("error", err);
+              } else {
+              }
+            })
+        }
+            
+        //메시지 수신를 해제 한다 
+        //구독을 해제한다
+        const unsubscribe = () => {
+        	  mqttClient.unsubscribe(mqtt_topic);
+        }
+            
+        //roomId를 이용하여 채팅방 정보를 출력한다 
+        //현재는 이름만 출력함  
+        const getRoomInfo = () => {
+            $.ajax({ 
+                type: "GET",
+                url: "<c:url value='/chat/room/'/>" + roomId,
+                dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json이라면) => javascript오브젝트로 변경
+            }).done(resp => {
+                //채팅방의 이름을 출력한다 
+                console.log("getRoomInfo resp", resp);            
+                $("#room-name").text(resp.name + " - " + sender);
+            }).fail(err => {
+                console.log("getRoomInfo error", err);            
+            }); 
+        }
+            
+        //입장메시지를 전송한다
+        const enterSendMessage = () => {
+        	  console.log("enterSendMessage ")
+            
+        	  //채팅방에 입장을 서버에 전송한다
+        	  mqttClient.publish(mqtt_topic, JSON.stringify({type:'ENTER', roomId : roomId, sender : '[알림]', message : sender + "님 입장하셨습니다"}));
+        }
+            
+        //퇴장메시지를 전송한다
+        const leaveSendMessage = () => {
+        	  //채팅방에 입장을 서버에 전송한다
+            mqttClient.publish(mqtt_topic, JSON.stringify({type:'LEAVE', roomId : roomId, sender : '[알림]', message : sender + "님 퇴장하셨습니다"}));
+        }
+            
+
+        //서버에 메시지를 전송한다
+        const sendMessage = () => {
+        	  const message = $("#message").val();
+            mqttClient.publish(mqtt_topic, JSON.stringify({type:'TALK', roomId : roomId, sender : sender, message:message}));
+            $("#message").val("");
+        };
+             
+        const recvMessage = recv =>  {
+        	  console.log(recv);
+            $("#message_list").prepend('<li class="list-group-item" >[' + recv.sender + '] - ' + recv.message + '</li>'); 
+        }
 
 </script>
