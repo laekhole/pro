@@ -1,5 +1,7 @@
 package com.kosa.pro.model;
 
+import java.util.List;
+
 import com.kosa.pro.model.general.GeneralModel;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +28,5 @@ public class VolunteerProceedVO implements GeneralModel {
 	private String name;
     private String gender;
 	
-
 
 }

@@ -2,45 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminchat">
 
-<!-- 	봉사 이력 관리 테이블 resultMap -->
-  <resultMap id="VolunteerProceedResultMap" type="VolunteerProceedVO">
-        <id column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
-        <result column="RECRUIT_SEQ" property="recruitSeq"/>
-        <result column="MEM_SEQ" property="memSeq"/>
-        <result column="GROUP_MEM_SEQ" property="groupMemSeq"/>
-        <result column="STATE" property="state"/>
-        <result column="REJECT_MESSAGE" property="rejectMessage"/>
-        <result column="START_DATE" property="startDate"/>
-        <result column="END_DATE" property="endDate"/>
-        <result column="ATTENDANCE" property="attendance"/>
-        <result column="NAME" property="name"/>
-        <result column="GENDER" property="gender"/>
-    </resultMap>
+		<!-- 봉사 이력 관리 테이블 resultMap -->
+	<resultMap id="VolunteerProceedResultMap"
+		type="VolunteerProceedVO">
+		<id column="VOLUN_PROCEED_SEQ" property="volunProceedSeq" />
+		<result column="RECRUIT_SEQ" property="recruitSeq" />
+		<result column="MEM_SEQ" property="memSeq" />
+		<result column="GROUP_MEM_SEQ" property="groupMemSeq" />
+		<result column="STATE" property="state" />
+		<result column="REJECT_MESSAGE" property="rejectMessage" />
+		<result column="ATTENDANCE" property="attendance" />
+	</resultMap>
+
+		<!-- 채팅방 테이블 resultMap -->
+	<resultMap id="ChatRoomResultMap" type="ChatRoomVO">
+	<id column="CHAT_ROOM_ID" property="chatRoomId"/>
+    <result column="ROOM_NAME" property="roomName"/>
+    <result column="CREATED_AT" property="createdRoomTime"/>
+    <result column="CLOSED" property="closed"/>
+    <result column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
+    	<!-- title을 RECRUIT_BOARD 테이블의 title 열과 매핑 -->
+    <result column="recruit_title" property="recruitTitle"/>
     
-<!--     채팅방 테이블 resultMap -->
-     <resultMap id="ChatRoomResultMap" type="ChatRoomVO">
-        <id column="CHAT_ROOM_ID" property="chatRoomId"/>
-        <result column="ROOM_NAME" property="roomName"/>
-        <result column="CREATED_ROOM_TIME" property="createdRoomTime"/>
-        <result column="CLOSED" property="closed"/>
-        <result column="VOLUN_PROCEED_SEQ" property="volunProceedSeq"/>
-          			 <!-- VolunteerProceedVO와의  관계를 위한 association -->
-    	<association property="volunteerProceedVO" resultMap="VolunteerProceedResultMap" />
-     </resultMap>
-    
-    <!--  채팅 카운트 -->
-	<select id="totalCountChatroom" parameterType="ChatRoomVO" resultType="int">
+    <!-- VolunteerProceedVO와의 관계를 위한 association -->
+    <association property="volunteerProceedVO" resultMap="VolunteerProceedResultMap" />
+
+	</resultMap>
+
+	<!-- 채팅 카운트 -->
+	<select id="totalCountChatroom" parameterType="ChatRoomVO"
+		resultType="int">
 		select count(*)
 		from chat_room
-	</select>	
+	</select>
 
 	<!-- 채팅방 정보와 관련된 봉사 신청 정보를 가져오는 쿼리 -->
-  	<select id="findAllRecruitChatRoom" resultMap="ChatRoomResultMap">
-     SELECT vp.recruit_seq, LISTAGG(vp.mem_seq, ',') WITHIN GROUP (ORDER BY vp.mem_seq) AS mem_seq_list,
-               cr.chat_room_id, cr.room_name, cr.created_at, cr.closed
-        FROM volunteer_proceed vp
-        JOIN chat_room cr ON vp.volun_proceed_seq = cr.volun_proceed_seq
-        GROUP BY vp.recruit_seq, cr.chat_room_id, cr.room_name, cr.created_at, cr.closed
+	<select id="findAllRecruitChatRoom" resultMap="ChatRoomResultMap">
+    SELECT
+        cr.chat_room_id,
+        cr.room_name,
+        cr.created_at,
+        cr.closed,
+<!--         cr.volun_proceed_seq, -->
+        vp.recruit_seq,
+        rb.recruit_title
+    FROM
+        CHAT_ROOM cr
+    JOIN
+        VOLUNTEER_PROCEED vp ON cr.volun_proceed_seq = vp.volun_proceed_seq
+    JOIN
+        RECRUIT_BOARD rb ON vp.recruit_seq = rb.recruit_seq
+    WHERE
+        vp.state = '승인'
+    GROUP BY
+        cr.chat_room_id,
+        cr.room_name,
+        cr.created_at,
+        cr.closed,
+<!--         cr.volun_proceed_seq, -->
+        vp.recruit_seq,
+        rb.recruit_title
+
 	</select>
 
 
