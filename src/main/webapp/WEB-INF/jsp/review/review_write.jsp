@@ -14,25 +14,25 @@
 	 <table class="table-review">
 	 	<tr>
 	 	 <th>봉사기간</th>
-	 	 <td>2023-10-21 ~ 2023-10-29</td>
+	 	 <td>${recruit.volunStartDate } ~ ${recruit.volunEndDate }</td>
 	 	 <th>봉사분야</th>
-	 	 <td>시설봉사</td>
+	 	 <td>${recruit.volunCode }</td>
 		</tr>
 		<tr>
 		 <th>봉사단체</th>
-		 <td>혜화불주먹해적단</td>
+		 <td>${recruit.groupName }</td>
 		 <th>봉사시간</th>
-		 <td>8시간</td>
+		 <td>${recruit.volunTime }</td>
 		</tr>
 		<tr>
 		 <th>봉사지역</th>
-		 <td>서울시 종로구</td>
+		 <td>${recruit.volunRegion1 } ${recruit.volunRegion2 }</td>
 		 <th>봉사장소</th>
-		 <td>혜화역</td>
+		 <td>${recruit.volunAddr }</td>
 		</tr>
 		<tr>
 		 <th>봉사대상</th>
-		 	<td>부족한친구들</td>
+		 	<td>${recruit.volunTarget }</td>
 		 	
 			 <th style="background-color: #fff;">
 				<select class="form-select" id="categorySelect">
@@ -120,6 +120,7 @@ document.querySelector('#write-button').addEventListener("click", e => {
 	const fileInput = document.querySelector("#chooseFile");
 	const tableName = document.querySelector("#tableName").value;
 	const titleValue = document.querySelector("#write-title").value;
+	const recruitSeq = "${search.recruitSeq}";
 	const token = "${token}";
 	editorValue = writeeditorValue.getData();
 	const formData = new FormData();
@@ -135,6 +136,7 @@ document.querySelector('#write-button').addEventListener("click", e => {
     formData.append('tableName', tableName);
     formData.append('token', token);
     formData.append('title', titleValue);
+    formData.append('recruitSeq', recruitSeq);
 
     // 서버로 데이터 전송
     fetch("/review/write/", {
@@ -147,9 +149,9 @@ document.querySelector('#write-button').addEventListener("click", e => {
         Swal.fire({
     		  title: "글 등록 완료!",
     		  icon: "success"
+    		}).then(() => {
+    			window.location.href = "/review/list";
     		});
-        
-        window.location.href = "/review/list";
     });
     
     
@@ -175,16 +177,25 @@ $("#categorySelect").on("change", function() {
 
 
 let timer = setTimeout(function() {
-    alert("시간이 만료되었습니다.");
-    window.location.href = "/review/list"; 
+    Swal.fire({
+		  title: "시간이 만료되었습니다.",
+		  icon: "error"
+		}).then(() => {
+			window.location.href = "/review/list"; 
+		});
+    
 }, 10 * 60 * 1000); // 10분 
 
 // 사용자의 상호 작용을 감지하면 타이머 재설정
 document.addEventListener("mousemove", function() {
     clearTimeout(timer); // 이전 타이머 제거
     timer = setTimeout(function() {
-        alert("시간이 만료되었습니다.");
-        window.location.href = "/review/list";
+        Swal.fire({
+  		  title: "시간이 만료되었습니다.",
+  		  icon: "error"
+  		}).then(() => {
+  			window.location.href = "/review/list"; 
+  		});
     }, 10 * 60 * 1000); // 10분 
 });
 	

@@ -276,9 +276,9 @@ document.querySelector('#recruit-write').addEventListener("click", e => {
         Swal.fire({
     		  title: "글 등록 완료!",
     		  icon: "success"
+    		}).then(() => {
+    			window.location.href = "/recruit/list";
     		});
-        
-        window.location.href = "/recruit/list";
     });
     
     

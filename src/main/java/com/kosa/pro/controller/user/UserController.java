@@ -13,6 +13,7 @@ import com.kosa.pro.controller.PrtController;
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.common.SearchVO;
 import com.kosa.pro.model.search.ReviewSearchVO;
+import com.kosa.pro.model.search.UserSearchVO;
 import com.kosa.pro.service.UserService;
 
 /**메인 컨트롤러
@@ -60,13 +61,14 @@ public class UserController extends PrtController {
 
 	
 	@RequestMapping("/finished")
-	public String mypageFinished(SearchVO search, Model model) throws Exception {
+	public String mypageFinished(UserSearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 종료된 봉사", model);
 		log.info(">>>>>>>>>>>>>>개인 종료된 봉사");
 		search.setRecordCount(5);
-		
+		log.info("시퀀스 오냐 = " + search.getMemSeq());
 		Map<String, Object> map = _userService.finishedList(search);
 		model.addAttribute("list", map.get("finishedList"));
+		model.addAttribute("search", search);
 		
 		return "user/mypageFinished";
 	}

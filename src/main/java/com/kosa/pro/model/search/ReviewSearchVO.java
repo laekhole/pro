@@ -18,6 +18,7 @@ public class ReviewSearchVO extends SearchVO {
 	
 	private String codeNumber;
 	private int reviewSeq;
+	private int recruitSeq;
 	
 	//유저정보
 	private int memSeq;
