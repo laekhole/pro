@@ -119,7 +119,7 @@
         V.VOLUN_HEAT as "volunteerTime.volunHeat",
         V.VOLUN_NOSHOW as "volunteerTime.volunNoshow"
     from member M
-    inner join ADMIN.VOLUNTEER_TIME V on M.mem_seq = V.MEM_SEQ
+    inner join VOLUNTEER_TIME V on M.mem_seq = V.MEM_SEQ
     <include refid="whereClause" />
     <choose>
         <when test="sort != null and sort != ''">
@@ -151,7 +151,7 @@
         G.grade_count,
         G.grade_add,
         G.grade
-    FROM admin.group_member GM
+    FROM group_member GM
     LEFT JOIN admin.grade G ON GM.group_mem_seq = G.group_mem_seq
     <include refid="whereClause2" />
     <choose>
