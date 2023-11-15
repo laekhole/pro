@@ -14,6 +14,9 @@
 			<div class="form-css">
 			<br>
 			
+			<input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${recruit.groupMemSeq}" >
+			<input type="hidden" id="RECRUIT_SEQ" name="recruitSeq" value="${recruit.recruitSeq}" >
+			<input type="hidden" id="MEM_SEQ" name="memSeq" value="${principal.user.memSeq}" >
 		<!-- 	<form action="/recruit/add" method="post"> -->
 			<div class="inner3">
 				<div class="inner4">
@@ -51,8 +54,8 @@
 										<tr>
 											<th>봉사기간</th>
 											<td><span>${recruit.volunStartDate}</span> ~ <span>${recruit.volunEndDate}</span></td>
-											<th>봉사분야</th>
-											<td><span>${recruit.volunCode}</span></td>
+											<th>모집기간</th>
+											<td><span>${recruit.recruitStartDate}</span> ~ <span>${recruit.recruitEndDate}</span></td>
 										</tr>
 										<tr>
 											<th>봉사단체</th>
@@ -69,12 +72,8 @@
 										<tr>
 											<th>봉사대상</th>
 											<td>${recruit.volunTarget}</td>
-											<th>그룹번호/글번호/회원번호</th>
-											<td>
-												<input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${recruit.groupMemSeq}" >
-												<input type="hidden" id="RECRUIT_SEQ" name="recruitSeq" value="${recruit.recruitSeq}" >
-												<input type="hidden" id="MEM_SEQ" name="memSeq" value="${principal.user.memSeq}" >
-											</td>
+											<th>봉사분야</th>
+											<td><span>${recruit.volunCode}</span></td>
 										</tr>
 			
 									</table>

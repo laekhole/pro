@@ -67,6 +67,17 @@ public class RecruitBoardService extends BaseService {
 		return map;
 	}
 	
+	
+	
+	// 봉사활동 몇 명 신청했는지 조회하기
+    public int insertCount(VolunteerProceedVO count) {
+    	
+        return (int) getDAO().selectOne("mypage.insertCount", count);
+    }
+
+	
+	
+	
 //	
 //	
 //	// 신청 수정 페이지

@@ -24,7 +24,7 @@
          </div>
          
       </div>
-      <%-- <input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${principal.user.memSeq}"> --%>
+      <input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${principal.user.memSeq}">
       <div style="width:100%">
       
          <div class="kanban-board">
@@ -38,7 +38,7 @@
                     <table style="font-size:13px;">
                         <tr>
                          <th>신청번호</th>
-                            <th>봉사글번호</th>
+                            <th>봉사신청글 제목</th>
                             <th>회원번호</th>
                             <th>이름</th>
                             <th>상태</th>
@@ -48,7 +48,7 @@
                         <tbody id="stateList">
 	                        <tr id="statestateList">
 	                            <td class="volunProceedSeq" id="volun_proceed_seq">${state.volunProceedSeq}</td>
-	                            <td id="recruitSeq">${state.recruitSeq}</td>
+	                            <td id="recruitTitle">${state.recruitTitle}</td>
 	                            <td id="memSeq">${state.memSeq}</td>
 	                            <td id="name">${state.name}</td>                                           
 	                            <td id="statestate">
@@ -78,7 +78,7 @@
                         
                         <tr>
                            	<th>신청번호</th>
-                            <th>봉사글번호</th>
+                            <th>봉사신청글 제목</th>
                             <th>회원번호</th>
                             <th>이름</th>
                             <th>상태</th>
@@ -88,7 +88,7 @@
 	                        <c:forEach var="approve" items="${approve}">
 		                        	<tr id="approveDetail">
 			                            <td class="approveVolunProceedSeq">${approve.volunProceedSeq}</td>
-			                            <td id="approveRecruitSeq">${approve.recruitSeq}</td>
+			                            <td id="approveRecruitTitle">${approve.recruitTitle}</td>
 			                            <td id="approveMemSeq">${approve.memSeq}</td>
 			                            <td id="approveName">${approve.name}</td>                                           
 			                            <td id="approveState">${approve.state}</td>
@@ -98,7 +98,7 @@
                         
                      	<tr id="approveapproveList" style="display: none;">
                             <td class="approveVolunProceedSeq"></td>
-                            <td id="approveRecruitSeq"></td>
+                            <td id="approveRecruitTitle"></td>
                             <td id="approveMemSeq"></td>
                             <td id="approveName"></td>                                           
                             <td id="approveState"></td>
@@ -113,7 +113,7 @@
                         
                         <tr>
                            <th>신청번호</th>
-                            <th>봉사글번호</th>
+                            <th>봉사신청글 제목</th>
                             <th>회원번호</th>
                             <th>이름</th>
                             <th>상태</th>
@@ -123,7 +123,7 @@
 	                        <c:forEach var="reject" items="${reject}">
 		                        	<tr id="rejectDetail">
 			                            <td class="rejectVolunProceedSeq">${reject.volunProceedSeq}</td>
-			                            <td id="rejectRecruitSeq">${reject.recruitSeq}</td>
+			                            <td id="rejectRecruitTitle">${reject.recruitTitle}</td>
 			                            <td id="rejectMemSeq">${reject.memSeq}</td>
 			                            <td id="rejectName">${reject.name}</td>                                           
 			                            <td id="rejectState">${reject.state}</td>
@@ -133,7 +133,7 @@
                         
                      	<tr id="rejectrejectList" style="display: none;">
 	                            <td class="rejectVolunProceedSeq"></td>
-	                            <td id="rejectRecruitSeq"></td>
+	                            <td id="rejectRecruitTitle"></td>
 	                            <td id="rejectMemSeq"></td>
 	                            <td id="rejectName"></td>                                           
 	                            <td id="rejectState"></td>
@@ -171,11 +171,21 @@ function moveToAccepted(button) {
 
     const state = $(button).closest("tr").find("#state").val();
     const volunProceedSeq = $(button).closest("tr").find(".volunProceedSeq").text();
+    const groupMemSeq = $("#GROUP_MEM_SEQ").val();
 
+    console.log("state : " + state);
+    console.log("volunProceedSeq : " + volunProceedSeq);
+    console.log("groupMemSeq : " + groupMemSeq);
+    
     const param = {
         state: state,
         volunProceedSeq: volunProceedSeq,
+        groupMemSeq: groupMemSeq,
     };
+    
+    console.log("state2 : " + state);
+    console.log("volunProceedSeq2 : " + volunProceedSeq);
+    console.log("groupMemSeq2 : " + groupMemSeq);
 
     fetch("<c:url value='/manager/approve'/>", {
         method: "POST",
@@ -209,7 +219,7 @@ function moveToAccepted(button) {
 	            console.log(approve);
 	            
 	            approveapproveList.find(".approveVolunProceedSeq").text(approve.volunProceedSeq);
-	            approveapproveList.find("#approveRecruitSeq").text(approve.recruitSeq);
+	            approveapproveList.find("#approveRecruitTitle").text(approve.recruitTitle);
 	            approveapproveList.find("#approveMemSeq").text(approve.memSeq);
 	            approveapproveList.find("#approveName").text(approve.name);
 	            approveapproveList.find("#approveState").text(approve.state);
@@ -239,20 +249,24 @@ function moveToAccepted(button) {
 	    const rejectMessage = document.getElementById('rejectMessage').value;
 	   /*  const volunProceedSeq = document.getElementById('volun_proceed_seq').textContent; */
 	    const volunProceedSeq = $("#volunSeq").val();
-	   
+		const groupMemSeq = $("#GROUP_MEM_SEQ").val();
+
 	    console.log("state: " + state);
  	    console.log("거절 사유: " + rejectMessage);
 	    console.log("volunProceedSeq: " + volunProceedSeq);
+	    console.log("groupMemSeq : " + groupMemSeq);
 
 	    const param = {
 	        state: state,
  	        rejectMessage: rejectMessage,
 	        volunProceedSeq: volunProceedSeq,
+	        groupMemSeq: groupMemSeq,
 	    };
 	    
 	    console.log("state2: " + state);
  	    console.log("거절 사유2: " + rejectMessage);
 	    console.log("volunProceedSeq2: " + volunProceedSeq);
+	    console.log("groupMemSeq2 : " + groupMemSeq);
 
 	    fetch("<c:url value='/manager/reject'/>", {
 	        method: "POST",
@@ -289,7 +303,7 @@ function moveToAccepted(button) {
 	                console.log(reject);
 
 	                rejectrejectList.find(".rejectVolunProceedSeq").text(reject.volunProceedSeq);
-	                rejectrejectList.find("#rejectRecruitSeq").text(reject.recruitSeq);
+	                rejectrejectList.find("#rejectRecruitTitle").text(reject.recruitTitle);
 	                rejectrejectList.find("#rejectMemSeq").text(reject.memSeq);
 	                rejectrejectList.find("#rejectName").text(reject.name);
 	                rejectrejectList.find("#rejectState").text(reject.state);

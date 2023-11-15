@@ -153,7 +153,7 @@
 												<dl style="width:20%; font-size:18px;">
 													<dt>신청/필요인원:</dt>
 													<dd>
-														<span>0/</span><span>${recruit.memCount}</span>
+														<span>${recruit.count}</span>/<span>${recruit.memCount}</span>
 													</dd>
 												</dl>
 												<dl style="width:35%; font-size:18px;">

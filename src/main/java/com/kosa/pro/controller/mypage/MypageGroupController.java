@@ -118,6 +118,7 @@ public class MypageGroupController extends PrtController {
 	public Map<String, Object> approve (@RequestBody VolunteerProceedVO vpvo, Model model) throws Exception {
 		log.info(">>>>>>>>>>>>>>단체 신청 승인 컨트롤러");
 		
+		
 		Map<String, Object> result = new HashMap<>();
 		int status = _mypageGroupService.updateApprove(vpvo);
 		
