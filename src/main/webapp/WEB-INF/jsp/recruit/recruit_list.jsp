@@ -133,18 +133,30 @@
 						<div class="sss" style="margin-bottom:50px;">
 						
 							<c:forEach var="recruit" items="${list}">
-							<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:50px;">
+							<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:70px;">
 								<div style="width:100%;">
 									<div class="date" style="margin-bottom: 10px;">
+										<!-- 모집 날짜 정보를 저장하는 hidden input -->
+
 										<ul class="tags">
-											<li style="font-size:18px;"><a href="#">${recruit.recruitState}</a></li>
-											<li id="recruitList"><a href="#" style="background-color: #50a9ed;">${recruit.volunRegion1}</a></li>
+											<li style="font-size:18px;"><a href="#" id="recruitLink${status.index}" class="recruitLink" style="width: 100px; text-align: center; padding: 6px;">${recruit.recruitState}</a></li>
+											<li id="recruitList"><a href="#" style=" width: 100px; text-align: center; padding: 6px; ">${recruit.volunRegion1}</a></li>
 											
 											<!-- 이거 디데이 자바스크립트로 설정하기 -->
-											<li id="recruitList"><a href="#" style="background-color: #ffea61;">D-5</a></li>
+											<!-- 여러 개의 리스트 아이템이 있을 때, 각각에 대한 클래스 추가 -->
+											<li class="recruit-list-item">
+											    <a href="#" style="background-color: #fff28d; width: 100px; text-align: center; padding: 6px;" >
+											        <span class="dday-element"></span>
+											    </a>
+											    <input type="hidden" class="recruit-start-date" name="recruitStartDate" value="${recruit.recruitStartDate}">
+											    <input type="hidden" class="recruit-end-date" name="recruitEndDate" value="${recruit.recruitEndDate}">
+											</li>
+												
+																						
+											
 										</ul>
 									</div>
-									<br>
+									
 <%-- 									<a href="/exam/get.do?boardNum=${board.boardNum}">${board.title}</a> --%>
 									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}" style="font-size:30px;">${recruit.recruitTitle}</a></p>
 									<div style="margin-top:10px;">
@@ -153,7 +165,7 @@
 												<dl style="width:20%; font-size:18px;">
 													<dt>신청/필요인원:</dt>
 													<dd>
-														<span>0/</span><span>${recruit.memCount}</span>
+														<span>${recruit.count}</span>/<span>${recruit.memCount}</span>
 													</dd>
 												</dl>
 												<dl style="width:35%; font-size:18px;">
@@ -190,7 +202,48 @@
 		</div>
 		
 	</div>
-	
-	
+	<script>
+    var recruitState${status.index} = "${recruit.recruitState}";
+
+    var recruitLink${status.index} = document.getElementById("recruitLink${status.index}");
+
+    if (recruitState${status.index} === '모집완료') {
+      recruitLink${status.index}.style.backgroundColor = 'red';
+    }
+  	</script>
+	<script>
+	// calculateDday 함수 정의
+	function calculateDday(targetDate) {
+	    var target = new Date(targetDate);
+	    var today = new Date();
+	    var timeDiff = target - today;
+	    var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+	    if (daysDiff === 0) {
+	        return "금일마감";
+	    } else if (daysDiff > 0) {
+	        return "D-" + daysDiff;
+	    } else {
+	        return "D+" + Math.abs(daysDiff);
+	    }
+	}
+
+	// DOMContentLoaded 이벤트 리스너
+	document.addEventListener("DOMContentLoaded", function() {
+	    // 각 recruit-start-date 클래스에 대해 D-Day 계산 및 할당
+	    var dateElements = document.getElementsByClassName("recruit-start-date");
+
+	    for (var i = 0; i < dateElements.length; i++) {
+	        var targetDateString = dateElements[i].value;
+	        var targetDate = new Date(targetDateString.replace(/-/g, "/"));
+	        var dday = calculateDday(targetDate);
+
+	        // 해당하는 D-Day 값을 클래스가 dday-element인 요소에 할당
+	        document.getElementsByClassName("dday-element")[i].innerHTML = dday;
+	    }
+	});
+
+
+	</script>
 	
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>

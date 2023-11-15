@@ -32,6 +32,7 @@
 		,VOLUN_ADDR
         ,LATITUDE
         ,LONGITUDE
+        ,COUNT
 <!--         trunc(volun_start_date) = trunc(sysdate) -->
 	</sql>
 	
