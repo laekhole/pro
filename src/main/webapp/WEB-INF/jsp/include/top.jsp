@@ -116,6 +116,7 @@
 										<li><a href="/manager/updateState?groupSeq=${principal.user.memSeq}">단체마이페이지</a></li>
 									</c:when>
 									<c:otherwise>
+										<li><a href="/userchat/chatRoom?memSeq=${principal.user.memSeq}">채팅방</a></li>
 										<li><a href="/user/?memSeq=${principal.user.memSeq }">마이페이지</a></li>
 									</c:otherwise>
 								</c:choose>

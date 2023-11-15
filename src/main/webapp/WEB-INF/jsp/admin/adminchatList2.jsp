@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<link href="/css/page/chat.css" rel="stylesheet">
+<%@ include file="/WEB-INF/jsp/include/admintop.jsp"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="/admintemplate/css/adminchat.css" rel="stylesheet">
 
-<<<<<<< HEAD
-<div class="chatcontainer">
+<div class="container">
 	<h3 class=" text-center">채팅방</h3>
 	<div class="messaging">
 		<div class="inbox_msg">
@@ -26,129 +28,6 @@
 						</div>
 					</div>
 				</div>
-=======
-<div class="container-chat">
-    <h3 class=" text-center">채팅방</h3>
-    <div class="messaging">
-        <div class="inbox_msg">
-            <div class="inbox_people">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                        <h4>채팅목록</h4>
-                    </div>
-                    <div class="srch_bar">
-                        <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search">
-                            <span class="input-group-addon">
-                                <button type="button">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inbox_chat">
-                    <div class="chat_list active_chat">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                ㅋㅋㅋㅋ
-                                <h5>
-                                    민재 <span class="chat_date">Dec 25</span>
-                                </h5>
-                                <p>대화방이 열렸습니다.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                <h5>
-                                    Sunil Rajput <span class="chat_date">Dec 25</span>
-                                </h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                <h5>
-                                    Sunil Rajput <span class="chat_date">Dec 25</span>
-                                </h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                <h5>
-                                    Sunil Rajput <span class="chat_date">Dec 25</span>
-                                </h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                <h5>
-                                    Sunil Rajput <span class="chat_date">Dec 25</span>
-                                </h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                <h5>
-                                    Sunil Rajput <span class="chat_date">Dec 25</span>
-                                </h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                <h5>
-                                    Sunil Rajput <span class="chat_date">Dec 25</span>
-                                </h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
->>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git
 
 				<div class="inbox_chat">
 					<c:forEach var="chatRoomItem" items="${chatlist}">
@@ -318,7 +197,6 @@
             //채팅방에 퇴장메시지를 서버에 전송한다
             leaveSendMessage();
 
-<<<<<<< HEAD
         });
             
         $("#reenter_button").on("click", e => {
@@ -424,5 +302,3 @@
         }
 
 </script>
-=======
->>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git

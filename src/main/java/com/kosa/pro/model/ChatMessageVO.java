@@ -12,7 +12,7 @@ public class ChatMessageVO {
   }
 
   private Long messageId; // 메시지 ID
-  private String roomId; // 방번호
+  private String chatRoomId; // 방번호
   private String sender; // 메시지 보낸사람
   private String message; // 메시지
   private Timestamp sentAt; // 보낸 시간
