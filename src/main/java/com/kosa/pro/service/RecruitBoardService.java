@@ -67,6 +67,8 @@ public class RecruitBoardService extends BaseService {
 		return map;
 	}
 	
+	
+	
 //	
 //	
 //	// 신청 수정 페이지

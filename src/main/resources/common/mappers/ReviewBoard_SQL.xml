@@ -32,7 +32,7 @@
 	</resultMap>
 
 	<sql id="select">
-		review_seq, recruit_seq, review_title, review_content, write_id, reg_date, mod_date, recom_count, view_count, del_yn, image_seq
+		review_seq, recruit_seq, review_title, review_content, write_id, reg_date, to_char(mod_date, 'yyyy-mm-dd') mod_date, recom_count, view_count, del_yn, image_seq
 	</sql>
 	
 	<sql id="whereClause">
@@ -116,7 +116,7 @@
 	
 	
 	<select id="selectPopularList" resultType="ReviewBoardVO">
-		select review_title, mod_date, review_seq
+		select review_title, to_char(mod_date, 'yyyy-mm-dd') mod_date, review_seq
 		from (
 			select * from review_board
 			order by recom_count desc
@@ -137,6 +137,19 @@
 		select recom_count
 		from review_board
 		where review_seq = #{reviewSeq}
+	</select>
+	
+	<select id="selectMainReviewTop3" resultMap="reviewResultMap">
+		select review_title, review_content, to_char(mod_date, 'yyyy-mm-dd') mod_date, review_seq, image_seq, name, profil_image
+			from (
+				select * 
+	            from review_board r inner join member m
+	            on r.mem_seq = m.mem_seq
+				order by r.recom_count desc
+			)
+		<![CDATA[	
+			where rownum <= 3
+		]]>
 	</select>
 	
 	<update id="updateViewCount" parameterType="ReviewSearchVO">

@@ -31,7 +31,6 @@
      -->
 
     <select id="selectFinishedList" resultType="RecruitBoardVO">
-    	<include refid="paging.top" /> 
 		select
 		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
 		    TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
@@ -48,7 +47,6 @@
 		    member m ON vr.mem_seq = m.mem_seq  
 		where 
 		    m.mem_seq = #{memSeq}
-		<include refid="paging.bottom" />
    </select> 
 
 

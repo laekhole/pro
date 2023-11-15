@@ -79,6 +79,8 @@ public class ReviewBoardService extends BaseService {
 	}
 	
 	
+	
+	
 	@Transactional
 	public int reviewInsert(ReviewBoardVO reviewBoard) {
 		log.info("등록 전 게시판 시퀀스 = " + reviewBoard.getReviewSeq());

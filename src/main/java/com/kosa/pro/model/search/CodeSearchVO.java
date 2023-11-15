@@ -8,6 +8,6 @@ public class CodeSearchVO extends SearchVO {
 	
 	private static final long serialVersionUID = 8514411261769653965L;
 	
-	
+	private int codeSeq;
 	
 }

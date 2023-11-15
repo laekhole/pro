@@ -2,12 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ include file="/WEB-INF/jsp/include/admintop.jsp"%>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link href="/admintemplate/css/adminchat.css" rel="stylesheet">
+<link href="/css/page/chat.css" rel="stylesheet">
 
-<div class="container">
+<div class="container-chat">
     <h3 class=" text-center">채팅방</h3>
     <div class="messaging">
         <div class="inbox_msg">
@@ -197,4 +194,3 @@
     </div>
 </div>
 
-<%@ include file="/WEB-INF/jsp/include/adminbottom.jsp"%>
