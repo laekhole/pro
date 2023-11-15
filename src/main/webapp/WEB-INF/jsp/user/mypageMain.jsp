@@ -25,10 +25,16 @@
                               <!-- <a href="single.html" class="img-link me-4">
                                  <img src="images/img_1_sq.jpg" alt="Image" class="img-fluid" style="10rem !important">
                               </a> -->
-                              <div>
-	                              <span class="date"> 오늘의 봉사 </span>
-	                              <span class="date float-end" id="mypageDate" ></span>
-	                              <h2><a href="single.html">${todayProceed.recruitTitle}</a></h2>
+                              <div class="col-md-12">
+	                              <span class="date ms-5"> 오늘의 봉사 </span>
+	                              <span class="date float-end me-5" id="mypageDate" ></span>
+                                  <div class="ms-2 my-3 d-flex align-items-center">
+	                              		<h2 id="volunProceedTitle" onclick="changeMapCenter()">${todayProceed.recruitTitle}</h2>
+                       		     	    <button class="btn btn-primary ms-2" onclick="changeMapCenter()">센터 찾기</button>
+   									    <button class="btn btn-secondary ms-2" onclick="changeMapUser()">현재 위치로</button>
+	                              		
+                              	  </div>
+
                               </div>
                            </div>
                         </div>
@@ -138,6 +144,16 @@
 	}
 	
 	document.getElementById('mypageDate').textContent = getKoreanDate();
+	
+	// 시간 기록 버튼 내용 바꾸기 함수
+	// 페이지 로드 시 실행
+    window.onload = function () {
+        // 데이터 업데이트 함수 호출
+        updateArrivalDeparture();
+    };
+
+
+
 	</script>
 
 
@@ -148,7 +164,163 @@
       <!-- kakaoMap SDK -->
       <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=08d20e40da94696ee7b9ff3a47add144"></script>
       <script>
+      
 
+      ////////////// 지도 표시 api //////////////
+      // 금일 봉사의 좌표를 동적으로 받아오기 위해 좌표 선언
+      // 금일 봉사 없을 땐 지도가 깨짐
+   	  var latitude = document.getElementById('latitude').value;
+  	  var longitude = document.getElementById('longitude').value;
+    
+      var volunLocPosition = new kakao.maps.LatLng(latitude, longitude); // 진행 중인 봉사 제목 누르면 이동하기 위한 함수용 변수
+
+  	  
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = { 
+//                  center: new kakao.maps.LatLng(37.29297, 127.0486), // 지도의 중심좌표 광교 좌표
+                  center: new kakao.maps.LatLng(parseFloat(latitude), parseFloat(longitude)), // 지도 좌표 동적 처리
+//                  center: new kakao.maps.LatLng(37.61625, 127.0656), // 지도의 중심좌표 석계 좌표
+
+                  level: 4 // 지도의 확대 레벨
+            };
+      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+
+      ////////////// 지도 확대 툴바 api //////////////
+      // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+      var mapTypeControl = new kakao.maps.MapTypeControl();
+
+      // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+      // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+      map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+      // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+      var zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+
+
+
+
+      ////////////// 지도 클릭 시 마커 및 좌표 획득 api //////////////
+      // 지도 중심좌표에 마커를 생성합니다
+      var marker2 = new kakao.maps.Marker({ 
+            // 지도 중심좌표에 마커를 생성합니다 
+            position: map.getCenter()
+      }); 
+
+      // 지도에 마커를 표시합니다
+      marker2.setMap(map);
+
+
+
+      var locPosition;
+      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+      if (navigator.geolocation) {
+
+         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+         var coord1 = navigator.geolocation.getCurrentPosition(function(position) {
+
+            var userlat = position.coords.latitude; // 위도
+            var userlon = position.coords.longitude; // 경도
+
+          console.log("사용자 위치[위도] " + userlat);
+          console.log("사용자 위치[경도] -> " + userlon);
+
+         const gpsInfo =  getInfo();
+
+//            console.log("gpsInfo -> " + gpsInfo);
+//            console.log("gpsInfo.center -> " + gpsInfo.center);
+//            console.log("gpsInfo.center.lat -> " + gpsInfo.center.lat);
+//            console.log("gpsInfo.center.lng -> " + gpsInfo.center.lng);
+          
+         // 이부분에서 거리 계산하면 됨
+
+         const coord1 = [userlon, userlat];
+         const coord2 = [gpsInfo.center.lng, gpsInfo.center.lat];
+         
+/*          console.log("coord1의 값을 보자 "+coord1); */
+
+
+      //////////////////////turf.js를 사용했을 때의 코드
+        // 두 지점 간의 거리를 계산합니다.
+      //   const options = { units: 'meters' }; // 거리의 단위를 미터로 설정합니다.
+      //   const distance = turf.distance(coord11, coord2, options);
+        
+
+      ///////////////////////////////////turf.js 관련 내용을 함수화해 만든 distance.js를 사용했을 때의 코드
+        const distance = calculateDistance(coord1, coord2);
+
+        console.log('두 지점 사이의 거리는 약 '+ distance +'미터입니다.');
+
+        // 거리에 따라 버튼 눌렀을 때 버튼 활성화/비활성화
+//        if (distance <= 100) { // 의도대로 짠 거리 로직
+        if (distance <= 10000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
+           document.getElementById('btnTimeRecord').classList.add('btn-secondary');
+           document.getElementById('btnTimeRecord').classList.remove('btn-gray');
+           // 들어올 때 함수 돌리고
+           attendCheck();
+           } else {
+           document.getElementById('btnTimeRecord').classList.remove('btn-secondary');
+           document.getElementById('btnTimeRecord').classList.add('btn-gray');
+           // 나갈 때 함수 돌리면
+           finishCheck();
+           }
+        
+      
+//             console.log("if문 안에 함수 안에 userlon"+userlon);
+             locPosition = new kakao.maps.LatLng(userlat, userlon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+             message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+            
+            // 마커와 인포윈도우를 표시합니다
+            displayMarker(locPosition, message);
+
+/*
+			console.log("현재 접속 위도입니다. userlat : "+userlat);
+            console.log("현재 접속 경도입니다. userlon : "+userlon);
+ */            
+
+            });
+
+         
+      } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+         
+         var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+            message = 'geolocation을 사용할수 없어요..'
+            
+         displayMarker(locPosition, message);
+      }
+
+      ////////////////////////////////////////카카오맵 API 지도 관련 함수 시작/////////////////////////////////////////
+
+      // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+      function displayMarker(locPosition, message) {
+
+         // 마커를 생성합니다
+         var marker = new kakao.maps.Marker({  
+            map: map, 
+            position: locPosition
+         }); 
+         
+         var iwContent = message, // 인포윈도우에 표시할 내용
+            iwRemoveable = true;
+
+         // 인포윈도우를 생성합니다
+         var infowindow = new kakao.maps.InfoWindow({
+            content : iwContent,
+            removable : iwRemoveable
+         });
+         
+         // 인포윈도우를 마커위에 표시합니다 
+         infowindow.open(map, marker);
+         
+         // 지도 중심좌표를 접속위치로 변경합니다
+         map.setCenter(locPosition);      
+      }  
+
+      
+      
       
       
 	  // 봉사활동 센터 위치 얻기 위한 함수
@@ -190,256 +362,130 @@
          bounds : bounds
        }
       }
-
-      ////////////// 지도 표시 api //////////////
-      // 금일 봉사의 좌표를 동적으로 받아오기 위해 좌표 선언
-      // 금일 봉사 없을 땐 지도가 깨짐
-   	  var latitude = document.getElementById('latitude').value;
-  	  var longitude = document.getElementById('longitude').value;
-    
-      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-            mapOption = { 
-//                  center: new kakao.maps.LatLng(37.29297, 127.0486), // 지도의 중심좌표 광교 좌표
-                  center: new kakao.maps.LatLng(parseFloat(latitude), parseFloat(longitude)), // 지도 좌표 동적 처리
-//                  center: new kakao.maps.LatLng(37.61625, 127.0656), // 지도의 중심좌표 석계 좌표
-
-                  level: 4 // 지도의 확대 레벨
-            };
-      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-      var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-
-      ////////////// 지도 확대 툴바 api //////////////
-      // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-      var mapTypeControl = new kakao.maps.MapTypeControl();
-
-      // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-      // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-      map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-      // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-      var zoomControl = new kakao.maps.ZoomControl();
-      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-
-
-
-
-      ////////////// 지도 클릭 시 마커 및 좌표 획득 api //////////////
-      // 지도 중심좌표에 마커를 생성합니다
-      var marker2 = new kakao.maps.Marker({ 
-            // 지도 중심좌표에 마커를 생성합니다 
-            position: map.getCenter()
-      }); 
-      // 지도에 마커를 표시합니다
-      marker2.setMap(map);
-
-
-
-
-      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-      if (navigator.geolocation) {
-
-         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-         var coord1 = navigator.geolocation.getCurrentPosition(function(position) {
-
-            var userlat = position.coords.latitude; // 위도
-            var userlon = position.coords.longitude; // 경도
-
-          console.log("사용자 위치[위도] " + userlat);
-          console.log("사용자 위치[경도] -> " + userlon);
-
-         const gpsInfo =  getInfo();
-
-//            console.log("gpsInfo -> " + gpsInfo);
-//            console.log("gpsInfo.center -> " + gpsInfo.center);
-//            console.log("gpsInfo.center.lat -> " + gpsInfo.center.lat);
-//            console.log("gpsInfo.center.lng -> " + gpsInfo.center.lng);
-          
-         // 이부분에서 거리 계산하면 됨
-
-         const coord1 = [userlon, userlat];
-         const coord2 = [gpsInfo.center.lng, gpsInfo.center.lat];
-         
-/*          console.log("coord1의 값을 보자 "+coord1); */
-
-
-      //////////////////////turf.js를 사용했을 때의 코드
-        // 두 지점 간의 거리를 계산합니다.
-      //   const options = { units: 'meters' }; // 거리의 단위를 미터로 설정합니다.
-      //   const distance = turf.distance(coord11, coord2, options);
-        
-
-      ///////////////////////////////////turf.js 관련 내용을 함수화해 만든 distance.js를 사용했을 때의 코드
-        const distance = calculateDistance(coord1, coord2);
-
-        console.log('두 지점 사이의 거리는 약 '+ distance +'미터입니다.');
-
-        // 거리에 따라 버튼 눌렀을 때 버튼 활성화/비활성화
-//        if (distance <= 100) { // 의도대로 짠 거리 로직
-        if (distance <= 1000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
-           document.getElementById('btnTimeRecord').classList.add('btn-secondary');
-           document.getElementById('btnTimeRecord').classList.remove('btn-gray');
-           } else {
-           document.getElementById('btnTimeRecord').classList.remove('btn-secondary');
-           document.getElementById('btnTimeRecord').classList.add('btn-gray');
-
-           }
-        
-        
-        
-        // 출석 체크 했을 때 백엔드와 통신하기 위한 함수
-        function attendCheck() {
-            // 서버에 출석 체크 요청을 보내는 비동기 요청
-            fetch('<c:url value="/user/attend" />')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('서버 오류');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('출석 체크 성공:', data);
-                    // 여기서 필요한 UI 업데이트 등을 수행
-                })
-                .catch(error => {
-                    console.error('에러 발생:', error);
-                    // 에러 발생 시 사용자에게 메시지 표시 등의 처리
-                });
-        }
-        
-        function finishCheck() {
-            // 서버에 출석 체크 요청을 보내는 비동기 요청
-            fetch('<c:url value="/user/recordUpdate" />')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('서버 오류');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('퇴근 체크 성공:', data);
-                    // 여기서 필요한 UI 업데이트 등을 수행
-                })
-                .catch(error => {
-                    console.error('에러 발생:', error);
-                    // 에러 발생 시 사용자에게 메시지 표시 등의 처리
-                });
-        }
-        
-        
-        
-        // 버튼 클릭 시 시간 기록 및 출석 체크
-        document.getElementById('btnTimeRecord').addEventListener('click', async function() {
-            if (this.classList.contains('btn-secondary')) {
-                if (document.getElementById('arrival').textContent.trim() === '') {
-                    document.getElementById('arrival').textContent = await getKoreanStandardTime();
-                    // 시간 기록 후 출석 체크 함수 호출
-                    attendCheck();
-                } else {
-                    if (document.getElementById('departure').textContent.trim() === '') {
-                        document.getElementById('departure').textContent = await getKoreanStandardTime();
-                    	// 시간 기록 후 퇴근 체크 함수 호출
-                        finishCheck();
-                    }
-                }
-
-            }
-        });
-        
-        
-        
-        
-
-        // sysdate를 한국 표준시로 얻기
-        async function getKoreanStandardTime() {
-            const now = new Date();
-            const koreanDate = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-            return koreanDate;
-        }
       
+      // 봉사 제목 누르면 센터로 지도 중심 이동 구현할 함수
+      function changeMapCenter(){
+		map.setCenter(volunLocPosition);
+     }
+     
+     // 봉사 제목 한 번 더 누르면 현재 위치로 지도 중심 이동할 함수
+     	function changeMapUser(){
+   		 map.setCenter(locPosition);
+   		 console.log(locPosition);
+     }
+     
 
-        // 데이터가 있는지 확인하고 적절한 내용으로 변경하는 함수
-        function updateArrivalDeparture() {
-            const arrivalElement = document.getElementById('arrival');
-            const departureElement = document.getElementById('departure');
-
-            const arrivalDataTimeElement = document.getElementById('arrivalDateTime');
-            const departureDataTimeElement = document.getElementById('departureDateTime');
-
-            // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
-            if (arrivalElement.innerText.trim() != '') {
-                arrivalDataTimeElement.innerHTML = '출석하셨습니다. 고맙습니다!';
-                arrivalElement.innerHTML = '보람찬 봉사, 감사합니다! <i class="bi bi-thermometer"></i>';
-            }
-
-            // Departure 데이터가 있으면 업데이트, 없으면 기본값으로 유지
-            if (departureElement.innerText.trim() !== '') {
-                departureDataTimeElement.innerHTML = '끝마쳤습니다. 고맙습니다!';
-                departureElement.innerHTML = '덕분에 더 따뜻해졌어요! <i class="bi bi-thermometer-sun"></i>';
-            }
-        }
-        
-        // 페이지 로드 시 실행
-        window.onload = function () {
-            // 데이터 업데이트 함수 호출
-            updateArrivalDeparture();
-        };
-        
-        
-
-        
-        
+     ////////////////////////////////////////카카오맵 API 지도 관련 함수 끝/////////////////////////////////////////
+     
+     
+     /////////////////////////////////////////////////////// 출석 체크 버튼 관련 함수 시작 ///////////////////////////////////
       
-//             console.log("if문 안에 함수 안에 userlon"+userlon);
-            var locPosition = new kakao.maps.LatLng(userlat, userlon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-                  message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
-            
-            // 마커와 인포윈도우를 표시합니다
-            displayMarker(locPosition, message);
-
-/*
-			console.log("현재 접속 위도입니다. userlat : "+userlat);
-            console.log("현재 접속 경도입니다. userlon : "+userlon);
- */            
-
-            });
-
-         
-      } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-         
-         var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
-            message = 'geolocation을 사용할수 없어요..'
-            
-         displayMarker(locPosition, message);
+      // 출석 체크 했을 때 백엔드와 통신하기 위한 함수
+      function attendCheck() {
+          // 서버에 출석 체크 요청을 보내는 비동기 요청
+          fetch('<c:url value="/user/attend" />')
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('서버 오류');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('출석 체크 성공:', data);
+              })
+              .catch(error => {
+                  console.error('이미 출근 처리 됐습니다.', error);
+                  // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+              });
       }
+      function finishCheck() {
+          // 서버에 출석 체크 요청을 보내는 비동기 요청
+          fetch('<c:url value="/user/recordUpdate" />')
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('서버 오류');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('퇴근 체크 성공:', data);
+              })
+              .catch(error => {
+                  console.error('이미 퇴근 처리가 됐습니다.', error);
+                  // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+              });
+      }
+      
+      
+      
+      // 버튼 클릭 시 시간 기록 및 출석 체크
+      document.getElementById('btnTimeRecord').addEventListener('click', async function() {
+          if (this.classList.contains('btn-secondary')) {
+              if (document.getElementById('arrival').textContent.trim() === '') {
+                  document.getElementById('arrival').textContent = await getKoreanStandardTime();
+                  // 시간 기록 후 출석 체크 함수 호출
+                  attendCheck();
+                  Swal.fire({
+                      title: "도착 인증 되었습니다!",
+                      html: `
+                      오시느라 고생 많으셨습니다!
+                      `,
+                      showCancelButton: false,
+                      confirmButtonText: "확인",
+                  })
+              } else {
+                  if (document.getElementById('departure').textContent.trim() === '') {
+                      document.getElementById('departure').textContent = await getKoreanStandardTime();
+                  	// 시간 기록 후 퇴근 체크 함수 호출
+                     finishCheck();
+                     Swal.fire({
+                         title: "퇴근 인증 되었습니다!",
+                         html: `
+                         오늘도 수고하셨습니다.<br>보람찬 봉사, 감사합니다!
+                         `,
+                         showCancelButton: false,
+                         confirmButtonText: "확인",
+                     })
+                  }
+              }
 
+          }
+      });
+      
+      
+      
+      
 
+      // sysdate를 한국 표준시로 얻기
+      async function getKoreanStandardTime() {
+          const now = new Date();
+          const koreanDate = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+          return koreanDate;
+      }
+    
 
-      // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-      function displayMarker(locPosition, message) {
+      // 데이터가 있는지 확인하고 적절한 내용으로 변경하는 함수
+      function updateArrivalDeparture() {
+          const arrivalElement = document.getElementById('arrival');
+          const departureElement = document.getElementById('departure');
 
-         // 마커를 생성합니다
-         var marker = new kakao.maps.Marker({  
-            map: map, 
-            position: locPosition
-         }); 
-         
-         var iwContent = message, // 인포윈도우에 표시할 내용
-            iwRemoveable = true;
+          const arrivalDataTimeElement = document.getElementById('arrivalDateTime');
+          const departureDataTimeElement = document.getElementById('departureDateTime');
 
-         // 인포윈도우를 생성합니다
-         var infowindow = new kakao.maps.InfoWindow({
-            content : iwContent,
-            removable : iwRemoveable
-         });
-         
-         // 인포윈도우를 마커위에 표시합니다 
-         infowindow.open(map, marker);
-         
-         // 지도 중심좌표를 접속위치로 변경합니다
-         map.setCenter(locPosition);      
-      }  
+          // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
+          if (arrivalElement.innerText.trim() != '') {
+              arrivalDataTimeElement.innerHTML = '출석하셨습니다. 고맙습니다!';
+              arrivalElement.innerHTML = '보람찬 봉사, 감사합니다! <i class="bi bi-thermometer"></i>';
+          }
+
+          // Departure 데이터가 있으면 업데이트, 없으면 기본값으로 유지
+          if (departureElement.innerText.trim() !== '') {
+              departureDataTimeElement.innerHTML = '끝마쳤습니다. 고맙습니다!';
+              departureElement.innerHTML = '덕분에 더 따뜻해졌어요! <i class="bi bi-thermometer-sun"></i>';
+          }
+      }
+      /////////////////////////////////////////////////////// 출석 체크 버튼 관련 함수 끝 ///////////////////////////////////
+
 
       </script>
 

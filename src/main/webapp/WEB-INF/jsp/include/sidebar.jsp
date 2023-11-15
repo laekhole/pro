@@ -7,12 +7,12 @@
       <!-- Sidebar-->
       <div class="col-md-2 col-lg-3 col-xl-2 border-end bg-white " id="sidebar-wrapper">
             <div class="list-group list-group-flush border-top">
-                  <a id="myMain" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/' />">마이 페이지</a>
+                  <a id="myMain" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/?memSeq=${principal.user.memSeq }' />">마이 페이지</a>
                   <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="#">즐겨찾기 목록</a>
                   <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="#">찜한 봉사 목록</a>
-                  <a id="myList" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/list' />">나의 봉사 목록</a>
+                  <a id="myList" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/list?memSeq=${principal.user.memSeq }' />">나의 봉사 목록</a>
                   <a id="myFinish" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/finished?memSeq=${principal.user.memSeq }' />">종료된 봉사</a>
-                  <a id="myReview" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/reviewed' />">내가 쓴 후기</a>
+                  <a id="myReview" class="list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/user/reviewed?memSeq=${principal.user.memSeq }' />">내가 쓴 후기</a>
                   <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="#">문의 내역</a>
                   <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="#">개인 정보</a>
 
