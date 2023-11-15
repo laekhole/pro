@@ -58,7 +58,22 @@
         vp.state = '승인'
 
 	</select>
-
+	
+	<!-- 특정 채팅방 정보와 메시지 가져오는 테이블 쿼리 -->
+	<select id="findMessagesByChatRoomId" resultType="ChatMessageVO">
+        SELECT
+            MESSAGE_ID,
+            CHAT_ROOM_ID,
+            SENDER_ID,
+            MESSAGE_TEXT,
+            SENT_AT
+        FROM
+            CHAT_MESSAGE
+        WHERE
+            CHAT_ROOM_ID = #{chatRoomId}
+        ORDER BY
+            SENT_AT ASC
+    </select>
 
 
 

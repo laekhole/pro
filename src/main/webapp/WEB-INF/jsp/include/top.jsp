@@ -117,6 +117,7 @@
 									</c:when>
 									<c:otherwise>
 										<li><a href="/user/main">마이페이지</a></li>
+										<li><a href="/userchat/chatRoom?memSeq=${principal.user.memSeq}">채팅방</a></li>
 									</c:otherwise>
 								</c:choose>
 								

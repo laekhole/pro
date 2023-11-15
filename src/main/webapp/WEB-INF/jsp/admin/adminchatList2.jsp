@@ -8,7 +8,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="/admintemplate/css/adminchat.css" rel="stylesheet">
 
-<div class="chatcontainer">
+<div class="container">
 	<h3 class=" text-center">채팅방</h3>
 	<div class="messaging">
 		<div class="inbox_msg">
