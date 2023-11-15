@@ -32,28 +32,41 @@
 		<include refid="whereClause" />
 	</select>
 	
+	
+	<select id="mainList" resultType="GroupMemberVO">
+		SELECT
+			*
+		FROM
+			GROUP_MEMBER
+		WHERE
+			GROUP_MEM_SEQ = #{groupMemSeq}
+	</select>
+	
+	
 	<!-- 봉사 신청내역(신청중) 게시판 목록보기 -->
 	<select id="volunteerProceedList" resultType="VolunteerProceedVO">
 			
-			SELECT
-			    vp.volun_proceed_seq,
-			    vp.recruit_seq,
-			    vp.mem_seq,
-			    m.name,
-			    vp.state,
-			    vp.end_date
-			FROM
-			    volunteer_proceed vp
-			JOIN
-			    member m ON vp.mem_seq = m.mem_seq
-			WHERE
-			    vp.group_mem_seq = 4
-			AND
-				vp.state = '신청중'
-			ORDER BY
-				recruit_seq asc
-    
-<!-- vp.group_mem_seq = #{groupMemSeq} -->
+		SELECT
+		    vp.volun_proceed_seq,
+		    vp.recruit_seq,
+		    rb.recruit_title,
+		    vp.mem_seq,
+		    m.name,
+		    vp.state,
+		    vp.end_date
+		FROM
+		    volunteer_proceed vp
+		JOIN
+		    member m ON vp.mem_seq = m.mem_seq
+		JOIN
+		    recruit_board rb ON vp.recruit_seq = rb.recruit_seq
+		WHERE
+		    vp.group_mem_seq = #{groupMemSeq}
+		    AND vp.state = '신청중'
+		ORDER BY
+		    vp.recruit_seq ASC
+
+
 	</select>
 	
 	
@@ -87,12 +100,24 @@
 	</select>
 	
 	
+	<!-- 봉사활동 몇 명 신청했는지 조회하기 -->
+	<select id="insertCount" resultType="int">
+		SELECT COUNT(*)
+	    FROM volunteer_proceed
+	    WHERE 
+		    RECRUIT_SEQ = #{recruitSeq}
+	    AND
+		    STATE = '승인'
+	</select>
+	    
+	
 	<!-- 봉사 신청내역(승인) 게시판 목록보기 -->
 	<select id="selectApprove" resultType="VolunteerProceedVO">
 			
 			SELECT
 			    vp.volun_proceed_seq,
 			    vp.recruit_seq,
+			    rb.recruit_title,
 			    vp.mem_seq,
 			    m.name,
 			    vp.state
@@ -100,8 +125,10 @@
 			    volunteer_proceed vp
 			JOIN
 			    member m ON vp.mem_seq = m.mem_seq
+			JOIN
+		    	recruit_board rb ON vp.recruit_seq = rb.recruit_seq
 			WHERE
-			    vp.group_mem_seq = 4
+			    vp.group_mem_seq = #{groupMemSeq}
 			AND
 				vp.state = '승인'
 			ORDER BY 
@@ -116,15 +143,19 @@
 			SELECT
 			    vp.volun_proceed_seq,
 			    vp.recruit_seq,
+			    rb.recruit_title,
 			    vp.mem_seq,
 			    m.name,
+			    vp.reject_message,
 			    vp.state
 			FROM
 			    volunteer_proceed vp
 			JOIN
 			    member m ON vp.mem_seq = m.mem_seq
+			JOIN
+		    	recruit_board rb ON vp.recruit_seq = rb.recruit_seq
 			WHERE
-			    vp.group_mem_seq = 4
+			    vp.group_mem_seq = #{groupMemSeq}
 			AND
 				vp.state = '거절'
 			ORDER BY 
@@ -143,6 +174,7 @@
 			state = '승인'
 		where volun_proceed_seq = #{volunProceedSeq}	
 	</update>
+	
 	
 
 	<!-- 거절 -->
@@ -169,7 +201,7 @@
 
 	<!-- 진행 중인 봉사 게시판 -->
 	<!-- 오늘!! 진행중인 봉사 신청글 목록보기 -->
-	<select id="selectVolunteeringList" parameterType="SearchVO" resultType="RecruitBoardVO">
+	<select id="selectVolunteeringList" resultType="RecruitBoardVO">
 			
 		<![CDATA[
             SELECT
@@ -177,7 +209,7 @@
 			FROM
 				 recruit_board
 			WHERE trunc(volun_start_date) = trunc(sysdate)
-            AND group_mem_seq = 4
+            AND group_mem_seq = #{groupMemSeq}
 		]]>
 
 	</select>
@@ -191,7 +223,7 @@
 			FROM
 				 recruit_board
 			WHERE trunc(volun_start_date) BETWEEN trunc(sysdate + 1) AND trunc(sysdate + 7)
-            AND group_mem_seq = 4
+            AND group_mem_seq = #{groupMemSeq}
 		]]>
 			
 	</select>

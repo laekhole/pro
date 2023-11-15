@@ -399,7 +399,7 @@ h4 {
       width: 120px;
       height: 50px;
 
-      background-color: #0c6ccb;
+      background-color: #3ab41cb5;
       color: white;
       font-size: 20px;
    }
@@ -498,7 +498,7 @@ h4 {
         }
 
         .card {
-            background: #f4f4f4;
+            background: #f8f8f8;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #999;
@@ -537,7 +537,7 @@ h4 {
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 70%;
+            width: 40%;
         }
 
         .close {

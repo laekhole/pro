@@ -47,11 +47,14 @@ public class RecruitGroupContorller extends PrtController {
 	
 	// 봉사활동 - 목록 페이지
 	@GetMapping("/list")
-	public String recruitList(BoardSearchVO search, Model model) throws Exception {
+	public String recruitList(BoardSearchVO search, VolunteerProceedVO add, Model model) throws Exception {
 		super.setPageSubTitle("봉사신청 목록 페이지", model);
 //		log.info(">>>>>>>>>>>>>>서치 = " + search.);
 		search.setRecordCount(5);
+		
 		Map<String, List<RecruitBoardVO>> map = _recruitBoardService.recruitList(search);
+		/* int count = _recruitBoardService.insertCount(add); */
+		
 		model.addAttribute("list", map.get("recruitList"));
 		model.addAttribute("search", search);
 		
@@ -63,11 +66,12 @@ public class RecruitGroupContorller extends PrtController {
 	
 	// 봉사활동 - 상세페이지
 	@GetMapping("/detail")
-	public String recruitDetail(RecruitBoardVO recruit, Model model) throws Exception {
+	public String recruitDetail(RecruitBoardVO recruit, VolunteerProceedVO add, Model model) throws Exception {
 		super.setPageSubTitle("봉사활동 상세페이지", model);
 		log.info(">>>>>>>>>>>>>>상세보기");
 
 		model.addAttribute("recruit", _recruitBoardService.recruitDetail(recruit));
+		model.addAttribute("count", _recruitBoardService.insertCount(add));
 		
 		return "recruit/recruit_detail";
 	}

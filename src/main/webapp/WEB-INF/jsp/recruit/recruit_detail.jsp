@@ -8,12 +8,17 @@
 
 	<div class="section search-result-wrap">
 		<div class="container">
-			<br>
+			<div class="recuit" style="margin-left:13.5%;">봉사자모집 및 신청</div>
 			<br>
 			<div class="detail_section">
 			<div class="form-css">
 			<br>
-			
+			<!-- 그룹멤버시퀀스 / 글번호시퀀스 / 유저번호시퀀스 / 모집인원 / 현재모집된인원  -->
+			<input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${recruit.groupMemSeq}" >
+			<input type="hidden" id="RECRUIT_SEQ" name="recruitSeq" value="${recruit.recruitSeq}" >
+			<input type="hidden" id="MEM_SEQ" name="memSeq" value="${principal.user.memSeq}" >
+			<input type="hidden" id="MEM_COUNT" name="memCount" value="${recruit.memCount}" >
+			<input type="hidden" id="COUNT" name="count" value="${recruit.count}" >
 		<!-- 	<form action="/recruit/add" method="post"> -->
 			<div class="inner3">
 				<div class="inner4">
@@ -25,7 +30,7 @@
 										<ul class="tags">
 											<li><a href="#" style="padding: 10px 20px;" >${recruit.recruitState}</a></li>
 											<li><a href="#" style="padding: 10px 20px;" >${recruit.volunRegion1}</a></li>
-											<li><a href="#" style="padding: 10px 20px;">D-5</a></li>
+											<li><a href="#" style="padding: 10px 20px; background-color: #fff28d;"><span id="ddayElement"></span></a></li>
 											<span class="btn-frame" style="flex: 1;">
 												<button class="btn" style="font-size:19px;" onclick="add()">신청하기</button>
 											</span>
@@ -51,8 +56,8 @@
 										<tr>
 											<th>봉사기간</th>
 											<td><span>${recruit.volunStartDate}</span> ~ <span>${recruit.volunEndDate}</span></td>
-											<th>봉사분야</th>
-											<td><span>${recruit.volunCode}</span></td>
+											<th>모집기간</th>
+											<td><span>${recruit.recruitStartDate}</span> ~ <span>${recruit.recruitEndDate}</span></td>
 										</tr>
 										<tr>
 											<th>봉사단체</th>
@@ -69,12 +74,8 @@
 										<tr>
 											<th>봉사대상</th>
 											<td>${recruit.volunTarget}</td>
-											<th>그룹번호/글번호/회원번호</th>
-											<td>
-												<input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${recruit.groupMemSeq}" >
-												<input type="hidden" id="RECRUIT_SEQ" name="recruitSeq" value="${recruit.recruitSeq}" >
-												<input type="hidden" id="MEM_SEQ" name="memSeq" value="${principal.user.memSeq}" >
-											</td>
+											<th>봉사분야</th>
+											<td><span>${recruit.volunCode}</span></td>
 										</tr>
 			
 									</table>
@@ -94,9 +95,9 @@
 									<!-- 담당자 정보 -->
 									<div class="personInfo" >
 										<ul>
-											<li>담당자:<span>${recruit.manager}</span></li>
-											<li>연락처:<span>${recruit.email}</span></li>
-											<li>이메일:<span>${recruit.phone}</span></li>
+											<li><span style="color:rgb(255, 97, 97);">·  </span>담당자 : <span>${recruit.manager}</span></li>
+											<li><span style="color:rgb(255, 97, 97);">·  </span>이메일 : <span>${recruit.email}</span></li>
+											<li><span style="color:rgb(255, 97, 97);">·  </span>연락처 : <span>${recruit.phone}</span></li>
 										</ul>
 									</div>
 
@@ -110,9 +111,24 @@
 
 									<hr>
 									<div style="float:right;">
-										<button style="padding: 10px 20px; background-color: #0c6ccb; color: white; border-radius: 4px; border: none; font-weight:bold; font-size: 15px; height: 40px; width: 80px;" >수정</button>
-										<button style="padding: 10px 20px; background-color: #0c6ccb; color: white; border-radius: 4px; border: none; font-weight:bold; font-size: 15px; height: 40px; width: 80px;" id="listBrn" onclick="list()">목록</button>
+										<button style="padding: 10px 20px; color: gray; background: #f2f2f2; border-radius: 4px; border: none; font-weight:bold; font-size: 15px; height: 40px; width: 80px;" id="listBrn" onclick="list()">목록</button>
 									</div>
+
+<%-- 								<ul class="dropdown">
+								<c:choose>
+									<c:when test="${principal.user.loginAuth eq 'ADMIN' }">
+										<li><a href="/admin/adminmain">관리자페이지</a></li>
+									</c:when>
+									<c:when test="${principal.user.loginAuth eq 'MANAGER' }">
+										<li><a href="/manager/updateState?groupSeq=${principal.user.memSeq}">단체마이페이지</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="/user/main">마이페이지</a></li>
+									</c:otherwise>
+								</c:choose>
+								</ul>
+ --%>
+
 
 								</div>
 							</div>
@@ -161,7 +177,50 @@
     </script>
 	
 	<script>
+	  function calculateDday(targetDate) {
+	    var target = new Date(targetDate);
+	    var today = new Date();
+	    var timeDiff = target - today;
+	    var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
+	    if (daysDiff === 0) {
+	      return "금일마감";
+	    } else if (daysDiff > 0) {
+	      return "D-" + daysDiff;
+	    } else {
+	      return "D+" + Math.abs(daysDiff);
+	    }
+	  }
+
+	  var targetDate = new Date("${recruit.recruitStartDate}");
+	  var dday = calculateDday(targetDate);
+
+	  document.getElementById("ddayElement").innerHTML = dday;
+
+
+
+	$(document).ready(function() {
+	    // 페이지 로딩 시에 비교 및 처리
+	    checkAndHandleRecruitmentCompletion();
+	});
+
+	function checkAndHandleRecruitmentCompletion() {
+	    // 모집인원 값을 가져옵니다.
+	    var count = $("#MEM_COUNT").val();
+
+	    // 실제모집인원 값을 가져옵니다.
+	    var realCount = $("#COUNT").val();
+
+	    // count와 realCount 값을 비교하여 같으면 처리합니다.
+	    if (count == realCount) {
+	        // 버튼 텍스트를 "신청 완료"로 변경합니다.
+	        $(".btn").text("모집완료");
+
+	        // 버튼을 비활성화합니다.
+	        $(".btn").prop("disabled", true);
+	    }
+	}
+	
 	function add() {
 	    
 	    const recruitSeq = $("#RECRUIT_SEQ").val();
