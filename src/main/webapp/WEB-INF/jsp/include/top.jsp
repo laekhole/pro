@@ -116,7 +116,7 @@
 										<li><a href="/manager/updateState">단체마이페이지</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="/user/main">마이페이지</a></li>
+										<li><a href="/user/?memSeq=${principal.user.memSeq }">마이페이지</a></li>
 									</c:otherwise>
 								</c:choose>
 								
