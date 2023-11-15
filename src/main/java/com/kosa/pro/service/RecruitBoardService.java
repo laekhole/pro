@@ -69,6 +69,7 @@ public class RecruitBoardService extends BaseService {
 	
 	
 	
+
 	// 봉사활동 몇 명 신청했는지 조회하기
     public int insertCount(VolunteerProceedVO count) {
     	
@@ -77,7 +78,7 @@ public class RecruitBoardService extends BaseService {
 
 	
 	
-	
+
 //	
 //	
 //	// 신청 수정 페이지

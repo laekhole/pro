@@ -5,9 +5,30 @@
 
 <mapper namespace="user">
 
+
+<!--    동적으로 구현해야 할 때 쓸 SQL문 // 까먹을까 미리 작성 -->
+<!--
+    <select id="selectFinishedList" resultType="RecruitBoardVO"> 
+		select
+		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
+		    TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
+		    r.recruit_title, 
+		    r.recruit_content, 
+		    r.group_name 
+		from 
+		    recruit_board r 
+		join
+		    volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
+		join 
+		    member m ON vr.mem_seq = m.mem_seq  
+		where 
+		    m.mem_seq = ${loginMember.memSeq}
+   </select>
+     -->
+
 	<!-- 종료된 봉사 -->
     <select id="selectFinishedList" parameterType="UserSearchVO"  resultType="RecruitBoardVO">
-    	<include refid="paging.top" /> 
+
 		select
 		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
 		    TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
@@ -24,7 +45,6 @@
 		    member m ON vr.mem_seq = m.mem_seq  
 		where 
 		    m.mem_seq = #{memSeq}
-		<include refid="paging.bottom" />
    </select> 
 	<!-- 종료된 봉사 -->
 

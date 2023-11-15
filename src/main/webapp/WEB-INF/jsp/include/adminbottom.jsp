@@ -22,6 +22,10 @@
     <script src="/admintemplate/lib/tempusdominus/js/moment.min.js"></script>
     <script src="/admintemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="/admintemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+    <script src="/js/common/jquery.locator.js"></script>
+	<script src="/js/common/jsrender.js"></script>
+	<script src="/js/common/jsviews.js"></script>
 
     <!-- Template Javascript -->
     <script src="/admintemplate/js/main.js"></script>

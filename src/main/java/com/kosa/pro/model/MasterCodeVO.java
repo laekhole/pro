@@ -15,6 +15,7 @@ public class MasterCodeVO implements GeneralModel {
 
 	private static final long serialVersionUID = 5601508389671979656L;
 	
+	private int codeSeq;
 	private String codeGroup;
 	private String codeNumber;
 	private String codeName;

@@ -92,6 +92,18 @@
 			recruit_seq = #{recruitSeq}
 	</select>
 	
+	<select id="selectMainRecruit" resultType="RecruitBoardVO">
+		select recruit_title, recruit_seq
+		from (
+	    	select * 
+	    	from recruit_board
+	    	where recruit_state = '모집중'
+	    	order by recruit_seq desc
+	<![CDATA[    	
+		) where rownum <= 5
+	]]>		
+	</select>
+	
 
 <insert id="insertRecruit">
     <selectKey keyProperty="recruitSeq" resultType="int" order="BEFORE">

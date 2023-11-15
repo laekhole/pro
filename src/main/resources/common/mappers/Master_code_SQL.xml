@@ -11,7 +11,7 @@
 	</resultMap>
 
 	<sql id="select">
-		code_group, code_number, code_name, code_detail, code_yn
+		code_seq, code_group, code_number, code_name, code_detail, code_yn
 	</sql>
 	
 	<select id="selectGroupCode" resultType="MasterCodeVO">
@@ -19,6 +19,7 @@
 		<include refid="select" />
 		from master_code
 		where code_group = #{groupCode}
+		order by code_number
 	</select>
 	
 	<select id="selectGroupList" resultType="MasterCodeVO">
@@ -55,6 +56,63 @@
 		inner join master_code m
 		on c.code_number = m.code_number
 		where r.review_seq = #{reviewSeq}
+		and code_group = '0001'
 	</select>
+	
+	<delete id="delete">
+		delete from master_code
+		where code_group = #{codeGroup}
+		and code_number = #{codeNumber}
+	</delete>
+	
+	<insert id="merge">
+		<selectKey keyProperty="codeSeq" resultType="int" order="BEFORE" statementType="PREPARED">
+			<if test="codeSeq == null or codeSeq == 0">
+				select code_seq.nextval from dual
+			</if>
+			<if test="codeSeq > 0">
+				select #{codeSeq} from dual
+			</if>
+		</selectKey>
+		merge into master_code a
+		using dual
+            on (code_seq = #{codeSeq})
+            when matched then
+            	update
+           		<set>
+					<if test="codeGroup != null">
+						code_group = #{codeGroup,jdbcType=VARCHAR},
+					</if>
+					<if test="codeNumber != null">
+						code_number = #{codeNumber,jdbcType=VARCHAR},
+					</if>
+					<if test="codeName != null">
+						code_name = #{codeName,jdbcType=VARCHAR},
+					</if>
+					<if test="codeDetail != null">
+						code_detail = #{codeDetail,jdbcType=VARCHAR},
+					</if>
+				</set>
+            when not matched then
+            	insert (
+					code_group, code_number,
+					code_name, code_detail, code_seq
+				)
+				values (
+					#{codeGroup,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR}, 
+					#{codeName,jdbcType=VARCHAR}, #{codeDetail,jdbcType=VARCHAR}, #{codeSeq,jdbcType=NUMERIC} 
+				)
+	</insert>
+	
+	<insert id="categoryCountInsert">
+		insert into category_count
+		(code_number)
+		values
+		(#{codeNumber})
+	</insert>
+	<delete id="categoryCountDelete">
+		delete from category_count
+		where code_number = #{codeNumber}
+	</delete>
 	
 </mapper>

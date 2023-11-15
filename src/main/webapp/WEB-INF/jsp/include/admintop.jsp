@@ -40,6 +40,7 @@
     <!--  권형이 추가한  -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/common/jquery.locator.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
