@@ -1,6 +1,6 @@
 @charset "EUC-KR";
 
- .container{max-width:100%; margin:auto;  height: 93vh; /* 브라우저 창의 전체 높이 */}
+ .chatcontainer{max-width:100%; margin:auto;  height: 93vh; /* 브라우저 창의 전체 높이 */}
        img{ max-width:100%;}
       .inbox_people {
         background: #f8f8f8 none repeat scroll 0 0;

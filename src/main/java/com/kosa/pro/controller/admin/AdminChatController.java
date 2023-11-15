@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosa.pro.model.ChatRoomVO;
 import com.kosa.pro.model.common.SearchVO;
@@ -32,8 +34,19 @@ public class AdminChatController {
 	model.addAttribute("chatlist", map.get("RecruitChatRoomList"));
 	model.addAttribute("search", search);
 	System.out.println("-- 채팅 컨트롤러 ->> " + map);
-		return "admin/adminchat";
+	//목록 가져오지말고 내가 승인된 한건 봉사id	
+	return "admin/adminchat";
 }
+
+	
+	//특정채팅방의 메시지내역 반환.
+	@GetMapping("/admin/chatRoom/{chatRoomId}")
+	@ResponseBody
+	public Map<String, List<ChatRoomVO>> roomInfo(@PathVariable String chatRoomId) {
+		
+		return adminChatRoomService.findRoomById(chatRoomId);
+		
+	}
 	
 
 }

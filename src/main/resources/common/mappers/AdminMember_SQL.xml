@@ -152,7 +152,7 @@
         G.grade_add,
         G.grade
     FROM group_member GM
-    LEFT JOIN admin.grade G ON GM.group_mem_seq = G.group_mem_seq
+    LEFT JOIN grade G ON GM.group_mem_seq = G.group_mem_seq
     <include refid="whereClause2" />
     <choose>
         <when test="sort != null and sort != ''">
