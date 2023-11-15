@@ -116,12 +116,8 @@
 										<li><a href="/manager/updateState?groupSeq=${principal.user.memSeq}">단체마이페이지</a></li>
 									</c:when>
 									<c:otherwise>
-<<<<<<< HEAD
-										<li><a href="/user/main">마이페이지</a></li>
 										<li><a href="/userchat/chatRoom?memSeq=${principal.user.memSeq}">채팅방</a></li>
-=======
 										<li><a href="/user/?memSeq=${principal.user.memSeq }">마이페이지</a></li>
->>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git
 									</c:otherwise>
 								</c:choose>
 								
