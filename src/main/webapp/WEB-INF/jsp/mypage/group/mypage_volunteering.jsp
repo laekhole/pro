@@ -29,11 +29,10 @@
 			        <!-- 봉사활동 정보 표시 -->
 			        <h1 style="color: black; font-size: 30px; font-weight: bold; margin-top:50px;">${recruit.recruitTitle}</h1>
 			        <p><strong>글번호:</strong>${recruit.recruitSeq}</p>
+			        <p><strong>봉사단체: </strong>${recruit.groupName}</p>
 			        <p><strong>봉사기간: </strong>${recruit.volunStartDate} ~ ${recruit.volunEndDate}</p>
 			        <p><strong>봉사장소: </strong>${recruit.volunAddr}</p>
-			        <p><strong>봉사대상: </strong>${recruit.volunTarget}</p>
-			        <p><strong>모집인원: </strong> 3명 / ${recruit.memCount}명</p>
-			        <p><strong>봉사단체: </strong>${recruit.groupName}</p>
+			        <p><strong>모집인원: </strong>${recruit.count}명 / ${recruit.memCount}명</p>
 			    </div>
 			    
 
@@ -61,7 +60,7 @@
 					            <td>${volunteer.memSeq}</td>
 					            <td>${volunteer.name}</td>
 					            <td>${volunteer.state}</td>
-					            <td></td>
+					            <td>${volunteer.attendance}</td>
 					        </tr>
  					    </c:forEach>
 					</table>

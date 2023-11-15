@@ -54,9 +54,8 @@
 	                            <td id="statestate">
 	                                <div class="button-container">
 	                                   <input type="hidden" value="${state.state}" id="state">
-	                                   
-		                                   <button onclick="moveToAccepted(this)" >승인</button>
-		                                   <button onclick="openRejectDialog(${state.volunProceedSeq})">거절</button>
+		                                   <button onclick="moveToAccepted(this)" style="background-color:#3ab41cb5;">승인</button>         
+		                                   <button style="background-color:#ff7c7c;" onclick="openRejectDialog(${state.volunProceedSeq})">거절</button>
 	                                </div>
 	                            </td>
 	                        </tr>
@@ -152,11 +151,34 @@
         <input type="hidden" id="volunSeq" value="">
             <div class="modal-content">
                <span class="close" onclick="closeRejectDialog()">&times;</span>
-               <h2>거절 사유 입력</h2>
+               <h4>거절 사유 입력</h4>
                <textarea id="rejectMessage" rows="4" cols="50"></textarea>
-               <button onclick="sendRejectionReason(this)">전송</button>
+               <div style="float:right; margin-top: 10px; margin-left: 89%;">
+               		<button style="background-color:#ff7c7c; width: 70px;" onclick="sendRejectionReason(this)" >전송</button>
+               </div>
             </div>
         </div>
+        
+<%--         		                        	<tr id="rejectDetail">
+			                            <td class="rejectVolunProceedSeq">${reject.volunProceedSeq}</td>
+			                            <td id="rejectRecruitTitle">${reject.recruitTitle}</td>
+			                            <td id="rejectMemSeq">${reject.memSeq}</td>
+			                            <td id="rejectName">${reject.name}</td>                                           
+			                            <td id="rejectState">${reject.state}</td> --%>
+			                       <!--  </tr> -->
+        <!-- 거절사유볼수있는상세페이지 -->
+<%--         <div id="rejectDetail" class="modal">
+            <div class="modal-content">
+               <span>신청글번호 : ${reject.volunProceedSeq}</span>
+               <span>봉사신청글 제목 : ${reject.recruitTitle}</span>
+               <span>회원번호 : ${reject.memSeq}</span>
+               <span>이름 : ${reject.name}</span>
+               <span>상태 : ${reject.state}</span>
+               <span class="close" onclick="closeRejectDialog()">&times;</span>
+               <h4>거절 사유</h4>
+               <p>${reject.rejectMessage}</p>
+            </div>
+        </div> --%>
 
 	  
     </div>

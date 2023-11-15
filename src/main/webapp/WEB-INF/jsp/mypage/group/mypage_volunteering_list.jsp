@@ -46,7 +46,7 @@
 															<dl>
 																<dt>신청/필요인원:</dt>
 																<dd>
-																	<span>0/</span><span>${today.memCount}</span>
+																	<span>${today.count}</span>/<span>${today.memCount}</span>
 																</dd>
 															</dl>
 															<dl>
@@ -75,7 +75,7 @@
 														<dl>
 															<dt>신청/필요인원:</dt>
 															<dd>
-																<span>0/</span><span>${withinAWeek.memCount}</span>
+																<span>${withinAWeek.count}</span>/<span>${withinAWeek.memCount}</span>
 															</dd>
 														</dl>
 														<dl>
