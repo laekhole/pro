@@ -4,33 +4,9 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-<!--
-    <sql id="select">
-       memSeq, memId, name, gender, phone, platform, auth, delYn, benYn, joinDate
-    </sql>
--->
 
-<!--    동적으로 구현해야 할 때 쓸 SQL문 // 까먹을까 미리 작성 -->
-<!--
-    <select id="selectFinishedList" resultType="RecruitBoardVO"> 
-		select
-		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
-		    TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
-		    r.recruit_title, 
-		    r.recruit_content, 
-		    r.group_name 
-		from 
-		    recruit_board r 
-		join
-		    volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
-		join 
-		    member m ON vr.mem_seq = m.mem_seq  
-		where 
-		    m.mem_seq = ${loginMember.memSeq}
-   </select>
-     -->
-
-    <select id="selectFinishedList" resultType="RecruitBoardVO">
+	<!-- 종료된 봉사 -->
+    <select id="selectFinishedList" parameterType="UserSearchVO"  resultType="RecruitBoardVO">
     	<include refid="paging.top" /> 
 		select
 		    TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
@@ -50,9 +26,14 @@
 		    m.mem_seq = #{memSeq}
 		<include refid="paging.bottom" />
    </select> 
+	<!-- 종료된 봉사 -->
 
 
-	<select id="selectRecruitList" resultType="RecruitBoardVO">	
+
+
+	<!-- 나의 봉사 목록 -->
+	<select id="selectRecruitList" parameterType="UserSearchVO" resultType="RecruitBoardVO">	
+    	<include refid="paging.top" /> 
 		select
 		    vp.state,
 		    r.volun_start_date,
@@ -68,30 +49,46 @@
 		join 
 		    member m ON vp.mem_seq = m.mem_seq  
 		where 
-		    m.mem_seq = 1
+		    m.mem_seq = #{memSeq}
+		<include refid="paging.bottom" />
 	</select>
+ 	<!-- 나의 봉사 목록 -->
 
 
-	<select id="selectReviewList" resultType="ReviewBoardVO">
+	 
+	 
+	<!-- 내가 쓴 후기 -->
+	<select id="selectReviewList" parameterType="UserSearchVO" resultType="ReviewBoardVO">
+    	<include refid="paging.top" /> 
 		select
 		    review_title,
 		    reg_date,
 		    SUBSTR(review_content, 1, 10) AS review_content
 		from review_board
-		where mem_seq = 1
+		where mem_seq = #{memSeq}
 		order by reg_date desc
+		<include refid="paging.bottom" />
 	</select>
-
-
-   <select id="selectVolunteerTime" resultType="VolunteerTimeVO">
+ 	<!-- 내가 쓴 후기 -->
+ 	
+ 	
+ 	
+ 
+ 
+	<!-- 봉사 온도 -->
+    <select id="selectVolunteerTime" parameterType="UserSearchVO" resultType="VolunteerTimeVO">
 	    select *
 		from volunteer_time
-		where mem_seq=1
-   </select>
+		where mem_seq= #{memSeq}
+    </select>
+ 	<!-- 봉사 온도 끝 -->
 
-     
-<!-- selectPersonal, selectVolunteerProceedList, timeRecord -->
-   <select id="selectVolunteerProceed" resultType="RecruitBoardVO">
+
+
+
+	<!-- 메인 화면 출력용 진행 중 봉사 -->
+	<!-- selectPersonal, selectVolunteerProceedList, timeRecord -->
+    <select id="selectVolunteerProceed" parameterType="UserSearchVO" resultType="RecruitBoardVO">
 		select
 			rb.recruit_seq,
 		    rb.recruit_title,
@@ -99,134 +96,73 @@
 		    rb.longitude
 		from 
 		    recruit_board rb
-		join
-		    volunteer_proceed vp on rb.recruit_seq = vp.recruit_seq 
-		where 
-		    sysdate between rb.volun_start_date and rb.volun_end_date
-   			and vp.mem_seq = 1
-		    
-   </select>
-      <!-- where mem_seq= ${memSeq} -->
+    </select>
+ 	<!-- 메인 화면 출력용 진행 중 봉사 -->
+ 	
+ 	
 
-<!-- 테이블에 Data를 insert 정적 쿼리 -->
-	<insert id="volunteerAttend" >
+	<!-- 출석 버튼 -->
+	<!-- 출석하면 종료된 봉사에 추가되는 쿼리(proceed 테이블의 데이터로 record 테이블로 insert) -->
+	<!-- 테이블에 Data를 insert 정적 쿼리 -->
+	<insert id="volunteerAttend" parameterType="UserSearchVO">
 		insert into volunteer_record (
 		    volun_record_seq,
 		    mem_seq,
 		    recruit_seq,
 		    group_mem_seq,
-		    attend
+		    attend,
+		   	timein
 		)
 		select
 		    volunteer_record_seq.nextval as volun_record_seq,
 		    vp.mem_seq,
 		    vp.recruit_seq,
 		    vp.group_mem_seq,
-		    'Y'
+		    'Y',
+		    current_timestamp
 		from 
 		    volunteer_proceed vp
-		where
-		    vp.mem_seq = 1
-		    and vp.recruit_seq = 43
-	</insert>
-
-
-<!-- 테이블에 Data를 insert 동적 쿼리 -->
-<!-- 
-<insert id="volunteerAttend" parameterType="map">
-    INSERT INTO volunteer_record (
-        volun_record_seq,
-        mem_seq,
-        recruit_seq,
-        group_mem_seq,
-        attend
-    )
-    SELECT
-        VOLUNTEER_RECORD_SEQ.NEXTVAL, volun_record_seq
-        vp.mem_seq,
-        vp.recruit_seq,
-        vp.group_mem_seq,
-        'Y' as attend
-    FROM 
-        volunteer_proceed vp
-    WHERE
-        vp.mem_seq = #{memSeq}
-        AND vp.recruit_seq = #{recruitSeq}
-</insert>
-
- -->
+		join
+		    recruit_board rb on vp.recruit_seq = rb.recruit_seq
+		where 
+		    current_timestamp between rb.volun_start_date and rb.volun_end_date
+		    and vp.mem_seq = #{memSeq}
+            and not exists (
+	            select 1
+	            from volunteer_record vr
+	            where vr.mem_seq = vp.mem_seq
+	              and vr.recruit_seq = vp.recruit_seq
+	        )
+	</insert>	
+	<!-- 출석 버튼 -->
 
 
 
+	<!-- 출퇴근 시간 출력용 -->
+	<select id="volunteerRecord" parameterType="UserSearchVO" resultType="volunteerRecordVO">
+		select vr.timein, vr.timeout
+		from volunteer_record vr
+		join volunteer_proceed vp on vr.recruit_seq = vp.recruit_seq
+		join recruit_board rb on vp.recruit_seq = rb.recruit_seq
+		where current_timestamp between rb.volun_start_date and rb.volun_end_date
+		    and vp.mem_seq = #{memSeq}
+	</select>
+	<!-- 출퇴근 시간 출력용 -->
  
-<!-- 
-<select id="selectFinsihedList" parameterType="map" resultType="">
-    SELECT 
-        r.volun_start_date, 
-        r.volun_end_date, 
-        r.recruit_title, 
-        r.group_name 
-    FROM 
-        recruit_board r 
-    JOIN 
-        volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
-    JOIN 
-        member m ON vr.mem_seq = m.mem_seq 
-    WHERE 
-        m.mem_seq = ${loginMember.memSeq}
-</select>
-
- -->
  
-<!-- <select id="selectReviewList" parameterType="ReviewSearchVO" resultType="ReviewBoardVO"> 
-      <include refid="paging.top" />
-      select *
-       <choose>
-          <when test="codeNumber != null and codeNumber != ''">
-             from review_board r inner join category c
-            on r.review_seq = c.review_seq
-          </when>
-          <otherwise>
-             from review_board
-          </otherwise>
-       </choose>
-      <include refid="whereClause" />
-      <choose>
-         <when test="sort != null and sort != ''">
-            order by ${sort}
-         </when>
-         <otherwise>
-            <choose>
-               <when test="codeNumber != null and codeNumber != ''">
-                  order by r.review_seq desc
-               </when>
-               <otherwise>
-                  order by review_seq desc
-               </otherwise>
-         
-            </choose>
-            
-         </otherwise>
-      </choose>
-      <include refid="paging.bottom" />
-   </select>
-   
-   
-   <select id="selectPopularList" resultType="ReviewBoardVO">
-      select review_title, mod_date
-      from (
-         select * from review_board
-         order by recom_count desc
-      )
-      <![CDATA[
-         where rownum <= 3
-      ]]>
-   </select>
-   
-   <select id="selectOne" parameterType="ReviewSearchVO" resultType="ReviewBoardVO">
-      select *
-      from review_board
-      where review_seq = #{reviewSeq}
-   </select> -->
-   
+ 	<!-- 퇴근 시간 업데이트 -->
+	<update id="recordUpdate" parameterType="UserSearchVO" >
+		update volunteer_record vr
+		set timeout = current_timestamp
+		where vr.mem_seq = #{memSeq}
+		  and exists (
+		      select 1
+		      from volunteer_proceed vp
+		      join recruit_board rb on vp.recruit_seq = rb.recruit_seq
+		      where vp.mem_seq = vr.mem_seq
+		        and current_timestamp between rb.volun_start_date and rb.volun_end_date
+		  )
+	</update>
+	 	<!-- 퇴근 시간 업데이트 -->
+
 </mapper> 

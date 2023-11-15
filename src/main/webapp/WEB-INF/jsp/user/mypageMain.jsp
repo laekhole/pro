@@ -15,7 +15,7 @@
                <div class="row" style="width: 1300px; height: 16rem; margin-bottom: 2rem;">
                   <div class="col-md-2">
                      <img src="images/person_1.jpg" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
-                     <div class="btn btn-secondary my-2 my-sm-0"  style="width:100%">변경</div>
+
                      <div class="col-md-2border" style="margin: 0;"><i class="bi bi-thermometer-high"></i>${temperature.volunHeat}</div>
                  </div>
                   <div class="col-md-6">
@@ -25,10 +25,16 @@
                               <!-- <a href="single.html" class="img-link me-4">
                                  <img src="images/img_1_sq.jpg" alt="Image" class="img-fluid" style="10rem !important">
                               </a> -->
-                              <div>
-	                              <span class="date"> 오늘의 봉사 </span>
-	                              <span class="date float-end" id="mypageDate" ></span>
-	                              <h2><a href="single.html">${todayProceed.recruitTitle}</a></h2>
+                              <div class="col-md-12">
+	                              <span class="date ms-5"> 오늘의 봉사 </span>
+	                              <span class="date float-end me-5" id="mypageDate" ></span>
+                                  <div class="ms-2 my-3 d-flex align-items-center">
+	                              		<h2 id="volunProceedTitle" onclick="changeMapCenter()">${todayProceed.recruitTitle}</h2>
+                       		     	    <button class="btn btn-primary ms-2" onclick="changeMapCenter()">센터 찾기</button>
+   									    <button class="btn btn-secondary ms-2" onclick="changeMapUser()">현재 위치로</button>
+	                              		
+                              	  </div>
+
                               </div>
                            </div>
                         </div>
@@ -72,16 +78,16 @@
                                     <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> IN</h5>
-                                          <p class="card-text" style="text-align:right">날짜 및 시간</p>
-                                          <p class="card-text" id="arrival" style="text-align:right"></p>
+                                          <p class="card-text" id="arrivalDateTime" style="text-align:right">날짜 및 시간</p>
+                                          <p class="card-text" id="arrival" style="text-align:right">${timeinout.timein}</p>
                                        </div>
                                     </div>
             
                                     <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
-                                          <p class="card-text" style="text-align:right">날짜 및 시간</p>
-                                          <p class="card-text" id="departure" style="text-align:right"></p>
+                                          <p class="card-text" id="departureDateTime" style="text-align:right">날짜 및 시간</p>
+                                          <p class="card-text" id="departure" style="text-align:right">${timeinout.timeout }</p>
                                        </div>
                                     </div>
             
@@ -138,6 +144,16 @@
 	}
 	
 	document.getElementById('mypageDate').textContent = getKoreanDate();
+	
+	// 시간 기록 버튼 내용 바꾸기 함수
+	// 페이지 로드 시 실행
+    window.onload = function () {
+        // 데이터 업데이트 함수 호출
+        updateArrivalDeparture();
+    };
+
+
+
 	</script>
 
 
@@ -148,53 +164,17 @@
       <!-- kakaoMap SDK -->
       <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=08d20e40da94696ee7b9ff3a47add144"></script>
       <script>
-
       
-	  // 봉사활동 센터 위치 얻기 위한 함수
-      function getInfo() {
-         // 지도의 현재 중심좌표를 얻어옵니다 
-         var center = map.getCenter(); 
-         
-         // 지도의 현재 레벨을 얻어옵니다
-         var level = map.getLevel();
-         
-         // 지도타입을 얻어옵니다
-         var mapTypeId = map.getMapTypeId(); 
-         
-         // 지도의 현재 영역을 얻어옵니다 
-         var bounds = map.getBounds();
-
-         // 영역의 남서쪽 좌표를 얻어옵니다 
-         var swLatLng = bounds.getSouthWest(); 
-
-         // 영역의 북동쪽 좌표를 얻어옵니다 
-         var neLatLng = bounds.getNorthEast(); 
-
-         // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
-         var boundsStr = bounds.toString();
-
-
-         var message = '봉사활동 위치 좌표는 위도 ' + center.getLat() + ', <br>';
-         message += '경도 ' + center.getLng() + '이고 <br>';
-         // message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
-         // message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
-         // message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
-         // message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';         
-         // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
-         // ex) console.log(message);
-         console.log(message);
-
-       return {
-         center : {lat : center.getLat(), lng : center.getLng()},
-         bounds : bounds
-       }
-      }
 
       ////////////// 지도 표시 api //////////////
       // 금일 봉사의 좌표를 동적으로 받아오기 위해 좌표 선언
+      // 금일 봉사 없을 땐 지도가 깨짐
    	  var latitude = document.getElementById('latitude').value;
   	  var longitude = document.getElementById('longitude').value;
     
+      var volunLocPosition = new kakao.maps.LatLng(latitude, longitude); // 진행 중인 봉사 제목 누르면 이동하기 위한 함수용 변수
+
+  	  
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = { 
 //                  center: new kakao.maps.LatLng(37.29297, 127.0486), // 지도의 중심좌표 광교 좌표
@@ -229,12 +209,13 @@
             // 지도 중심좌표에 마커를 생성합니다 
             position: map.getCenter()
       }); 
+
       // 지도에 마커를 표시합니다
       marker2.setMap(map);
 
 
 
-
+      var locPosition;
       // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
       if (navigator.geolocation) {
 
@@ -275,67 +256,22 @@
 
         // 거리에 따라 버튼 눌렀을 때 버튼 활성화/비활성화
 //        if (distance <= 100) { // 의도대로 짠 거리 로직
-        if (distance <= 1000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
+        if (distance <= 10000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
            document.getElementById('btnTimeRecord').classList.add('btn-secondary');
            document.getElementById('btnTimeRecord').classList.remove('btn-gray');
+           // 들어올 때 함수 돌리고
+           attendCheck();
            } else {
            document.getElementById('btnTimeRecord').classList.remove('btn-secondary');
            document.getElementById('btnTimeRecord').classList.add('btn-gray');
-
+           // 나갈 때 함수 돌리면
+           finishCheck();
            }
-        
-        
-        
-        // 출석 체크 했을 때 백엔드와 통신하기 위한 함수
-        function attendCheck() {
-            // 서버에 출석 체크 요청을 보내는 비동기 요청
-            fetch('<c:url value="/user/attend" />')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('서버 오류');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('출석 체크 성공:', data);
-                    // 여기서 필요한 UI 업데이트 등을 수행
-                })
-                .catch(error => {
-                    console.error('에러 발생:', error);
-                    // 에러 발생 시 사용자에게 메시지 표시 등의 처리
-                });
-        }
-        
-        
-        
-        // 버튼 클릭 시 시간 기록 및 출석 체크
-        document.getElementById('btnTimeRecord').addEventListener('click', async function() {
-            if (this.classList.contains('btn-secondary')) {
-                if (document.getElementById('arrival').textContent.trim() === '') {
-                    document.getElementById('arrival').textContent = await getKoreanStandardTime();
-                    
-                    // 시간 기록 후 출석 체크 함수 호출
-                    attendCheck();
-                } else {
-                    if (document.getElementById('departure').textContent.trim() === '') {
-                        document.getElementById('departure').textContent = await getKoreanStandardTime();
-                    }
-                }
-
-            }
-        });
-
-        // sysdate를 한국 표준시로 얻기
-        async function getKoreanStandardTime() {
-            const now = new Date();
-            const koreanDate = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-            return koreanDate;
-        }
         
       
 //             console.log("if문 안에 함수 안에 userlon"+userlon);
-            var locPosition = new kakao.maps.LatLng(userlat, userlon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-                  message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+             locPosition = new kakao.maps.LatLng(userlat, userlon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+             message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
             
             // 마커와 인포윈도우를 표시합니다
             displayMarker(locPosition, message);
@@ -356,7 +292,7 @@
          displayMarker(locPosition, message);
       }
 
-
+      ////////////////////////////////////////카카오맵 API 지도 관련 함수 시작/////////////////////////////////////////
 
       // 지도에 마커와 인포윈도우를 표시하는 함수입니다
       function displayMarker(locPosition, message) {
@@ -382,6 +318,174 @@
          // 지도 중심좌표를 접속위치로 변경합니다
          map.setCenter(locPosition);      
       }  
+
+      
+      
+      
+      
+	  // 봉사활동 센터 위치 얻기 위한 함수
+      function getInfo() {
+         // 지도의 현재 중심좌표를 얻어옵니다 
+         var center = map.getCenter(); 
+         
+         // 지도의 현재 레벨을 얻어옵니다
+         var level = map.getLevel();
+         
+         // 지도타입을 얻어옵니다
+         var mapTypeId = map.getMapTypeId(); 
+         
+         // 지도의 현재 영역을 얻어옵니다 
+         var bounds = map.getBounds();
+
+         // 영역의 남서쪽 좌표를 얻어옵니다 
+         var swLatLng = bounds.getSouthWest(); 
+
+         // 영역의 북동쪽 좌표를 얻어옵니다 
+         var neLatLng = bounds.getNorthEast(); 
+
+         // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
+         var boundsStr = bounds.toString();
+
+
+         var message = '봉사활동 위치 좌표는 위도 ' + center.getLat() + ', <br>';
+         message += '경도 ' + center.getLng() + '이고 <br>';
+         // message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
+         // message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
+         // message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
+         // message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';         
+         // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
+         // ex) console.log(message);
+         console.log(message);
+
+       return {
+         center : {lat : center.getLat(), lng : center.getLng()},
+         bounds : bounds
+       }
+      }
+      
+      // 봉사 제목 누르면 센터로 지도 중심 이동 구현할 함수
+      function changeMapCenter(){
+		map.setCenter(volunLocPosition);
+     }
+     
+     // 봉사 제목 한 번 더 누르면 현재 위치로 지도 중심 이동할 함수
+     	function changeMapUser(){
+   		 map.setCenter(locPosition);
+   		 console.log(locPosition);
+     }
+     
+
+     ////////////////////////////////////////카카오맵 API 지도 관련 함수 끝/////////////////////////////////////////
+     
+     
+     /////////////////////////////////////////////////////// 출석 체크 버튼 관련 함수 시작 ///////////////////////////////////
+      
+      // 출석 체크 했을 때 백엔드와 통신하기 위한 함수
+      function attendCheck() {
+          // 서버에 출석 체크 요청을 보내는 비동기 요청
+          fetch('<c:url value="/user/attend" />')
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('서버 오류');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('출석 체크 성공:', data);
+              })
+              .catch(error => {
+                  console.error('이미 출근 처리 됐습니다.', error);
+                  // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+              });
+      }
+      function finishCheck() {
+          // 서버에 출석 체크 요청을 보내는 비동기 요청
+          fetch('<c:url value="/user/recordUpdate" />')
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('서버 오류');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('퇴근 체크 성공:', data);
+              })
+              .catch(error => {
+                  console.error('이미 퇴근 처리가 됐습니다.', error);
+                  // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+              });
+      }
+      
+      
+      
+      // 버튼 클릭 시 시간 기록 및 출석 체크
+      document.getElementById('btnTimeRecord').addEventListener('click', async function() {
+          if (this.classList.contains('btn-secondary')) {
+              if (document.getElementById('arrival').textContent.trim() === '') {
+                  document.getElementById('arrival').textContent = await getKoreanStandardTime();
+                  // 시간 기록 후 출석 체크 함수 호출
+                  attendCheck();
+                  Swal.fire({
+                      title: "도착 인증 되었습니다!",
+                      html: `
+                      오시느라 고생 많으셨습니다!
+                      `,
+                      showCancelButton: false,
+                      confirmButtonText: "확인",
+                  })
+              } else {
+                  if (document.getElementById('departure').textContent.trim() === '') {
+                      document.getElementById('departure').textContent = await getKoreanStandardTime();
+                  	// 시간 기록 후 퇴근 체크 함수 호출
+                     finishCheck();
+                     Swal.fire({
+                         title: "퇴근 인증 되었습니다!",
+                         html: `
+                         오늘도 수고하셨습니다.<br>보람찬 봉사, 감사합니다!
+                         `,
+                         showCancelButton: false,
+                         confirmButtonText: "확인",
+                     })
+                  }
+              }
+
+          }
+      });
+      
+      
+      
+      
+
+      // sysdate를 한국 표준시로 얻기
+      async function getKoreanStandardTime() {
+          const now = new Date();
+          const koreanDate = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+          return koreanDate;
+      }
+    
+
+      // 데이터가 있는지 확인하고 적절한 내용으로 변경하는 함수
+      function updateArrivalDeparture() {
+          const arrivalElement = document.getElementById('arrival');
+          const departureElement = document.getElementById('departure');
+
+          const arrivalDataTimeElement = document.getElementById('arrivalDateTime');
+          const departureDataTimeElement = document.getElementById('departureDateTime');
+
+          // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
+          if (arrivalElement.innerText.trim() != '') {
+              arrivalDataTimeElement.innerHTML = '출석하셨습니다. 고맙습니다!';
+              arrivalElement.innerHTML = '보람찬 봉사, 감사합니다! <i class="bi bi-thermometer"></i>';
+          }
+
+          // Departure 데이터가 있으면 업데이트, 없으면 기본값으로 유지
+          if (departureElement.innerText.trim() !== '') {
+              departureDataTimeElement.innerHTML = '끝마쳤습니다. 고맙습니다!';
+              departureElement.innerHTML = '덕분에 더 따뜻해졌어요! <i class="bi bi-thermometer-sun"></i>';
+          }
+      }
+      /////////////////////////////////////////////////////// 출석 체크 버튼 관련 함수 끝 ///////////////////////////////////
+
 
       </script>
 
