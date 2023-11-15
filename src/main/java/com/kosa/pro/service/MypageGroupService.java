@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.kosa.pro.model.GroupMemberVO;
 import com.kosa.pro.model.RecruitBoardVO;
 import com.kosa.pro.model.VolunteerProceedVO;
 import com.kosa.pro.model.VolunteerRecordVO;
@@ -26,6 +27,17 @@ import lombok.extern.slf4j.Slf4j;
 public class MypageGroupService extends BaseService {
 	
 	private AttendanceWebSoketHandler handler;
+	
+	// 마이페이지 - 메인
+	public Map<String, List<GroupMemberVO>> memberVO(GroupMemberVO vo) throws Exception {
+		System.out.println("마이페이지(단체) 메인 페이지 서비스 진입");
+		
+		Map<String, List<GroupMemberVO>> map = new HashMap<>();
+		map.put("member", (List<GroupMemberVO>) getDAO().selectList("mypage.mainList", vo));
+		
+		return map;	
+	}
+	
 
 	/**
 	 * 신청 수락/거절 페이지 기존 신청 내역 1. state 부분을 수락/거절로 변경할 것 2. 확정일 당일 날짜로 변경할 것
@@ -33,7 +45,9 @@ public class MypageGroupService extends BaseService {
 	// 신청확인(수락/거절) 목록
 	public Map<String, List<VolunteerProceedVO>> volunteerProceedList(VolunteerProceedVO vo) throws Exception {
 		System.out.println("신청 수락/거절 페이지 서비스 진입");
-
+		
+		
+		
 		Map<String, List<VolunteerProceedVO>> map = new HashMap<>();
 		map.put("state", (List<VolunteerProceedVO>) getDAO().selectList("mypage.volunteerProceedList", vo));
 
@@ -90,22 +104,21 @@ public class MypageGroupService extends BaseService {
 	 */
 	
 	// 4-1. 당일 봉사활동 목록
-	public Map<String, List<RecruitBoardVO>> selectVolunteeringList(BoardSearchVO search) throws Exception {
+	public Map<String, List<RecruitBoardVO>> selectVolunteeringList(RecruitBoardVO vo) throws Exception {
 		System.out.println("당일 봉사활동 목록 서비스 진입");
 
 		Map<String, List<RecruitBoardVO>> map = new HashMap<>();
-		map.put("today",
-				(List<RecruitBoardVO>) getDAO().selectBySearch("mypage.selectVolunteeringList", search, "totalCount"));
+		map.put("today", (List<RecruitBoardVO>) getDAO().selectList("mypage.selectVolunteeringList", vo));
 
 		return map;
 	}
 
 	// 4-2. 일주일 이내 봉사활동 목록
-	public Map<String, List<RecruitBoardVO>> selectVolunteeringListWithinAWeek(BoardSearchVO search) throws Exception {
+	public Map<String, List<RecruitBoardVO>> selectVolunteeringListWithinAWeek(RecruitBoardVO vo) throws Exception {
 		System.out.println("일주일 이내 봉사활동 목록 서비스 진입");
 
 		Map<String, List<RecruitBoardVO>> map = new HashMap<>();
-		map.put("withinAWeek", (List<RecruitBoardVO>) getDAO().selectBySearch("mypage.selectVolunteeringListWithinAWeek", search, "totalCount"));
+		map.put("withinAWeek", (List<RecruitBoardVO>) getDAO().selectList("mypage.selectVolunteeringListWithinAWeek", vo));
 
 		return map;
 	}

@@ -14,20 +14,23 @@
        border-bottom: 1px solid #dee2e6;">
        
         <div class="list-group list-group-flush">
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">마이 페이지</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 글 작성</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신청 목록/ 승인 및 거절</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">진행 중인 봉사</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">봉사활동 후기글</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">캘린더 관리</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">개인 정보 및 프로필 수정</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}"">캘린더 관리</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/profile?groupSeq=${principal.user.memSeq}">개인 정보 및 프로필 수정</a>
          </div>
          
      	</div>
       
       	<div style="width:100%">
       
-
+				그룹멤버 잘 불러오냐
+				<p>그룹멤버번호 : ${principal.user.memSeq}</p>
+				<p>그룹멤버이름 : ${principal.user.loginName}</p>
+				
 		</div>
 	</div>
  
