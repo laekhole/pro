@@ -210,8 +210,8 @@
     if (recruitState${status.index} === '모집완료') {
       recruitLink${status.index}.style.backgroundColor = 'red';
     }
-  	</script>
-	<script>
+
+    
 	// calculateDday 함수 정의
 	function calculateDday(targetDate) {
 	    var target = new Date(targetDate);
