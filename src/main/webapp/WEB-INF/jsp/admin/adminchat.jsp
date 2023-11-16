@@ -148,7 +148,6 @@
                     </div>
                 </div>
             </div>
->>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git
 
 				<div class="inbox_chat">
 					<c:forEach var="chatRoomItem" items="${chatlist}">
@@ -424,5 +423,3 @@
         }
 
 </script>
-=======
->>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git
