@@ -33,6 +33,17 @@ public class VolunteerProceedVO implements GeneralModel {
     // [user] 마이페이지 메인 조인 용도 필드
 	private String latitude;     	// 위도
 	private String longitude;    	// 경도
+	
+	
+	
+    public int getMemCount() {
+        return this.memCount; 
+    }
+
+    public int getCount() {
+        return this.count; 
+    }
+    
 
 
 }
