@@ -14,7 +14,7 @@
             <div class="container-fluid">
                <div class="row" style="width: 1300px; height: 16rem; margin-bottom: 2rem;">
                   <div class="col-md-2">
-                     <img src="images/person_1.jpg" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
+                     <img src="${profil.profilImage }" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
 
                      <div class="col-md-2border" style="margin: 0;"><i class="bi bi-thermometer-high"></i>${temperature.volunHeat}</div>
                  </div>
@@ -44,6 +44,7 @@
                      <p class="text-md-start">
 	                     <div>
 	               	        <div>오늘의 봉사 온도</div>
+     		                <img src="/images/thermometer.png" class="img-fluid" alt="온도계" style="width:100%; margin-bottom:1rem !important;">
 							<i class="bi bi-thermometer-high"></i>${temperature.volunHeat}
 	                     	<div>축하드려요</div>
 	                     	<div>내일의 봉사 온도</div>
@@ -159,7 +160,6 @@
 
  
       <!-- 거리계산용 JS -->
-      <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
       <script src='/js/map/distance.js'></script>
       <!-- kakaoMap SDK -->
       <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=08d20e40da94696ee7b9ff3a47add144"></script>
@@ -237,8 +237,8 @@
           
          // 이부분에서 거리 계산하면 됨
 
-         const coord1 = [userlon, userlat];
-         const coord2 = [gpsInfo.center.lng, gpsInfo.center.lat];
+         const coord1 = [userlon, userlat]; // 사용자의 위치
+         const coord2 = [gpsInfo.center.lng, gpsInfo.center.lat]; // 센터의 위치
          
 /*          console.log("coord1의 값을 보자 "+coord1); */
 

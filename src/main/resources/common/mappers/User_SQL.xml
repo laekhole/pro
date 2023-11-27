@@ -103,9 +103,13 @@
  	<!-- 봉사 온도 끝 -->
 
 
-	<!--  -->
-
-	<!--  -->
+	<!-- 프로필 사진 -->
+    <select id="selectProfilImage" parameterType="UserSearchVO" resultType="MemberVO">
+	select profil_image
+	from member
+	where mem_seq=#{memSeq}
+    </select>
+	<!-- 프로필 사진 -->
 	
 
 	<!-- 메인 화면 출력용 진행 중 봉사 -->

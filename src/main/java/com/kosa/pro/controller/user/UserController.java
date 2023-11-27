@@ -2,8 +2,6 @@ package com.kosa.pro.controller.user;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +29,18 @@ public class UserController extends PrtController {
 	private UserService _userService;
 	
 	@RequestMapping(value={"", "/", "/main"})
-	public String myPageMain(UserSearchVO search, Model model) throws Exception {
+	public String myPageMain(UserSearchVO search, Model model, Authentication authentication) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 마이페이지", model);
 		log.info(">>>>>>>>>>>>>>개인 메인");
 //		log.info("개인 메인 시퀀스 오냐 = " + search.getMemSeq());
+
+		getMemSeq(search, authentication); // memSeq 획득용
+		Map<String, Object> map = _userService.userMain(search); // 서비스 메소드 실행
 		
-		Map<String, Object> map = _userService.userMain(search);
+		model.addAttribute("profil", map.get("profil")); // 프로필 사진 획득 용도
 		model.addAttribute("todayProceed", map.get("volunteerProceed")); // 진행중 봉사 획득 용도
 		model.addAttribute("temperature", map.get("volunteerTime")); // 봉사 온도 획득 용도
 		model.addAttribute("timeinout", map.get("volunteerRecord")); // 타임인 타임아웃 시간 획득 용도
-		 
 		
 		return "user/mypageMain";
 	}
