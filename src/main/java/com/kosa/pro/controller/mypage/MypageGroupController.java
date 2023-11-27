@@ -51,16 +51,12 @@ public class MypageGroupController extends PrtController {
 	
 	// 1. 마이 페이지(메인)
 	@GetMapping("/main")
-	public String main(@RequestParam int groupSeq, BoardSearchVO search, Model model, Authentication authentication) throws Exception {
+	public String main(@RequestParam int groupSeq, VolunteerProceedVO proceed, BoardSearchVO search, Model model, Authentication authentication) throws Exception {
 		super.setPageSubTitle("봉사활동 등록 페이지", model);
 
+		Map<String, List<VolunteerProceedVO>> map = _mypageGroupService.selectStateCount(proceed);
+		model.addAttribute("stateCount", map.get("stateCount")); 
 		
-		/*GroupMemberVO member, 
-		 * Map<String, List<GroupMemberVO>> map1 = _mypageGroupService.memberVO(member);
-		 * 
-		 * model.addAttribute("main", map1.get("member"));
-		 */
-		/* model.addAttribute("member", authentication.); */
 		
 		if (authentication != null) {
 			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -126,15 +122,23 @@ public class MypageGroupController extends PrtController {
     		
     		if(vpvo.getMemCount() > vpvo.getCount()) {
 	    		result.put("status", true);
+	    		System.out.println("모집인원 : " + vpvo.getMemCount());
+	    		System.out.println("신청된인원 : " + vpvo.getCount());
 	    		result.put("message", "봉사신청 '승인' 처리 되었습니다.");
+	    		result.put("count", vpvo.getCount()); // getCountAfterApproval 메서드는 업데이트된 count 값을 반환하는 메서드라 가정
 	    		result.put("approve", _mypageGroupService.approve(vpvo));
+	    		System.out.println("신청된인원 : " + vpvo.getCount());
     		} else {
     			result.put("status", false);
+	    		System.out.println("모집인원 : " + vpvo.getMemCount());
+	    		System.out.println("신청된인원 : " + vpvo.getCount());
         		result.put("message", "인원이 초과되었습니다.");
     		}
     		
     	} else {
     		result.put("status", false);
+    		System.out.println("모집인원 : " + vpvo.getMemCount());
+    		System.out.println("신청된인원 : " + vpvo.getCount());
     		result.put("message", "오류가 발생했습니다. 다시 시도해주세요.");
     	}
     	

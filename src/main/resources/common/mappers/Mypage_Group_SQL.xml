@@ -71,6 +71,16 @@
 
 	</select>
 	
+	<!-- 봉사활동 몇 명 신청중인지 조회하기 -->
+	<select id="selectStateCount" resultType="int">
+		SELECT COUNT(*)
+	    FROM volunteer_proceed
+	    WHERE 
+		    RECRUIT_SEQ = #{recruitSeq}
+	    AND
+		    STATE = '신청중'
+	</select>
+	
 	
 	<!-- 봉사활동 개인이 신청하기!! -->	
 	<insert id="insertAdd">
@@ -188,6 +198,12 @@
 	        ,reject_message = #{rejectMessage}
 		where volun_proceed_seq = #{volunProceedSeq}	
 	</update>
+	
+	
+	<!-- 카운트값 업데이트 -->
+	<select id="selectCount">
+		SELECT mem_count, count FROM recruit_board WHERE RECRUIT_SEQ = #{recruitSeq};
+	</select>
 
 	
 	

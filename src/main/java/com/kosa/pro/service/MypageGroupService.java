@@ -93,6 +93,31 @@ public class MypageGroupService extends BaseService {
 
 		return getDAO().update("mypage.updateReject", vpvo);
 	}
+	
+	// 카운트값 업데이트
+	public Map<String, List<VolunteerProceedVO>> selectCount(VolunteerProceedVO vo) throws Exception {
+		System.out.println("승인 카운트값 업데이트 진입");
+
+		Map<String, List<VolunteerProceedVO>> map = new HashMap<>();
+		map.put("count", (List<VolunteerProceedVO>) getDAO().selectList("mypage.selectCount", vo));
+
+		System.out.println("승인 카운트값 map -> " + map);
+
+		return map;
+	}
+	
+	// 신청중 몇명인지
+	public Map<String, List<VolunteerProceedVO>> selectStateCount(VolunteerProceedVO vo) throws Exception {
+		System.out.println("카운트값 업데이트 진입");
+
+		Map<String, List<VolunteerProceedVO>> map = new HashMap<>();
+		map.put("stateCount", (List<VolunteerProceedVO>) getDAO().selectList("mypage.selectStateCount", vo));
+
+		System.out.println("신청중 카운트값 map -> " + map);
+
+		return map;
+	}
+	
 
 	
 	

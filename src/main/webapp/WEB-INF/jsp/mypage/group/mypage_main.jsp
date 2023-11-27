@@ -19,19 +19,96 @@
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}"">캘린더 관리</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}">캘린더 관리</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/profile?groupSeq=${principal.user.memSeq}">개인 정보 및 프로필 수정</a>
          </div>
          
      	</div>
       
-      	<div style="width:100%">
-      
-				그룹멤버 잘 불러오냐
-				<p>그룹멤버번호 : ${principal.user.memSeq}</p>
-				<p>그룹멤버이름 : ${principal.user.loginName}</p>
-				
-		</div>
+		<div style="width:80%;">
+<!-- 			<div style="display: flex; justify-content: center;">
+				<div style="width:75%;"> -->
+				<br>
+					<input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${principal.user.memSeq}">
+					<div class="inner1">
+						<div class="inner2">
+							<div class="row posts-entry">
+								<div class="sss">
+									<div style="width:100%">
+									<br>
+      								<div>
+      									<h6 style="text-align: center;"><img src="/images/profile.png" class="mb-2"></h6>
+      								</div>
+      								<br>
+									<h2 style="text-align: center; color:black; ">${principal.user.loginName}</h2>
+									<br>
+									<div>
+	      								<table style="font-size:13px; margin-bottom:50px;">
+										      <tr>
+										          <th class="rounded-cell" style="font-size:16px;">신청중</th>
+										          <th class="rounded-cell" style="font-size:16px;">봉사활동 등록건수</th>
+										          <th class="rounded-cell" style="font-size:16px;">오늘의 봉사활동</th>
+										      </tr>
+		                        
+						                        <tbody id="approveList">
+							                        <%-- <c:forEach var="approve" items="${approve}"> --%>
+								                        	<tr id="approveDetail">
+									                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>
+									                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>
+									                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>                                        
+									                        </tr>
+							                        <%-- </c:forEach> --%>
+						                        </tbody>
+						                     
+						                    </table>
+      									</div>
+									<br>
+									<br>	
+					                    <table style="font-size:13px; margin-bottom:50px;">
+									      <tr>
+									          <th class="rounded-cell" style="font-size:16px;">봉사활동 등록건수</th>
+									          <th class="rounded-cell" style="font-size:16px;">오늘의 봉사활동</th>
+									      </tr>
+	                        
+					                        <tbody id="approveList">
+						                        <%-- <c:forEach var="approve" items="${approve}"> --%>
+							                        	<tr id="approveDetail">
+								                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>
+								                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>                                   
+								                        </tr>
+						                        <%-- </c:forEach> --%>
+					                        </tbody>
+					                     
+					                    </table>
+					                <br>
+					                <hr>
+					                <table style="font-size:13px; margin-bottom:50px;">
+									      <tr>
+									          <th class="rounded-cell" style="font-size:16px;">미확인 쪽지</th>
+									          <th class="rounded-cell" style="font-size:16px;">미확인 후기</th>
+									          <th class="rounded-cell" style="font-size:16px;">미확인 승인</th>
+									      </tr>
+	                        
+					                        <tbody id="approveList">
+						                        <%-- <c:forEach var="approve" items="${approve}"> --%>
+							                        	<tr id="approveDetail">
+								                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>
+								                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>
+								                            <td style="border-bottom: 1px solid #ddd;  border-radius: 5px;">3 건</td>                                      
+								                        </tr>
+						                        <%-- </c:forEach> --%>
+					                        </tbody>
+					                     
+					                    </table>
+				                	</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+		
+		
+					</div>
 	</div>
  
 

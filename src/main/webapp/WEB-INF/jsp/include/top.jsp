@@ -75,7 +75,9 @@
 			<div class="site-navigation">
 				<div class="row g-0 align-items-center">
 					<div class="col-2">
-						<a href="/main" class="logo m-0 float-start">VolunTree<span class="text-primary">.</span></a>
+						<a href="/main" class="logo m-0 float-start">
+							<img src="/images/logo9.png" class="mb-2" style="width: 250px;">
+						</a>
 					</div>
 					<div class="col-8 text-center">
 
