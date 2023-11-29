@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.kosa.pro.model.ChatRoomVO;
 import com.kosa.pro.model.GroupMemberVO;
 import com.kosa.pro.model.RecruitBoardVO;
+import com.kosa.pro.model.ReviewBoardVO;
 import com.kosa.pro.model.VolunteerProceedVO;
 import com.kosa.pro.model.VolunteerRecordVO;
-import com.kosa.pro.model.search.BoardSearchVO;
+import com.kosa.pro.model.VolunteeringVO;
 import com.kosa.pro.service.common.BaseService;
 import com.kosa.pro.websoket.AttendanceWebSoketHandler;
 
@@ -36,6 +38,19 @@ public class MypageGroupService extends BaseService {
 		map.put("member", (List<GroupMemberVO>) getDAO().selectList("mypage.mainList", vo));
 		
 		return map;	
+	}
+	
+	
+	// 신청 글 작성 목록
+	public Map<String, List<RecruitBoardVO>> list(RecruitBoardVO vo) throws Exception {
+		System.out.println("신청 수락 페이지 서비스 진입");
+
+		Map<String, List<RecruitBoardVO>> map = new HashMap<>();
+		map.put("list", (List<RecruitBoardVO>) getDAO().selectList("mypage.registerList", vo));
+
+		System.out.println("작성글 리스트 -> " + map);
+
+		return map;
 	}
 	
 
@@ -107,15 +122,25 @@ public class MypageGroupService extends BaseService {
 	}
 	
 	// 신청중 몇명인지
-	public Map<String, List<VolunteerProceedVO>> selectStateCount(VolunteerProceedVO vo) throws Exception {
-		System.out.println("카운트값 업데이트 진입");
+	public Object selectStateCount(Object object) throws Exception {
+		System.out.println("신청중 몇 건인지 조회 진입");
 
-		Map<String, List<VolunteerProceedVO>> map = new HashMap<>();
-		map.put("stateCount", (List<VolunteerProceedVO>) getDAO().selectList("mypage.selectStateCount", vo));
 
-		System.out.println("신청중 카운트값 map -> " + map);
+		return getDAO().selectOne("mypage.selectStateCount", object);
+	}
+	
+	// 후기 몇개썼는지
+	public Object selectReviewCount(ReviewBoardVO vo) throws Exception {
+		System.out.println("리뷰 몇 건인지 조회 진입");
 
-		return map;
+		return getDAO().selectOne("mypage.selectReviewCount", vo);
+	}
+	
+	// 채팅방 몇갠지
+	public Object selectChatRoomCount(ChatRoomVO vo) throws Exception {
+		System.out.println("채팅방 몇갠지 조회 진입");
+
+		return getDAO().selectOne("mypage.selectChatRoomCount", vo.getVolunteerProceedVO().getGroupMemSeq());
 	}
 	
 
@@ -149,10 +174,10 @@ public class MypageGroupService extends BaseService {
 	}
 
 	// 4-3. 진행 중인 봉사 상세
-	public Map<String, List<VolunteerProceedVO>> volunteering(VolunteerProceedVO vo) throws Exception {
+	public Map<String, List<VolunteeringVO>> volunteering(VolunteeringVO vo) throws Exception {
 	 
-		Map<String, List<VolunteerProceedVO>> map = new HashMap<>();
-		map.put("volunteer", (List<VolunteerProceedVO>) getDAO().selectList("mypage.selectVolunteeringMember", vo));
+		Map<String, List<VolunteeringVO>> map = new HashMap<>();
+		map.put("volunteer", (List<VolunteeringVO>) getDAO().selectList("mypage.selectVolunteeringMember", vo));
 
 	    return map; 
 	}

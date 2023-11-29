@@ -76,7 +76,7 @@
 				<div class="row g-0 align-items-center">
 					<div class="col-2">
 						<a href="/main" class="logo m-0 float-start">
-							<img src="/images/logo9.png" class="mb-2" style="width: 250px;">
+							<img src="/images/logo15.png" class="mb-2" style="width: 300px;">
 						</a>
 					</div>
 					<div class="col-8 text-center">
