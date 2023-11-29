@@ -59,8 +59,7 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0">Admin</h6>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -72,7 +71,7 @@
                     <a href="<c:url value='adminboard'/>" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>게시판</a>
                     <a href="<c:url value='admininquiry'/>" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>고객문의</a>
                     <a href="<c:url value='admincodemanagement'/>" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>카테고리 관리</a>
-                </div>					   
+                </div>                  
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -88,31 +87,16 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">                        
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">채팅방입장</span>
-                        
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">알람</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">고객문의 존재</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                        </div>
-                    </div>
+                    
+                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="/admintemplate/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">Admin</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>       
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="<c:url value='/'/>" class="dropdown-item">메인홈으로 </a>       
+                            <a href="<c:url value='/logout'/>" class="dropdown-item">로그아웃</a>
                         </div>
                     </div>
                 </div>
@@ -144,7 +128,7 @@
                             <canvas id="bar-chart"></canvas>
                         </div>
                     </div>
-                 	<div class="col-sm-12 col-xl-6">
+                    <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">봉사 활동 유형별 분포</h6>
                             <canvas id="doughnut-chart" width="567" height="565" style="display: block; margin: 0px auto; box-sizing: border-box; height: 376.667px; width: 378px;"></canvas>
@@ -175,8 +159,8 @@
                         <c:forEach items="${top5Reviews}" var="review">
                             <tr>
                                 <td><c:url var="reviewDetailUrl" value="/review/info">
- 								<c:param name="reviewSeq" value="${review.reviewSeq}" /></c:url>
-                				<a href="${reviewDetailUrl}">${review.reviewTitle}</a> </td>
+                         <c:param name="reviewSeq" value="${review.reviewSeq}" /></c:url>
+                            <a href="${reviewDetailUrl}">${review.reviewTitle}</a> </td>
                                 <td>${review.writeId}</td>
                                 <td>${review.regDate}</td>
                                 <td>${review.viewCount}</td>
