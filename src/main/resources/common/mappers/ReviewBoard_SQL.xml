@@ -96,7 +96,7 @@
 		<include refid="whereClause" />
 		<choose>
 			<when test="sort != null and sort != ''">
-				order by ${sort}
+				order by #{sort}
 			</when>
 			<otherwise>
 				<choose>

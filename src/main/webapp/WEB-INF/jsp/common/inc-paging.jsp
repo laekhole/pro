@@ -40,7 +40,7 @@
 <c:if test="${search.paging.totalCount > 0}">
 	<div class="${empty search.paging.pagerClassName ? 'page_navi_set' : search.paging.pagerClassName}">
 
-		<span>
+		<span class="mL3">
 <c:choose>
 	<c:when test="${search.paging.pageIndex gt 1 }">
 			<a href="javascript:goPage(1);" class="btn_prev2"></a>
