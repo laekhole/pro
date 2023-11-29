@@ -25,21 +25,7 @@
                     </div>
 
                     <div class="col-lg-10">
-<!--                     
-			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
-			               <div style="flex-grow: 1; margin-left: 1rem;">
-			               	   <span><button type="button" class="btn btn-primary">신청 중</button></span>
-			               	   <span><button type="button" class="btn btn-warning">D-3</button></span>
-			                   <h2><a href="single.html">1번째 샘플? 부트스트랩 : 테두리 컴포넌트 적용</a></h2>
-			                   <span class="me-2">신청 인원 : 0/10</span><span class="date me-2">봉사 기간 : Apr. 14th, 2022</span><span class="me-2">모집 기관 : 바우와 주간보호센터</span>
-			                   <div class="d-flex justify-content-between align-items-center">
-			                       <div>
-			                           <p style="margin-bottom: 0;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-			                       </div>
-			                   </div>
-			               </div>
-			             </div>
- -->
+
 						<c:forEach var="recruit" items="${list}">
 			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
 			               <div style="flex-grow: 1; margin-left: 1rem;">
