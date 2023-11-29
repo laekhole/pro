@@ -52,6 +52,11 @@ public class MemberController extends PrtController {
 	public String loginForm(Model model,
 			@RequestParam(value = "error", required = false) String error, 
 			@RequestParam(value = "exception", required = false) String exception) {
+		String url = getConfig().getHostLocal();
+		if ("dev".equals(getConfig().getWebMode()))
+			url = getConfig().getHostDev();
+		
+		model.addAttribute("url", url);
 		model.addAttribute("error", error);
 		model.addAttribute("exception", exception);
 		return "member/loginForm";
@@ -84,15 +89,25 @@ public class MemberController extends PrtController {
 		// RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
 		
+		String kakaoUri = getConfig().getHostLocal() + "/auth/kakao/callback";
+		//웹모드 배포서버면 uri 수정
+		System.out.println("111111카카오uri = " + kakaoUri);
+		if ("dev".equals(getConfig().getWebMode())) {
+			kakaoUri = getConfig().getHostDev() + "/auth/kakao/callback";
+		} 
+		System.out.println("222222카카오uri = " + kakaoUri);
+		
 		// HttpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	
 		
 		// HttpBody 오브젝트 생성
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "d7267f5ca33a7f3cec9546ca74dae03a");
-		params.add("redirect_uri", "http://localhost:8090/auth/kakao/callback");
+//		params.add("redirect_uri", "http://localhost:8090/auth/kakao/callback");
+		params.add("redirect_uri", kakaoUri);
 		params.add("code", code);
 		
 		System.out.println("httpheaders= " + headers.toString());

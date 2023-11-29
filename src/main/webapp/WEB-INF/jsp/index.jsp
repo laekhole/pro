@@ -43,7 +43,7 @@
 		<div class="row" style="height: 250px;">
 			<div class="col-md-6 col-lg-3 mx-5" style="height: 250px;">
 				<div class="blog-entry main-bd" >
-					<h2 class="notice-h2" style="font-size: 30px; color: black;">공지사항</h2> <a href="" class="notice-a">+</a>
+					<h2 class="notice-h2" style="font-size: 30px; color: black;">공지사항</h2> <a href="/notice" class="notice-a">+</a>
 					<ul class="main-ul">
 					<c:forEach var="notice" items="${noticeList }">
 						<li>${notice.title }</li>

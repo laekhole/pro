@@ -72,11 +72,7 @@
     <include refid="paging.bottom" />
   </select>
   
-  <select id="selectMainNotice" resultType="NoticeVO">
-  	select * from notice
-	where fixed_yn = 'Y'
-	order by notice_seq desc
-  </select>
+
   
   <!-- 공지사항 상세 -->
 <!--   <select id="selectNoticeDetail" parameterType="int" resultMap="NoticeResultMap"> -->
