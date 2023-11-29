@@ -66,8 +66,7 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0">Admin</h6>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -97,30 +96,14 @@
                 <i class="fa fa-bars"></i>
             </a>
             <div class="navbar-nav align-items-center ms-auto">
-                <div class="nav-item dropdown">                        
-                        <i class="fa fa-envelope me-lg-2"></i>
-                        <a href="<c:url value='adminchat'/>"><span class="d-none d-lg-inline-flex">채팅방입장</span></a>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="fa fa-bell me-lg-2"></i>
-                        <span class="d-none d-lg-inline-flex">알람</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">고객문의 존재</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                    </div>
-                </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="/admintemplate/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                         <span class="d-none d-lg-inline-flex">Admin</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">My Profile</a>       
-                        <a href="#" class="dropdown-item">Log Out</a>
+                        <a href="<c:url value='/'/>" class="dropdown-item">메인홈으로 </a>         
+                        <a href="<c:url value='/logout'/>" class="dropdown-item">로그아웃</a>
                     </div>
                 </div>
             </div>
