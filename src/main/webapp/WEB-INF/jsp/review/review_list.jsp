@@ -14,14 +14,14 @@
 					<option value="content">내용</option>
 				</select>
 					<input class="form-control me-sm-2" name="searchWord" type="search" value="${search.searchWord }" >
-					<button class="btn btn-secondary my-2 my-sm-0" type="submit" id="search">검색</button>
+					<button class="btn btn-secondary my-2 my-sm-0" type="submit" id="search" style="background-color: #3ab41cb5; border: none; font-size: 15px;">검색</button>
 
 			</form>
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<div class="heading">
-				Category:
+				<div class="heading" style="font-weight:bold;">
+				카테고리:
 				<c:if test="${empty categoryName }">
 					전체
 				</c:if>
@@ -32,17 +32,16 @@
 		<div class="row posts-entry">
 			<div class="col-lg-8">
 			 <c:forEach var="review" items="${list }">
-			 	<div class="blog-entry d-flex blog-entry-search-item">
+			 	<div class="blog-entry d-flex blog-entry-search-item" style="border-bottom: 1px solid #e6e6e6;">
 					<a href="/review/info?reviewSeq=${review.reviewSeq }" class="img-link me-4">
 						<img src="/files/${review.imageSeq}" alt="Image" class="img-fluid">
 					</a>
-					<div>
+					<div style=" margin-bottom: 60px;">
 						<span class="date">${review.modDate }  <span style="float:right;">조회수 : ${review.viewCount }</span></span>
-						<h2 class="mt-1"><a href="/review/info?reviewSeq=${review.reviewSeq }">${review.reviewTitle }</a></h2>
+						<h2 class="mt-1" style="color:black; font-weight:500;"><a href="/review/info?reviewSeq=${review.reviewSeq }">${review.reviewTitle }</a></h2>
 						<div class="review-text-area">
-							<span>${review.reviewContent }<span>
 						</div>
-						<a href="/review/info?reviewSeq=${review.reviewSeq }" class="btn btn-sm btn-outline-primary mt-3">Read More</a>
+						<a href="/review/info?reviewSeq=${review.reviewSeq }" class="btn btn-sm btn-outline-primary mt-3">상세 보기</a>
 						<div class="love-list">
 							<i class="bi bi-hand-thumbs-up-fill recommend-list"></i>
 							<span>${review.recomCount }</span>
@@ -55,12 +54,15 @@
 			 		<h2>검색 결과가 존재 하지 않습니다.</h2>
 			 	</div>
 			 </c:if>
-				<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
+			 <div style="margin-top:70px;">
+			 	<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
+			 </div>
+				
 			</div>
 			
 			<div class="col-lg-4 sidebar"><!-- END sidebar-box -->
 				<div class="sidebar-box">
-					<h3 class="heading">인기 후기글</h3>
+					<h3 class="heading" style="font-weight:bold;">인기 후기글</h3>
 					<div class="post-entry-sidebar">
 						<ul>
 						<c:forEach var="popular" items="${polist }">
@@ -83,7 +85,7 @@
 				<!-- END sidebar-box -->
 
 				<div class="sidebar-box">
-					<h3 class="heading">Categories</h3>
+					<h3 class="heading" style="font-weight:bold;">카테고리</h3>
 					<ul class="categories">
 					<c:forEach var="category" items="${categoryList }">
 						<li><a href="/review/list?codeNumber=${category.codeNumber }">${category.codeName } <span>(${category.categoryCount })</span></a></li>
