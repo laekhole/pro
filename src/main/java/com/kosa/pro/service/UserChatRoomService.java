@@ -1,5 +1,7 @@
 package com.kosa.pro.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.kosa.pro.model.ChatRoomVO;
@@ -12,24 +14,22 @@ import com.kosa.pro.service.common.BaseService;
 public class UserChatRoomService extends BaseService{
 
 
-//개인회원 채팅방
-	public VolunteerProceedVO findmyChatRoom(String memSeq) {
-		
-		VolunteerProceedVO chatRoomInfo = (VolunteerProceedVO) getDAO().selectOne("adminchat.findMyChatRoom", memSeq);
-		
-		return chatRoomInfo;
+	
+	//개인 채팅방 목록
+	public List<VolunteerProceedVO> findmyChatRoom(String memSeq) {
+		List<VolunteerProceedVO> chatRoomMyList = (List<VolunteerProceedVO>) getDAO().selectList("adminchat.findMyChatRoomList", memSeq);
+	    System.out.println("개인회원채팅목록");
+		// TODO Auto-generated method stub
+		return chatRoomMyList;
+	}
+	
+
+	//단체 채팅방 목록
+	public List<RecruitBoardVO> findGroupChatRooms(int groupMemSeq) {
+	    List<RecruitBoardVO> chatRoomGroupList = (List<RecruitBoardVO>) getDAO().selectList("adminchat.findGroupmyChatRoom", groupMemSeq);
+	    System.out.println("단체회원채팅");
+	    return chatRoomGroupList;
 	}
 
-//단체회원 채팅방
-	public RecruitBoardVO findGroupmyChatRoom(int groupMemSeq) {
 
-		RecruitBoardVO chatRoomGroupInfo = (RecruitBoardVO) getDAO().selectOne("adminchat.findGroupmyChatRoom", groupMemSeq);
-		
-		System.out.println("단체회원채팅");
-		
-		return chatRoomGroupInfo;
-	}
-
-	
-	
 }

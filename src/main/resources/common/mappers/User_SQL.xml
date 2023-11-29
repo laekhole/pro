@@ -112,7 +112,6 @@
     </select>
    <!-- 프로필 사진 -->
    
-
    <!-- 메인 화면 출력용 진행 중 봉사 -->
    <!-- selectPersonal, selectVolunteerProceedList, timeRecord -->
     <select id="selectVolunteerProceed" parameterType="UserSearchVO" resultType="RecruitBoardVO">

@@ -19,7 +19,7 @@
 	src="<c:url value='/resources/mqtt/mqtt.min.js'/>"></script>
 
 <head>
-<title>Spring stomp chat</title>
+<title>개인채팅방</title>
 </head>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">

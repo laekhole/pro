@@ -29,28 +29,29 @@
 						</div>
 					</div>
 					<div class="inbox_chat">
-						<div class="chat_list active_chat">
-							<div class="chat_people">
-								<div class="chat_img">
-									<img src="https://ptetutorials.com/images/user-profile.png"
-										alt="sunil">
-								</div>
-								<c:if test="${not empty myGroupchatInfo.recruitSeq}">
-								<div class="chat_ib" id="roomList">
-			<%-- 	<h5>단체 신청게시글번호:${myGroupchatInfo.recruitSeq} --%>
-									<h5>단체 주관한 채팅방:${myGroupchatInfo.recruitTitle}
-										<span class="chat_date">Dec 25</span>
-									</h5>
-									<p>대화방이 열렸습니다.</p>
-									<button class="enter_chat_button">채팅방 입장</button>
-								</div>
-								</c:if>
-								<c:if test="${empty myGroupchatInfo.recruitSeq}">
-   											 <p>채팅방이 없습니다. 봉사 주최시에 해당 봉사채팅방 자동 개설됩니다.</p>
-								</c:if>
-							</div>
-						</div>
-	
+				<c:forEach var="chatRoom" items="${groupChatRoomList}">
+				    <div class="chat_list active_chat">
+				        <div class="chat_people">
+				            <div class="chat_img">
+				                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+				            </div>
+				            <div class="chat_ib" id="roomList">
+				                <c:choose>
+				                    <c:when test="${not empty chatRoom.recruitSeq}">
+				                        <h5>단체 주관한 채팅방: ${chatRoom.recruitTitle}
+				                            <span class="chat_date">Dec 25</span>
+				                        </h5>
+				                        <p>대화방이 열렸습니다.</p>
+				                        <button class="enter_chat_button" data-recruitSeq="${chatRoom.recruitSeq}" data-groupName="${chatRoom.groupName}" data-recruitTitle="${chatRoom.recruitTitle}">채팅방 입장</button>
+				                    </c:when>
+				                    <c:otherwise>
+   											 <p>채팅방이 없습니다. 봉사 등록 시에 자동 개설 됩니다.</p>
+				                    </c:otherwise>
+				                </c:choose>
+				            </div>
+				        </div>
+				    </div>
+				</c:forEach>
 					</div>
 				</div>
 	
@@ -66,23 +67,36 @@
 $(document).ready(() => {
     // 채팅방 입장 버튼에 대한 클릭 이벤트를 설정합니다.
     $('.enter_chat_button').on('click', function() {
-    	const recruitSeq = `${myGroupchatInfo.recruitSeq}`;
-    	const sender = `${myGroupchatInfo.groupName}`;
-    	const title = `${myGroupchatInfo.recruitTitle}`;
-        enterRoom(recruitSeq, sender,title);
+        // 클릭한 버튼의 데이터 속성을 가져옵니다.
+        const recruitSeq = $(this).data('recruitseq');
+        const sender = $(this).data('groupname');
+        const title = $(this).data('recruittitle');
+        enterRoom(recruitSeq, sender, title);
     });
 });
 
 function enterRoom(recruitSeq, sender, title) {
-
-    // 사용자 식별 정보를 로컬 저장소에 저장합니다.
+    // 로컬 저장소에 데이터 저장
     localStorage.setItem('chat.recruitSeq', recruitSeq);
     localStorage.setItem('chat.sender', sender);
-    localStorage.setItem('chat.sender', sender);
+    localStorage.setItem('chat.title', title);
 
-    // 채팅방 페이지로 이동합니다.
-    location.href = '/userchat/room/groupEnter';
+    // AJAX를 사용하여 서버에 데이터 전송
+    $.ajax({
+        url: '/userchat/setChatInfo',
+        type: 'POST',
+        data: {
+            recruitSeq: recruitSeq,
+            sender: sender,
+            title: title
+        },
+        success: function(response) {
+            // 서버 처리 성공 후 페이지 이동
+            location.href = '/userchat/room/groupEnter';
+        }
+    });
 }
+
 </script>
 
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>
