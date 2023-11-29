@@ -500,14 +500,30 @@
     <!-- FullCalendar JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" crossorigin="anonymous"></script>
+	<!-- 구글캘린더연동용 -->
+    <script src="/js/calendar/dist/index.global.min.js"></script>
+    <script src='/js/calendar/google-calendar/index.global.min.js'></script>
 
 
 
       <script> 
+/*          구글캘린더 연동하기 위해 설정해야 하는 부분
+      let calendar = new Calendar(calendarEl, {
+     	  plugins: [ googleCalendarPlugin ],
+     	  googleCalendarApiKey: 'AIzaSyA8nrKaQrzEODvdfmSCDc-GxFdQog1kOSQ',
+     	  events: {
+     	    googleCalendarId: '9a054ccc467c37c20a414c993afa81dede8541aa46b2a1f74c1af9a912d995f6@group.calendar.google.com', // 이 부분에 사용자 구글 아이디 넣으면 됨. ex) mingi9391@gmail.com
+     	    className: 'gcal-event' // an option!
+     	  }
+     	});
+*/
          // 변수 선언
          var calendar;
          var event;
  
+         
+
+         
          // FullCalendar 초기화
          $(document).ready(function () {
              calendar = $('#calendar').fullCalendar({
@@ -524,8 +540,33 @@
                  eventLimit: true,
                  contentHeight: 410,
                  
- 
-                 // 이벤트 클릭 이벤트 처리
+          	     // 구글 캘린더 연동부
+                 googleCalendarApiKey: 'AIzaSyA8nrKaQrzEODvdfmSCDc-GxFdQog1kOSQ',
+                 eventSources: [
+                    {
+                       googleCalendarId: 'kimhgb@gmail.com', // 이 부분에 사용자 구글 아이디 넣으면 됨. ex) mingi9391@gmail.com
+                       className: 'gcal-event', // an option!
+                       color: 'blue',
+                       textcolor:'black'
+                    },
+                    // 서버에서 가져온 일정 데이터 연동
+                    {
+                        url: '/user/calendar',
+                        method: 'GET',
+                        color: 'green', // 원하는 색상으로 변경
+                        textColor: 'white' // 원하는 텍스트 색상으로 변경
+                    }
+                 ],
+                 events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다. 
+                          {
+/*                              title:'일정',
+                             start:'2023-11-26 00:00:00',
+                             end:'2023-11-27 24:00:00' 
+                             // color 값을 추가해 색상도 변경 가능
+ */                          }
+                 ],
+
+             	 // 이벤트 클릭 이벤트 처리
                  eventClick: function (calEvent, jsEvent, view) {
                      event = calEvent;
                      $('#inputTitle').val(calEvent.title);

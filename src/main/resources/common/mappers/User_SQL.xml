@@ -125,7 +125,7 @@
    		join
 		    volunteer_proceed vp on rb.recruit_seq = vp.recruit_seq 
 		where 
-		    current_timestamp between rb.volun_start_date and rb.volun_end_date
+		    current_timestamp between rb.volun_start_date and rb.volun_end_date+1
    			and vp.mem_seq = #{memSeq}
     </select>
  	<!-- 메인 화면 출력용 진행 중 봉사 -->
@@ -195,5 +195,24 @@
 		  )
 	</update>
 	 	<!-- 퇴근 시간 업데이트 -->
+
+	<!-- 진행 중 봉사 달력 출력용 -->
+	<select id="calendarList" parameterType="UserSearchVO" resultType="RecruitBoardVO">	
+		select
+		    rb.recruit_title,
+		    rb.volun_start_date,
+		    rb.volun_end_date+1 as volun_end_date
+		from 
+		    recruit_board rb
+   		join
+		    volunteer_proceed vp on rb.recruit_seq = vp.recruit_seq 
+		where 
+		    vp.state = '승인'
+ 		    and vp.mem_seq = #{memSeq}
+<!-- 
+   		    and vp.mem_seq = 1
+ 		     -->
+	</select>
+	<!-- 진행 중 봉사 달력 출력용 -->
 
 </mapper> 

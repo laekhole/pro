@@ -1,7 +1,11 @@
 package com.kosa.pro.controller.user;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosa.pro.config.auth.PrincipalDetails;
 import com.kosa.pro.controller.PrtController;
+import com.kosa.pro.model.RecruitBoardVO;
 import com.kosa.pro.model.search.UserSearchVO;
 import com.kosa.pro.service.UserService;
 
@@ -89,6 +95,7 @@ public class UserController extends PrtController {
 	}
 	
 	
+	// 진행 중 봉사 출석 체크 메소드
 	@RequestMapping("/attend")
 	public ResponseEntity<String> volunteerAttend(UserSearchVO search, Authentication authentication) throws Exception {
 	    log.info(">>>>>>>>>>>>>>출석 체크");
@@ -115,6 +122,35 @@ public class UserController extends PrtController {
 		_userService.recordUpdate(search);		
 		}
 
+	
+	// 풀캘린더 데이터 조회 메소드
+    @RequestMapping("/calendar")
+    @ResponseBody
+    public List<Map<String, Object>> scheduleFind(UserSearchVO search, Authentication authentication) {
+
+    	System.out.println("search.toString : "+search.toString());
+		
+    	getMemSeq(search, authentication);
+    	System.out.println("search.toString : "+search.toString());
+
+    	List<RecruitBoardVO> listAll = _userService.scheduleFind(search);
+ 
+        JSONObject jsonObj = new JSONObject();
+        JSONArray jsonArr = new JSONArray();
+ 
+        HashMap<String, Object> hash = new HashMap<>();
+
+        for (RecruitBoardVO board : listAll) {
+            hash.put("title", board.getRecruitTitle());
+            hash.put("start", board.getVolunStartDate());
+            hash.put("end", board.getVolunEndDate());
+
+            jsonArr.add(hash);
+        }
+
+        log.info("jsonArrCheck: {}", jsonArr);
+        return jsonArr;
+    }
 	
 	
 	//로그인 유저 데이터 구성
