@@ -71,7 +71,7 @@
                     <a href="<c:url value='adminboard'/>" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>게시판</a>
                     <a href="<c:url value='admininquiry'/>" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>고객문의</a>
                     <a href="<c:url value='admincodemanagement'/>" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>카테고리 관리</a>
-                </div>					   
+                </div>                  
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -128,7 +128,7 @@
                             <canvas id="bar-chart"></canvas>
                         </div>
                     </div>
-                 	<div class="col-sm-12 col-xl-6">
+                    <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">봉사 활동 유형별 분포</h6>
                             <canvas id="doughnut-chart" width="567" height="565" style="display: block; margin: 0px auto; box-sizing: border-box; height: 376.667px; width: 378px;"></canvas>
@@ -159,8 +159,8 @@
                         <c:forEach items="${top5Reviews}" var="review">
                             <tr>
                                 <td><c:url var="reviewDetailUrl" value="/review/info">
- 								<c:param name="reviewSeq" value="${review.reviewSeq}" /></c:url>
-                				<a href="${reviewDetailUrl}">${review.reviewTitle}</a> </td>
+                         <c:param name="reviewSeq" value="${review.reviewSeq}" /></c:url>
+                            <a href="${reviewDetailUrl}">${review.reviewTitle}</a> </td>
                                 <td>${review.writeId}</td>
                                 <td>${review.regDate}</td>
                                 <td>${review.viewCount}</td>

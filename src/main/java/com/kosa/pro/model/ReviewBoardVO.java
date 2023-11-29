@@ -1,8 +1,7 @@
 package com.kosa.pro.model;
 
-import java.sql.Clob;
+import java.sql.Date;
 
-import com.kosa.pro.model.common.FileAttacheVO;
 import com.kosa.pro.model.general.GeneralModel;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class ReviewBoardVO implements GeneralModel {
 	private String reviewContent;
 	private String writeId;
 	private String regDate;
-	private String modDate;
+	private Date modDate;
 	private int recomCount;
 	private int viewCount;
 	private String delYn;

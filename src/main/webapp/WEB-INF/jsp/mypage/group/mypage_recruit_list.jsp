@@ -166,7 +166,7 @@
     </div>
 </div>
  
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
 
@@ -247,7 +247,7 @@ function moveToAccepted(button) {
                     approveList.append(approveapproveList);
                 })
                 
-                alert("승인되었습니다.");
+                swal("Good job!", "승인 되었습니다!", "success");
                 
             } else {
                 alert('승인에 실패했습니다: ' + json.message);
