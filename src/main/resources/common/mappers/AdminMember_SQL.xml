@@ -3,6 +3,31 @@
 
 <mapper namespace="adminmember">
 
+<!-- <memberResultMap member voluntime이랑 -->
+<resultMap id="memberResultMap" type="MemberVO">
+    <id property="memSeq" column="MEM_SEQ" />
+    <result property="memId" column="MEM_ID" />
+    <result property="name" column="NAME" />
+    <result property="gender" column="GENDER" />
+    <result property="phone" column="PHONE" />
+    <result property="platform" column="PLATFORM" />
+    <result property="auth" column="AUTH" />
+    <result property="delYn" column="DEL_YN" />
+    <result property="benYn" column="BEN_YN" />
+    <result property="joinDate" column="JOIN_DATE" />
+    <result property="profilImage" column="PROFIL_IMAGE" />
+    <result property="pwd" column="PWD" />
+    <result property="loginCount" column="LOGIN_COUNT" />
+    <result property="lastLoginTime" column="LAST_LOGIN_TIME" />
+    <!-- VolunteerTimeVO와의 관계를 매핑 -->
+    <association property="volunteerTime" javaType="VolunteerTimeVO">
+        <id property="memSeq" column="MEM_SEQ" />
+        <result property="volunHeat" column="VOLUN_HEAT" />
+        <result property="volunAddtime" column="VOLUN_ADDTIME" />
+        <result property="volunNoshow" column="VOLUN_NOSHOW" />
+    </association>
+</resultMap>
+
 <!-- GradeVO 객체를 위한 resultMap -->
   <resultMap id="GradeResultMap" type="GradeVO">
     <id property="gradeSeq" column="grade_seq" />
@@ -60,19 +85,19 @@
     grade
 </sql>
    		
-<!--    		개인회원검색조건 -->
+<!--    		위의 검색 조건  -->
 			<sql id="whereClause">
 		<trim prefix="where" prefixOverrides="and">
 			<if test="searchWord != null and searchWord != ''">
 				<choose>
 					<when test="type1 == 'TopField'">
-						and mem_seq like concat(concat('%', #{searchWord}), '%')
+						and mem_seq = #{searchWord}
 					</when>
-					<when test="type1 == 'mem_id'">
+					<when test="type1 == 'name'">
 						and name like concat(concat('%', #{searchWord}), '%')
 					</when>
-					<when test="type1 == 'group_id'">
-						and group_id like concat(concat('%', #{searchWord}), '%')
+					<when test="type1 == 'mem_id'">
+						 and mem_id like concat(concat('%', #{searchWord}), '%')
 					</when>
 <!-- 					<otherwise> -->
 <!-- 						and (title like concat(concat('%', #{searchWord}), '%') or mem_id like concat(concat('%', #{searchWord}), '%')) -->
@@ -171,6 +196,41 @@
     SET ben_yn = 'Y'
     WHERE mem_seq = #{memSeq}
 	</update>	
+
+
+<!-- 온도에 따라 오름차순으로 회원 목록을 가져오는 쿼리 -->
+<select id="adminmember.selectMembersSortedByTemperatureAsc" resultMap="memberResultMap">
+    SELECT
+        M.*,
+        VT.VOLUN_HEAT,
+        VT.VOLUN_ADDTIME,
+        VT.VOLUN_NOSHOW
+    FROM
+        MEMBER M
+    LEFT JOIN
+        VOLUNTEER_TIME VT ON M.MEM_SEQ = VT.MEM_SEQ
+    ORDER BY
+        VT.VOLUN_HEAT ASC
+</select>
+
+<!-- 온도에 따라 내림차순으로 회원 목록을 가져오는 쿼리 -->
+<select id="adminmember.selectMembersSortedByTemperatureDesc" resultMap="memberResultMap">
+    <![CDATA[
+     SELECT
+        M.*,
+        VT.VOLUN_HEAT,
+        VT.VOLUN_ADDTIME,
+        VT.VOLUN_NOSHOW
+    FROM
+        MEMBER M
+    LEFT JOIN
+        VOLUNTEER_TIME VT ON M.MEM_SEQ = VT.MEM_SEQ
+    ORDER BY
+        VT.VOLUN_HEAT DESC
+    ]]>
+</select>
+
+
 
 
 </mapper>

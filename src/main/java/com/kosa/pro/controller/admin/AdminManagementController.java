@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosa.pro.model.GroupMemberVO;
@@ -32,7 +33,6 @@ public class AdminManagementController {
 	@Autowired
 	private AdminMemberService _memberService;
 	
-	//ppp삭제 jsp도 원래로 돌리기
 	@RequestMapping("/adminmanagement")
 	public String adminMangementMain(MemberSearchVO search, Model model) throws Exception {
 		log.info(">>>>>>>>>>>>>>관리자 회원/단체 관리");
@@ -81,19 +81,15 @@ public class AdminManagementController {
     	return response;
     }
     
-		//ResponseEntity써야 요청에 다양한 대처가능하다고함 HTTP 응답을 다루는 것이 권장되는 방법
-		//    @PostMapping("/adminBlockMember")  
-		//    public ResponseEntity<Map<String, Object>> adminBlockMember(GroupMemberSearchVO search, @RequestBody Map<String, Object> requestBody) {
-		//        Map<String, Object> response = _memberService.adminBlockMember((int) requestBody.get("memSeq"),search);
-		//
-		//        if (response.containsKey("status") && response.get("status").equals("success")) {
-		//            log.info("회원 제재 성공: memSeq = " + requestBody.get("memSeq"));
-		//            return ResponseEntity.ok(response);
-		//        } else {
-		//            log.error("회원 제재 실패: memSeq 값이 없거나 처리 중 오류 발생");
-		//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-		//        }
-		//    }
+	//정렬 컨트롤러
+    // 클라이언트로부터 정렬 방식을 받아와서 회원 목록을 정렬하여 반환
+    @GetMapping("/sortMembers")
+    @ResponseBody
+    public List<MemberVO> sortMembers(@RequestParam String sortType) {
+        List<MemberVO> sortedMembers = _memberService.getMembersSortedByTemperature(sortType);
+        System.out.println( "정렬된 애들 누구 있노 "+sortedMembers);
+        return sortedMembers;
+    }
     
     
     

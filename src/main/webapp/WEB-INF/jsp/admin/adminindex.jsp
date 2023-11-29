@@ -139,7 +139,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
+                        <div class="bg-light rounded h-100 p-4" style= "height:475px;">
                             <h6 class="mb-4">[월 단위] 주최된 봉사</h6>
                             <canvas id="bar-chart"></canvas>
                         </div>
@@ -147,7 +147,7 @@
                  	<div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">봉사 활동 유형별 분포</h6>
-                            <canvas id="doughnut-chart"></canvas>
+                            <canvas id="doughnut-chart" width="567" height="565" style="display: block; margin: 0px auto; box-sizing: border-box; height: 376.667px; width: 378px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -264,6 +264,7 @@
 
     <!-- Template Javascript -->
     <script src="/admintemplate/js/main.js"></script>
+    <script src="/admintemplate/js/chart.js"></script>
 </body>
 
 </html>

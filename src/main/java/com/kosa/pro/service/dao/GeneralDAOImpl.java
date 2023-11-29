@@ -109,6 +109,7 @@ public class GeneralDAOImpl implements GeneralDAO {
 		return sqlSession.selectList(sqlMapID, search);
 	}
 	
+	
 	/**
 	 * 특정 모델을 파라미터에 해당하는 리스트를 가져옵니다.
 	 * @param sqlMapID
@@ -118,6 +119,7 @@ public class GeneralDAOImpl implements GeneralDAO {
 	public List<?> selectList(String sqlMapID, Object vo) {
 		return sqlSession.selectList(sqlMapID, vo);
 	}
+	
 	
 	
 	
