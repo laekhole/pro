@@ -13,11 +13,11 @@
 
          <div class="post-content-body">
            <div class="review-list">
-             <h4 style="font-weight: bold;">${info.reviewTitle }</h4>
+             <h4 style="font-weight: bold; font-size:35px;">${info.reviewTitle }</h4>
            </div>
 
-             <ul class="review-ul">
-               <li>작성일 : ${info.modDate }</li>
+             <ul class="review-ul" style="color:black; font-weight:bold;">
+               <li>작성일 : <span><fmt:formatDate value="${info.modDate }" pattern="yyyy-MM-dd" /></span></li>
                <li>조회수 : ${info.viewCount }</li>
                <!-- <li>
                  <div class="icon-love">
@@ -26,29 +26,33 @@
                  591
                </li> -->
              </ul>
-
+           <br>
+           <br>
+		   <div style="font-size:16px; color: black; margin-bottom:5px;"><span style="font-size:9px;">▶</span>  봉사 정보</div>
            <table class="table-review">
              <tr>
                <th>봉사기간</th>
-               <td>${recruit.volunStartDate } ~ ${recruit.volunEndDate }</td>
+               <td style="color:black; font-weight:bold;">${recruit.volunStartDate } ~ ${recruit.volunEndDate }</td>
                <th>봉사분야</th>
-               <td>${recruit.volunCode }</td>
+               <td style="color:black; font-weight:bold;">${recruit.volunCode }</td>
              </tr>
              <tr>
                <th>봉사단체</th>
-               <td>${recruit.groupName }</td>
+               <td style="color:black; font-weight:bold;">${recruit.groupName }</td>
                <th>봉사시간</th>
-               <td>${recruit.volunTime }</td>
+               <td style="color:black; font-weight:bold;">${recruit.volunTime }</td>
              </tr>
              <tr>
                <th>봉사지역</th>
-               <td>${recruit.volunRegion1 } ${recruit.volunRegion2 }</td>
+               <td style="color:black; font-weight:bold;">${recruit.volunRegion1 } ${recruit.volunRegion2 }</td>
                <th>봉사장소</th>
-               <td>${recruit.volunAddr }</td>
+               <td style="color:black; font-weight:bold;">${recruit.volunAddr }</td>
              </tr>
              <tr>
                <th>봉사대상</th>
-               <td colspan="3">${recruit.volunTarget }</td>
+               <td style="color:black; font-weight:bold;">${recruit.volunTarget }</td>
+               <th></th>
+               <td style="color:black; font-weight:bold;"></td>
              </tr>
 
            </table>
@@ -65,14 +69,14 @@
                <img src="images/img_3_horizontal.jpg" alt="Image placeholder" class="img-fluid rounded">
              </div>
            </div> -->
-           <div>
+           <div style="color:black; margin-top:50px; margin-bottom:50px;">
            ${info.reviewContent }   
            </div>
          </div>
 
 
          <div class="pt-5">
-           <p>Categories:  
+           <p style="font-weight:bold; color:black;">카테고리:  
            	<c:forEach var="category" items="${categoryName }">
            		<a href="/review/list?codeNumber=${category.codeNumber }">${category.codeName }</a>, 
            	</c:forEach>
@@ -93,7 +97,7 @@
          <span id="recommendCount">${info.recomCount }</span>  
  
          <div class="pt-5 comment-wrap">
-           <h3 class="mb-5 heading" id="comment-count">${commentCount } Comments</h3>
+           <h3 class="mb-5 heading" id="comment-count" style="font-weight:bold;">댓글 <span style="color:red;">${commentCount }</span> 개</h3>
            <ul class="comment-list" id="comment-form">
            <c:forEach var="comment" items="${commentList }">
              <li class="comment">
@@ -112,20 +116,19 @@
            <!-- END comment-list -->
 		<c:if test="${!empty principal }">
            <div class="comment-form-wrap pt-5">
-             <h3 class="mb-5" style="display: inline-block;">Leave a comment</h3>
-             <a href="#" class="btn btn-primary btn-sm rounded px-2 py-2" style="float:right;">Top</a>
-             <form class="p-5 bg-light">
+             <h3 class="mb-5" style="display: inline-block; color:black; ">댓글을 남겨보세요</h3>
+             <a href="#" class="btn btn-primary btn-sm rounded px-2 py-2" style="color: black;float:right;background-color: #e7e7e7; font-weight:bold; color: gray;background: #f2f2f2;border-radius: 4px;border: none;font-weight: bold; height: 40px;">Top</a>
+             <form>
                <div class="form-group">
-                 <label for="name">Name : </label>
-                 <span>${principal.user.loginName }</span>
+                 <label for="name" style="margin-bottom:10px; color:black; ">작성자 : </label>
+                 <span style="color:black;">${principal.user.loginName }</span>
                </div>
 
                <div class="form-group">
-                 <label for="message" style="margin-top: 20px; margin-bottom: 20px;">Message</label>
-                 <textarea name="" id="message" cols="10" rows="5" class="form-control" style="width:100%"></textarea>
+                 <textarea name="" id="message" cols="10" rows="5" class="form-control" style="width:100%;" ></textarea>
                </div>
                <div class="form-group">
-                 <input type="submit" value="Post Comment" id="comment-write" class="btn btn-primary">
+                 <input type="submit" value="등록하기" id="comment-write" class="btn btn-primary" style="padding: 20px; text-align: center; width: 120px; height: 50px; background-color: #3ab41cb5; color: white; font-size: 19px; border : none; padding:0; float:right;">
                </div>
 
              </form>
@@ -143,16 +146,15 @@
            <div class="bio text-center">
              <img src="${info.member.profilImage }" alt="Image Placeholder" class="img-fluid mb-3">
              <div class="bio-body">
-               <h2>${info.member.name }</h2>
+               <h2 style="color:black; font-weight:bold;">${info.member.name }</h2>
 <!--                <p class="mb-4">이곳은 프로필 코멘트 남긴걸 보여주는곳 입니다.</p> -->
-               
                <!-- <p class="figure ms-2"><a href="#" class="btn btn-primary btn-sm rounded px-2 py-2">글 좋아요</a></p> -->
              </div>
            </div>
          </div>
          <!-- END sidebar-box -->  
          <div class="sidebar-box">
-           <h3 class="heading">인기 후기글</h3>
+           <h3 class="heading" style="color:black; font-weight:bold;">인기 후기글</h3>
            <div class="post-entry-sidebar">
              <ul>
           	<c:forEach var="popular" items="${polist }">
@@ -175,7 +177,7 @@
          <!-- END sidebar-box -->
 
          <div class="sidebar-box">
-           <h3 class="heading">Categories</h3>
+           <h3 class="heading" style="color:black; font-weight:bold;">카테고리</h3>
 					<ul class="categories">
 					<c:forEach var="category" items="${categoryList }">
 						<li><a href="/review/list?codeNumber=${category.codeNumber }">${category.codeName } <span>(${category.categoryCount })</span></a></li>

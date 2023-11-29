@@ -106,15 +106,18 @@
 
 .table-review th,
 td {
-	border: 1px solid black;
 	padding: 8px;
-	text-align: left;
+	text-align: center;
+	border-top: 1px solid rgb(195, 195, 195);
+    border-bottom: 1px solid rgb(195, 195, 195);
+    padding: 8px;
 }
 
 .table-review td {
 	width: 35%;
 	color: #070606;
 	font-size: 15px;
+	
 }
 
 .table-review th {
@@ -122,16 +125,19 @@ td {
 	/* 회색 배경색 */
 	width: 15%;
 	color: #070606;
+	border: 1px solid rgb(195, 195, 195);
+    border-right: none;
+    border-left: none;
+    font-size: 14px;
+    text-align: center;
 
 }
 
 /*후기 상세보기*/
 .review-list {
-	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	margin-bottom: 10px;
-	background-color: #f2f2f2;
-	padding: 15px;
+	padding: 10px 0px;
 	color: #070606;
 	font-weight: bold;
 }

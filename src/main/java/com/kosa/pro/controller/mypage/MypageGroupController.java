@@ -139,16 +139,11 @@ public class MypageGroupController extends PrtController {
     		
     		if(vpvo.getMemCount() > vpvo.getCount()) {
 	    		result.put("status", true);
-	    		System.out.println("모집인원 : " + vpvo.getMemCount());
-	    		System.out.println("신청된인원 : " + vpvo.getCount());
 	    		result.put("message", "봉사신청 '승인' 처리 되었습니다.");
 	    		result.put("count", vpvo.getCount()); // getCountAfterApproval 메서드는 업데이트된 count 값을 반환하는 메서드라 가정
 	    		result.put("approve", _mypageGroupService.approve(vpvo));
-	    		System.out.println("신청된인원 : " + vpvo.getCount());
     		} else {
     			result.put("status", false);
-	    		System.out.println("모집인원 : " + vpvo.getMemCount());
-	    		System.out.println("신청된인원 : " + vpvo.getCount());
         		result.put("message", "인원이 초과되었습니다.");
     		}
     		
