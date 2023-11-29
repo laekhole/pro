@@ -74,11 +74,7 @@
     <include refid="paging.bottom" />
   </select>
   
-  <select id="selectMainNotice" resultType="NoticeVO">
-  	select * from notice
-	where fixed_yn = 'Y'
-	order by notice_seq desc
-  </select>
+
   
   
 <!--   관리자 페이지에서 공지사항 다이알로그로 등록 -->

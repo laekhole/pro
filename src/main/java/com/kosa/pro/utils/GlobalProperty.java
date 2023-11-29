@@ -107,6 +107,23 @@ public class GlobalProperty {
 	}
 	
 	/**
+	 * 로컬
+	 * @return
+	 */
+	public String getHostLocal() {
+		return _sHostLocal;
+	}
+	
+	/**
+	 * 배포 서버
+	 * @return
+	 */
+	public String getHostDev() {
+		return _sHostDev;
+	}
+	
+	
+	/**
 	 * 
 	 * @return 기본 타이틀
 	 */

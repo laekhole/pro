@@ -11,7 +11,7 @@
       <div class="social-container-login mt-5">
       
         <a href="/oauth2/authorization/google" ><img src="/images/Google.png" class="mb-2" style="width: 305px;"></a>
-        <a href="https://kauth.kakao.com/oauth/authorize?client_id=d7267f5ca33a7f3cec9546ca74dae03a&redirect_uri=http://localhost:8090/auth/kakao/callback&response_type=code"><img src="/images/kakao.png" /></a>
+        <a href="https://kauth.kakao.com/oauth/authorize?client_id=d7267f5ca33a7f3cec9546ca74dae03a&redirect_uri=${url }/auth/kakao/callback&response_type=code"><img src="/images/kakao.png" /></a>
 		
       </div>
 <!--       <span>or use your account</span> -->

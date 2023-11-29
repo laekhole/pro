@@ -64,7 +64,11 @@ public class SearchVO implements GeneralModel {
 	 */
 	private String token;
 	
-
+	
+	/**
+	 * 캐싱
+	 */
+	private int cash;
 
 
 	/**
@@ -728,6 +732,22 @@ public class SearchVO implements GeneralModel {
 	 */
 	public void setUseYn(String useYn) {
 		this.useYn = useYn;
+	}
+
+	/**
+	 * 캐싱 - 구분자
+	 * @return
+	 */
+	public int getCash() {
+		return cash;
+	}
+	
+	/**
+	 * 캐싱 - 구분자
+	 * @param cash
+	 */
+	public void setCash(int cash) {
+		this.cash = cash;
 	}
 	
 	

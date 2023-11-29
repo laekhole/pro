@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="/resources/css/admin/register.css">
     <link rel="stylesheet" href="/resources/css/admin/product_register.css">
     <!-- include favicon -->
-	<%@include file="/WEB-INF/views/common/favicon.jsp" %>
 	<script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"></script>
@@ -43,7 +42,6 @@
 <body>
 
 <!-- 헤더 - 로그인/로그아웃 로고, 관리자페이지 메인글씨 -->
-<%@include file= "/WEB-INF/views/admin/common/header.jsp" %> 
 
 <!-- 메인 - 보라색 가로줄(메인페이지글자), 왼쪽 메뉴 -->
 <main>
