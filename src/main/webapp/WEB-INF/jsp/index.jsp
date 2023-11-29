@@ -9,7 +9,7 @@
 		<div class="row align-items-stretch retro-layout">
 			<div class="col-md-8">
 				<a href="" class="h-entry img-5 h-100 gradient">
-					<div class="featured-img" style="background-size: 100% 100%; background-image: url('/template/images/mainimage.png');"></div>
+					<div class="featured-img" style="background-size: 100% 100%; background-image: url('/template/images/main_image.png');"></div>
 				</a>
 		</div>
 		<div class="col-md-4">
