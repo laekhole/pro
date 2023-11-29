@@ -16,6 +16,7 @@
         <div class="list-group list-group-flush">
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/registerList?groupSeq=${principal.user.memSeq}">신청 글 목록</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
@@ -31,31 +32,33 @@
             <div class="column" id="waiting-column" style="min-height:700px; margin-bottom:50px;">
                 <h2 style="color: black;
                 font-size: 25px;
-                font-weight: bold;">신청 대기 목록</h2>
+                font-weight: bold;"><img src="/images/list4.png" style="width:22px;">   신청 대기 목록</h2>
                 
                 
-                <div class="card" style="min-height: 643px;">
-                    <table style="font-size:13px;">
-                        <tr>
-                         <th>신청번호</th>
-                            <th>봉사신청글 제목</th>
-                            <th>회원번호</th>
-                            <th>이름</th>
-                            <th>상태</th>
-                        </tr>
+                <div class="card" style="min-height: 870px;">
+                    <table style="font-size:13px; border:none;">
+				      <tr>
+				          <th class="rounded-cell">신청번호</th>
+				          <th class="rounded-cell">봉사신청글 제목</th>
+				          <th class="rounded-cell">회원번호</th>
+				          <th class="rounded-cell">이름</th>
+				          <th class="rounded-cell">상태</th>
+				      </tr>
                         
                         <c:forEach var="state" items="${state}">
                         <tbody id="stateList">
+                        	        <input type="hidden" id="mem_count" name="memCount" value="${state.memCount}">
+	                        		<input type="hidden" id="count" name="count" value="${state.count}">
 	                        <tr id="statestateList">
-	                            <td class="volunProceedSeq" id="volun_proceed_seq">${state.volunProceedSeq}</td>
-	                            <td id="recruitTitle">${state.recruitTitle}</td>
-	                            <td id="memSeq">${state.memSeq}</td>
-	                            <td id="name">${state.name}</td>                                           
-	                            <td id="statestate">
+	                            <td class="volunProceedSeq" id="volun_proceed_seq" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.volunProceedSeq}</td>
+	                            <td id="recruitTitle" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.recruitTitle}</td>
+	                            <td id="memSeq" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.memSeq}</td>
+	                            <td id="name" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.name}</td>                                           
+	                            <td id="statestate" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">
 	                                <div class="button-container">
 	                                   <input type="hidden" value="${state.state}" id="state">
-		                                   <button onclick="moveToAccepted(this)" style="background-color:#3ab41cb5;">승인</button>         
-		                                   <button style="background-color:#ff7c7c;" onclick="openRejectDialog(${state.volunProceedSeq})">거절</button>
+		                                   <button onclick="moveToAccepted(this)" style="background-color:#3ab41cb5;  font-weight:bold;">승인</button>         
+		                                   <button style="background-color:#ff7c7c; font-weight:bold;" onclick="openRejectDialog(${state.volunProceedSeq})">거절</button>
 	                                </div>
 	                            </td>
 	                        </tr>
@@ -66,76 +69,76 @@
                 </div>
             </div>
             
-         <!-- 신청 확정 내역 -->
+         	<!-- 신청 확정 내역 -->
 
             <div class="column" id="accepted-column" style="margin-bottom:50px;">
             
                 <!-- 승인 내역 카드 -->
-                <h2 style="color: black; font-size: 25px; font-weight: bold;">승인 목록</h2>
-                <div class="card" style="min-height:300px;">
-                    <table style="font-size:13px;">
+                <h2 style="color: black; font-size: 25px; font-weight: bold;"><img src="/images/list4.png" style="width:22px;">   승인 목록</h2>
+                <div class="card" style="min-height:400px;">
+                    <table style="font-size:13px; border:none;">
                         
-                        <tr>
-                           	<th>신청번호</th>
-                            <th>봉사신청글 제목</th>
-                            <th>회원번호</th>
-                            <th>이름</th>
-                            <th>상태</th>
-                        </tr>
+				      <tr>
+				          <th class="rounded-cell">신청번호</th>
+				          <th class="rounded-cell">봉사신청글 제목</th>
+				          <th class="rounded-cell">회원번호</th>
+				          <th class="rounded-cell">이름</th>
+				          <th class="rounded-cell">상태</th>
+				      </tr>
                         
                         <tbody id="approveList">
 	                        <c:forEach var="approve" items="${approve}">
 		                        	<tr id="approveDetail">
-			                            <td class="approveVolunProceedSeq">${approve.volunProceedSeq}</td>
-			                            <td id="approveRecruitTitle">${approve.recruitTitle}</td>
-			                            <td id="approveMemSeq">${approve.memSeq}</td>
-			                            <td id="approveName">${approve.name}</td>                                           
-			                            <td id="approveState">${approve.state}</td>
+			                            <td class="approveVolunProceedSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.volunProceedSeq}</td>
+			                            <td id="approveRecruitTitle" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.recruitTitle}</td>
+			                            <td id="approveMemSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.memSeq}</td>
+			                            <td id="approveName" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.name}</td>                                           
+			                            <td id="approveState" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.state}</td>
 			                        </tr>
 	                        </c:forEach>
                         </tbody>
                         
                      	<tr id="approveapproveList" style="display: none;">
-                            <td class="approveVolunProceedSeq"></td>
-                            <td id="approveRecruitTitle"></td>
-                            <td id="approveMemSeq"></td>
-                            <td id="approveName"></td>                                           
-                            <td id="approveState"></td>
+                            <td class="approveVolunProceedSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+                            <td id="approveRecruitTitle" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+                            <td id="approveMemSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+                            <td id="approveName" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>                                           
+                            <td id="approveState" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
 	                    </tr>
                     </table>
                 </div>
                 
                 <!-- 거절 내역 카드 -->
-                <h2 style="color: black; font-size: 25px; font-weight: bold;">거절 목록</h2>
-                <div class="card" style="min-height:300px;">
+                <h2 style="color: black; font-size: 25px; font-weight: bold;"><img src="/images/list4.png" style="width:22px;">   거절 목록</h2>
+                <div class="card" style="min-height:400px;">
                     <table style="font-size:13px;">
                         
-                        <tr>
-                           <th>신청번호</th>
-                            <th>봉사신청글 제목</th>
-                            <th>회원번호</th>
-                            <th>이름</th>
-                            <th>상태</th>
-                        </tr>
+				      <tr>
+				          <th class="rounded-cell">신청번호</th>
+				          <th class="rounded-cell">봉사신청글 제목</th>
+				          <th class="rounded-cell">회원번호</th>
+				          <th class="rounded-cell">이름</th>
+				          <th class="rounded-cell">상태</th>
+				      </tr>
                         
                         <tbody id="rejectList">
 	                        <c:forEach var="reject" items="${reject}">
 		                        	<tr id="rejectDetail">
-			                            <td class="rejectVolunProceedSeq">${reject.volunProceedSeq}</td>
-			                            <td id="rejectRecruitTitle">${reject.recruitTitle}</td>
-			                            <td id="rejectMemSeq">${reject.memSeq}</td>
-			                            <td id="rejectName">${reject.name}</td>                                           
-			                            <td id="rejectState">${reject.state}</td>
+			                            <td class="rejectVolunProceedSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.volunProceedSeq}</td>
+			                            <td id="rejectRecruitTitle" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.recruitTitle}</td>
+			                            <td id="rejectMemSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.memSeq}</td>
+			                            <td id="rejectName" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.name}</td>                                           
+			                            <td id="rejectState" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.state}</td>
 			                        </tr>
 	                        </c:forEach>
                         </tbody>
                         
                      	<tr id="rejectrejectList" style="display: none;">
-	                            <td class="rejectVolunProceedSeq"></td>
-	                            <td id="rejectRecruitTitle"></td>
-	                            <td id="rejectMemSeq"></td>
-	                            <td id="rejectName"></td>                                           
-	                            <td id="rejectState"></td>
+	                            <td class="rejectVolunProceedSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+	                            <td id="rejectRecruitTitle" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+	                            <td id="rejectMemSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+	                            <td id="rejectName" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>                                           
+	                            <td id="rejectState" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
 	                    </tr>
                      	
                     </table>
@@ -158,27 +161,6 @@
                </div>
             </div>
         </div>
-        
-<%--         		                        	<tr id="rejectDetail">
-			                            <td class="rejectVolunProceedSeq">${reject.volunProceedSeq}</td>
-			                            <td id="rejectRecruitTitle">${reject.recruitTitle}</td>
-			                            <td id="rejectMemSeq">${reject.memSeq}</td>
-			                            <td id="rejectName">${reject.name}</td>                                           
-			                            <td id="rejectState">${reject.state}</td> --%>
-			                       <!--  </tr> -->
-        <!-- 거절사유볼수있는상세페이지 -->
-<%--         <div id="rejectDetail" class="modal">
-            <div class="modal-content">
-               <span>신청글번호 : ${reject.volunProceedSeq}</span>
-               <span>봉사신청글 제목 : ${reject.recruitTitle}</span>
-               <span>회원번호 : ${reject.memSeq}</span>
-               <span>이름 : ${reject.name}</span>
-               <span>상태 : ${reject.state}</span>
-               <span class="close" onclick="closeRejectDialog()">&times;</span>
-               <h4>거절 사유</h4>
-               <p>${reject.rejectMessage}</p>
-            </div>
-        </div> --%>
 
 	  
     </div>
@@ -194,20 +176,28 @@ function moveToAccepted(button) {
     const state = $(button).closest("tr").find("#state").val();
     const volunProceedSeq = $(button).closest("tr").find(".volunProceedSeq").text();
     const groupMemSeq = $("#GROUP_MEM_SEQ").val();
+    const count = $("#count").val();
+    const memCount = $("#mem_count").val();
 
     console.log("state : " + state);
     console.log("volunProceedSeq : " + volunProceedSeq);
     console.log("groupMemSeq : " + groupMemSeq);
+    console.log("신청한인원수 : " + count);
+    console.log("모집인원수 : " + memCount);
     
     const param = {
         state: state,
         volunProceedSeq: volunProceedSeq,
         groupMemSeq: groupMemSeq,
+        count: count,
+        memCount: memCount,
     };
     
     console.log("state2 : " + state);
     console.log("volunProceedSeq2 : " + volunProceedSeq);
     console.log("groupMemSeq2 : " + groupMemSeq);
+    console.log("신청한인원수 : " + count);
+    console.log("모집인원수 : " + memCount);
 
     fetch("<c:url value='/manager/approve'/>", {
         method: "POST",
@@ -219,49 +209,56 @@ function moveToAccepted(button) {
     .then((response) => response.json())
     .then((json) => {
         if (json.status) {
-            // 성공적으로 승인되었을 때, 승인 상태로 변경하고 목록에서 삭제
-            console.log("성공1");
-            const row = $(button).closest("tr");
-            console.log("성공2");
-            row.remove();
-            console.log("성공3");
-            
-            const approveList = $("#approveList"); // 댓글 목록 요소 (전체 데이터)
-            approveList.empty();
-            
-            // 승인 데이터를 가져오는 방식에 따라서 아래 코드 수정이 필요합니다.
-            const approves = json.approve.approve; // 승인 데이터 가져오기
-           	console.log(approves);
-           	console.log("성공4");
-            
-           	approves.forEach((approve) => {
-	       		const approveapproveList = $("#approveapproveList").clone();
-	            
-	       		console.log("성공5");
-	            console.log(approve);
-	            
-	            approveapproveList.find(".approveVolunProceedSeq").text(approve.volunProceedSeq);
-	            approveapproveList.find("#approveRecruitTitle").text(approve.recruitTitle);
-	            approveapproveList.find("#approveMemSeq").text(approve.memSeq);
-	            approveapproveList.find("#approveName").text(approve.name);
-	            approveapproveList.find("#approveState").text(approve.state);
-        	   
+            if (json.approve) {  // 추가: 성공적으로 승인된 경우에만 처리
+                // 성공적으로 승인되었을 때, 승인 상태로 변경하고 목록에서 삭제
+                const count = json.approve.count; // 업데이트된 count 값
 
-                // 목록에 새로운 행 추가
-               	approveapproveList.show();
-               	approveList.append(approveapproveList);
-           
-           	
-           	})
-           
+	            // UI에서 count 값을 업데이트
+	            $("#count").val(count); // 혹은 다른 방법으로 UI를 업데이트
+            
+                console.log("성공1");
+                const row = $(button).closest("tr");
+                console.log("성공2");
+                row.remove();
+                console.log("성공3");
+
+                const approveList = $("#approveList"); // 댓글 목록 요소 (전체 데이터)
+                approveList.empty();
+
+                // 승인 데이터를 가져오는 방식에 따라서 아래 코드 수정이 필요합니다.
+                const approves = json.approve.approve; // 승인 데이터 가져오기
+                console.log(approves);
+                console.log("성공4");
+
+                approves.forEach((approve) => {
+                    const approveapproveList = $("#approveapproveList").clone();
+
+                    console.log("성공5");
+                    console.log(approve);
+
+                    approveapproveList.find(".approveVolunProceedSeq").text(approve.volunProceedSeq);
+                    approveapproveList.find("#approveRecruitTitle").text(approve.recruitTitle);
+                    approveapproveList.find("#approveMemSeq").text(approve.memSeq);
+                    approveapproveList.find("#approveName").text(approve.name);
+                    approveapproveList.find("#approveState").text(approve.state);
+
+                    // 목록에 새로운 행 추가
+                    approveapproveList.show();
+                    approveList.append(approveapproveList);
+                })
+                
+                
+                
+            } else {
+                alert('승인에 실패했습니다: ' + json.message);
+                console.log(json.message);
+            }
         } else {
             alert('승인에 실패했습니다: ' + json.message);
             console.log(json.message);
         }
-    })
-    .catch(error => {
-        console.error('오류 발생:', error);
     });
+
 }
 
 

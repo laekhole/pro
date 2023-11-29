@@ -16,10 +16,11 @@
         <div class="list-group list-group-flush">
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/registerList?groupSeq=${principal.user.memSeq}">신청 글 목록</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}"">캘린더 관리</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}">캘린더 관리</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/profile?groupSeq=${principal.user.memSeq}">개인 정보 및 프로필 수정</a>
          </div>
          
@@ -30,9 +31,11 @@
 
          <div class="section search-result-wrap">
             <div class="container" style="margin-left : 10%;">
+            <br>
+               <h1 style="text-align : center; color:black; font-size:bold;"><img src="/images/register.png" style="width:30px;">   신청 글 작성</h1>
                <br>
-               <br>
-               <div class="search_section">
+               <div class="card" style="padding:0px;">
+               <div class="search_section" style="min-width:1100px;">
 <!--                   <form action="/recruit/register" method="post"> -->
                      <div class="form-css">
                         <br>
@@ -51,11 +54,11 @@
                                     <table class="table-register">
                                        <tr>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사기간</th>
-                                          <td><span><input type="date"  class="form-keyword" id="volun_start_date" name="volunStartDate"></span>~<span><input type="date"  class="form-keyword" id="volun_end_date" name="volunEndDate"></span></td>
+                                          <td><span><input type="date"  class="form-keyword" id="volun_start_date" name="volunStartDate" style="width:160px;"></span>~<span><input type="date"  class="form-keyword" id="volun_end_date" name="volunEndDate" style="width:160px;"></span></td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사분야</th>
                                           <td>
                                           
-                                        <select class="form-select" id="categorySelect">
+                                        <select class="form-select" id="categorySelect" style="width:330px;">
 											<option value="">선택</option>
 										  <c:forEach var="category" items="${groupCodeList }">
 										  	<option value="${category.codeNumber }">${category.codeName }</option>
@@ -69,7 +72,7 @@
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사단체</th>
                                           <td>${principal.user.loginName }</td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사시간</th>
-                                          <td><span><input type="number" id=volun_time  name="volunTime"></span></td>
+                                          <td><span><input type="number" id=volun_time  name="volunTime" class="form-keyword" style="width:330px;"></span></td>
                                        </tr>
       
                                           <!-- 봉사지역 -->
@@ -78,7 +81,7 @@
                                           <td>
                                            	<div class="search_boxes">
 												<div class="search_box">
-													<select class="form-select" id="volun_region1" name="volunRegion1" onchange="categoryChange(this)">
+													<select class="form-select" id="volun_region1" name="volunRegion1" style="width:162px;" onchange="categoryChange(this)" >
 														<option value>시/도 선택</option>
 														<option value="general01">강원</option>
 														<option value="general02">경기</option>
@@ -97,7 +100,7 @@
 														<option value="general15">충남</option>
 														<option value="general16">충북</option>
 													</select>
-													<select class="form-select" id="volun_region2" name="volunRegion2">
+													<select class="form-select" id="volun_region2" name="volunRegion2" style="width:162px;">
 														<option>군/구 선택</option>
 													</select>
 												</div>
@@ -108,38 +111,44 @@
 <!--                                           <input type="text" id="sample5_address" placeholder="주소">
 										  <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br> -->
                                           <td>
-                                          	  <input type="text" class="form-keyword" id="volun_addr" name="volunAddr" placeholder="주소">
-                                          	  <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
-                                          	  <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+                                          	  <input type="text" class="form-keyword" id="volun_addr" name="volunAddr" placeholder="주소" style="width:250px;">
+                                          	  <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색" style="background-color: black; color: white; border-radius: 5px; font-weight: bold; padding: 5px 5px;">
+                                          </td>                                          
+                                       </tr>
+      								   <tr>
+      								   	  <th></th>
+      								   	  <td></td>
+      								      <th></th>
+                                          <td> 
+                                          	  <div id="map" style="width:330px;height:250px;margin-top:10px;display:none"></div>
                                           	  <input type="hidden" id="latitude" name="latitude">
 											  <input type="hidden" id="longitude" name="longitude">
-                                          </td>
-                                       </tr>
-      
+										  </td>
+      								   </tr>
       								
                                        <tr>
                                           <!-- 봉사대상 -> 직접작성? -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>봉사대상</th>
-                                          <td><input type="text" class="form-keyword" id="volun_target"  name="volunTarget"></td>
+                                          <td><input type="text" class="form-keyword" id="volun_target"  name="volunTarget" style="width:330px;"></td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>모집인원</th>
-                                          <td><input type="number"  class="form-keyword" id="mem_count"  name="memCount"></td>
+                                          <td><input type="number"  class="form-keyword" id="mem_count"  name="memCount" style="width:330px;"></td>
                                        </tr>
       
       									
                                        <tr>
                                           <!-- 모집기간  -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>모집기간</th>
-                                          <td><span><input type="date" class="form-keyword" id="recruit_start_date" name="recruitStartDate"></span>~<span><input type="date" class="form-keyword" id="recruit_end_date" name="recruitEndDate"></span></td>
+                                          <td><span><input type="date" class="form-keyword" id="recruit_start_date" name="recruitStartDate" style="width:160px;"></span>~<span><input type="date" class="form-keyword" id="recruit_end_date" name="recruitEndDate" style="width:160px;"></span></td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>담당자</th>
-                                          <td><input type="text" class="form-keyword" id="manager" name="manager"></td>
+                                          <td><input type="text" class="form-keyword" id="manager" name="manager" style="width:330px;"></td>
                                        </tr>
       
                                        <tr>
                                           <!-- 담당자 안내  -->
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>연락처</th>
-                                          <td><input type="text" class="form-keyword" id="phone" name="phone"></td>
+                                          <td><input type="text" class="form-keyword" id="phone" name="phone" style="width:330px;"></td>
                                           <th><span style="color:rgb(255, 97, 97);">·  </span>이메일</th>
-                                          <td><input type="text" class="form-keyword" id="email" name="email"></td>
+                                          <td><input type="text" class="form-keyword" id="email" name="email" style="width:330px;"></td>
                                        </tr>
                                     </table>
       
@@ -176,6 +185,7 @@
                      </div>
                   </div>
 <!--                   </form> -->
+               </div>
                </div>
             </div>
          </div>

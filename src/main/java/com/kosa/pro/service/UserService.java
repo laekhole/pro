@@ -4,10 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.kosa.pro.config.auth.PrincipalDetails;
+import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.RecruitBoardVO;
 import com.kosa.pro.model.ReviewBoardVO;
 import com.kosa.pro.model.search.UserSearchVO;
@@ -20,7 +19,7 @@ public class UserService extends BaseService {
 	public Map<String, Object> userMain(UserSearchVO search) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		
-//		map.put("userInfo", (MemberVO) getDAO().selectOne("user.userInfo", search)); // 프사 획득하기
+		map.put("profil", (MemberVO) getDAO().selectOne("user.selectProfilImage", search)); // 프사 획득하기
 		map.put("volunteerProceed", getDAO().selectOne("user.selectVolunteerProceed", search)); // 진행중 봉사 획득 용도
 		map.put("volunteerTime", getDAO().selectOne("user.selectVolunteerTime", search)); // 봉사 온도 획득 용도
 		map.put("volunteerRecord", getDAO().selectOne("user.volunteerRecord", search)); // 타임인 타임아웃 시간 획득 용도

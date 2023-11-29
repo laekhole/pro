@@ -77,6 +77,7 @@
 		<sec:authentication property="principal" var="principal" />
 	</sec:authorize>
 
+<<<<<<< HEAD
 	<nav class="site-nav">
 		<div class="container">
 			<div class="menu-bg-wrap">
@@ -87,6 +88,19 @@
 								class="text-primary">.</span></a>
 						</div>
 						<div class="col-8 text-center">
+=======
+<nav class="site-nav">
+	<div class="container">
+		<div class="menu-bg-wrap">
+			<div class="site-navigation">
+				<div class="row g-0 align-items-center">
+					<div class="col-2">
+						<a href="/main" class="logo m-0 float-start">
+							<img src="/images/logo15.png" class="mb-2" style="width: 300px;">
+						</a>
+					</div>
+					<div class="col-8 text-center">
+>>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git
 
 							<ul
 								class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">

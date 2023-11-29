@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<%@ include file="/WEB-INF/jsp/include/top.jsp"%> 
-	<%@ include file="/WEB-INF/jsp/include/sidebar.jsp"%> 
+   <%@ include file="/WEB-INF/jsp/include/top.jsp"%> 
+   <%@ include file="/WEB-INF/jsp/include/sidebar.jsp"%> 
 
     <input type="hidden" id="pageName" value="main">
     
@@ -14,7 +14,7 @@
             <div class="container-fluid">
                <div class="row" style="width: 1300px; height: 16rem; margin-bottom: 2rem;">
                   <div class="col-md-2">
-                     <img src="images/person_1.jpg" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
+                     <img src="${profil.profilImage }" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
 
                      <div class="col-md-2border" style="margin: 0;"><i class="bi bi-thermometer-high"></i>${temperature.volunHeat}</div>
                  </div>
@@ -26,14 +26,14 @@
                                  <img src="images/img_1_sq.jpg" alt="Image" class="img-fluid" style="10rem !important">
                               </a> -->
                               <div class="col-md-12">
-	                              <span class="date ms-5"> 오늘의 봉사 </span>
-	                              <span class="date float-end me-5" id="mypageDate" ></span>
+                                 <span class="date ms-5"> 오늘의 봉사 </span>
+                                 <span class="date float-end me-5" id="mypageDate" ></span>
                                   <div class="ms-2 my-3 d-flex align-items-center">
-	                              		<h2 id="volunProceedTitle" onclick="changeMapCenter()">${todayProceed.recruitTitle}</h2>
-                       		     	    <button class="btn btn-primary ms-2" onclick="changeMapCenter()">센터 찾기</button>
-   									    <button class="btn btn-secondary ms-2" onclick="changeMapUser()">현재 위치로</button>
-	                              		
-                              	  </div>
+                                       <h2 id="volunProceedTitle" onclick="changeMapCenter()">${todayProceed.recruitTitle}</h2>
+                                         <button class="btn btn-primary ms-2" onclick="changeMapCenter()">센터 찾기</button>
+                                  <button class="btn btn-secondary ms-2" onclick="changeMapUser()">현재 위치로</button>
+                                       
+                                   </div>
 
                               </div>
                            </div>
@@ -42,12 +42,13 @@
                   </div>
                   <div class="col-md-3 border d-flex align-items-center">
                      <p class="text-md-start">
-	                     <div>
-	               	        <div>오늘의 봉사 온도</div>
-							<i class="bi bi-thermometer-high"></i>${temperature.volunHeat}
-	                     	<div>축하드려요</div>
-	                     	<div>내일의 봉사 온도</div>
-	                     </div>
+                        <div>
+                             <div>오늘의 봉사 온도</div>
+                           <img src="/images/thermometer.png" class="img-fluid" alt="온도계" style="width:100%; margin-bottom:1rem !important;">
+                     <i class="bi bi-thermometer-high"></i>${temperature.volunHeat}
+                           <div>축하드려요</div>
+                           <div>내일의 봉사 온도</div>
+                        </div>
 
                      </p>
                   </div>
@@ -125,28 +126,28 @@
       </div>
    </div>
    
-	<!-- 오늘의 봉사 좌표 획득용 hidden input 태그 -->
-	<input type="hidden" id="latitude" value="${todayProceed.latitude}">
-	<input type="hidden" id="longitude" value="${todayProceed.longitude}">
+   <!-- 오늘의 봉사 좌표 획득용 hidden input 태그 -->
+   <input type="hidden" id="latitude" value="${todayProceed.latitude}">
+   <input type="hidden" id="longitude" value="${todayProceed.longitude}">
 
-    <!-- 	마이 페이지 날짜 획득용JS -->
-	<script>
-	function getKoreanDate() {
-	   const now = new Date();
-	   const options = {
-	       timeZone: 'Asia/Seoul',
-	       year: 'numeric',
-	       month: '2-digit',
-	       day: '2-digit'
-	   };
-	   const koreanDate = now.toLocaleString('ko-KR', options);
-	   return koreanDate;
-	}
-	
-	document.getElementById('mypageDate').textContent = getKoreanDate();
-	
-	// 시간 기록 버튼 내용 바꾸기 함수
-	// 페이지 로드 시 실행
+    <!--    마이 페이지 날짜 획득용JS -->
+   <script>
+   function getKoreanDate() {
+      const now = new Date();
+      const options = {
+          timeZone: 'Asia/Seoul',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+      };
+      const koreanDate = now.toLocaleString('ko-KR', options);
+      return koreanDate;
+   }
+   
+   document.getElementById('mypageDate').textContent = getKoreanDate();
+   
+   // 시간 기록 버튼 내용 바꾸기 함수
+   // 페이지 로드 시 실행
     window.onload = function () {
         // 데이터 업데이트 함수 호출
         updateArrivalDeparture();
@@ -154,27 +155,27 @@
 
 
 
-	</script>
+   </script>
 
 
  
       <!-- 거리계산용 JS -->
-      <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
       <script src='/js/map/distance.js'></script>
       <!-- kakaoMap SDK -->
       <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=08d20e40da94696ee7b9ff3a47add144"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/3.0.0/mqtt.min.js"></script>
       <script>
       
 
       ////////////// 지도 표시 api //////////////
       // 금일 봉사의 좌표를 동적으로 받아오기 위해 좌표 선언
       // 금일 봉사 없을 땐 지도가 깨짐
-   	  var latitude = document.getElementById('latitude').value;
-  	  var longitude = document.getElementById('longitude').value;
+        var latitude = document.getElementById('latitude').value;
+       var longitude = document.getElementById('longitude').value;
     
       var volunLocPosition = new kakao.maps.LatLng(latitude, longitude); // 진행 중인 봉사 제목 누르면 이동하기 위한 함수용 변수
 
-  	  
+       
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = { 
 //                  center: new kakao.maps.LatLng(37.29297, 127.0486), // 지도의 중심좌표 광교 좌표
@@ -237,8 +238,8 @@
           
          // 이부분에서 거리 계산하면 됨
 
-         const coord1 = [userlon, userlat];
-         const coord2 = [gpsInfo.center.lng, gpsInfo.center.lat];
+         const coord1 = [userlon, userlat]; // 사용자의 위치
+         const coord2 = [gpsInfo.center.lng, gpsInfo.center.lat]; // 센터의 위치
          
 /*          console.log("coord1의 값을 보자 "+coord1); */
 
@@ -277,7 +278,7 @@
             displayMarker(locPosition, message);
 
 /*
-			console.log("현재 접속 위도입니다. userlat : "+userlat);
+         console.log("현재 접속 위도입니다. userlat : "+userlat);
             console.log("현재 접속 경도입니다. userlon : "+userlon);
  */            
 
@@ -323,7 +324,7 @@
       
       
       
-	  // 봉사활동 센터 위치 얻기 위한 함수
+     // 봉사활동 센터 위치 얻기 위한 함수
       function getInfo() {
          // 지도의 현재 중심좌표를 얻어옵니다 
          var center = map.getCenter(); 
@@ -365,13 +366,13 @@
       
       // 봉사 제목 누르면 센터로 지도 중심 이동 구현할 함수
       function changeMapCenter(){
-		map.setCenter(volunLocPosition);
+      map.setCenter(volunLocPosition);
      }
      
      // 봉사 제목 한 번 더 누르면 현재 위치로 지도 중심 이동할 함수
-     	function changeMapUser(){
-   		 map.setCenter(locPosition);
-   		 console.log(locPosition);
+        function changeMapUser(){
+          map.setCenter(locPosition);
+          console.log(locPosition);
      }
      
 
@@ -380,24 +381,70 @@
      
      /////////////////////////////////////////////////////// 출석 체크 버튼 관련 함수 시작 ///////////////////////////////////
       
-      // 출석 체크 했을 때 백엔드와 통신하기 위한 함수
-      function attendCheck() {
-          // 서버에 출석 체크 요청을 보내는 비동기 요청
-          fetch('<c:url value="/user/attend" />')
-              .then(response => {
-                  if (!response.ok) {
-                      throw new Error('서버 오류');
-                  }
-                  return response.json();
-              })
-              .then(data => {
-                  console.log('출석 체크 성공:', data);
-              })
-              .catch(error => {
-                  console.error('이미 출근 처리 됐습니다.', error);
-                  // 에러 발생 시 사용자에게 메시지 표시 등의 처리
-              });
-      }
+
+     
+	<!-- MQTT 송수신 상태 설정 -->
+	const mqtt_host = "www.amond.store";
+	const mqtt_port = 9001;
+	const mqtt_topic = `/recruitSeq/${todayProceed.recruitSeq}`; // publish용 topic으로 변경
+	console.log("mqtt_topic: " + mqtt_topic);
+	const options = {
+	    hostname: mqtt_host,
+	    port: mqtt_port,
+	    username: 'kosa',
+	    password: '1004',
+	    clean: true,
+	};
+	
+	// 여기서 페이지 로드 시에 MQTT 클라이언트 초기화
+	const mqttClient = mqtt.connect(options);
+	
+	// MQTT 메시지 전송 함수
+	function sendMQTTMessage(topic, message) {
+			
+		const memSeq = "${principal.user.memSeq}";
+	    // publish용 topic으로 메시지를 전송
+	    const fullMessage = memSeq + "|" + message;
+	    mqttClient.publish(topic, fullMessage);
+	    console.log("send함수 topic: " + topic);
+	    console.log("send함수 message: " + fullMessage);
+	    
+	}
+
+	// 출석 체크 했을 때 백엔드와 통신하기 위한 함수
+	function attendCheck() {
+	    // 출석 체크 성공 후 MQTT 메시지 전송
+	    const message = "출석완료";
+	    
+	    sendMQTTMessage(mqtt_topic, message);
+	    console.log("버튼눌렀을 때 message" + message);
+	    console.log("버튼눌렀을 때 mqtt_topic" + mqtt_topic);
+	    console.log("버튼눌렀을 때 출석완료-mqtt용");
+	    console.log("버튼눌렀을 때 sendMQTTMessage : "+ sendMQTTMessage);
+
+
+	    // 서버에 출석 체크 요청을 보내는 비동기 요청
+	    fetch('/user/attend')
+	        .then(response => {
+	            if (!response.ok) {
+	                throw new Error('서버 오류');
+	            }
+	            return response.json();
+	        })
+	        .then(data => {
+	            console.log('출석 체크 성공:', data);
+	        })
+	        .catch(error => {
+	            console.error('이미 출근 처리 됐습니다.', error);
+	            // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+	        });
+	}
+
+
+
+
+     
+     
       function finishCheck() {
           // 서버에 출석 체크 요청을 보내는 비동기 요청
           fetch('<c:url value="/user/recordUpdate" />')
@@ -436,7 +483,7 @@
               } else {
                   if (document.getElementById('departure').textContent.trim() === '') {
                       document.getElementById('departure').textContent = await getKoreanStandardTime();
-                  	// 시간 기록 후 퇴근 체크 함수 호출
+                     // 시간 기록 후 퇴근 체크 함수 호출
                      finishCheck();
                      Swal.fire({
                          title: "퇴근 인증 되었습니다!",
@@ -500,14 +547,28 @@
     <!-- FullCalendar JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" crossorigin="anonymous"></script>
-
+   <!-- 구글캘린더연동용 -->
+   <script src='fullcalendar/dist/index.global.js'></script>
 
 
       <script> 
+/*          구글캘린더 연동하기 위해 설정해야 하는 부분
+      let calendar = new Calendar(calendarEl, {
+          plugins: [ googleCalendarPlugin ],
+          googleCalendarApiKey: 'AIzaSyA8nrKaQrzEODvdfmSCDc-GxFdQog1kOSQ',
+          events: {
+            googleCalendarId: '9a054ccc467c37c20a414c993afa81dede8541aa46b2a1f74c1af9a912d995f6@group.calendar.google.com', // 이 부분에 사용자 구글 아이디 넣으면 됨. ex) mingi9391@gmail.com
+            className: 'gcal-event' // an option!
+          }
+        });
+*/
          // 변수 선언
          var calendar;
          var event;
  
+         
+
+         
          // FullCalendar 초기화
          $(document).ready(function () {
              calendar = $('#calendar').fullCalendar({
@@ -524,7 +585,13 @@
                  eventLimit: true,
                  contentHeight: 410,
                  
- 
+                // 구글 캘린더 연동부
+                 googleCalendarApiKey: 'AIzaSyA8nrKaQrzEODvdfmSCDc-GxFdQog1kOSQ',
+                 events: {
+                   googleCalendarId: '9a054ccc467c37c20a414c993afa81dede8541aa46b2a1f74c1af9a912d995f6@group.calendar.google.com', // 이 부분에 사용자 구글 아이디 넣으면 됨. ex) mingi9391@gmail.com
+                   className: 'gcal-event' // an option!
+                 },
+
                  // 이벤트 클릭 이벤트 처리
                  eventClick: function (calEvent, jsEvent, view) {
                      event = calEvent;
@@ -578,4 +645,4 @@
          document.getElementById("currentTime").innerHTML = Date();
       </script>
 
-	<%@ include file="/WEB-INF/jsp/include/bottom.jsp"%> 
+   <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%> 

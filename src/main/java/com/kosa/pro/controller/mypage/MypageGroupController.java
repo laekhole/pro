@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kosa.pro.config.auth.PrincipalDetails;
 import com.kosa.pro.controller.PrtController;
+import com.kosa.pro.model.ChatRoomVO;
 import com.kosa.pro.model.RecruitBoardVO;
+import com.kosa.pro.model.ReviewBoardVO;
 import com.kosa.pro.model.VolunteerProceedVO;
 import com.kosa.pro.model.VolunteeringVO;
-import com.kosa.pro.model.auth.LoginMember;
 import com.kosa.pro.model.search.BoardSearchVO;
 import com.kosa.pro.service.MypageGroupService;
 import com.kosa.pro.service.RecruitBoardService;
@@ -51,32 +51,45 @@ public class MypageGroupController extends PrtController {
 	
 	// 1. 마이 페이지(메인)
 	@GetMapping("/main")
-	public String main(@RequestParam int groupSeq, BoardSearchVO search, Model model, Authentication authentication) throws Exception {
-		super.setPageSubTitle("봉사활동 등록 페이지", model);
+	public String main(@RequestParam int groupSeq, VolunteerProceedVO count, ChatRoomVO chat, ReviewBoardVO review, RecruitBoardVO vo, BoardSearchVO search, Model model, Authentication authentication) throws Exception {
+		super.setPageSubTitle("단체회원 마이 페이지", model);
+		
+		vo.setGroupMemSeq(groupSeq);
 
+		// 작성글 목록
+		Map<String, List<RecruitBoardVO>> map1 = _mypageGroupService.list(vo);
+		model.addAttribute("list", map1.get("list")); 
 		
-		/*GroupMemberVO member, 
-		 * Map<String, List<GroupMemberVO>> map1 = _mypageGroupService.memberVO(member);
-		 * 
-		 * model.addAttribute("main", map1.get("member"));
-		 */
-		/* model.addAttribute("member", authentication.); */
+		// 신청중 카운트
+		model.addAttribute("count", _mypageGroupService.selectStateCount(count)); 
 		
-		if (authentication != null) {
-			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-			if (principalDetails != null) {
-				LoginMember loginMember = principalDetails.getUser();
-				model.addAttribute("loginMember", loginMember);
-			}
-		}
+		// 리뷰수 카운트
+		model.addAttribute("review", _mypageGroupService.selectReviewCount(review)); 
 		
+		// 채팅방 카운트
+		// model.addAttribute("chat", _mypageGroupService.selectChatRoomCount(chat)); 
+		
+
 		return "mypage/group/mypage_main";
 		
 	}
 	
 	
-	// 2. 봉사활동 신청 글 작성 -> recruitGroupContoller에 작성
-	
+	// 2. 봉사활동 신청 글 목록 -> recruitGroupContoller에 작성
+	// 1. 마이 페이지(메인)
+	@GetMapping("/registerList")
+	public String list(@RequestParam int groupSeq, RecruitBoardVO vo, BoardSearchVO search, Model model, Authentication authentication) throws Exception {
+		super.setPageSubTitle("봉사활동 등록 페이지", model);
+		
+		vo.setGroupMemSeq(groupSeq);
+		
+		Map<String, List<RecruitBoardVO>> map = _mypageGroupService.list(vo);
+		model.addAttribute("list", map.get("list")); 
+		
+		
+		return "mypage/group/mypage_register_list";
+		
+	}
 	
 	
 	/*
@@ -126,15 +139,23 @@ public class MypageGroupController extends PrtController {
     		
     		if(vpvo.getMemCount() > vpvo.getCount()) {
 	    		result.put("status", true);
+	    		System.out.println("모집인원 : " + vpvo.getMemCount());
+	    		System.out.println("신청된인원 : " + vpvo.getCount());
 	    		result.put("message", "봉사신청 '승인' 처리 되었습니다.");
+	    		result.put("count", vpvo.getCount()); // getCountAfterApproval 메서드는 업데이트된 count 값을 반환하는 메서드라 가정
 	    		result.put("approve", _mypageGroupService.approve(vpvo));
+	    		System.out.println("신청된인원 : " + vpvo.getCount());
     		} else {
     			result.put("status", false);
+	    		System.out.println("모집인원 : " + vpvo.getMemCount());
+	    		System.out.println("신청된인원 : " + vpvo.getCount());
         		result.put("message", "인원이 초과되었습니다.");
     		}
     		
     	} else {
     		result.put("status", false);
+    		System.out.println("모집인원 : " + vpvo.getMemCount());
+    		System.out.println("신청된인원 : " + vpvo.getCount());
     		result.put("message", "오류가 발생했습니다. 다시 시도해주세요.");
     	}
     	
@@ -206,7 +227,7 @@ public class MypageGroupController extends PrtController {
 	
 	// 4-3. 진행 중인 봉사 상세페이지
 	@GetMapping("/volunteering")
-	public String working(RecruitBoardVO recruit, VolunteerProceedVO vo, Model model) throws Exception {
+	public String working(RecruitBoardVO recruit, VolunteeringVO vo, Model model) throws Exception {
 	    super.setPageSubTitle("진행 중인 봉사 상세 페이지", model);
 	    log.info(">>>>>>>>>>>>>>진행 중인 봉사 상세 페이지");
 
@@ -214,7 +235,7 @@ public class MypageGroupController extends PrtController {
 	    
 	    try {
 	    	
-	    	Map<String, List<VolunteerProceedVO>> map =  _mypageGroupService.volunteering(vo);
+	    	Map<String, List<VolunteeringVO>> map =  _mypageGroupService.volunteering(vo);
 
 	    	model.addAttribute("recruit", _recruitBoardService.recruitDetail(recruit));
 			model.addAttribute("volunteer", map.get("volunteer"));
