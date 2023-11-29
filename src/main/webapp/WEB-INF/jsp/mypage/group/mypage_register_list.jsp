@@ -28,17 +28,17 @@
 					<input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${principal.user.memSeq}">
 					<div class="inner1">
 						<div class="inner2">
-							<div class="row posts-entry">
+							<div class="row posts-entry" style="font-weight:bold;">
 								<div class="sss" style="margin-bottom:150px;">
 								
-									<p style="font-size:30px;"><img src="/images/list4.png" style="width:26px;">   오늘의 봉사활동</p>
+									<p style="font-size:30px;"><img src="/images/list4.png" style="width:26px;">   신청 글 작성 목록</p>
 									<hr>
 									<div style="width: 100%;">
-										<c:forEach var="today" items="${today}">
+										<c:forEach var="list" items="${list}">
 										<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:100px;">
 											<div>
-<%-- 												<p>글번호 : ${today.recruitSeq}</p> --%>
-												<p class="title" style="margin-bottom:5px; font-weight:bold;"><a href="/manager/volunteering?recruitSeq=${today.recruitSeq}">${today.recruitTitle}</a></p>
+												<p>글번호 : ${list.recruitSeq}</p>
+												<p class="title" style="margin-bottom:5px;"><a href="/recruit/detail?recruitSeq=${list.recruitSeq}">${list.recruitTitle}</a></p>
 
 
 												<div>
@@ -46,12 +46,12 @@
 															<dl>
 																<dt>신청/필요인원:</dt>
 																<dd>
-																	<span>${today.count}</span>/<span>${today.memCount}</span>
+																	<span>${list.count}</span>/<span>${list.memCount}</span>
 																</dd>
 															</dl>
 															<dl>
 																<dt>봉사기간:</dt>
-																<dd><span>${today.volunStartDate}</span>~<span>${today.volunEndDate}</span></dd>
+																<dd><span>${list.volunStartDate}</span>~<span>${list.volunEndDate}</span></dd>
 															</dl>
 			
 													</div>
@@ -60,40 +60,7 @@
 										</div>
 										</c:forEach>
 									</div>
-									
-									
-									<p style="font-size:30px;"><img src="/images/list4.png" style="width:26px;">   다가오는 봉사활동</p>
-									<hr>								
-									<c:forEach var="withinAWeek" items="${withinAWeek}">
-									<div class="blog-entry d-flex blog-entry-search-item" style="margin-bottom:100px;">
-										<div>
-											<p>글번호 : ${withinAWeek.recruitSeq}</p>
-											<p class="title"><a href="/manager/volunteering?recruitSeq=${withinAWeek.recruitSeq}">${withinAWeek.recruitTitle}</a></p>
-											
-											<div>
-												<div class="data clear">
-														<dl>
-															<dt>신청/필요인원:</dt>
-															<dd>
-																<span>${withinAWeek.count}</span>/<span>${withinAWeek.memCount}</span>
-															</dd>
-														</dl>
-														<dl>
-															<dt>봉사기간:</dt>
-															<dd><span>${withinAWeek.volunStartDate}</span>~<span>${withinAWeek.volunEndDate}</span></dd>
-														</dl>
-		
-												</div>
-											</div>
-										</div>
-									</div>
-									</c:forEach>
-									
-		
-		
-		
-								
-									
+																
 					
 								</div>
 							</div>

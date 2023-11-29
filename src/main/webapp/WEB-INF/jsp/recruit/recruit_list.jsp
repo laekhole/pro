@@ -17,11 +17,11 @@
 					<br>
 				<div class="search_section">
 					<form action="/recruit/list" >
-						<div class="form-css" style="width:100%;">
+						<div class="form-css" style="width:100%; background-color: #f8f8f8; border-radius: 5px;">
 	
 							<!-- 봉사 지역 -->
 						<div style="width:100%;">
-						<div class="form-region" style="margin-right:7%;">
+						<div class="form-region" style="margin-right:1%;">
 							<label for="form-select">봉사지역 </label>
 							<select class="form-select" name="area"  title="활동지역 선택" onchange="drawAreaList(this);" style="width:170px;">
 								<option value="">선택1</option>
@@ -71,12 +71,12 @@
 							<!-- 봉사 기간 -->
 						<div class="form-calendar">
 							<label for="date-select">봉사기간 </label>
-							<input type="date" class="form-keyword" name="sttdte" title="봉사기간 시작일"  style="width:170px;"><span class="dash"> ~ </span><input type="date" class="form-keyword" name="enddte" title="봉사기간 종료일"  style="width:170px;" >
+							<input type="date" class="form-keyword" name="sttdte" title="봉사기간 시작일"  style="width:195px;"><span class="dash"> ~ </span><input type="date" class="form-keyword" name="enddte" title="봉사기간 종료일"  style="width:195px;" >
 						</div>
 						</div>
 						<br>
 						<!-- 모집 현황 -->
-						<div class="form-status">
+						<div class="form-status" style="margin-right: 1.5%;">
 							<label for="form-select">모집현황 </label>
 							<select class="form-select" name="status">
 								<option value="">선택</option>
@@ -111,7 +111,7 @@
 								<option value="recruitContent">내용</option>
 							</select>
 							<input class="form-keyword" name="searchWord" type="search" value="${search.searchWord }" >
-							<button type="submit" id="search" style="font-size: 17px;width: 70px;height: 40px;background-color: black;">검색</button>
+							<button type="submit" id="search" style="font-size: 17px;width: 70px;height: 36px;background-color: black;">검색</button>
 
 						</div>
 						
@@ -158,7 +158,7 @@
 									</div>
 									
 <%-- 									<a href="/exam/get.do?boardNum=${board.boardNum}">${board.title}</a> --%>
-									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}" style="font-size:30px;">${recruit.recruitTitle}</a></p>
+									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}" style="font-size:30px; font-weight:bold;">${recruit.recruitTitle}</a></p>
 									<div style="margin-top:10px;">
 										<div class="data clear">
 										<div style="width:100%;">

@@ -43,6 +43,55 @@
 	</select>
 	
 	
+	<!-- 해당 단체의 봉사 작성글 목록보기 -->
+	<select id="registerList" resultType="RecruitBoardVO">
+			
+		SELECT
+		    *
+		FROM
+		    recruit_board
+		WHERE
+		    group_mem_seq = #{groupMemSeq}
+		    
+	</select>
+	
+	<!-- 봉사활동 몇 명 신청중인지 조회하기 -->
+	<select id="selectStateCount" resultType="int">
+		SELECT COUNT(*)
+	    FROM volunteer_proceed
+	    WHERE 
+		    GROUP_MEM_SEQ = #{groupMemSeq}
+	    AND
+		    STATE = '신청중'
+	</select>
+	
+	<!-- 단체회원 글에 대해서 봉사활동 리뷰 몇개썼는지 조회하기 -->
+	<select id="selectReviewCount" resultType="int">
+		SELECT
+		    COUNT(*)
+		FROM
+		    review_board rvb
+		JOIN
+		    recruit_board rcb ON rvb.recruit_seq = rcb.recruit_seq
+		WHERE
+		    rcb.group_mem_seq = #{groupMemSeq}
+	</select>
+	
+	
+	<!-- 단체회원 글에 대해서 채팅방 몇개 생성됐는지 조회하기 -->
+ 	<select id="selectChatRoomCount" resultType="int">
+		SELECT
+		    count(*)
+		FROM
+		    CHAT_ROOM cr
+		JOIN
+		    recruit_board rcb ON cr.recruit_seq = rcb.recruit_seq
+		WHERE
+		    rcb.group_mem_seq = #{groupMemSeq}
+	</select>
+
+
+	
 	<!-- 봉사 신청내역(신청중) 게시판 목록보기 -->
 	<select id="volunteerProceedList" resultType="VolunteerProceedVO">
 			
@@ -72,14 +121,14 @@
 	</select>
 	
 	<!-- 봉사활동 몇 명 신청중인지 조회하기 -->
-	<select id="selectStateCount" resultType="int">
+<!-- 	<select id="selectStateCount" resultType="int">
 		SELECT COUNT(*)
 	    FROM volunteer_proceed
 	    WHERE 
 		    RECRUIT_SEQ = #{recruitSeq}
 	    AND
 		    STATE = '신청중'
-	</select>
+	</select> -->
 	
 	
 	<!-- 봉사활동 개인이 신청하기!! -->	
@@ -125,33 +174,34 @@
 	
 	<!-- 봉사 신청내역(승인) 게시판 목록보기 -->
 	<select id="selectApprove" resultType="VolunteerProceedVO">
-			
+		<![CDATA[		
 			SELECT
-			    vp.volun_proceed_seq,
-			    vp.recruit_seq,
-			    rb.recruit_title,
-			    vp.mem_seq,
-			    m.name,
-			    vp.state
-			FROM
-			    volunteer_proceed vp
-			JOIN
-			    member m ON vp.mem_seq = m.mem_seq
-			JOIN
-		    	recruit_board rb ON vp.recruit_seq = rb.recruit_seq
-			WHERE
-			    vp.group_mem_seq = #{groupMemSeq}
-			AND
-				vp.state = '승인'
-			ORDER BY 
-				vp.volun_proceed_seq desc
-	<!-- vp.group_mem_seq = #{groupMemSeq} -->    
-
+		        vp.volun_proceed_seq,
+		        vp.recruit_seq,
+		        rb.recruit_title,
+		        vp.mem_seq,
+		        m.name,
+		        vp.state
+		    FROM
+		        volunteer_proceed vp
+		    JOIN
+		        member m ON vp.mem_seq = m.mem_seq
+		    JOIN
+		        recruit_board rb ON vp.recruit_seq = rb.recruit_seq
+		    WHERE
+		        vp.group_mem_seq = #{groupMemSeq}
+		    AND
+		        vp.state = '승인'
+		    AND
+		        vp.end_date BETWEEN trunc(sysdate) AND trunc(sysdate) + 1
+		    ORDER BY 
+		        vp.volun_proceed_seq DESC
+		]]>	
 	</select>
 	
 	<!-- 봉사 신청내역(거절) 게시판 목록보기 -->
 	<select id="selectreject" resultType="VolunteerProceedVO">
-			
+		<![CDATA[	
 			SELECT
 			    vp.volun_proceed_seq,
 			    vp.recruit_seq,
@@ -170,8 +220,11 @@
 			    vp.group_mem_seq = #{groupMemSeq}
 			AND
 				vp.state = '거절'
+			AND
+		        vp.end_date BETWEEN TRUNC(sysdate) AND TRUNC(sysdate) + 1
 			ORDER BY 
 				vp.volun_proceed_seq desc
+		]]>		
  	<!-- vp.group_mem_seq = #{groupMemSeq} -->   
 	</select>
 	

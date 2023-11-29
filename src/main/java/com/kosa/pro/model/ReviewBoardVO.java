@@ -30,6 +30,7 @@ public class ReviewBoardVO implements GeneralModel {
 	private String delYn;
 	private int imageSeq;
 	private int memSeq;
+	private int groupMemSeq;
 	
 	private MemberVO member;
 	
