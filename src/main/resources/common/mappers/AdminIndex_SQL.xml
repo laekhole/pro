@@ -26,7 +26,7 @@
 		    TO_CHAR(REG_DATE, 'YYYY-MM') AS month,
 		    COUNT(*) AS total_recruits
 		FROM 
-		    ADMIN.RECRUIT_BOARD
+		    RECRUIT_BOARD
 		WHERE
 		    REG_DATE IS NOT NULL
 		GROUP BY 
@@ -45,9 +45,9 @@
 		mc.CODE_YN,
 		cc.CATEGORY_COUNT
 		FROM
-		ADMIN.MASTER_CODE mc
+		MASTER_CODE mc
 		LEFT JOIN
-		ADMIN.CATEGORY_COUNT cc ON mc.CODE_NUMBER = cc.CODE_NUMBER
+		CATEGORY_COUNT cc ON mc.CODE_NUMBER = cc.CODE_NUMBER
 	</select>
 
 		<!--   	후기 게시판 TOP 5 -->
@@ -60,7 +60,7 @@
 		    RECOM_COUNT AS "recomCount",
 		    VIEW_COUNT AS "viewCount"
         FROM
-            ADMIN.REVIEW_BOARD
+            REVIEW_BOARD
         WHERE
             DEL_YN = 'N'
         ORDER BY

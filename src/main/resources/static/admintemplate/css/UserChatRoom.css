@@ -1,0 +1,102 @@
+@charset "EUC-KR";
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.chat-header {
+    background: #85C1E9; /* 밝은 파란색으로 변경 */
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-main {
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+    gap: 20px;
+    height: 500px;
+}
+
+.chat-sidebar {
+    background: #D6EAF8; /* 매우 연한 파란색으로 변경 */
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.chat-messages {
+    background: #EBF5FB; /* 연한 하늘색으로 변경 */
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.incoming_msg {
+    background: #FDEBD0; /* 연한 주황색으로 변경 */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.outgoing_msg {
+    background: #ABEBC6; /* 연한 녹색으로 변경 */
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.chat-form-container {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#chat-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* 보내기 버튼 스타일 */
+#chat-form button {
+    padding: 10px;
+    background: #76D7C4; /* 연한 청록색 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: 50px; /* 버튼 높이 설정 */
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
+}
+
+/* 입력 필드 스타일 */
+#chat-form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid rgb(0, 0, 0);
+    height: 50px; /* 입력 필드 높이 설정 */
+}
+/*전달자와 받는자*/ 
+
+.list-group-item.received-message {
+    text-align: left;
+    background-color: #AED6F1; /* 연한 파란색 */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.list-group-item.sent-message {
+    text-align: right;
+    background-color: #D6EAF8; /* 더 연한 파란색 */
+    padding: 10px;
+    margin-bottom: 10px;
+}

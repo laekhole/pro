@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kosa.pro.model.GroupMemberVO;
 import com.kosa.pro.model.MemberVO;
 import com.kosa.pro.model.ReviewBoardVO;
+import com.kosa.pro.model.VolunteerTimeVO;
 import com.kosa.pro.model.search.GroupMemberSearchVO;
 import com.kosa.pro.model.search.MemberSearchVO;
 import com.kosa.pro.service.common.BaseService;
@@ -68,13 +69,15 @@ public class AdminMemberService extends BaseService {
 	
 	
 	
-		// 리스트를 돌면서 특정 온도,평점이 이하 점수가 되면 쪽지 발송되게 끔!
-//	 	@Scheduled(fixedRate = 5000) // 5초마다 실행
-	 	@Scheduled(fixedRate = 43200000) // 12시간마다 실행
-	    public void sendMessagesToUsers() {
-	        System.out.println("쪽지발송");
-	 		// 로직 구현
-	        // 쪽지를 발송하는 로직을 구현합니다.
-	    }
+	// 온도에 따라 회원을 정렬하여 가져오는 메소드
+	public List<MemberVO> getMembersSortedByTemperature(String sortType) {
+	    
+		// "asc" 또는 "desc"에 따라 오름차순 또는 내림차순 정렬 쿼리를 선택합니다.
+	    String sqlMapID = (sortType.equals("asc")) ? "adminmember.selectMembersSortedByTemperatureAsc" : "adminmember.selectMembersSortedByTemperatureDesc";
+
+	    // 정렬된 회원 목록을 가져옵니다.
+	    return (List<MemberVO>) getDAO().selectList(sqlMapID, null);
+	}
+
 
 }

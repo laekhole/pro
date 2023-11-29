@@ -22,4 +22,12 @@ public class AdminNoticeService extends BaseService {
 				search, "totalCountNotice"));
 		return map;
 	}
+
+	public boolean insertNotice(NoticeVO notice) {
+		
+		int insertNotice = getDAO().insert("adminnotice.admininsertnotice", notice);
+
+		return insertNotice > 0;
+		
+	}
 }

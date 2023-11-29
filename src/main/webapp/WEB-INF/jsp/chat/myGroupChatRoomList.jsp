@@ -9,13 +9,13 @@
 <link href="/admintemplate/css/adminchat.css" rel="stylesheet">
 
 	<div class="chatcontainer">
-		<h3 class=" text-center">봉사 개인회원 채팅방</h3>
+		<h3 class=" text-center">봉사 단체 회원 채팅방</h3>
 		<div class="messaging">
 			<div class="inbox_msg">
 				<div class="inbox_people">
 					<div class="headind_srch">
 						<div class="recent_heading">
-							<h4>개인회원 채팅목록</h4>
+							<h4>봉사단체 채팅목록</h4>
 						</div>
 						<div class="srch_bar">
 							<div class="stylish-input-group">
@@ -35,17 +35,18 @@
 									<img src="https://ptetutorials.com/images/user-profile.png"
 										alt="sunil">
 								</div>
-								<c:if test="${not empty mychatinfo.recruitSeq}">
+								<c:if test="${not empty myGroupchatInfo.recruitSeq}">
 								<div class="chat_ib" id="roomList">
-									<h5>나의 신청게시글번호:${mychatinfo.recruitSeq}
+			<%-- 	<h5>단체 신청게시글번호:${myGroupchatInfo.recruitSeq} --%>
+									<h5>단체 주관한 채팅방:${myGroupchatInfo.recruitTitle}
 										<span class="chat_date">Dec 25</span>
 									</h5>
 									<p>대화방이 열렸습니다.</p>
 									<button class="enter_chat_button">채팅방 입장</button>
 								</div>
 								</c:if>
-								<c:if test="${empty mychatinfo.recruitSeq}">
-   											 <p>채팅방이 없습니다. 봉사 신청 후 승인 시에 해당 봉사채팅방 개설됩니다.</p>
+								<c:if test="${empty myGroupchatInfo.recruitSeq}">
+   											 <p>채팅방이 없습니다. 봉사 주최시에 해당 봉사채팅방 자동 개설됩니다.</p>
 								</c:if>
 							</div>
 						</div>
@@ -54,7 +55,7 @@
 				</div>
 	
 			</div>
-			<p class="text-center top_spac">Volunteer 4조 프로젝트</p>
+			<p class="text-center top_spac">Volunteer Sunil Rajput</p>
 			<!-- Back to Top -->
 		</div>
 	</div>
@@ -65,24 +66,22 @@
 $(document).ready(() => {
     // 채팅방 입장 버튼에 대한 클릭 이벤트를 설정합니다.
     $('.enter_chat_button').on('click', function() {
-    	const recruitSeq = `${mychatinfo.recruitSeq}`;
-    	const sender = `${mychatinfo.name}`;
-//     	const name = `${mychatinfo.name}`;
-//         const recruitSeq = ${mychatinfo.recruitSeq};
-//         const sender = ${memSeq};
-        enterRoom(recruitSeq, sender);
+    	const recruitSeq = `${myGroupchatInfo.recruitSeq}`;
+    	const sender = `${myGroupchatInfo.groupName}`;
+    	const title = `${myGroupchatInfo.recruitTitle}`;
+        enterRoom(recruitSeq, sender,title);
     });
 });
 
-function enterRoom(recruitSeq, sender) {
+function enterRoom(recruitSeq, sender, title) {
 
     // 사용자 식별 정보를 로컬 저장소에 저장합니다.
     localStorage.setItem('chat.recruitSeq', recruitSeq);
     localStorage.setItem('chat.sender', sender);
-    
+    localStorage.setItem('chat.sender', sender);
 
     // 채팅방 페이지로 이동합니다.
-    location.href = '/userchat/room/enter';
+    location.href = '/userchat/room/groupEnter';
 }
 </script>
 
