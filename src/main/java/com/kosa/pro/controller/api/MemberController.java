@@ -52,6 +52,7 @@ public class MemberController extends PrtController {
 	public String loginForm(Model model,
 			@RequestParam(value = "error", required = false) String error, 
 			@RequestParam(value = "exception", required = false) String exception) {
+		super.setPageSubTitle("로그인", model);
 		String url = getConfig().getHostLocal();
 		if ("dev".equals(getConfig().getWebMode()))
 			url = getConfig().getHostDev();

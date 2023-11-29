@@ -66,7 +66,7 @@
 						<c:forEach var="popular" items="${polist }">
 							<li>
 								<a href="/review/info?reviewSeq=${popular.reviewSeq }">
-									<img src="/template/images/img_1_sq.jpg" alt="Image placeholder" class="me-4 rounded">
+									<img src="/files/${popular.imageSeq }" alt="Image placeholder" class="me-4 rounded">
 									<div class="text">
 										<h4>${popular.reviewTitle }</h4>
 										<div class="post-meta">

@@ -32,10 +32,15 @@ public class MainService extends BaseService {
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("listTop3", (List<ReviewBoardVO>) getDAO().selectList("review.selectMainReviewTop3", null));
-		map.put("recruitList", (List<RecruitBoardVO>) getDAO().selectList("recruit.selectMainRecruit", null));
+		//map.put("recruitList", (List<RecruitBoardVO>) getDAO().selectList("recruit.selectMainRecruit", null));
 		map.put("noticeList", (List<NoticeVO>) getDAO().selectList("notice.selectMainNotice", null));
 		
 		return map;
+	}
+	
+	public List<RecruitBoardVO> recruitList() {
+		
+		return (List<RecruitBoardVO>) getDAO().selectList("recruit.selectMainRecruit", null);
 	}
 
 	

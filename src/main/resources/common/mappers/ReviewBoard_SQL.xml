@@ -116,7 +116,7 @@
 	
 	
 	<select id="selectPopularList" resultType="ReviewBoardVO">
-		select review_title, to_char(mod_date, 'yyyy-mm-dd') mod_date, review_seq
+		select review_title, to_char(mod_date, 'yyyy-mm-dd') mod_date, review_seq, image_seq
 		from (
 			select * from review_board
 			order by recom_count desc

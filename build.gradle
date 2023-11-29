@@ -10,8 +10,6 @@ group = 'com.kosa'
 version = '0.0.1-SNAPSHOT'
 apply plugin: 'war'
 
-mainClassName = 'GoogleCalendarController'
-sourceCompatibility = '11'
 
 java {
 	sourceCompatibility = '11'

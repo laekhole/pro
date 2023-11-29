@@ -28,11 +28,13 @@ public class MainController extends PrtController {
 	public String mainIndex(SearchVO search, Model model) throws Exception {
 		super.setPageSubTitle("봉사커뮤니티 메인", model);
 		search.setCash(0);
+		
+		model.addAttribute("recruitList", _mainService.recruitList());
+		
 		long tick = System.nanoTime();
 		Map<String, Object> map = _mainService.mainList(search);
 		
 		model.addAttribute("listTop3", map.get("listTop3")); 
-		model.addAttribute("recruitList", map.get("recruitList"));
 		model.addAttribute("noticeList", map.get("noticeList"));
 		
 		
