@@ -60,7 +60,8 @@
           r.recruit_title,
           r.volun_start_date,
           r.volun_end_date,
-          r.group_name
+          r.group_name,
+          vp.reject_message
       from 
           recruit_board r 
       join

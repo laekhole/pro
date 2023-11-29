@@ -33,9 +33,6 @@
 								<div class="btn-container" style="float: right; display: inline-block;">
 									<a href="/review/writeForm?recruitSeq=${finished.recruitSeq }"><div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</div></a>
 								    <div class="btn btn-secondary my-2 my-sm-0" onclick="openRatingModal(${finished.recruitSeq})">평가<br>하기</div>
-<!-- 
-									<div class="btn btn-secondary my-2 my-sm-0"> 평가<br>하기</div>
- -->
 								</div>
 							</div>		
 							
