@@ -6,23 +6,9 @@
 <%@ include file="/WEB-INF/jsp/include/top.jsp"%>
 
 <head>
-<title>개인 채팅방</title>
+<title>단체 채팅방</title>
 </head>
-<link href="/admintemplate/css/UserChatRoom.css" rel="stylesheet">
-
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="<c:url value='/resources/mqtt/mqtt.min.js'/>"></script>
-
-<head>
-<title>Spring stomp chat</title>
-</head>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link href="/admintemplate/css/groupChatRoom.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
@@ -37,16 +23,23 @@
 			<h1>
 				<i class="fas fa-smile"></i> 채팅방
 			</h1>
-			<a href="/userchat/chatRoom?memSeq=${principal.user.memSeq}"><button id="leave-room" class="btn">Chat List</button></a>
+			<a href="/userchat/chatGroupRoom?groupMemSeq=${principal.user.memSeq}"><button id="leave-room" class="btn">Chat List</button></a>
 		</header>
 		<main class="chat-main">
 			<div class="chat-sidebar">
-				<h2>
-					<i class=""></i>
-				</h2>
-				<h2 id="room-name"></h2>
-				<ul id="users">
-					<!-- User list will be here -->
+				<div class="room-info">
+					<div class="room-title-section">
+						<label for="room-title">주최한 봉사:</label>
+						<h2 class="room-title" id="room-title">${myGroupchatInfo.recruitTitle}</h2>
+					</div>
+					<div class="room-name-section">
+						<label for="room-name">단체 이름:</label>
+						<h3 class="room-name" id="room-name">${myGroupchatInfo.groupName}</h3>
+					</div>
+				</div>
+				<!-- User List Section -->
+				<ul id="users" class="user-list">
+					<!-- User list will be dynamically populated here -->
 				</ul>
 			</div>
 			<div class="chat-messages">
@@ -66,8 +59,9 @@
 			</form>
 		</div>
 	</div>
+
 	<script type="text/javascript">
-    let notificationCount = 0;
+	 let notificationCount = 0;
 
 	 // 알림 배지 업데이트 함수
 	 const updateNotificationBadge = () => {
@@ -84,6 +78,7 @@
     //MQTT client
     const roomId = localStorage.getItem('chat.recruitSeq');
     const sender = localStorage.getItem('chat.sender');
+    
 
     //MQTT info host, port, topic 을 설정.
     //const mqtt_host = "www.masugil.shop";
@@ -254,26 +249,26 @@
 //     const recvMessage = recv =>  {
 //     	  console.log(recv);
 //         $("#message_list").prepend('<li class="list-group-item" >[' + recv.sender + '] - ' + recv.message + '</li>'); 
-        	
+        
 //         if(recv.sender !== sender){
-//         updateNotificationBadge(); // 알림 배지 업데이트
-//         }
+//             updateNotificationBadge(); // 알림 배지 업데이트
+//             }      
 //     }
-
     const sendMessage = () => {
-        const message = $("#message").val();
-        mqttClient.publish(mqtt_topic, JSON.stringify({type: 'TALK', roomId: roomId, sender: sender, message: message}));
-        $("#message").val("");
-    };
+    const message = $("#message").val();
+    mqttClient.publish(mqtt_topic, JSON.stringify({type: 'TALK', roomId: roomId, sender: sender, message: message}));
+    $("#message").val("");
+};
 
-        const recvMessage = recv => {
-            let messageClass = (recv.sender === sender) ? 'sent-message' : 'received-message';
-            let messageElement = '<li class="list-group-item ' + messageClass + '" >[' + recv.sender + '] - ' + recv.message + '</li>';
-            $("#message_list").prepend(messageElement);
-            
-            if (recv.sender !== sender) {
-                updateNotificationBadge(); // 알림 배지 업데이트
-            }
-        };
+    const recvMessage = recv => {
+        let messageClass = (recv.sender === sender) ? 'sent-message' : 'received-message';
+        let messageElement = '<li class="list-group-item ' + messageClass + '" >[' + recv.sender + '] - ' + recv.message + '</li>';
+        $("#message_list").prepend(messageElement);
+        
+        if (recv.sender !== sender) {
+            updateNotificationBadge(); // 알림 배지 업데이트
+        }
+    };
+    
     </script>
 </body>

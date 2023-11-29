@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
  <%@ include file="/WEB-INF/jsp/include/admintop.jsp"%>
+ 
 <!-- Chart Start -->
 <div class="container-fluid mt-3">
   <div class="row">
@@ -14,7 +15,7 @@
           </div>
       </div>
          <!-- 검색 & 필터 & 버튼 -->
-           <!-- 고객센터 검색 -->
+           <!-- 회원관리 검색 -->
 		<div class="management-container">
 			<div class="management-actions">
 				<div class="management-search">
@@ -22,7 +23,7 @@
 						<select class="management-select" name="type1" id="managementCategory">
 							<option value="TopField" >전체</option>
 							<option value="name">회원이름</option>
-							<option value="group_id">단체이름</option>
+							<option value="mem_id">회원아이디</option>
 						</select> 
 						 <input type="text" name="searchWord" id="inquiryInput" class="search-input" placeholder="검색...">
 						<button type="submit" class="search-btn">검색</button>
@@ -30,13 +31,6 @@
 				</div>
 			</div>
 		</div>
-
-
-		<!-- 쪽지 전송 & 일괄 제재 버튼 -->
-<!-- <div class="mt-2 d-flex justify-content-end">
-  <button class="btn btn-primary active-button" id="messageButton">쪽지 전송</button>
-  <button class="btn btn-primary" id="sanctionButton">일괄 제재</button>
-</div> -->
 
 
           <!-- 테이블 -->
@@ -48,7 +42,7 @@
               </div>
               <div class="mt-2 d-flex justify-content-end">
                 <!-- 쪽지 전송 & 일괄 제재 버튼 -->
-                <button class="btn btn-primary active-button" id="messageButton">쪽지 전송</button>
+<!--                 <button class="btn btn-primary active-button" id="messageButton">쪽지 전송</button> -->
                 <button onclick="adminCheckBlockMember()" class="btn btn-primary" id="sanctionButton">일괄 제재</button>
         
                 <!-- 정렬 드롭다운 -->
@@ -57,8 +51,8 @@
                         정렬
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">이름 순</a>
-                        <a class="dropdown-item" href="#">등록 순</a>
+                        <a class="dropdown-item" href="#" data-sort="asc">온도 낮은순</a>
+                        <a class="dropdown-item" href="#" data-sort="desc">온도 높은순</a>
                     </div>
                 </div>
             </div>
@@ -116,7 +110,7 @@
 							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'Y'}">
 							        <button type="button" class="btn btn-danger btn-sm">제재함</button> 
 							        </c:when>
-							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'N'}">
+							        <c:when test="${member.volunteerTime.volunHeat < 100 && member.benYn == 'N'}">
 							            <button type="button" class="btn btn-warning btn-sm" id="adminBlockButton${member.memSeq}" onclick="adminBlockBut(${member.memSeq})">제재가능</button>
 							        </c:when>
 							        <c:otherwise>
@@ -244,7 +238,7 @@
         	 var statusButton = '';
              if (member.volunteerTime.volunHeat < 30 && member.benYn === 'Y') {
                  statusButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
-             } else if (member.volunteerTime.volunHeat < 30 && member.benYn === 'N') {
+             } else if (member.volunteerTime.volunHeat < 100 && member.benYn === 'N') {
                  statusButton = '<button type="button" class="btn btn-warning btn-sm"  id="adminBlockButton' + member.memSeq + '" onclick="adminBlockBut(' + member.memSeq + ')">제재가능</button>';
              }
              var row = '<tr>' +
@@ -351,7 +345,89 @@
          }
      }
  }
- 
+//  -- 여기서부터 정렬
+$(document).ready(function() {
+    // 정렬 드롭다운 항목 클릭 이벤트
+    $('.dropdown-item').on('click', function(e) {
+        e.preventDefault();
+        var sortType = $(this).data('sort'); // 클릭한 항목의 정렬 방식 (asc 또는 desc)
+
+        // AJAX 요청을 통해 서버에 정렬 방식을 전달하고 데이터를 가져옴
+        $.ajax({
+            url: '/admin/sortMembers', // 서버의 정렬 처리 URL로 수정해야 함
+            method: 'GET',
+            data: { sortType: sortType },
+            dataType: 'json',
+            success: function(data) {
+                // 서버에서 받아온 정렬된 데이터로 테이블을 업데이트
+                updateTable(data);
+            },
+            error: function(error) {
+                console.error('정렬 에러:', error);
+            }
+        });
+    });
+
+});
+
+function updateTable(members, sortType) {
+    var tableBody = $('#memberTableContainer tbody');
+    tableBody.empty(); // 테이블의 기존 내용을 비웁니다.
+
+    // 데이터를 정렬하고 테이블 내용을 채웁니다.
+     members.sort(function(a, b) {
+        // volunteerTime 및 volunHeat가 null이 아닌지 확인
+        var aHeat = (a.volunteerTime && a.volunteerTime.volunHeat) || 0;
+        var bHeat = (b.volunteerTime && b.volunteerTime.volunHeat) || 0;
+
+        // 정렬 기준에 따라 비교
+        if (sortType === 'asc') {
+            if (aHeat > bHeat) {
+                return 1;
+            } else if (aHeat < bHeat) {
+                return -1;
+            } else {
+                return 0;
+            }
+        } else if (sortType === 'desc') {
+            if (aHeat > bHeat) {
+                return -1;
+            } else if (aHeat < bHeat) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    });
+
+    $.each(members, function(i, member) {
+        var statusButton = '';
+        if (member.volunteerTime && member.volunteerTime.volunHeat < 30 && member.benYn === 'Y') {
+            statusButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
+        } else if (member.volunteerTime && member.volunteerTime.volunHeat < 100 && member.benYn === 'N') {
+            statusButton = '<button type="button" class="btn btn-warning btn-sm"  id="adminBlockButton' + member.memSeq + '" onclick="adminBlockBut(' + member.memSeq + ')">제재가능</button>';
+        }
+
+        // volunteerTime 및 volunHeat가 null이 아닌지 확인 후 처리
+        var heatValue = (member.volunteerTime && member.volunteerTime.volunHeat) || '';
+
+        var row = '<tr>' +
+            '<td><input type="checkbox" name="selectRow" /></td>' +
+            '<td>' + member.memSeq + '</td>' +
+            '<td>' + member.memId + '</td>' +
+            '<td>' + member.name + '</td>' +
+            '<td>' + member.gender + '</td>' +
+            '<td>' + member.phone + '</td>' +
+            '<td>' + (member.volunteerTime ? member.volunteerTime.volunAddtime : '') + '</td>' +
+            '<td>' + heatValue + '</td>' +
+            '<td>' + (member.volunteerTime ? member.volunteerTime.volunNoshow : '') + '</td>' +
+            '<td id="status' + member.memSeq + '">' + (member.benYn === 'N' ? '활성' : '비활성') + '</td>' +
+            '<td>' + statusButton + '</td>' +
+            '</tr>';
+        tableBody.append(row);
+    }); 
+}
+
 </script>
  
 

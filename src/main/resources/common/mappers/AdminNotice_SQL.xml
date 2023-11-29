@@ -16,6 +16,8 @@
     <result property="delYn" column="DEL_YN" />
   </resultMap>
   
+ 
+  
    <!-- 공지사항 검색 조건 -->
  <sql id="whereClauseNotice">
   <trim prefix="where" prefixOverrides="and">
@@ -74,6 +76,20 @@
   
 
   
+  
+<!--   관리자 페이지에서 공지사항 다이알로그로 등록 -->
+  <insert id="admininsertnotice">
+    <!-- 위에서 정의한 selectNextNoticeSeq 쿼리를 실행하여 다음 시퀀스 값을 가져옴 -->
+    <selectKey keyProperty="noticeSeq" resultType="int" order="BEFORE">
+        select NOTICE_SEQ.NEXTVAL NOTICE_SEQ from dual
+    </selectKey>
+
+    INSERT INTO notice (NOTICE_SEQ, TITLE, CONTENT, FIXED_YN, REG_DATE, VIEW_COUNT)
+    VALUES (#{noticeSeq}, #{title}, #{content}, #{pixedYn}, SYSDATE, 0)
+</insert>
+    
+    
+    
   <!-- 공지사항 상세 -->
 <!--   <select id="selectNoticeDetail" parameterType="int" resultMap="NoticeResultMap"> -->
 <!--     select -->
