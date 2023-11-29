@@ -30,11 +30,11 @@
 				<div class="room-info">
 					<div class="room-title-section">
 						<label for="room-title">주최한 봉사:</label>
-						<h2 class="room-title" id="room-title">${myGroupchatInfo.recruitTitle}</h2>
+						<h2 class="room-title" id="room-title">${title}</h2>
 					</div>
 					<div class="room-name-section">
 						<label for="room-name">단체 이름:</label>
-						<h3 class="room-name" id="room-name">${myGroupchatInfo.groupName}</h3>
+						<h3 class="room-name" id="room-name">${groupname}</h3>
 					</div>
 				</div>
 				<!-- User List Section -->

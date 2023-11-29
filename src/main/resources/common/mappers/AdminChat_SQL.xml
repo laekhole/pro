@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminchat">
-
-	<!-- 회원 채팅방 정보 가져오기 -->
-	<select id="findMyChatRoom" parameterType="String" resultType="VolunteerProceedVO">
-		SELECT vp.RECRUIT_SEQ, 
-				m.NAME
-	    FROM VOLUNTEER_PROCEED vp
-	    JOIN MEMBER m ON vp.MEM_SEQ = m.MEM_SEQ
-	    WHERE vp.MEM_SEQ = #{memSeq}
-	    AND vp.STATE = '승인'
-	</select>
 	
-	<!-- 단체 로그인 시 해당 채팅방 정보 가져오기 -->
+	<!-- 단체 채팅방클릭시 게시글 리스트 정보 가져오기 -->
 	<select id="findGroupmyChatRoom" parameterType="int" resultType="RecruitBoardVO">
 		SELECT rb.recruit_title as recruitTitle,
 	           rb.recruit_seq as recruitSeq,
@@ -21,6 +11,14 @@
 	    INNER JOIN group_member gm ON rb.group_mem_seq = gm.group_mem_seq
 	    WHERE gm.group_mem_seq = #{groupMemSeq}
 	</select>
-
+<!-- 		개인 채팅방클릭시 개인 채팅방 목록 정보 가져오기  -->
+		<select id="findMyChatRoomList" parameterType="String" resultType="VolunteerProceedVO">
+		SELECT vp.RECRUIT_SEQ, 
+				m.NAME
+	    FROM VOLUNTEER_PROCEED vp
+	    JOIN MEMBER m ON vp.MEM_SEQ = m.MEM_SEQ
+	    WHERE vp.MEM_SEQ = #{memSeq}
+	    AND vp.STATE = '승인'
+	</select>
 
 </mapper>
