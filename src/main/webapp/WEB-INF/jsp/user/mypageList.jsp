@@ -30,6 +30,9 @@
 			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
 			               <div style="flex-grow: 1; margin-left: 1rem;">
 			               	   <span><button type="button" class="btn btn-primary">${recruit.state}</button></span>
+						            <c:if test="${not empty recruit.rejectMessage}">
+						                <span><button type="button" class="btn btn-primary">${recruit.rejectMessage}</button></span>
+						            </c:if>
 			               	   <span><button type="button" class="btn btn-warning">${recruit.recruitEndDate}</button></span>
 			                   <h2><a href="single.html">${recruit.recruitTitle}</a></h2>
 			                   <span class="date me-2">봉사 기간 : ${recruit.volunStartDate} ~ ${recruit.volunEndDate}</span>

@@ -46,6 +46,7 @@ public class RecruitBoardVO implements GeneralModel {
 
 	private String state;			// 조인용 상태(승인/거절)
 	private int count;				// 실제 신청인원
+	private String rejectMessage;	// 거절 메시지
 	
 
 }

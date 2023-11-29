@@ -247,7 +247,7 @@ function moveToAccepted(button) {
                     approveList.append(approveapproveList);
                 })
                 
-                
+                alert("승인되었습니다.");
                 
             } else {
                 alert('승인에 실패했습니다: ' + json.message);
@@ -297,7 +297,7 @@ function moveToAccepted(button) {
 	    .then((response) => response.json())
 	    .then((json) => {
 	        if (json.status) {
-
+				alert("거절되었습니다.");
 	        	const volunProceedSeq = $("#volunSeq").val(); // 서버에서 받은 값
 
 	        	// volunProceedSeq 값을 가진 행을 찾아서 삭제
