@@ -16,6 +16,7 @@
         <div class="list-group list-group-flush">
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
+               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/registerList?groupSeq=${principal.user.memSeq}">신청 글 목록</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
@@ -31,11 +32,11 @@
             <div class="column" id="waiting-column" style="min-height:700px; margin-bottom:50px;">
                 <h2 style="color: black;
                 font-size: 25px;
-                font-weight: bold;">신청 대기 목록</h2>
+                font-weight: bold;"><img src="/images/list4.png" style="width:22px;">   신청 대기 목록</h2>
                 
                 
                 <div class="card" style="min-height: 870px;">
-                    <table style="font-size:13px;">
+                    <table style="font-size:13px; border:none;">
 				      <tr>
 				          <th class="rounded-cell">신청번호</th>
 				          <th class="rounded-cell">봉사신청글 제목</th>
@@ -49,11 +50,11 @@
                         	        <input type="hidden" id="mem_count" name="memCount" value="${state.memCount}">
 	                        		<input type="hidden" id="count" name="count" value="${state.count}">
 	                        <tr id="statestateList">
-	                            <td class="volunProceedSeq" id="volun_proceed_seq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.volunProceedSeq}</td>
-	                            <td id="recruitTitle" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.recruitTitle}</td>
-	                            <td id="memSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.memSeq}</td>
-	                            <td id="name" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.name}</td>                                           
-	                            <td id="statestate" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">
+	                            <td class="volunProceedSeq" id="volun_proceed_seq" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.volunProceedSeq}</td>
+	                            <td id="recruitTitle" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.recruitTitle}</td>
+	                            <td id="memSeq" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.memSeq}</td>
+	                            <td id="name" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">${state.name}</td>                                           
+	                            <td id="statestate" style="border:none;  border-bottom: 1px solid #ddd;  border-radius: 5px;">
 	                                <div class="button-container">
 	                                   <input type="hidden" value="${state.state}" id="state">
 		                                   <button onclick="moveToAccepted(this)" style="background-color:#3ab41cb5;  font-weight:bold;">승인</button>         
@@ -68,14 +69,14 @@
                 </div>
             </div>
             
-         <!-- 신청 확정 내역 -->
+         	<!-- 신청 확정 내역 -->
 
             <div class="column" id="accepted-column" style="margin-bottom:50px;">
             
                 <!-- 승인 내역 카드 -->
-                <h2 style="color: black; font-size: 25px; font-weight: bold;">승인 목록</h2>
+                <h2 style="color: black; font-size: 25px; font-weight: bold;"><img src="/images/list4.png" style="width:22px;">   승인 목록</h2>
                 <div class="card" style="min-height:400px;">
-                    <table style="font-size:13px;">
+                    <table style="font-size:13px; border:none;">
                         
 				      <tr>
 				          <th class="rounded-cell">신청번호</th>
@@ -88,27 +89,27 @@
                         <tbody id="approveList">
 	                        <c:forEach var="approve" items="${approve}">
 		                        	<tr id="approveDetail">
-			                            <td class="approveVolunProceedSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.volunProceedSeq}</td>
-			                            <td id="approveRecruitTitle" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.recruitTitle}</td>
-			                            <td id="approveMemSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.memSeq}</td>
-			                            <td id="approveName" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.name}</td>                                           
-			                            <td id="approveState" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.state}</td>
+			                            <td class="approveVolunProceedSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.volunProceedSeq}</td>
+			                            <td id="approveRecruitTitle" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.recruitTitle}</td>
+			                            <td id="approveMemSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.memSeq}</td>
+			                            <td id="approveName" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.name}</td>                                           
+			                            <td id="approveState" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${approve.state}</td>
 			                        </tr>
 	                        </c:forEach>
                         </tbody>
                         
                      	<tr id="approveapproveList" style="display: none;">
-                            <td class="approveVolunProceedSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
-                            <td id="approveRecruitTitle" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
-                            <td id="approveMemSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
-                            <td id="approveName" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>                                           
-                            <td id="approveState" style="border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+                            <td class="approveVolunProceedSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+                            <td id="approveRecruitTitle" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+                            <td id="approveMemSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
+                            <td id="approveName" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>                                           
+                            <td id="approveState" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;"></td>
 	                    </tr>
                     </table>
                 </div>
                 
                 <!-- 거절 내역 카드 -->
-                <h2 style="color: black; font-size: 25px; font-weight: bold;">거절 목록</h2>
+                <h2 style="color: black; font-size: 25px; font-weight: bold;"><img src="/images/list4.png" style="width:22px;">   거절 목록</h2>
                 <div class="card" style="min-height:400px;">
                     <table style="font-size:13px;">
                         
@@ -123,11 +124,11 @@
                         <tbody id="rejectList">
 	                        <c:forEach var="reject" items="${reject}">
 		                        	<tr id="rejectDetail">
-			                            <td class="rejectVolunProceedSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.volunProceedSeq}</td>
-			                            <td id="rejectRecruitTitle" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.recruitTitle}</td>
-			                            <td id="rejectMemSeq" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.memSeq}</td>
-			                            <td id="rejectName" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.name}</td>                                           
-			                            <td id="rejectState" style="border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.state}</td>
+			                            <td class="rejectVolunProceedSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.volunProceedSeq}</td>
+			                            <td id="rejectRecruitTitle" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.recruitTitle}</td>
+			                            <td id="rejectMemSeq" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.memSeq}</td>
+			                            <td id="rejectName" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.name}</td>                                           
+			                            <td id="rejectState" style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${reject.state}</td>
 			                        </tr>
 	                        </c:forEach>
                         </tbody>

@@ -43,7 +43,7 @@ dd > dl {
 }
 
 .title {
-		font-size: 20px;
+		font-size: 30px;
 		margin:0;
 
 }
@@ -67,7 +67,6 @@ dd > dl {
 
 .search_section {
 	min-height: 200px;
-	background-color: #f8f9fa;
 }
 
 .form-keyword {
@@ -491,7 +490,7 @@ h4 {
         .column {
             flex: 1;
             padding: 10px;
-            border: 1px solid #ccc;
+            border-left: 1px solid #ccc;
         }
 
         .column h2 {
@@ -586,6 +585,20 @@ h4 {
             text-align: center;
             padding: 5px;
         }
+        
+        
+		  th {
+			  border : none;
+		      background-color: #f2f2f2; border-bottom: 1px solid #ddd;
+		  }
+		
+		  /* 각 셀에 대해 border-radius 적용 */
+		  td {
+			  border : none;
+		      border-bottom: 1px solid #ddd;
+		      border-radius: 5px;
+		  }
+  
 
         P {
             color: black;
