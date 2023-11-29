@@ -1,5 +1,6 @@
 package com.kosa.pro.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,15 @@ public class UserService extends BaseService {
 		return getDAO().update("user.updateTemperature", search);
 	}
 
+	// 풀캘린더 데이터 조회
+	public List<RecruitBoardVO> scheduleFind(UserSearchVO search) {
+//		List<RecruitBoardVO> map = new ArrayList<>();
+//		map=(List<RecruitBoardVO>) getDAO().selectList("user.calendarList" , search );
+//				
+//		return map;
+		return (List<RecruitBoardVO>) getDAO().selectList("user.calendarList", search);
+	}
+	
 	
 	// [개인] 종료된 봉사
 	public Map<String, Object> finishedList(UserSearchVO search) {
