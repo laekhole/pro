@@ -97,17 +97,22 @@ public class UserController extends PrtController {
 	
 	// 진행 중 봉사 출석 체크 메소드
 	@RequestMapping("/attend")
-	public ResponseEntity<String> volunteerAttend(UserSearchVO search, Authentication authentication) throws Exception {
+	public ResponseEntity<Map<String, Object>> volunteerAttend(UserSearchVO search, Authentication authentication) throws Exception {
 	    log.info(">>>>>>>>>>>>>>출석 체크");
 	    // UserSearchVO에 memSeq 셋팅
 	    getMemSeq(search, authentication);
-	    
+
 	    boolean success = _userService.attend(search);
-	    
+
+	    Map<String, Object> response = new HashMap<>();
 	    if (success) {
-	        return ResponseEntity.ok("출석이 정상적으로 처리되었습니다.");
+	        response.put("status", "success");
+	        response.put("message", "출석이 정상적으로 처리되었습니다.");
+	        return ResponseEntity.ok(response);
 	    } else {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("데이터 삽입 중 오류가 발생했습니다.");
+	        response.put("status", "error");
+	        response.put("message", "데이터 삽입 중 오류가 발생했습니다.");
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 	    }
 	}
 
@@ -124,34 +129,31 @@ public class UserController extends PrtController {
 
 	
 	// 풀캘린더 데이터 조회 메소드
-    @RequestMapping("/calendar")
-    @ResponseBody
-    public List<Map<String, Object>> scheduleFind(UserSearchVO search, Authentication authentication) {
+	@RequestMapping("/calendar")
+	@ResponseBody
+	public List<Map<String, Object>> scheduleFind(UserSearchVO search, Authentication authentication) {
+	    System.out.println("search.toString : " + search.toString());
 
-    	System.out.println("search.toString : "+search.toString());
-		
-    	getMemSeq(search, authentication);
-    	System.out.println("search.toString : "+search.toString());
+	    getMemSeq(search, authentication);
+	    System.out.println("search.toString : " + search.toString());
 
-    	List<RecruitBoardVO> listAll = _userService.scheduleFind(search);
- 
-        JSONObject jsonObj = new JSONObject();
-        JSONArray jsonArr = new JSONArray();
- 
-        HashMap<String, Object> hash = new HashMap<>();
+	    List<RecruitBoardVO> listAll = _userService.scheduleFind(search);
 
-        for (RecruitBoardVO board : listAll) {
-            hash.put("title", board.getRecruitTitle());
-            hash.put("start", board.getVolunStartDate());
-            hash.put("end", board.getVolunEndDate());
+	    JSONArray jsonArr = new JSONArray();
 
-            jsonArr.add(hash);
-        }
+	    for (RecruitBoardVO board : listAll) {
+	        // 각각의 이벤트마다 새로운 HashMap 생성
+	        HashMap<String, Object> hash = new HashMap<>();
+	        hash.put("title", board.getRecruitTitle());
+	        hash.put("start", board.getVolunStartDate());
+	        hash.put("end", board.getVolunEndDate());
 
-        log.info("jsonArrCheck: {}", jsonArr);
-        return jsonArr;
-    }
-	
+	        jsonArr.add(hash);
+	    }
+
+	    log.info("jsonArrCheck: {}", jsonArr);
+	    return jsonArr;
+	}
 	
 	//로그인 유저 데이터 구성
 	public void getMemSeq(UserSearchVO search, Authentication authentication) {

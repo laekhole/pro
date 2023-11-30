@@ -47,11 +47,9 @@
 	<script src="/js/common/jquery.locator.js"></script>
 	<script src="/js/common/jsrender.js"></script>
 	<script src="/js/common/jsviews.js"></script>
-	<!-- 	--권형 페이징 -->
-	
+	<!-- 	--권형 페이징 -->	
     <script src="/template/js/bootstrap.bundle.min.js"></script>
     <script src="/template/js/tiny-slider.js"></script>
-
     <script src="/template/js/flatpickr.min.js"></script>
 
 
@@ -60,9 +58,6 @@
 <!--     <script src="/template/js/navbar.js"></script> -->
     <script src="/template/js/counter.js"></script>
     <script src="/template/js/custom.js"></script>
-    <!-- FullCalendar JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" crossorigin="anonymous"></script>
 
     
   </body>
