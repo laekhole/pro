@@ -12,9 +12,11 @@
 
             <!-- Page content-->
             <div class="container-fluid">
-               <div class="row" style="width: 1300px; height: 16rem;">
+            
+               <div class="row" style="width: 1300px; height: 16rem; margin-bottom:30px;">
+               
                   <div class="col-md-2">
-                     <img src="${profil.profilImage }" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
+                     <img src="${profil.profilImage }" class="img-fluid" alt="프로필 사진" style="width: 200px; height: 200px; border-radius: 5px; margin-bottom:1rem !important;">
                  </div>
                   <div class="col-md-6">
                      <div class="">
@@ -24,23 +26,23 @@
                                  <img src="images/img_1_sq.jpg" alt="Image" class="img-fluid" style="10rem !important">
                               </a> -->
                               <div class="col-md-12">
-                                 <span class="date ms-5"> 오늘의 봉사 </span>
-                                 <span class="date float-end me-5" id="mypageDate" ></span>
+                                 <span class="date ms-5" style="margin-left:1rem !important; color:black; font-weight:bold;"> 오늘의 봉사 </span>
+                                 <span class="date float-end me-5" id="mypageDate"  style="color:black; font-weight:bold;"></span>
                                   <div class="ms-2 my-3 d-flex align-items-center">
                                        <h2 id="volunProceedTitle" onclick="changeMapCenter()">${todayProceed.recruitTitle}</h2>
-                                         <button class="btn btn-primary ms-2" onclick="changeMapCenter()">센터 찾기</button>
-                                  <button class="btn btn-secondary ms-2" onclick="changeMapUser()">현재 위치로</button>
+                                         <button class="btn btn-primary ms-2" onclick="changeMapCenter()" style="background-color:#3ab41cb5; border:none;">센터 찾기</button>
+                                  <button class="btn btn-secondary ms-2" onclick="changeMapUser()" style="background-color:#f2f2f2; color: gray; border:none;">현재 위치로</button>
                                        
                                    </div>
 
                               </div>
                            </div>
                         </div>
-                     </div>.
+                     </div>
                   </div>
 				<div class="col-md-3 d-flex">
 				    <img src="/images/thermometer.png" class="img-fluid" alt="온도계" style="width:50%; height:60%; margin-right: 1rem;">
-				    <div>
+				    <div style="font-weight: bold; color: black;">
 				        <div class="mb-5">
 				            <div>오늘의 온도</div>
 				            <i class="bi bi-thermometer-high text-danger"></i>${temperature.volunHeat}℃
@@ -51,16 +53,18 @@
 				        </div>
 				    </div>
 				</div>
+			  
               </div>
-
+			  
+			  
                   <div class="row" style="width:1300px; margin-bottom: 2rem;" >
                      <div class="col-md-11" >
                      <ul class="nav nav-pills nav-fill">
                         <li class="nav-item border rounded-2">
-                          <a class="nav-link active" data-toggle="tab" href="#mapTab">지도</a>
+                          <a class="nav-link active" data-toggle="tab" href="#mapTab" style="font-weight:bold;">지도</a>
                         </li>
                         <li class="nav-item border rounded-2">
-                          <a class="nav-link" data-toggle="tab" href="#calendarTab">내 일정</a>
+                          <a class="nav-link" data-toggle="tab" href="#calendarTab" style="font-weight:bold;">내 일정</a>
                         </li>
                       </ul>
                       <div class="tab-content">
@@ -75,7 +79,7 @@
                                  </div>
                               
                                  <div class="col-md-4" >
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> IN</h5>
                                           <p class="card-text" id="arrivalDateTime" style="text-align:right">날짜 및 시간</p>
@@ -83,7 +87,7 @@
                                        </div>
                                     </div>
             
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
                                           <p class="card-text" id="departureDateTime" style="text-align:right">날짜 및 시간</p>
@@ -91,7 +95,7 @@
                                        </div>
                                     </div>
             
-                                    <div class="btn btn-secondary my-2 my-sm-0" id="btnTimeRecord" style="width:100%; height: 7rem; align-items: center;">
+                                    <div class="btn btn-secondary my-2 my-sm-0" id="btnTimeRecord" style="width:100%; height: 7rem; align-items: center; background-color:#3ab41cb5; border:none;">
                                        <p class="fs-2" style="margin-top:20px;"> 출근/퇴근</p>
                                     </div>
                                  </div>

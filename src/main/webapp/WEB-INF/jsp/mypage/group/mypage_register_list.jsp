@@ -8,7 +8,7 @@
 
 <div class="d-flex" id="wrapper">
       <!-- Sidebar-->
-      <div>
+      <div class="col-md-2 col-lg-3 col-xl-2 border-end bg-white" style="border-right: 1px solid #dee2e6;">
         <div class="list-group list-group-flush">
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
@@ -27,11 +27,11 @@
 
 					<input type="hidden" id="GROUP_MEM_SEQ" name="groupMemSeq" value="${principal.user.memSeq}">
 					<div class="inner1">
-						<div class="inner2">
-							<div class="row posts-entry" style="font-weight:bold;">
+						<div class="inner2" style="width:70%;">
+							<div class="row posts-entry">
 								<div class="sss" style="margin-bottom:150px;">
 								
-									<p style="font-size:30px;"><img src="/images/list4.png" style="width:26px;">   신청 글 작성 목록</p>
+									<h1 style="text-align:center; color:black; margin-bottom:50px;"><img src="/images/list4.png" style="width:26px;">   신청 글 작성 목록</h1>
 									<hr>
 									<div style="width: 100%;">
 										<c:forEach var="list" items="${list}">

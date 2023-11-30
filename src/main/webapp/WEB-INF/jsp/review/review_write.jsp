@@ -7,10 +7,11 @@
   <div class="row blog-entries element-animate">
 	<div class="col-md-12 main-content">
 	 <div class="post-content-body">
-	  <div class="review-list">
-		<h4 style="font-weight: bold;">후기 글 쓰기</h4>
+	  <div class="review-list" style="margin-bottom:40px;">
+		<h1 style="text-align:center;"><img src="/images/register.png" style="width:30px; border:none;">   후기 글 쓰기</h1>
 	  </div>
 	
+	<div class="card">
 	 <table class="table-review">
 	 	<tr>
 	 	 <th>봉사기간</th>
@@ -46,7 +47,7 @@
 		  </tr>
 		  <tr>
 		   <th>제목</th>
-		   	<td colspan="3"><input class="me-sm-2" type="text" id="write-title" style="width:100%"></td>
+		   	<td colspan="3" ><input class="me-sm-2" type="text" id="write-title" style="width:100%"></td>
 		  </tr>
 	 </table>
 <!-- 	 <div style="margin-top:10px; display:flex;">
@@ -82,10 +83,14 @@
 	</div>
 
 
-	
-		<input type="hidden" id="arrCategory" value="">
-		<button class="btn btn-secondary my-2 my-sm-0" id="write-button" style="float:right;">등록</button>
+		<div style="float:right;">
+			<input type="hidden" id="arrCategory" value="">
+			<button class="btn btn-secondary my-2 my-sm-0" id="write-button" 
+					style="float:right; text-align: center; width: 120px; height: 50px; background-color: #3ab41cb5; color: white; font-size: 20px; float: right; border: none;">
+			등록</button>
+		</div>
 	 </div>
+	</div>
 
 	</div>
 <!-- END main-content -->
