@@ -19,28 +19,26 @@
 <body>
 
 	<div class="chat-container">
-		<header class="chat-header">
-			<h1>
-				<i class="fas fa-smile"></i> 채팅방
+		<header class="chat-header" >
+			<h1 >
+				<i class="fas fa-smile"></i>${groupname} 채팅방
 			</h1>
-			<a href="/userchat/chatGroupRoom?groupMemSeq=${principal.user.memSeq}"><button id="leave-room" class="btn">Chat List</button></a>
+			<a href="/userchat/chatGroupRoom?groupMemSeq=${principal.user.memSeq}"><button id="leave-room" class="btn">채팅방 목록</button></a>
 		</header>
 		<main class="chat-main">
 			<div class="chat-sidebar">
 				<div class="room-info">
-					<div class="room-title-section">
-						<label for="room-title">주최한 봉사:</label>
-						<h2 class="room-title" id="room-title">${title}</h2>
-					</div>
-					<div class="room-name-section">
-						<label for="room-name">단체 이름:</label>
-						<h3 class="room-name" id="room-name">${groupname}</h3>
-					</div>
+					  <div class="room-title-section">
+				            <i class="fas fa-users"></i> <!-- "handshake" 아이콘 추가 -->
+				            <label for="room-title">주최한 봉사:</label>
+				            <h2 class="room-title" id="room-title">${title}</h2>
+				        </div>
+				        <div class="room-name-section">
+				            <i class="fas fa-users"></i> <!-- "users" 아이콘 추가 -->
+				            <label for="room-name">단체 이름:</label>
+				            <h3 class="room-name" id="room-name">${groupname}</h3>
+				        </div>
 				</div>
-				<!-- User List Section -->
-				<ul id="users" class="user-list">
-					<!-- User list will be dynamically populated here -->
-				</ul>
 			</div>
 			<div class="chat-messages">
 				<ul class="list-group" id="message_list">

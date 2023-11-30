@@ -34,6 +34,10 @@ public class VolunteerProceedVO implements GeneralModel {
 	private String latitude;     	// 위도
 	private String longitude;    	// 경도
 	
+	//[민재-채팅방]  11.30 - 채팅방 정보
+	private String manager; // 주최자
+	private String phone;
+	private String volunaddr; //주소 지역
 	
 	
     public int getMemCount() {

@@ -12,13 +12,40 @@
 	    WHERE gm.group_mem_seq = #{groupMemSeq}
 	</select>
 <!-- 		개인 채팅방클릭시 개인 채팅방 목록 정보 가져오기  -->
-		<select id="findMyChatRoomList" parameterType="String" resultType="VolunteerProceedVO">
-		SELECT vp.RECRUIT_SEQ, 
-				m.NAME
-	    FROM VOLUNTEER_PROCEED vp
-	    JOIN MEMBER m ON vp.MEM_SEQ = m.MEM_SEQ
-	    WHERE vp.MEM_SEQ = #{memSeq}
-	    AND vp.STATE = '승인'
-	</select>
+<!-- 		<select id="findMyChatRoomList" parameterType="String" resultType="VolunteerProceedVO"> -->
+<!-- 		SELECT vp.RECRUIT_SEQ,  -->
+<!-- 				m.NAME -->
+<!-- 	    FROM VOLUNTEER_PROCEED vp -->
+<!-- 	    JOIN MEMBER m ON vp.MEM_SEQ = m.MEM_SEQ -->
+<!-- 	    WHERE vp.MEM_SEQ = #{memSeq} -->
+<!-- 	    AND vp.STATE = '승인' -->
+<!-- 	</select> -->
+	<!-- 		개인 채팅방클릭시 개인 채팅방 목록 정보 가져오기  -->
+	<select id="findMyChatRoomList" parameterType="String" resultType="VolunteerProceedVO">
+    SELECT vp.RECRUIT_SEQ, 
+           m.NAME,
+           rb.GROUP_NAME,
+           rb.VOLUN_REGION1,
+           rb.VOLUN_START_DATE,
+           rb.VOLUN_END_DATE,
+           rb.RECRUIT_STATE,
+           rb.VOLUN_CODE,
+           rb.VOLUN_TIME,
+           rb.PHONE,
+           rb.MANAGER,
+           rb.VOLUN_ADDR as volunaddr,
+           rb.RECRUIT_START_DATE,
+           rb.RECRUIT_END_DATE,
+           rb.MEM_COUNT,
+           rb.VOLUN_TARGET,
+           rb.RECRUIT_TITLE,
+           rb.RECRUIT_CONTENT,
+           rb.VIEW_COUNT
+    FROM VOLUNTEER_PROCEED vp
+    JOIN MEMBER m ON vp.MEM_SEQ = m.MEM_SEQ
+    JOIN RECRUIT_BOARD rb ON vp.RECRUIT_SEQ = rb.RECRUIT_SEQ
+    WHERE vp.MEM_SEQ = #{memSeq}
+    AND vp.STATE = '승인'
+</select>
 
 </mapper>

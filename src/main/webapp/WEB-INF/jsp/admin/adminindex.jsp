@@ -111,7 +111,7 @@
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-0">하루 방문자</p>
-                                <h6 class="mb-0">777명</h6>
+                                <h6 class="mb-0">24명</h6>
                             </div>
                         </div>
                     </div>
@@ -123,13 +123,13 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4" style= "height:475px;">
-                            <h6 class="mb-4">[월 단위] 주최된 봉사</h6>
+                        <div class="bg-light rounded h-100 p-4 text-center" style= "height:475px;">
+                            <h6 class="mb-4">월 단위 주최 봉사</h6>
                             <canvas id="bar-chart"></canvas>
                         </div>
                     </div>
                  	<div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
+                        <div class="bg-light rounded h-100 p-4 text-center">
                             <h6 class="mb-4">봉사 활동 유형별 분포</h6>
                             <canvas id="doughnut-chart" width="567" height="565" style="display: block; margin: 0px auto; box-sizing: border-box; height: 376.667px; width: 378px;"></canvas>
                         </div>
@@ -142,29 +142,31 @@
             <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0"> 후기 게시글 TOP 5 </h6>
-            </div>
+    <div style="flex: 1;"></div> <!-- 왼쪽 빈 공간 -->
+    <h6 class="mb-0" style="flex: 2; text-align: center;">후기 게시글 TOP 5</h6>
+    <div style="flex: 1;"></div> <!-- 오른쪽 빈 공간 -->
+</div>
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col">제목</th>
-                            <th scope="col">작성자</th>
-                            <th scope="col">작성일</th>
-                            <th scope="col">조회수</th>
-                            <th scope="col">추천수</th>
+                            <th scope="col" class="text-center">제목</th>
+					        <th scope="col" class="text-center">작성자</th>
+					        <th scope="col" class="text-center">작성일</th>
+					        <th scope="col" class="text-end">조회수</th>
+					        <th scope="col" class="text-end">추천수</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${top5Reviews}" var="review">
                             <tr>
-                                <td><c:url var="reviewDetailUrl" value="/review/info">
- 								<c:param name="reviewSeq" value="${review.reviewSeq}" /></c:url>
-                				<a href="${reviewDetailUrl}">${review.reviewTitle}</a> </td>
-                                <td>${review.writeId}</td>
-                                <td>${review.regDate}</td>
-                                <td>${review.viewCount}</td>
-                                <td>${review.recomCount}</td>
+							    <td class=""><c:url var="reviewDetailUrl" value="/review/info">
+								<c:param name="reviewSeq" value="${review.reviewSeq}" />
+								</c:url> <a href="${reviewDetailUrl}">${review.reviewTitle}</a></td>
+								<td class="text-center">${review.writeId}</td>
+					            <td class="text-center">${review.regDate}</td>
+					            <td class="text-end">${review.viewCount}</td>
+					            <td class="text-end">${review.recomCount}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -178,37 +180,51 @@
                 <div class="row g-4">
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calender</h6>
-                                <a href="">Show All</a>
-                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-4">
+							    <h6 class="mb-0">일정표</h6>
+							</div>
                             <div id="calender"></div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">To Do List</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div>
+					<div class="col-sm-12 col-md-6 col-xl-8">
+						<div class="h-100 bg-light rounded p-4">
+							<div
+								class="d-flex align-items-center justify-content-center mb-4">
+								<h6 class="mb-0">오늘의 업무</h6>
+							</div>
 
-                            <div class="d-flex align-items-center pt-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>문의 답변하기...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+							<div class="d-flex mb-2">
+								<input id="taskInput" class="form-control bg-transparent"
+									type="text" placeholder="업무를 입력하세요">
+								<button id="addTaskButton" type="button"
+									class="btn btn-primary ms-2">+</button>
+							</div>
+							<div id="taskList" class="task-list">
+								<!-- 할 일 목록이 여기에 추가됩니다 -->
+							</div>
+						</div>
+					</div>
+
+
+
+<!-- 					<div class="d-flex mb-2"> -->
+<!--                                 <input class="form-control bg-transparent" type="text" placeholder="업무를 입력하세요"> -->
+<!--                                 <button type="button" class="btn btn-primary ms-2">+</button> -->
+<!--                             </div> -->
+
+<!--                             <div class="d-flex align-items-center pt-2"> -->
+<!--                                 <input class="form-check-input m-0" type="checkbox"> -->
+<!--                                 <div class="w-100 ms-3"> -->
+<!--                                     <div class="d-flex w-100 align-items-center justify-content-between"> -->
+<!--                                         <span>공지사항 등록하기</span> -->
+<!--                                         <button class="btn btn-sm"><i class="fa fa-times"></i></button> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
             <!-- Widgets End -->
 
 
@@ -217,7 +233,7 @@
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                            &copy; <a href="<c:url value='/'/>">volunteer</a>, All Right Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
@@ -250,5 +266,51 @@
     <script src="/admintemplate/js/main.js"></script>
     <script src="/admintemplate/js/chart.js"></script>
 </body>
+
+<script>
+    document.getElementById('addTaskButton').addEventListener('click', function() {
+        var task = document.getElementById('taskInput').value;
+        if (task) {
+            addTask(task);
+            document.getElementById('taskInput').value = '';
+        }
+    });
+
+    function addTask(task) {
+        var taskList = document.getElementById('taskList');
+        var taskDiv = document.createElement('div');
+        taskDiv.classList.add('d-flex', 'align-items-center', 'pt-2');
+
+        var checkBox = document.createElement('input');
+        checkBox.classList.add('form-check-input', 'm-0');
+        checkBox.type = 'checkbox';
+
+        var taskContentDiv = document.createElement('div');
+        taskContentDiv.classList.add('w-100', 'ms-3');
+
+        var taskContentInnerDiv = document.createElement('div');
+        taskContentInnerDiv.classList.add('d-flex', 'w-100', 'align-items-center', 'justify-content-between');
+
+        var taskSpan = document.createElement('span');
+        taskSpan.textContent = task;
+
+        var deleteButton = document.createElement('button');
+        deleteButton.classList.add('btn', 'btn-sm');
+        deleteButton.innerHTML = '<i class="fa fa-times"></i>';
+        deleteButton.addEventListener('click', function() {
+            taskList.removeChild(taskDiv);
+        });
+
+        taskContentInnerDiv.appendChild(taskSpan);
+        taskContentInnerDiv.appendChild(deleteButton);
+
+        taskContentDiv.appendChild(taskContentInnerDiv);
+
+        taskDiv.appendChild(checkBox);
+        taskDiv.appendChild(taskContentDiv);
+
+        taskList.appendChild(taskDiv);
+    }
+</script>
 
 </html>
