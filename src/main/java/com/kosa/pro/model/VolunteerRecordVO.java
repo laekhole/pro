@@ -1,7 +1,5 @@
 package com.kosa.pro.model;
 
-import java.sql.Date;
-
 import com.kosa.pro.model.general.GeneralModel;
 
 import lombok.AllArgsConstructor;
@@ -21,8 +19,8 @@ public class VolunteerRecordVO implements GeneralModel {
 	private int memSeq;
 	private int groupMemSeq;
 	private int recruitSeq;
-	private Date timein;
-	private Date timeout;
+	private String timein;
+	private String timeout;
 	
 	
 //	[별이] 11/05 추가

@@ -2784,8 +2784,8 @@ textarea.form-control-lg {
   border-color: #214252; }
   .btn-outline-primary:hover {
     color: #fff;
-    background-color: #214252;
-    border-color: #214252; }
+    background-color: #3ab41cb5;
+    border-color: #3ab41cb5; }
   .btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
     -webkit-box-shadow: 0 0 0 0.25rem rgba(33, 66, 82, 0.5);
     box-shadow: 0 0 0 0.25rem rgba(33, 66, 82, 0.5); }
