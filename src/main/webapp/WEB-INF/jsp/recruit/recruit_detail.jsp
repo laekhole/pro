@@ -252,15 +252,15 @@
 	        .then(data => {
 	            // 수정: 중괄호와 괄호를 맞춤
 	            if (data.status) {
-	                alert(data.message);
+	            	swal("신청이 완료되었습니다", " ", "success");
 	            } else {
-	            	alert(data.message);
+	            	swal("잠시 후 다시 신청해주세요", " ", "error");
 	            }
 	        });
 	    }
 	 
 	</script>
-	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
 

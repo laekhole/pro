@@ -8,60 +8,63 @@
     <input type="hidden" id="pageName" value="main">
     
       <!-- Page content wrapper-->
-      <div class="col-md-10 col-lg-9 col-xl-10" id="page-content-wrapper" style="margin-top: 1rem;">
+      <div class="col-md-10 col-lg-9 col-xl-10 ms-3 mt-4" id="page-content-wrapper" style="margin-top: 1rem;">
 
             <!-- Page content-->
             <div class="container-fluid">
-               <div class="row" style="width: 1300px; height: 16rem; margin-bottom: 2rem;">
+            
+               <div class="row" style="width: 1300px; height: 16rem; margin-bottom:30px;">
+               
                   <div class="col-md-2">
-                     <img src="${profil.profilImage }" class="img-fluid" alt="프로필 사진" style="width:100%; margin-bottom:1rem !important;">
-
-                     <div class="col-md-2border" style="margin: 0;"><i class="bi bi-thermometer-high"></i>${temperature.volunHeat}</div>
+                     <img src="${profil.profilImage }" class="img-fluid" alt="프로필 사진" style="width: 200px; height: 200px; border-radius: 5px; margin-bottom:1rem !important;">
                  </div>
                   <div class="col-md-6">
-                     <div class="border">
+                     <div class="">
                         <div style="height: 16rem;">
                            <div class="blog-entry d-flex blog-entry-search-item">
                               <!-- <a href="single.html" class="img-link me-4">
                                  <img src="images/img_1_sq.jpg" alt="Image" class="img-fluid" style="10rem !important">
                               </a> -->
                               <div class="col-md-12">
-                                 <span class="date ms-5"> 오늘의 봉사 </span>
-                                 <span class="date float-end me-5" id="mypageDate" ></span>
+                                 <span class="date ms-5" style="margin-left:1rem !important; color:black; font-weight:bold;"> 오늘의 봉사 </span>
+                                 <span class="date float-end me-5" id="mypageDate"  style="color:black; font-weight:bold;"></span>
                                   <div class="ms-2 my-3 d-flex align-items-center">
                                        <h2 id="volunProceedTitle" onclick="changeMapCenter()">${todayProceed.recruitTitle}</h2>
-                                         <button class="btn btn-primary ms-2" onclick="changeMapCenter()">센터 찾기</button>
-                                  <button class="btn btn-secondary ms-2" onclick="changeMapUser()">현재 위치로</button>
+                                         <button class="btn btn-primary ms-2" onclick="changeMapCenter()" style="background-color:#3ab41cb5; border:none;">센터 찾기</button>
+                                  <button class="btn btn-secondary ms-2" onclick="changeMapUser()" style="background-color:#f2f2f2; color: gray; border:none;">현재 위치로</button>
                                        
                                    </div>
 
                               </div>
                            </div>
                         </div>
-                     </div>.
+                     </div>
                   </div>
-                  <div class="col-md-3 border d-flex align-items-center">
-                     <p class="text-md-start">
-                        <div>
-                             <div>오늘의 봉사 온도</div>
-                           <img src="/images/thermometer.png" class="img-fluid" alt="온도계" style="width:100%; margin-bottom:1rem !important;">
-                     <i class="bi bi-thermometer-high"></i>${temperature.volunHeat}
-                           <div>축하드려요</div>
-                           <div>내일의 봉사 온도</div>
-                        </div>
-
-                     </p>
-                  </div>
-               </div>
-
+				<div class="col-md-3 d-flex">
+				    <img src="/images/thermometer.png" class="img-fluid" alt="온도계" style="width:50%; height:60%; margin-right: 1rem;">
+				    <div style="font-weight: bold; color: black;">
+				        <div class="mb-5">
+				            <div>오늘의 온도</div>
+				            <i class="bi bi-thermometer-high text-danger"></i>${temperature.volunHeat}℃
+				        </div>
+				        <div>
+				            <div>내일의 온도</div>
+				            <i class="bi bi-thermometer-high text-danger"></i>${temperature.tomorrowHeat}℃
+				        </div>
+				    </div>
+				</div>
+			  
+              </div>
+			  
+			  
                   <div class="row" style="width:1300px; margin-bottom: 2rem;" >
                      <div class="col-md-11" >
                      <ul class="nav nav-pills nav-fill">
                         <li class="nav-item border rounded-2">
-                          <a class="nav-link active" data-toggle="tab" href="#mapTab">지도</a>
+                          <a class="nav-link active" data-toggle="tab" href="#mapTab" style="font-weight:bold;">지도</a>
                         </li>
                         <li class="nav-item border rounded-2">
-                          <a class="nav-link" data-toggle="tab" href="#calendarTab">내 일정</a>
+                          <a class="nav-link" data-toggle="tab" href="#calendarTab" style="font-weight:bold;">내 일정</a>
                         </li>
                       </ul>
                       <div class="tab-content">
@@ -76,7 +79,7 @@
                                  </div>
                               
                                  <div class="col-md-4" >
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> IN</h5>
                                           <p class="card-text" id="arrivalDateTime" style="text-align:right">날짜 및 시간</p>
@@ -84,7 +87,7 @@
                                        </div>
                                     </div>
             
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
                                           <p class="card-text" id="departureDateTime" style="text-align:right">날짜 및 시간</p>
@@ -92,8 +95,8 @@
                                        </div>
                                     </div>
             
-                                    <div class="btn btn-secondary my-2 my-sm-0" id="btnTimeRecord" style="width:100%; height: 7rem;">
-                                       <p> 시간 기록 버튼 : <div id="currentTime"> </div> </p>
+                                    <div class="btn btn-secondary my-2 my-sm-0" id="btnTimeRecord" style="width:100%; height: 7rem; align-items: center; background-color:#3ab41cb5; border:none;">
+                                       <p class="fs-2" style="margin-top:20px;"> 출근/퇴근</p>
                                     </div>
                                  </div>
                               </div>
@@ -433,10 +436,19 @@
 	        })
 	        .then(data => {
 	            console.log('출석 체크 성공:', data);
+                Swal.fire({
+                    title: "도착 인증 되었습니다!",
+                    html: `
+                    오시느라 고생 많으셨습니다!
+                    `,
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                })
 	        })
 	        .catch(error => {
 	            console.error('이미 출근 처리 됐습니다.', error);
 	            // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+
 	        });
 	}
 
@@ -456,10 +468,26 @@
               })
               .then(data => {
                   console.log('퇴근 체크 성공:', data);
+                  Swal.fire({
+                      title: "퇴근 인증 되었습니다!",
+                      html: `
+                      오늘도 수고하셨습니다.<br>보람찬 봉사, 감사합니다!
+                      `,
+                      showCancelButton: false,
+                      confirmButtonText: "확인",
+                  })
               })
               .catch(error => {
                   console.error('이미 퇴근 처리가 됐습니다.', error);
                   // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+                  Swal.fire({
+                      title: "퇴근 인증 되었습니다!",
+                      html: `
+                      오늘도 수고하셨습니다.<br>보람찬 봉사, 감사합니다!
+                      `,
+                      showCancelButton: false,
+                      confirmButtonText: "확인",
+                  })
               });
       }
       
@@ -472,27 +500,13 @@
                   document.getElementById('arrival').textContent = await getKoreanStandardTime();
                   // 시간 기록 후 출석 체크 함수 호출
                   attendCheck();
-                  Swal.fire({
-                      title: "도착 인증 되었습니다!",
-                      html: `
-                      오시느라 고생 많으셨습니다!
-                      `,
-                      showCancelButton: false,
-                      confirmButtonText: "확인",
-                  })
+
               } else {
                   if (document.getElementById('departure').textContent.trim() === '') {
                       document.getElementById('departure').textContent = await getKoreanStandardTime();
                      // 시간 기록 후 퇴근 체크 함수 호출
                      finishCheck();
-                     Swal.fire({
-                         title: "퇴근 인증 되었습니다!",
-                         html: `
-                         오늘도 수고하셨습니다.<br>보람찬 봉사, 감사합니다!
-                         `,
-                         showCancelButton: false,
-                         confirmButtonText: "확인",
-                     })
+                     
                   }
               }
 
@@ -520,14 +534,14 @@
           const departureDataTimeElement = document.getElementById('departureDateTime');
 
           // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
-          if (arrivalElement.innerText.trim() != '') {
-              arrivalDataTimeElement.innerHTML = '출석하셨습니다. 고맙습니다!';
+          if (arrivalElement.innerText.trim() != '') {              
+              arrivalDataTimeElement.innerHTML = '${timeinout.timein}에 출석하셨습니다. 고맙습니다!';
               arrivalElement.innerHTML = '보람찬 봉사, 감사합니다! <i class="bi bi-thermometer"></i>';
           }
 
           // Departure 데이터가 있으면 업데이트, 없으면 기본값으로 유지
           if (departureElement.innerText.trim() !== '') {
-              departureDataTimeElement.innerHTML = '끝마쳤습니다. 고맙습니다!';
+              departureDataTimeElement.innerHTML = '${timeinout.timeout}에 끝마쳤습니다. 고맙습니다!';
               departureElement.innerHTML = '덕분에 더 따뜻해졌어요! <i class="bi bi-thermometer-sun"></i>';
           }
       }
@@ -550,26 +564,6 @@
 
 
       <script> 
-/*          구글캘린더 연동하기 위해 설정해야 하는 부분
-      let calendar = new Calendar(calendarEl, {
-<<<<<<< HEAD
-     	  plugins: [ googleCalendarPlugin ],
-     	  googleCalendarApiKey: 'AIzaSyA8nrKaQrzEODvdfmSCDc-GxFdQog1kOSQ',
-     	  events: {
-     	    googleCalendarId: '9a054ccc467c37c20a414c993afa81dede8541aa46b2a1f74c1af9a912d995f6@group.calendar.google.com', // 이 부분에 사용자 구글 아이디 넣으면 됨. ex) mingi9391@gmail.com
-     	    className: 'gcal-event' // an option!
-     	  }
-     	});
-=======
-          plugins: [ googleCalendarPlugin ],
-          googleCalendarApiKey: 'AIzaSyA8nrKaQrzEODvdfmSCDc-GxFdQog1kOSQ',
-          events: {
-            googleCalendarId: '9a054ccc467c37c20a414c993afa81dede8541aa46b2a1f74c1af9a912d995f6@group.calendar.google.com', // 이 부분에 사용자 구글 아이디 넣으면 됨. ex) mingi9391@gmail.com
-            className: 'gcal-event' // an option!
-          }
-        });
->>>>>>> branch 'develop' of https://github.com/laekhole/pro.git
-*/
          // 변수 선언
          var calendar;
          var event;
@@ -594,15 +588,8 @@
                  contentHeight: 410,
                  
 
-          	     // 구글 캘린더 연동부
-                 googleCalendarApiKey: 'AIzaSyA8nrKaQrzEODvdfmSCDc-GxFdQog1kOSQ',
+				 // 풀캘린더 출력
                  eventSources: [
-                    {
-                       googleCalendarId: 'kimhgb@gmail.com', // 이 부분에 사용자 구글 아이디 넣으면 됨. ex) mingi9391@gmail.com
-                       className: 'gcal-event', // an option!
-                       color: 'blue',
-                       textcolor:'black'
-                    },
                     // 서버에서 가져온 일정 데이터 연동
                     {
                         url: '/user/calendar',
@@ -611,23 +598,8 @@
                         textColor: 'white' // 원하는 텍스트 색상으로 변경
                     }
                  ],
-                 events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다. 
-                          {
-/*                              title:'일정',
-                             start:'2023-11-26 00:00:00',
-                             end:'2023-11-27 24:00:00' 
-                             // color 값을 추가해 색상도 변경 가능
- */                          }
-                 ],
 
-             	 // 이벤트 클릭 이벤트 처리
 
-                 eventClick: function (calEvent, jsEvent, view) {
-                     event = calEvent;
-                     $('#inputTitle').val(calEvent.title);
-                     $('#eventModalLabel').text('Edit Event');
-                     $('#eventModal').modal('show');
-                 },
  
                  // 날짜 클릭 이벤트 처리
                  dayClick: function (date, jsEvent, view) {
@@ -639,39 +611,12 @@
              });
          });
  
-         // 이벤트 생성 및 수정 함수 추가
-         function saveEvent() {
-             var title = $('#inputTitle').val();
- 
-             if (title) {
-                 var eventData = {
-                     title: title,
-                     start: event ? event.start : $('#calendar').fullCalendar('getDate'),
-                     end: event ? event.end : null,
-                 };
- 
-                 if (event) {
-                     // 이벤트 수정
-                     event.title = title;
-                     $('#calendar').fullCalendar('updateEvent', event);
-                 } else {
-                     // 이벤트 생성
-                     $('#calendar').fullCalendar('renderEvent', eventData, true);
-                 }
-                 $('#eventModal').modal('hide');
-             } else {
-                 alert('Title is required');
-             }
-         }
      </script>
 
       <!-- 탭 만들기 부트스트랩 링크 -->
       <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-      <!-- 마이 페이지 날짜 기록 함수 호출용 JS -->
-      <script>
-         document.getElementById("currentTime").innerHTML = Date();
-      </script>
+
 
    <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%> 

@@ -10,26 +10,31 @@
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        
           <!--공지사항 바디 리스트 -->
-          <div class="notice-container">
-            <div class="notice-actions">
-                <div class="notice-search">
-                    <select class="notice-select" name="type1" id="noticeCategory">
-                        <option value="title">제목</option>
-                        <option value="writeId">작성자</option>
-                        <option value="content">내용</option>
-                    </select>
-                    <input type="text" name="searchWord" id="noticeInput" class="search-input" placeholder="검색...">
-               		<button type="submit" class="search-btn">검색</button>
-                </div>
-                <button class="new-notice-btn">새 공지사항 등록</button>
-            </div>
-            <!-- 기타 공지사항 내용... -->
-        	</div>
-        
-         <!-- 정렬 영역 -->
+	<div class="notice-container">
+		<div class="notice-actions">
+			<!-- 검색 영역 -->
+			<div class="notice-search">
+				<select class="notice-select" name="type1" id="noticeCategory">
+					<option value="title">제목</option>
+					<option value="writeId">작성자</option>
+					<option value="content">내용</option>
+				</select> <input type="text" name="searchWord" id="noticeInput"
+					class="search-input" placeholder="검색...">
+				<button type="submit" class="search-btn">검색</button>
+			</div>
+	
+			<!-- 새 공지사항 버튼 -->
+		</div>
+		<!-- 기타 공지사항 내용... -->
+	</div>
+
+
+<!-- 정렬 영역 -->
           <!-- 상단 고정 및 삭제 버튼 -->
           <div class="button-group">
             <div class="manage-buttons">
+            
+                <button class="btn btn-primary m-2" id="new-notice-btn">공지사항 등록</button>
                 <button class="btn btn-primary m-2">상단 고정</button>
                 <button class="btn btn-primary m-2">선택 삭제</button>
             </div>
@@ -127,7 +132,7 @@ function noticeselectAllCheckboxes() {
 
 $(document).ready(function () {
     // 새 공지사항 등록 버튼 클릭 시 다이얼로그 열기
-    $(".new-notice-btn").on("click", function () {
+    $("#new-notice-btn").on("click", function () {
       // 다이얼로그 열기
       $("#noticeDialog").css("display", "block");
     });

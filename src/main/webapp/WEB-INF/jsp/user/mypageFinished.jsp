@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ include file="/WEB-INF/jsp/include/top.jsp"%>
 	<%@ include file="/WEB-INF/jsp/include/sidebar.jsp"%> 
-    
+ 
+ 
     <input type="hidden" id="pageName" value="finish">
 <!-- Page content wrapper-->
       <div class="col-md-10 col-lg-9 col-xl-10" id="page-content-wrapper">
@@ -40,17 +41,28 @@
 						</div>
 					</c:forEach>
 
-					<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
                     </div>
-			</div>
+<%-- 
+ 					<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
+ 					 --%>
 
+                    <div class="row text-start pt-5 border-top">
+                        <div class="col-md-12">
+                            <div class="custom-pagination">
+                                <span>1</span>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <span>...</span>
+                                <a href="#">15</a>
+                            </div>
+                        </div>
+                    </div>
 
-
-
+				</div>
             </div>
-
       </div>
-      
+   </div>
 <!-- 모달 창 -->
 <div class="modal" tabindex="-1" role="dialog" id="ratingModal">
     <div class="modal-dialog" role="document">
@@ -85,6 +97,10 @@
         </div>
     </div>
 </div>
+
+
+
+<%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>   
 
 
 
@@ -173,5 +189,11 @@ function modalClose() {
     $('.jquery-modal').hide();
 }
 </script>
-   
-<%@ include file="/WEB-INF/jsp/include/bottom.jsp"%>   
+
+
+
+
+
+
+
+</html>

@@ -490,7 +490,6 @@ h4 {
         .column {
             flex: 1;
             padding: 10px;
-            border-left: 1px solid #ccc;
         }
 
         .column h2 {

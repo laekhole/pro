@@ -35,19 +35,34 @@
 	<div class="chat-container">
 		<header class="chat-header">
 			<h1>
-				<i class="fas fa-smile"></i> 채팅방
+				<i class="fas fa-smile"></i> ${name}의 채팅방
 			</h1>
-			<a href="/userchat/chatRoom?memSeq=${principal.user.memSeq}"><button id="leave-room" class="btn">Chat List</button></a>
+			<a href="/userchat/chatRoom?memSeq=${principal.user.memSeq}"><button id="leave-room" class="btn">채팅방 목록</button></a>
 		</header>
 		<main class="chat-main">
 			<div class="chat-sidebar">
-				<h2>
-					<i class=""></i>
-				</h2>
-				<h2 id="room-name"></h2>
-				<ul id="users">
-					<!-- User list will be here -->
-				</ul>
+				<div class="room-info">
+					<div class="room-recruitTitle-section">
+					<i class="fas fa-smile"></i> 
+						<label for="room-recruitTitle">참여한 봉사 제목:</label>
+						<h2 class="room-recruitTitle" id="room-recruitTitle">${recruitTitle}</h2>
+					</div>
+					<div class="room-manager-section">
+					<i class="fas fa-user"></i>
+						<label for="room-manager">봉사 주최 담당자:</label>
+						<h2 class="room-manager" id="room-manager">${manager}</h2>
+					</div>
+					<div class="room-name-section">
+					<i class="fas fa-phone"></i>
+						<label for="room-name">담당자 연락처:</label>
+						<h3 class="room-name" id="room-name">${phone}</h3>
+					</div>
+					<div class="room-volunaddr-section">
+					 <i class="fas fa-map-marker-alt"></i> 
+						<label for="room-volunaddr">봉사 장소:</label>
+						<h3 class="room-volunaddr" id="room-volunaddr">${volunaddr}</h3>
+					</div>
+				</div>
 			</div>
 			<div class="chat-messages">
 				<ul class="list-group" id="message_list">

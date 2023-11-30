@@ -146,4 +146,14 @@ public class GeneralDAOImpl implements GeneralDAO {
 	public int delete(String sqlMapID, Object key) {
 		return sqlSession.delete(sqlMapID, key);
 	}
+
+	/**
+	 * 
+	 * @param 민재 만든거
+	 * @param memSeqArray
+	 * @return
+	 */
+	public int update(String sqlMapID, List<Long> memSeqArray) {
+		return sqlSession.update(sqlMapID, memSeqArray);
+	}
 }

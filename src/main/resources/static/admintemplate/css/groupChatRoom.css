@@ -112,3 +112,16 @@ body {
 .room-title-section, .room-name-section {
     margin-bottom: 15px;
 }
+
+/* room-info */
+.room-info label {
+    font-weight: bold;
+    color: #333; /* 라벨 텍스트 색상 설정 */
+    font-size: 25px; /* 텍스트 크기 설정 */
+}
+
+.room-info h2, .room-info h3 {
+    color: #555; /* 텍스트 색상 설정 */
+    font-size: 21px; /* 텍스트 크기 설정 */
+}
+

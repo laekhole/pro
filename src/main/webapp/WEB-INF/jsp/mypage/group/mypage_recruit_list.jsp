@@ -247,14 +247,14 @@ function moveToAccepted(button) {
                     approveList.append(approveapproveList);
                 })
                 
-                swal("Good job!", "승인 되었습니다!", "success");
+                swal("Good job!", "승인 되었습니다", "success");
                 
             } else {
-                alert('승인에 실패했습니다: ' + json.message);
+            	swal("Oops!", "잠시 후 다시 신청해주세요", "error");
                 console.log(json.message);
             }
         } else {
-            alert('승인에 실패했습니다: ' + json.message);
+        	swal("Oops!", "잠시 후 다시 신청해주세요", "error");
             console.log(json.message);
         }
     });
@@ -297,7 +297,7 @@ function moveToAccepted(button) {
 	    .then((response) => response.json())
 	    .then((json) => {
 	        if (json.status) {
-				alert("거절되었습니다.");
+	        	swal("Good job!", "거절 되었습니다", "success");
 	        	const volunProceedSeq = $("#volunSeq").val(); // 서버에서 받은 값
 
 	        	// volunProceedSeq 값을 가진 행을 찾아서 삭제
@@ -346,12 +346,12 @@ function moveToAccepted(button) {
 	            
 	            
 	        } else {
-	            alert('거절에 실패했습니다: ' + json.message);
+	        	swal("Oops!", "잠시 후 다시 신청해주세요", "error");
 	            console.log(json.message);
 	        }
 	    })
 	    .catch(error => {
-	        console.error('오류 발생:', error);
+	    	swal("Oops!", "잠시 후 다시 신청해주세요", "error");
 	    });
 	}
 
