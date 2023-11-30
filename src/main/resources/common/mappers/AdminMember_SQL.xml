@@ -197,6 +197,32 @@
     WHERE mem_seq = #{memSeq}
 	</update>	
 
+<!-- 	회원 제제 해제 버튼  -->
+	<update id="AdminBlockClearMember" parameterType="int">
+    UPDATE member
+    SET ben_yn = 'N'
+    WHERE mem_seq = #{memSeq}
+	</update>	
+	
+<!-- 	체크 선택 제제 버튼  -->
+	<update id="CheckBanupdateMember" parameterType="java.util.List">
+    UPDATE member
+    SET ben_yn = 'Y'
+    WHERE mem_seq IN
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+</update>
+
+<!-- 	체크 선택 제재 해제 버튼  -->
+	<update id="CheckUnbanupdateMember" parameterType="java.util.List">
+    UPDATE member
+    SET ben_yn = 'N'
+    WHERE mem_seq IN
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+</update>
 
 <!-- 온도에 따라 오름차순으로 회원 목록을 가져오는 쿼리 -->
 <select id="adminmember.selectMembersSortedByTemperatureAsc" resultMap="memberResultMap">

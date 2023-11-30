@@ -39,5 +39,8 @@ public class MemberVO implements GeneralModel {
 	//VolunteerTimeVO 타입의 필드 추가
 	private VolunteerTimeVO volunteerTime;
 	
+	//체크 박스 memSeq 
+	private long checkmemSeq;
+	
 
 }
