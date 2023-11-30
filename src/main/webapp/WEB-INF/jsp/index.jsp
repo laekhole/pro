@@ -103,7 +103,7 @@
 						<div class="text-area">
 							<span>${top.reviewContent }</span>
 						</div>
-						<a href="/review/list" class="read-more">Continue Reading</a>	
+						<a href="/review/info?reviewSeq=${top.reviewSeq }" class="read-more">Continue Reading</a>	
 					</div>
 					
 				</div>

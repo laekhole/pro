@@ -96,11 +96,11 @@
 
 							<ul
 								class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li class="active"><a href="/notice">공지사항</a></li>
-								<li><a href="category.html" style="color: #fff;">봉사 안내</a></li>
-								<li><a href="/recruit/list" style="color: #fff;">봉사 신청</a></li>
-								<li><a href="/review/list" style="color: #fff;">봉사 후기</a></li>
-								<li><a href="category.html" style="color: #fff;">고객센터</a></li>
+								<li class="active"><a href="/notice" style="font-size:22px;">공지사항</a></li>
+								<li><a href="category.html" style="color: #fff; font-size:22px;">봉사 안내</a></li>
+								<li><a href="/recruit/list" style="color: #fff; font-size:22px;">봉사 신청</a></li>
+								<li><a href="/review/list" style="color: #fff; font-size:22px;">봉사 후기</a></li>
+								<li><a href="category.html" style="color: #fff; font-size:22px;">고객센터</a></li>
 							</ul>
 						</div>
 
