@@ -102,8 +102,8 @@
                         <span class="d-none d-lg-inline-flex">Admin</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="<c:url value='/'/>" class="dropdown-item">메인홈으로 </a>         
-                        <a href="<c:url value='/logout'/>" class="dropdown-item">로그아웃</a>
+                            <a href="<c:url value='/'/>" class="dropdown-item">메인홈으로 </a>       
+                            <a href="<c:url value='/logout'/>" class="dropdown-item">로그아웃</a>
                     </div>
                 </div>
             </div>

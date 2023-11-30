@@ -128,13 +128,8 @@
                             <canvas id="bar-chart"></canvas>
                         </div>
                     </div>
-<<<<<<< HEAD
                  	<div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4 text-center">
-=======
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
->>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git
                             <h6 class="mb-4">봉사 활동 유형별 분포</h6>
                             <canvas id="doughnut-chart" width="567" height="565" style="display: block; margin: 0px auto; box-sizing: border-box; height: 376.667px; width: 378px;"></canvas>
                         </div>
@@ -165,7 +160,6 @@
                     <tbody>
                         <c:forEach items="${top5Reviews}" var="review">
                             <tr>
-<<<<<<< HEAD
 							    <td class=""><c:url var="reviewDetailUrl" value="/review/info">
 								<c:param name="reviewSeq" value="${review.reviewSeq}" />
 								</c:url> <a href="${reviewDetailUrl}">${review.reviewTitle}</a></td>
@@ -173,15 +167,6 @@
 					            <td class="text-center">${review.regDate}</td>
 					            <td class="text-end">${review.viewCount}</td>
 					            <td class="text-end">${review.recomCount}</td>
-=======
-                                <td><c:url var="reviewDetailUrl" value="/review/info">
-                         <c:param name="reviewSeq" value="${review.reviewSeq}" /></c:url>
-                            <a href="${reviewDetailUrl}">${review.reviewTitle}</a> </td>
-                                <td>${review.writeId}</td>
-                                <td>${review.regDate}</td>
-                                <td>${review.viewCount}</td>
-                                <td>${review.recomCount}</td>
->>>>>>> branch 'develop' of https://github.com/onlyminjae/pro.git
                             </tr>
                         </c:forEach>
                     </tbody>
