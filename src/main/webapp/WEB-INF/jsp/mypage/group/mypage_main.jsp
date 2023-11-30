@@ -14,14 +14,14 @@
        border-bottom: 1px solid #dee2e6;">
        
         <div class="list-group list-group-flush">
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/registerList?groupSeq=${principal.user.memSeq}">신청 글 목록</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}">캘린더 관리</a>
-               <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/profile?groupSeq=${principal.user.memSeq}">개인 정보 및 프로필 수정</a>
+               <a id="mainPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
+               <a id="registerPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
+               <a id="registerListPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/registerList?groupSeq=${principal.user.memSeq}">신청 글 목록</a>
+               <a id="updateStatePage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
+               <a id="volunteeringListPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
+               <a id="reviewPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
+               <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}">캘린더 관리</a>
+               <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/profile?groupSeq=${principal.user.memSeq}">개인 정보 및 프로필 수정</a>
          </div>
          
      	</div>
@@ -129,6 +129,47 @@
 
 <script src="js/flatpickr.min.js"></script>
 
+			   <a id="mainPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/main?groupSeq=${principal.user.memSeq}">마이 페이지</a>
+               <a id="registerPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/recruit/registerForm">신청 글 작성</a>
+               <a id="registerListPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/registerList?groupSeq=${principal.user.memSeq}">신청 글 목록</a>
+               <a id="updateStatePage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/updateState?groupSeq=${principal.user.memSeq}">신청 목록/ 승인 및 거절</a>
+               <a id="volunteeringListPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/volunteeringList?groupSeq=${principal.user.memSeq}">진행 중인 봉사</a>
+               <a id="reviewPage" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/review?groupSeq=${principal.user.memSeq}">봉사활동 후기글</a>
+               <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/calendar?groupSeq=${principal.user.memSeq}">캘린더 관리</a>
+               <a id="" class="list-group-item list-group-item-action list-group-item-light p-3" href="/manager/profile?groupSeq=${principal.user.memSeq}">개인 정보 및 프로필 수정</a>
+         </div>
+         
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+    	  	var pageName = document.getElementById('pageName').value;
+    	    var mainPage = document.getElementById('mainPage');
+    	    var registerPage = document.getElementById('registerPage');
+    	    var registerListPage = document.getElementById('registerListPage');
+    	    var updateStatePage = document.getElementById('updateStatePage');
+    	    var volunteeringListPage = document.getElementById('volunteeringListPage');
+    	    var reviewPage = document.getElementById('reviewPage');
+
+            if (pageName === 'list') {
+            	mainPage.classList.add('text-light');
+            	mainPage.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'finish') {
+            	registerPage.classList.add('text-light');
+            	registerPage.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'main') {
+            	registerListPage.classList.add('text-light');
+            	registerListPage.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'review') {
+            	updateStatePage.classList.add('text-light');
+            	updateStatePage.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'review') {
+            	volunteeringListPage.classList.add('text-light');
+            	volunteeringListPage.style.backgroundColor = '#3ab41cb5';
+            } else if (pageName === 'review') {
+            	reviewPage.classList.add('text-light');
+            	reviewPage.style.backgroundColor = '#3ab41cb5';
+            }
+    	});
+      </script>
 
 <script src="js/aos.js"></script>
 <script src="js/glightbox.min.js"></script>

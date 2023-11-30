@@ -32,7 +32,7 @@
          <div class="section search-result-wrap">
             <div class="container" style="margin-left : 10%;">
             <br>
-               <h1 style="text-align : center; color:black; font-size:bold;"><img src="/images/register.png" style="width:30px;">   신청 글 작성</h1>
+               <h1 style="text-align : center; color:black;"><img src="/images/register.png" style="width:30px;">   신청 글 작성</h1>
                <br>
                <div class="card" style="padding:0px;">
                <div class="search_section" style="min-width:1100px;">
@@ -112,7 +112,7 @@
 										  <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br> -->
                                           <td>
                                           	  <input type="text" class="form-keyword" id="volun_addr" name="volunAddr" placeholder="주소" style="width:250px;">
-                                          	  <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색" style="background-color: black; color: white; border-radius: 5px; font-weight: bold; padding: 5px 5px;">
+                                          	  <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색" style="background-color: #3ab41cb5; color: white; border-radius: 5px; font-weight: bold; padding: 7px 7px; border:none;">
                                           </td>                                          
                                        </tr>
       								   <tr>
