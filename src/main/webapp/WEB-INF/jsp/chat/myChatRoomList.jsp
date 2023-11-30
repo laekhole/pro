@@ -38,7 +38,13 @@
 								</div>
 								<c:if test="${not empty chatRoom.recruitSeq}">
 								<div class="chat_ib" id="roomList">
+								<input type="hidden" id="manager" value="${chatRoom.manager}">
+								<input type="hidden" id="phone" value="${chatRoom.phone}">
+								<input type="hidden" id="volunaddr" value="${chatRoom.volunaddr}">
+								<input type="hidden" id="recruitTitle" value="${chatRoom.recruitTitle}">
 									<h5>나의 신청게시글번호:${chatRoom.recruitSeq}
+									</h5>
+									<h5>나의 신청봉사주제:${chatRoom.recruitTitle}
 										<span class="chat_date">Dec 25</span>
 									</h5>
 									<p>대화방이 열렸습니다.</p>
@@ -83,11 +89,16 @@ $(document).ready(() => {
         // 클릭한 버튼의 데이터 속성을 가져옵니다.
         const recruitSeq = $(this).data('recruitseq');
         const sender = $(this).data('name');
-        enterRoom(recruitSeq, sender);
+        const manager = $(this).closest('.chat_ib').find('#manager').val();
+        const recruitTitle = $(this).closest('.chat_ib').find('#recruitTitle').val();
+        const phone = $(this).closest('.chat_ib').find('#phone').val();
+        const volunaddr = $(this).closest('.chat_ib').find('#volunaddr').val();
+        
+        enterRoom(recruitSeq, recruitTitle ,sender,manager,phone,volunaddr);
     });
 });
 
-function enterRoom(recruitSeq, sender) {
+function enterRoom(recruitSeq, recruitTitle, sender,manager,phone,volunaddr) {
     // 로컬 저장소에 데이터 저장
     localStorage.setItem('chat.recruitSeq', recruitSeq);
     localStorage.setItem('chat.sender', sender);
@@ -98,7 +109,11 @@ function enterRoom(recruitSeq, sender) {
         type: 'POST',
         data: {
             recruitSeq: recruitSeq,
+            recruitTitle: recruitTitle,
             sender: sender,
+            manager: manager,
+            phone: phone,
+            volunaddr: volunaddr,
         },
         success: function(response) {
             // 서버 처리 성공 후 페이지 이동

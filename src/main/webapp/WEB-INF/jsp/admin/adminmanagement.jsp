@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -34,29 +34,30 @@
 
 
           <!-- 테이블 -->
-          <div class="mt-4 center-right-container">
-              <div class="mb-3 d-flex align-items-center">
-                  <label for="member-type-filter" class="form-label me-2" style="display:none">회원/단체 구분</label>
-                  <button class="btn btn-primary me-2" id="personalButton">개인</button>
-                  <button class="btn btn-secondary" id="groupButton">단체</button>
-              </div>
-              <div class="mt-2 d-flex justify-content-end">
-                <!-- 쪽지 전송 & 일괄 제재 버튼 -->
-<!--                 <button class="btn btn-primary active-button" id="messageButton">쪽지 전송</button> -->
-                <button onclick="adminCheckBlockMember()" class="btn btn-primary" id="sanctionButton">일괄 제재</button>
+<div class="d-flex justify-content-between mt-4 center-right-container">
+    <!-- 왼쪽 그룹: 개인, 단체 버튼 -->
+    <div class="d-flex align-items-center">
+        <button class="btn btn-primary me-2" id="personalButton">개인</button>
+        <button class="btn btn-secondary" id="groupButton">단체</button>
+    </div>
+
+    <!-- 오른쪽 그룹: 일괄 제재, 정렬 드롭다운 -->
+    <div class="d-flex align-items-center">
+        <button class="btn btn-primary" id="sanctionButton" onclick="adminCheckListBlockClearBut()">일괄 해제</button>
+        <button class="btn btn-primary" id="sanctionButton" onclick="adminCheckListBlockBut()">일괄 제재</button>
         
-                <!-- 정렬 드롭다운 -->
-                <div class="dropdown">
-                    <button class="btn btn-primary active-button dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        정렬
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#" data-sort="asc">온도 낮은순</a>
-                        <a class="dropdown-item" href="#" data-sort="desc">온도 높은순</a>
-                    </div>
-                </div>
+        <!-- 정렬 드롭다운 -->
+        <div class="dropdown">
+            <button class="btn btn-primary active-button dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                정렬
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" data-sort="asc">온도 낮은순</a>
+                <a class="dropdown-item" href="#" data-sort="desc">온도 높은순</a>
             </div>
-            </div>
+        </div>
+    </div>
+</div>
 
       </div>
           
@@ -104,13 +105,12 @@
         					<td>${member.volunteerTime.volunNoshow}</td> <!-- 노쇼 횟수 -->
 		                    <td id="status${member.memSeq}">${member.benYn == 'N' ? '활성' : '비활성'}</td> <!-- delYn이 'N'이면 활성, 아니면 비활성으로 표시 -->
 			  				
-			  				<!-- 제재 버튼, 온도가 30도 미만일 때만 보임 -->
 							<td>
 							    <c:choose>
-							        <c:when test="${member.volunteerTime.volunHeat < 30 && member.benYn == 'Y'}">
-							        <button type="button" class="btn btn-danger btn-sm">제재함</button> 
+							        <c:when test="${member.benYn == 'Y'}">
+							        <button type="button" class="btn btn-danger btn-sm" id="adminBlockClearBut${member.memSeq}" onclick="adminBlockClearBut(${member.memSeq})">제재함</button> 
 							        </c:when>
-							        <c:when test="${member.volunteerTime.volunHeat < 100 && member.benYn == 'N'}">
+							        <c:when test="${member.benYn == 'N'}">
 							            <button type="button" class="btn btn-warning btn-sm" id="adminBlockButton${member.memSeq}" onclick="adminBlockBut(${member.memSeq})">제재가능</button>
 							        </c:when>
 							        <c:otherwise>
@@ -157,7 +157,7 @@
 							        <c:when test="${group.grade.grade <= 1 && group.groupDelYn == 'Y'}">
 							        <button type="button" class="btn btn-danger btn-sm">제재함</button> 
 							        </c:when>
-							        <c:when test="${group.grade.grade <= 1 && group.groupDelYn == 'N'}">
+							        <c:when test="${group.groupDelYn == 'N'}">
 							            <button type="button" class="btn btn-warning btn-sm">제재가능</button>
 							        </c:when>
 							        <c:otherwise>
@@ -236,9 +236,9 @@
          // 받은 데이터로 테이블 내용을 채웁니다.
          $.each(members, function(i, member) {
         	 var statusButton = '';
-             if (member.volunteerTime.volunHeat < 30 && member.benYn === 'Y') {
-                 statusButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
-             } else if (member.volunteerTime.volunHeat < 100 && member.benYn === 'N') {
+             if (member.benYn === 'Y') {
+                 statusButton = '<button type="button" class="btn btn-danger btn-sm" id="adminBlockClearBut' + member.memSeq + '" onclick="adminBlockClearBut(' + member.memSeq + ')">제재함</button>';
+             } else if (member.benYn === 'N') {
                  statusButton = '<button type="button" class="btn btn-warning btn-sm"  id="adminBlockButton' + member.memSeq + '" onclick="adminBlockBut(' + member.memSeq + ')">제재가능</button>';
              }
              var row = '<tr>' +
@@ -268,7 +268,7 @@
         	 var sanctionButton = '';
         	 if (group.grade.grade <= 1 && group.groupDelYn === 'Y') {
         		 sanctionButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
-             } else if (group.grade.grade <= 1 && group.groupDelYn === 'N') {
+             } else if (group.groupDelYn === 'N') {
             	 sanctionButton = '<button type="button" class="btn btn-warning btn-sm">제재가능</button>';
              }
         	 var row = '<tr>' +
@@ -326,6 +326,45 @@
 	}
 }
 
+ //제재함 해제 ajax -> 제재가능 버튼으로 변경 하는 함수 
+ // adminBlockClearBut() 함수 정의
+ function adminBlockClearBut(member) {
+	  
+	 var confirmAction = confirm("회원을 제재 해제하시겠습니까?");
+   // MemberVO 객체 생성 및 데이터 설정
+   if(confirmAction){
+   var memberVO = {
+       memSeq: member
+   };
+
+   $.ajax({
+       url: '/admin/adminBlockClearBut', 
+       method: 'POST', 
+       contentType: 'application/json', // Content-Type 설정
+       data: JSON.stringify(memberVO), // JSON 데이터로 변환
+       success: function(response) {
+    	   if (response.status === 'success') {
+    	        // 버튼 스타일 변경
+    	        var button = $('#adminBlockClearBut' + member);
+    	        button.removeClass('btn btn-danger btn-sm').addClass('btn btn-warning btn-sm');
+                button.text('제재가능'); // 버튼 텍스트 변경
+    	        
+    	        // 상태 텍스트 변경
+    	        var statusText = $('#status' + member);
+    	        statusText.text('활성'); // 상태를 활성으로 변경
+
+    	        console.info('회원 제재 해제 성공 로그: ' + response.message);
+    	    }
+    	},
+       error: function(error) {
+           console.error('제제해제  에러 :', error);
+       }
+   });
+} else{
+	console.log('회원 제재 해제가 취소되었습니다.')
+	}
+}
+  
 
  
  // 모든 체크박스 선택/해제 함수
@@ -337,14 +376,15 @@
  }
  
  // 선택된 행 삭제 함수
- function adminCheckBlockMember() {
-     var checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-     for (var i = 0; i < checkboxes.length; i++) {
-         if (checkboxes[i].checked) {
-             checkboxes[i].closest('tr').remove();
-         }
-     }
- }
+//  function adminCheckBlockMember() {
+//      var checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+//      for (var i = 0; i < checkboxes.length; i++) {
+//          if (checkboxes[i].checked) {
+//              checkboxes[i].closest('tr').remove();
+//          }
+//      }
+//  }
+ 
 //  -- 여기서부터 정렬
 $(document).ready(function() {
     // 정렬 드롭다운 항목 클릭 이벤트
@@ -402,9 +442,9 @@ function updateTable(members, sortType) {
 
     $.each(members, function(i, member) {
         var statusButton = '';
-        if (member.volunteerTime && member.volunteerTime.volunHeat < 30 && member.benYn === 'Y') {
-            statusButton = '<button type="button" class="btn btn-danger btn-sm">제재함</button>';
-        } else if (member.volunteerTime && member.volunteerTime.volunHeat < 100 && member.benYn === 'N') {
+        if (member.benYn === 'Y') {
+            statusButton = '<button type="button" class="btn btn-danger btn-sm" id="adminBlockClearBut' + member.memSeq + '" onclick="adminBlockClearBut(' + member.memSeq + ')">제재함</button>';
+        } else if (member.benYn === 'N') {
             statusButton = '<button type="button" class="btn btn-warning btn-sm"  id="adminBlockButton' + member.memSeq + '" onclick="adminBlockBut(' + member.memSeq + ')">제재가능</button>';
         }
 
@@ -428,6 +468,121 @@ function updateTable(members, sortType) {
     }); 
 }
 
+//선택박스 체크하여 memSeq 가져오기
+function getSelectedMembers() {
+    var selectedMembers = [];
+    var checkboxes = document.querySelectorAll('tbody input[name="selectRow"]:checked');
+    
+    checkboxes.forEach(function (checkbox) {
+        var row = checkbox.closest('tr');
+        var memSeq = row.querySelector('td:nth-child(2)').textContent.trim(); // 두 번째 컬럼의 값 (memSeq) 가져오기
+        selectedMembers.push(memSeq);
+    });
+    
+    return selectedMembers;
+}
+
+// 선택 회원 일괄 제재 함수 ajax
+function adminCheckListBlockBut() {
+    var selectedMembers = getSelectedMembers();
+    console.log("selectedMembers:", selectedMembers)
+    
+    if (selectedMembers.length === 0) {
+        alert('선택된 멤버가 없습니다.');
+        return;
+    }
+
+    var confirmAction = confirm("선택된 멤버를 일괄 제재하시겠습니까?");
+    if (confirmAction) {
+        var data = {
+        		checkmemSeq: selectedMembers
+        };
+        console.log("checkmemSeq : " , data.checkmemSeq)
+        $.ajax({
+            url: '/admin/adminCheckListBlockButMember',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (response) {
+                if (response.status === 'success') {
+                    // 선택된 멤버를 일괄 제재한 후, 각 멤버의 버튼 상태 업데이트
+                    selectedMembers.forEach(function (memberSeq) {
+                        // 버튼 스타일 변경
+                        var button = $('#adminBlockButton' + memberSeq);
+                        button.removeClass('btn btn-warning btn-sm').addClass('btn btn-danger btn-sm');
+                        button.text('제재함'); // 버튼 텍스트 변경
+                        
+                        // 상태 텍스트 변경
+                        var statusText = $('#status' + memberSeq);
+                        statusText.text('비활성'); // 상태를 비활성으로 변경
+                        
+                        console.info('회원 제재 성공 로그: ' + response.message);
+                    });
+                    
+                    alert('선택된 멤버가 일괄 제재되었습니다.');
+                    // 페이지 새로 고침 또는 선택된 멤버 처리 후 필요한 작업 수행
+                }
+            },
+            error: function (error) {
+                console.error('일괄 제재 에러:', error);
+            }
+        });
+    } else {
+        console.log('일괄 제재가 취소되었습니다.');
+    }
+}
+
+
+// 선택 회원 일괄 제재 해제 함수 ajax
+function adminCheckListBlockClearBut() {
+    var selectedMembers = getSelectedMembers();
+    console.log("selectedMembers:", selectedMembers)
+    
+    if (selectedMembers.length === 0) {
+        alert('선택된 멤버가 없습니다.');
+        return;
+    }
+
+    var confirmAction = confirm("선택된 멤버의 제재를 해제하시겠습니까?");
+    if (confirmAction) {
+        var data = {
+            memSeqArray: selectedMembers
+        };
+        console.log("memSeqArray: ", data.memSeqArray)
+        
+        $.ajax({
+            url: '/admin/adminCheckListUnblockButMember',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (response) {
+                if (response.status === 'success') {
+                    // 선택된 멤버의 제재를 해제한 후, 각 멤버의 버튼 상태 업데이트
+                    selectedMembers.forEach(function (memberSeq) {
+                        // 버튼 스타일 변경
+                        var button = $('#adminBlockButton' + memberSeq);
+                        button.removeClass('btn btn-danger btn-sm').addClass('btn btn-warning btn-sm');
+                        button.text('제재가능'); // 버튼 텍스트 변경
+                        
+                        // 상태 텍스트 변경
+                        var statusText = $('#status' + memberSeq);
+                        statusText.text('활성'); // 상태를 활성으로 변경
+                        
+                        console.info('회원 제재 해제 성공 로그: ' + response.message);
+                    });
+                    
+                    alert('선택된 멤버의 제재가 해제되었습니다.');
+                    // 페이지 새로 고침 또는 선택된 멤버 처리 후 필요한 작업 수행
+                }
+            },
+            error: function (error) {
+                console.error('일괄 제재 해제 에러:', error);
+            }
+        });
+    } else {
+        console.log('일괄 제재 해제가 취소되었습니다.');
+    }
+}
 </script>
- 
+
 

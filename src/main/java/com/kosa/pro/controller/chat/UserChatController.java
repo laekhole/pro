@@ -45,14 +45,19 @@ public class UserChatController {
 		return "chat/myChatRoomList";
 	}
 	
-	
+	//채팅방 입장시 세션에 정보저장
 	@PostMapping("/setChatmyInfo")
-	public ResponseEntity<?> setChatmyInfo(HttpSession session,
-	                                     @RequestParam("recruitSeq") String recruitSeq,
-	                                     @RequestParam("sender") String sender) {
+	public ResponseEntity<?> setChatmyInfo(HttpSession session, @RequestParam("recruitSeq") String recruitSeq,
+			@RequestParam("sender") String sender, @RequestParam("recruitTitle") String recruitTitle, @RequestParam("manager") String manager,
+			@RequestParam("phone") String phone, @RequestParam("volunaddr") String volunaddr) {
 	    // 세션에 채팅 정보 저장
+		System.out.println("세션에 저장할 --> " + recruitTitle);
 	    session.setAttribute("chat.recruitSeq", recruitSeq);
+	    session.setAttribute("chat.recruitTitle", recruitTitle);
 	    session.setAttribute("chat.sender", sender);
+	    session.setAttribute("chat.manager", manager);
+	    session.setAttribute("chat.phone", phone);
+	    session.setAttribute("chat.volunaddr",volunaddr);
 
 	    return ResponseEntity.ok().build();
 	}
@@ -62,11 +67,22 @@ public class UserChatController {
 	public String roomEnter(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		List<VolunteerProceedVO> myChatRoomList = (List<VolunteerProceedVO>) session.getAttribute("mychatInfoList");
-	    String title = (String) session.getAttribute("chat.title");
+//	    String title = (String) session.getAttribute("chat.title");
+	    String recruitTitle = (String) session.getAttribute("chat.recruitTitle");
 	    String name = (String) session.getAttribute("chat.sender");
+	    String manager = (String) session.getAttribute("chat.manager");
+	    String phone = (String) session.getAttribute("chat.phone");
+	    String volunaddr = (String) session.getAttribute("chat.volunaddr");
 	    
-	    model.addAttribute("title", title);
+//	    model.addAttribute("title", title);
+	    model.addAttribute("recruitTitle", recruitTitle);
 	    model.addAttribute("name", name);
+	    model.addAttribute("manager", manager);
+	    model.addAttribute("phone", phone);
+	    model.addAttribute("volunaddr", volunaddr);
+	    
+	    System.out.println("recruitTitle --> " + recruitTitle);
+//	    System.out.println("title --> " + title);
 	    
 		return "/chat/myChatRoom";
 	}

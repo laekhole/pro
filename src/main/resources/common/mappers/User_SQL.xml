@@ -101,15 +101,16 @@
    <!-- 봉사 온도 -->
     <select id="selectVolunteerTime" parameterType="UserSearchVO" resultType="VolunteerTimeVO">
        select
-       		vt.volun_heat,
-		    vt.volun_heat + rb.volun_time / 2 as tomorrow_heat
-		from
-		    volunteer_proceed rp
-		join
-		    recruit_board rb on rp.recruit_seq = rb.recruit_seq
-		join
-		    volunteer_time vt on rp.mem_seq = vt.mem_seq
-		where rp.mem_seq= #{memSeq}
+             vt.volun_heat,
+          vt.volun_heat + rb.volun_time / 2 as tomorrow_heat
+      from
+          volunteer_proceed rp
+      join
+          recruit_board rb on rp.recruit_seq = rb.recruit_seq
+      join
+          volunteer_time vt on rp.mem_seq = vt.mem_seq
+      where rp.mem_seq= #{memSeq}
+           and current_timestamp between rb.volun_start_date and rb.volun_end_date+1
     </select>
     <!-- 봉사 온도 끝 -->
 

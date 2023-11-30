@@ -24,10 +24,18 @@
 		</div>
 		
 		
-<div class="mb-3 d-flex align-items-center">
-	<label for="member-type-filter" class="form-label me-2" style="display: none">봉사게시판 구분</label>
-	<button class="btn btn-primary me-2" id="recruitButton">모집 게시판 </button>
-	<button class="btn btn-secondary" id="reviewButton">후기 게시판</button>
+<div class="mb-3 d-flex justify-content-between align-items-center">
+    <div>
+        <!-- 기존 버튼들 -->
+        <label for="member-type-filter" class="form-label me-2" style="display: none">봉사게시판 구분</label>
+        <button class="btn btn-primary me-2" id="recruitButton">모집 게시판</button>
+        <button class="btn btn-secondary" id="reviewButton">후기 게시판</button>
+    </div>
+
+    <div>
+        <!-- 오른쪽에 정렬할 새로운 버튼 -->
+        <button onclick="deleteRows()" class="btn btn-primary rounded">선택 항목 삭제</button>
+    </div>
 </div>
 
 		            <!-- 모집 게시판 리스트 출력 -->
@@ -106,9 +114,6 @@
 		    </table>
 		</div>
       
-                <!-- 선택한 항목을 삭제할 버튼 -->
-            <!-- 선택한 항목을 삭제할 둥글게 디자인된 버튼 -->
-            <button onclick="deleteRows()" class="btn btn-primary rounded">선택 항목 삭제</button>
             <%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
 
             
