@@ -5,29 +5,6 @@
 
 <mapper namespace="user">
 
-
-
-
-<!--    동적으로 구현해야 할 때 쓸 SQL문 // 까먹을까 미리 작성 -->
-<!--
-    <select id="selectFinishedList" resultType="RecruitBoardVO"> 
-      select
-          TO_CHAR(r.volun_start_date, 'YYYY-MM-DD') as volun_start_date , 
-          TO_CHAR(r.volun_end_date, 'YYYY-MM-DD') as volun_end_date,  
-          r.recruit_title, 
-          r.recruit_content, 
-          r.group_name 
-      from 
-          recruit_board r 
-      join
-          volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
-      join 
-          member m ON vr.mem_seq = m.mem_seq  
-      where 
-          m.mem_seq = ${loginMember.memSeq}
-   </select>
-     -->
-
    <!-- 종료된 봉사 -->
     <select id="selectFinishedList" parameterType="UserSearchVO"  resultType="RecruitBoardVO">
    	 <include refid="paging.top" />
@@ -51,14 +28,29 @@
    </select> 
    <!-- 종료된 봉사 -->
 
+	<!-- 종료된 봉사 페이징용 전체 카운트 SQL  -->
+	<select id="finishedTotalCount" parameterType="UserSearchVO" resultType="int">
+      select
+		  count(*)
+       from 
+          recruit_board r 
+      join
+          volunteer_record vr ON r.recruit_seq = vr.recruit_seq 
+      join 
+          member m ON vr.mem_seq = m.mem_seq  
+      where 
+          m.mem_seq = #{memSeq}
+	</select>
+	<!-- 종료된 봉사 페이징용 전체 카운트 SQL  -->
 
 
 
    <!-- 나의 봉사 목록 -->
    <select id="selectRecruitList" parameterType="UserSearchVO" resultType="RecruitBoardVO">   
-       <include refid="paging.top" /> 
+      <include refid="paging.top" /> 
       select
           vp.state,
+          r.recruit_seq,
           r.recruit_end_date,
           r.recruit_title,
           r.volun_start_date,
@@ -73,9 +65,26 @@
           member m ON vp.mem_seq = m.mem_seq  
       where 
           m.mem_seq = #{memSeq}
+           <![CDATA[and current_timestamp <= r.volun_end_date + 1]]>
       <include refid="paging.bottom" />
    </select>
     <!-- 나의 봉사 목록 -->
+
+	<!-- 나의 봉사 페이징용 전체 카운트 SQL  -->
+	<select id="recruitingTotalCount" parameterType="UserSearchVO" resultType="int">
+      select
+          count(*)
+      from 
+          recruit_board r 
+      join
+          volunteer_proceed vp ON r.recruit_seq = vp.recruit_seq 
+      join 
+          member m ON vp.mem_seq = m.mem_seq  
+      where 
+          m.mem_seq = #{memSeq}
+           <![CDATA[and current_timestamp <= r.volun_end_date + 1]]>
+	</select>
+	<!-- 나의 봉사 페이징용 전체 카운트 SQL  -->
 
 
     
@@ -84,9 +93,11 @@
    <select id="selectReviewList" parameterType="UserSearchVO" resultType="ReviewBoardVO">
        <include refid="paging.top" /> 
       select
+      	  review_seq,
           review_title,
           reg_date,
-          SUBSTR(review_content, 1, 10) AS review_content
+          SUBSTR(review_content, 1, 10) AS review_content,
+          image_seq
       from review_board
       where mem_seq = #{memSeq}
       order by reg_date desc
@@ -94,6 +105,15 @@
    </select>
     <!-- 내가 쓴 후기 -->
     
+   	<!-- 내가 쓴 후기 페이징용 전체 카운트 SQL  -->
+	<select id="reviewedTotalCount" parameterType="UserSearchVO" resultType="int">
+      select
+		count(*)
+      from review_board
+      where mem_seq = #{memSeq}
+      order by reg_date desc
+	</select>
+	<!-- 내가 쓴 후기 페이징용 전체 카운트 SQL  -->
     
     
  
@@ -101,7 +121,7 @@
    <!-- 봉사 온도 -->
     <select id="selectVolunteerTime" parameterType="UserSearchVO" resultType="VolunteerTimeVO">
        select
-             vt.volun_heat,
+          vt.volun_heat,
           vt.volun_heat + rb.volun_time / 2 as tomorrow_heat
       from
           volunteer_proceed rp
