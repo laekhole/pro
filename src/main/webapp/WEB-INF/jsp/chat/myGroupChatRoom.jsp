@@ -74,27 +74,24 @@
 	 
     //MQTT 수신 받을 상태로 초기화를 한다
     //MQTT client
-    const roomId = localStorage.getItem('chat.recruitSeq');
-    const sender = localStorage.getItem('chat.sender');
+//     const roomId = localStorage.getItem('chat.recruitSeq');
+//     const sender = localStorage.getItem('chat.sender');
     
 
     //MQTT info host, port, topic 을 설정.
     //const mqtt_host = "www.masugil.shop";
     //const mqtt_port = 9090; //websocket port : mosquitt.conf 파일에 설정됨 :   
     //const mqtt_topic = "/team1/sub/" + roomId;
+//     const mqtt_host = "www.amond.store";
+//     const mqtt_port = 9001; //websocket ssl port : mosquitt.conf 파일에 설정됨  
+//     const mqtt_topic = "/test/sub/" + roomId;
+
+    const roomId = localStorage.getItem('chat.recruitSeq');
+    const sender = localStorage.getItem('chat.sender');
+    
     const mqtt_host = "www.amond.store";
     const mqtt_port = 9001; //websocket ssl port : mosquitt.conf 파일에 설정됨  
     const mqtt_topic = "/test/sub/" + roomId;
-    //*websocket에 ssl 적용시
-    //아래 내용 mosquitt.conf 파일에 추가함 
-		//listener 8883
-		//protocol websockets
-		//cafile /etc/ssl/ca_bundle.crt
-		//certfile /etc/ssl/certificate.crt
-		//keyfile /etc/ssl/private.key
-		//require_certificate false
-		//tls_version tlsv1.2
-    
 
     const options = {
 //     		  protocol : 'wss',
@@ -104,7 +101,7 @@
           password : '1004',
           clean: true,
     }
-    console.log('Connecting mqtt client ');
+    console.log('연결중 mqtt client ');
     console.log('mqtt_topic -> ', mqtt_topic);
       
     const mqttClient = mqtt.connect(options);

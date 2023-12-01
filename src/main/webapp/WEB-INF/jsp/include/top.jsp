@@ -148,7 +148,7 @@
 												</c:when>
 												<c:when test="${principal.user.loginAuth eq 'MANAGER' }">
 													<li><a
-														href="/manager/updateState?groupSeq=${principal.user.memSeq}">단체마이페이지</a></li>
+														href="/manager/main?groupSeq=${principal.user.memSeq}">단체마이페이지</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a href="/user/?memSeq=${principal.user.memSeq }">마이페이지</a></li>

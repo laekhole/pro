@@ -280,7 +280,6 @@
 			FROM
 				 recruit_board
 			WHERE TRUNC(sysdate) BETWEEN TRUNC(volun_start_date) AND TRUNC(volun_end_date)
->>>>>>> branch 'develop' of https://github.com/kimkwonyoung/pro.git
             AND group_mem_seq = #{groupMemSeq}
       ]]>
 

@@ -74,7 +74,7 @@
 									                            </td>
 									                            <td style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;  border-radius: 5px; height:150px; font-size:16px; font-weight:bold;">
 									                            	<span>채팅방 생성</span><br>
-									                            	<span style="color:red;">2</span> 건
+									                            	<span style="color:red;">0</span> 건
 									                            </td>
 									                            <td style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;  border-radius: 5px; height:150px; font-size:16px; font-weight:bold;">
 									                            	<span>작성된 후기</span><br>
