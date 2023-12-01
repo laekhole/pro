@@ -28,9 +28,9 @@
 								<div class="inner5-detail">
 									<span class="date">
 										<ul class="tags">
-											<li><a href="#" style="padding: 10px 20px;" >${recruit.recruitState}</a></li>
-											<li><a href="#" style="padding: 10px 20px;" >${recruit.volunRegion1}</a></li>
-											<li><a href="#" style="padding: 10px 20px; background-color: #fff28d;"><span id="ddayElement"></span></a></li>
+											<li><a href="#" id="recruitState" class="recruitLink"  style="padding: 10px 20px; font-weight:bold;" >${recruit.recruitState}</a></li>
+											<li><a href="#" style="padding: 10px 20px; font-weight:bold;" >${recruit.volunRegion1}</a></li>
+											<li><a href="#" style="padding: 10px 20px; background-color: #fff28d; font-weight:bold;"><span id="ddayElement"></span></a></li>
 											<span class="btn-frame" style="flex: 1;">
 												<button class="btn" style="font-size:19px;" onclick="add()">신청하기</button>
 											</span>
@@ -169,7 +169,24 @@
 		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 		// marker.setMap(null);    
 	</script>
-	
+	<script>
+    // 문서가 로드된 후 실행되는 함수
+    document.addEventListener("DOMContentLoaded", function() {
+        // 모든 클래스가 "recruitLink"인 요소들을 선택
+        var recruitLinks = document.querySelectorAll('.recruitLink');
+
+        // 각 링크에 대해 반복
+        recruitLinks.forEach(function(link) {
+            // 해당 요소의 텍스트 값이 "모집중"인 경우
+            if (link.innerText.trim() === "모집중") {
+                // 링크의 텍스트 색상을 변경하여 흰색으로 설정
+                link.style.color = 'white';
+                // 링크의 배경색을 변경하여 원하는 색상으로 설정
+                link.style.backgroundColor = '#3ab41cb5';
+            }
+        });
+    });
+	</script>
 	<script>
     	function list() {
     		location.href = "<c:url value='/recruit/list'/>"; 
@@ -252,9 +269,15 @@
 	        .then(data => {
 	            // 수정: 중괄호와 괄호를 맞춤
 	            if (data.status) {
-	            	swal("신청이 완료되었습니다", " ", "success");
+
+	            	swal({
+	            		  title: "신청이 완료되었습니다",
+	            		  text: "",
+	            		  icon: "success",
+	            		  button: "확인",
+	            		});
 	            } else {
-	            	swal("잠시 후 다시 신청해주세요", " ", "error");
+	            	swal("이미 신청되었습니다", "", "error");
 	            }
 	        });
 	    }
