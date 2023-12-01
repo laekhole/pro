@@ -1,5 +1,7 @@
 package com.kosa.pro.controller.user;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +78,7 @@ public class UserController extends PrtController {
 
 		Map<String, Object> map = _userService.proceedingList(search);
 		model.addAttribute("list", map.get("proceedingList"));
+		model.addAttribute("search", search);
 	
 		return "user/mypageList";
 	}
@@ -90,6 +93,7 @@ public class UserController extends PrtController {
 		
 		Map<String, Object> map = _userService.reviewedList(search);
 		model.addAttribute("list", map.get("reviewedList"));
+		model.addAttribute("search", search);
 		
 		return "user/mypageReviewed";
 	}
@@ -106,6 +110,9 @@ public class UserController extends PrtController {
 
 	    Map<String, Object> response = new HashMap<>();
 	    if (success) {
+	    	Calendar now = Calendar.getInstance();
+	    	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	    	response.put("timein", sdf.format(now.getTime()));
 	        response.put("status", "success");
 	        response.put("message", "출석이 정상적으로 처리되었습니다.");
 	        return ResponseEntity.ok(response);
@@ -120,13 +127,35 @@ public class UserController extends PrtController {
 	// void로 할 지, 실패했을 때 로그든 에러메세지든 보여줘야 하는지 모르겠음
 	// 퇴근 버튼 클릭 시 update 메소드
 	@RequestMapping("/recordUpdate")
+	public ResponseEntity<Map<String, Object>> recordUpdate(UserSearchVO search, Authentication authentication) throws Exception {
+		log.info(">>>>>>>>>>>>>>record 테이블 시간 업데이트");
+	    // UserSearchVO에 memSeq 셋팅
+	    getMemSeq(search, authentication);
+
+	    boolean success = _userService.recordUpdate(search);
+
+	    Map<String, Object> response = new HashMap<>();
+	    if (success) {
+	        response.put("status", "success");
+	        response.put("message", "퇴근이 정상적으로 처리되었습니다.");
+	        return ResponseEntity.ok(response);
+	    } else {
+	        response.put("status", "error");
+	        response.put("message", "데이터 삽입 중 오류가 발생했습니다.");
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+/*	
+  	// void로 할 지, 실패했을 때 로그든 에러메세지든 보여줘야 하는지 모르겠음
+	// 퇴근 버튼 클릭 시 update 메소드
+	@RequestMapping("/recordUpdate")
 	public void recordUpdate(UserSearchVO search, Authentication authentication) throws Exception {
 		log.info(">>>>>>>>>>>>>>record 테이블 시간 업데이트");
 		// UserSearchVO에 memSeq 셋팅
 		getMemSeq(search, authentication);
 		_userService.recordUpdate(search);		
 		}
-
+*/
 	
 	// 풀캘린더 데이터 조회 메소드
 	@RequestMapping("/calendar")

@@ -31,7 +31,7 @@
                                   <div class="ms-2 my-3 d-flex align-items-center">
                                        <h2 id="volunProceedTitle" onclick="changeMapCenter()">${todayProceed.recruitTitle}</h2>
                                          <button class="btn btn-primary ms-2" onclick="changeMapCenter()" style="background-color:#3ab41cb5; border:none;">센터 찾기</button>
-                                  <button class="btn btn-secondary ms-2" onclick="changeMapUser()" style="background-color:#f2f2f2; color: gray; border:none;">현재 위치로</button>
+                                  <button class="btn btn-secondary ms-2" onclick="changeMapUser()" style="background-color:#f2f2f2; color: gray; border:none;">내 위치로</button>
                                        
                                    </div>
 
@@ -79,7 +79,7 @@
                                  </div>
                               
                                  <div class="col-md-4" >
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0; padding:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> IN</h5>
                                           <p class="card-text" id="arrivalDateTime" style="text-align:right">날짜 및 시간</p>
@@ -87,7 +87,7 @@
                                        </div>
                                     </div>
             
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0; padding:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
                                           <p class="card-text" id="departureDateTime" style="text-align:right">날짜 및 시간</p>
@@ -149,12 +149,7 @@
    
    document.getElementById('mypageDate').textContent = getKoreanDate();
    
-   // 시간 기록 버튼 내용 바꾸기 함수
-   // 페이지 로드 시 실행
-    window.onload = function () {
-        // 데이터 업데이트 함수 호출
-        updateArrivalDeparture();
-    };
+
 
 
 
@@ -260,22 +255,22 @@
 
         // 거리에 따라 버튼 눌렀을 때 버튼 활성화/비활성화
 //        if (distance <= 100) { // 의도대로 짠 거리 로직
-        if (distance <= 10000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
+        if (distance <= 100000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
            document.getElementById('btnTimeRecord').classList.add('btn-secondary');
            document.getElementById('btnTimeRecord').classList.remove('btn-gray');
            // 들어올 때 함수 돌리고
            attendCheck();
-           } else {
+        } else {
            document.getElementById('btnTimeRecord').classList.remove('btn-secondary');
            document.getElementById('btnTimeRecord').classList.add('btn-gray');
            // 나갈 때 함수 돌리면
            finishCheck();
-           }
+        }
         
       
 //             console.log("if문 안에 함수 안에 userlon"+userlon);
              locPosition = new kakao.maps.LatLng(userlat, userlon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-             message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+             message = '<div style="padding:5px; width:80px !important">내 위치</div>'; // 인포윈도우에 표시될 내용입니다
             
             // 마커와 인포윈도우를 표시합니다
             displayMarker(locPosition, message);
@@ -307,17 +302,6 @@
             position: locPosition
          }); 
          
-         var iwContent = message, // 인포윈도우에 표시할 내용
-            iwRemoveable = true;
-
-         // 인포윈도우를 생성합니다
-         var infowindow = new kakao.maps.InfoWindow({
-            content : iwContent,
-            removable : iwRemoveable
-         });
-         
-         // 인포윈도우를 마커위에 표시합니다 
-         infowindow.open(map, marker);
          
          // 지도 중심좌표를 접속위치로 변경합니다
          map.setCenter(locPosition);      
@@ -415,7 +399,7 @@
 	}
 
 	// 출석 체크 했을 때 백엔드와 통신하기 위한 함수
-	function attendCheck() {
+	async function attendCheck() {
 	    // 출석 체크 성공 후 MQTT 메시지 전송
 	    const message = "출석완료";
 	    
@@ -424,41 +408,117 @@
 	    console.log("버튼눌렀을 때 mqtt_topic" + mqtt_topic);
 	    console.log("버튼눌렀을 때 출석완료-mqtt용");
 	    console.log("버튼눌렀을 때 sendMQTTMessage : "+ sendMQTTMessage);
-
-
-	    // 서버에 출석 체크 요청을 보내는 비동기 요청
-	    fetch('/user/attend')
-	        .then(response => {
-	            if (!response.ok) {
-	                throw new Error('서버 오류');
-	            }
-	            return response.json();
-	        })
-	        .then(data => {
-	            console.log('출석 체크 성공:', data);
-                Swal.fire({
-                    title: "도착 인증 되었습니다!",
-                    html: `
-                    오시느라 고생 많으셨습니다!
-                    `,
-                    showCancelButton: false,
-                    confirmButtonText: "확인",
-                })
-	        })
-	        .catch(error => {
-	            console.error('이미 출근 처리 됐습니다.', error);
-	            // 에러 발생 시 사용자에게 메시지 표시 등의 처리
-
+	
+	    try {
+	        // 비동기로 한국 표준시 얻기
+	        const koreanStandardTime = await getKoreanStandardTime();
+	        
+	        // 업데이트 #arrival element
+	        document.getElementById('arrival').innerText = koreanStandardTime;
+	        document.getElementById('arrivalDateTime').innerText = koreanStandardTime; // 작동안함...
+	
+	        // 서버에 출석 체크 요청을 보내는 비동기 요청
+	        const response = await fetch('/user/attend');
+	
+	        if (!response.ok) {
+	            throw new Error('서버 오류');
+	        }
+	
+	        const data = await response.json();
+	        console.log('출석 체크 성공:', data);
+	
+	        Swal.fire({
+	            title: "도착 인증 되었습니다!",
+	            html: `
+	                오시느라 고생 많으셨습니다!
+	            `,
+	            showCancelButton: false,
+	            confirmButtonText: "확인",
 	        });
+	        
+	        
+	        
+	        const arrivalDataTimeElement = document.getElementById('arrivalDateTime');
+	        arrivalDataTimeElement.innerText = data.timein + '에 출석하셨습니다.';
+	        
+	    } catch (error) {
+	        console.error('이미 출근 처리 됐습니다.', error);
+	        // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+	    }
 	}
 
+     /* 
+  	// 출석 체크 했을 때 백엔드와 통신하기 위한 함수
+  	function attendCheck() {
+  	    // 출석 체크 성공 후 MQTT 메시지 전송
+  	    const message = "출석완료";
+  	    
+  	    sendMQTTMessage(mqtt_topic, message);
+  	    console.log("버튼눌렀을 때 message" + message);
+  	    console.log("버튼눌렀을 때 mqtt_topic" + mqtt_topic);
+  	    console.log("버튼눌렀을 때 출석완료-mqtt용");
+  	    console.log("버튼눌렀을 때 sendMQTTMessage : "+ sendMQTTMessage);
 
 
+  	    // 서버에 출석 체크 요청을 보내는 비동기 요청
+  	    fetch('/user/attend')
+  	        .then(response => {
+  	            if (!response.ok) {
+  	                throw new Error('서버 오류');
+  	            }
+  	            return response.json();
+  	        })
+  	        .then(data => {
+  	            console.log('출석 체크 성공:', data);
+                  Swal.fire({
+                      title: "도착 인증 되었습니다!",
+                      html: `
+                      오시느라 고생 많으셨습니다!
+                      `,
+                      showCancelButton: false,
+                      confirmButtonText: "확인",
+                  });
+                  arrivalElement.innerHTML = '<div id="currentTime()"></div>';
+  	        })
+  	        .catch(error => {
+  	            console.error('이미 출근 처리 됐습니다.', error);
+  	            // 에러 발생 시 사용자에게 메시지 표시 등의 처리
 
-     
-     
+  	        });
+  	}
+ */
+      
       function finishCheck() {
-          // 서버에 출석 체크 요청을 보내는 비동기 요청
+    	    // 서버에 출석 체크 요청을 보내는 비동기 요청
+    	    fetch('/user/recordUpdate')
+    	        .then(response => {
+    	            if (!response.ok) {
+    	                throw new Error('서버 오류');
+    	            }
+    	            return response.json();
+    	        })
+      	        .then(data => {
+      	            console.log('출석 체크 성공:', data);
+                    Swal.fire({
+                        title: "퇴근 인증 되었습니다!",
+                        html: `
+                        오늘도 수고하셨습니다.<br>보람찬 봉사, 감사합니다!
+                        `,
+                        showCancelButton: false,
+                        confirmButtonText: "확인",
+                    });
+                      arrivalElement.innerHTML = '<div id="currentTime()"></div>';
+      	        })
+      	        .catch(error => {
+      	            console.error('이미 퇴근 처리 됐습니다.', error);
+      	            // 에러 발생 시 사용자에게 메시지 표시 등의 처리
+
+      	        });
+      	}
+
+/*     	        
+    	  // 서버에 퇴근 체크 요청을 보내는 비동기 요청
+function finishCheck() {
           fetch('<c:url value="/user/recordUpdate" />')
               .then(response => {
                   if (!response.ok) {
@@ -475,7 +535,8 @@
                       `,
                       showCancelButton: false,
                       confirmButtonText: "확인",
-                  })
+                  });
+                  
               })
               .catch(error => {
                   console.error('이미 퇴근 처리가 됐습니다.', error);
@@ -490,7 +551,7 @@
                   })
               });
       }
-      
+       */
       
       
       // 버튼 클릭 시 시간 기록 및 출석 체크
@@ -512,10 +573,6 @@
 
           }
       });
-      
-      
-      
-      
 
       // sysdate를 한국 표준시로 얻기
       async function getKoreanStandardTime() {
@@ -527,21 +584,26 @@
 
       // 데이터가 있는지 확인하고 적절한 내용으로 변경하는 함수
       function updateArrivalDeparture() {
+    	 
           const arrivalElement = document.getElementById('arrival');
           const departureElement = document.getElementById('departure');
 
           const arrivalDataTimeElement = document.getElementById('arrivalDateTime');
           const departureDataTimeElement = document.getElementById('departureDateTime');
 
-          // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
-          if (arrivalElement.innerText.trim() != '') {              
-              arrivalDataTimeElement.innerHTML = '${timeinout.timein}에 출석하셨습니다. 고맙습니다!';
+          
+           // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
+          if (arrivalElement.innerText.trim() != '') {     
+        	  
+              arrivalDataTimeElement.innerText = '${timeinout.timein} 에 출석하셨습니다.';
+                            
               arrivalElement.innerHTML = '보람찬 봉사, 감사합니다! <i class="bi bi-thermometer"></i>';
           }
+          
 
           // Departure 데이터가 있으면 업데이트, 없으면 기본값으로 유지
           if (departureElement.innerText.trim() !== '') {
-              departureDataTimeElement.innerHTML = '${timeinout.timeout}에 끝마쳤습니다. 고맙습니다!';
+              departureDataTimeElement.innerHTML = '${timeinout.timeout}에 끝마쳤습니다.';
               departureElement.innerHTML = '덕분에 더 따뜻해졌어요! <i class="bi bi-thermometer-sun"></i>';
           }
       }
@@ -618,5 +680,17 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
+     <!-- 마이 페이지 날짜 기록 함수 호출용 JS -->
+      <script>
+         //document.getElementById("currentTime").innerHTML = Date();
+
+         // 시간 기록 버튼 내용 바꾸기 함수
+         // 페이지 로드 시 실행
+          window.onload = function () {
+              // 데이터 업데이트 함수 호출
+              updateArrivalDeparture();
+          };
+      </script>
+      
 
    <%@ include file="/WEB-INF/jsp/include/bottom.jsp"%> 

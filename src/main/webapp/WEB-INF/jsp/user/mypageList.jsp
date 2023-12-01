@@ -7,7 +7,7 @@
     <input type="hidden" id="pageName" value="list">
     
 <!-- Page content wrapper-->
-      <div class="col-md-10 col-lg-9 col-xl-10" id="page-content-wrapper">
+      <div class="col-md-10 col-lg-9 col-xl-10 ms-3 mt-4" id="page-content-wrapper">
 
             <!-- Page content-->
             <div class="container-fluid">
@@ -21,20 +21,21 @@
                 <div class="row posts-entry" style="margin-bottom: 2rem;">
                 
                     <div class="col-lg-10" style="text-align: right;">
-						<%@ include file="/WEB-INF/jsp/include/searchformTemplate.jsp"%> 
+ 						<%@ include file="/WEB-INF/jsp/include/searchformList.jsp"%>  
+<%-- 						<%@ include file="/WEB-INF/jsp/include/searchformStar.jsp"%>  --%>
                     </div>
 
                     <div class="col-lg-10">
 
 						<c:forEach var="recruit" items="${list}">
 			             <div class="blog-entry d-flex blog-entry-search-item" style="display: flex; align-items: center;">
-			               <div style="flex-grow: 1; margin-left: 1rem;">
-			               	   <span><button type="button" class="btn btn-primary">${recruit.state}</button></span>
+			               <div style="flex-grow: 1; ">
+			               	   <span><button type="button" class="btn btn-primary" style="color: #7f7b7b; font-weight:800; background-color: #f2f2f2; border:transparent;">${recruit.state}</button></span>
 						            <c:if test="${not empty recruit.rejectMessage}">
-						                <span><button type="button" class="btn btn-primary">${recruit.rejectMessage}</button></span>
+						                <span><button type="button" class="btn btn-primary" style="color: #7f7b7b; font-weight:800; background-color: #f2f2f2 ; border:transparent;">${recruit.rejectMessage}</button></span>
 						            </c:if>
-			               	   <span><button type="button" class="btn btn-warning">${recruit.recruitEndDate}</button></span>
-			                   <h2><a href="single.html">${recruit.recruitTitle}</a></h2>
+			               	   <span><button type="button" class="btn btn-warning" style="font-weight:800; background-color: #fbeb6c; border:transparent;">${recruit.recruitEndDate}</button></span>
+			                   <h2><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq }"">${recruit.recruitTitle}</a></h2>
 			                   <span class="date me-2">봉사 기간 : ${recruit.volunStartDate} ~ ${recruit.volunEndDate}</span>
 			                   <span class="me-2">모집 기관 : ${recruit.groupName}</span>
 			               </div>
@@ -43,7 +44,9 @@
 
 
 
-
+					<!-- 권형 페이징 -->                    
+ 					<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
+<!-- 
                         <div class="row text-start pt-5 border-top">
                             <div class="col-md-12">
                                 <div class="custom-pagination">
@@ -56,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-
+ -->
                     </div>
 
 

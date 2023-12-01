@@ -35,8 +35,8 @@ public class UserService extends BaseService {
 	}
 	
 	// 봉사활동 종료 시 시간 업데이트 // 봉사활동 종료 시 퇴근 찍으면 timeout 찍히는 용도
-	public int recordUpdate(UserSearchVO search) {
-		return getDAO().update("user.recordUpdate", search); 
+	public boolean recordUpdate(UserSearchVO search) {
+		return getDAO().update("user.recordUpdate", search)>0; 
 	}
 	
 	// 봉사활동 종료 시 시간 업데이트
@@ -58,7 +58,7 @@ public class UserService extends BaseService {
 	public Map<String, Object> finishedList(UserSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("finishedList", (List<RecruitBoardVO>) getDAO().selectList("user.selectFinishedList", search));
+		map.put("finishedList", (List<RecruitBoardVO>) getDAO().selectBySearch("user.selectFinishedList", search,"finishedTotalCount"));
 		
 		return map;
 	}
@@ -67,7 +67,7 @@ public class UserService extends BaseService {
 	public Map<String, Object> proceedingList(UserSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("proceedingList", (List<RecruitBoardVO>) getDAO().selectList("user.selectRecruitList", search));
+		map.put("proceedingList", (List<RecruitBoardVO>) getDAO().selectBySearch("user.selectRecruitList", search,"recruitingTotalCount"));
 		
 		return map;
 	}
@@ -75,7 +75,7 @@ public class UserService extends BaseService {
 	public Map<String, Object> reviewedList(UserSearchVO search) {
 		Map<String, Object> map = new HashMap<>();
 		System.out.println("진입점");
-		map.put("reviewedList", (List<ReviewBoardVO>) getDAO().selectList("user.selectReviewList", search));
+		map.put("reviewedList", (List<ReviewBoardVO>) getDAO().selectBySearch("user.selectReviewList", search,"reviewedTotalCount"));
 		System.out.println("출력잘되나");
 		System.out.println(map);
 		return map;

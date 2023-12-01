@@ -7,7 +7,7 @@
  
     <input type="hidden" id="pageName" value="finish">
 <!-- Page content wrapper-->
-      <div class="col-md-10 col-lg-9 col-xl-10" id="page-content-wrapper">
+      <div class="col-md-10 col-lg-9 col-xl-10 ms-3 mt-4" id="page-content-wrapper">
 
             <!-- Page content-->
             <div class="container-fluid">
@@ -15,25 +15,21 @@
                 <div class="row posts-entry" style="margin-bottom: 2rem;">
                 
                     <div class="col-lg-10" style="text-align: right;">
-						<%@ include file="/WEB-INF/jsp/include/searchformTemplate.jsp"%> 
+						<%@ include file="/WEB-INF/jsp/include/searchformfinished.jsp"%> 
                     </div>
 
                     <div class="col-lg-10">
 
 					<c:forEach var="finished" items="${list}">
 						<div class="blog-entry d-flex blog-entry-search-item" style="align-items: center !important;">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-								<label class="form-check-label" for="flexCheckDefault"></label>
-							</div>
-							<div style="flex-grow: 1; margin-left: 1rem;">
+							<div style="flex-grow: 1;">
 							<div>
 								봉사기간: <span class="date" style="margin-right: 5rem !important;">${finished.volunStartDate } ~ ${finished.volunEndDate }</span>
 								<p style="margin:0;">단체이름: ${finished.groupName }</p>
 								<h2 style="display: inline-block;"><a href="/recruit/detail?recruitSeq=${finished.recruitSeq }">${finished.recruitTitle }</a></h2>
 								<div class="btn-container" style="float: right; display: inline-block;">
-									<a href="/review/writeForm?recruitSeq=${finished.recruitSeq }"><div class="btn btn-secondary my-2 my-sm-0"> 후기<br>쓰기</div></a>
-								    <div class="btn btn-secondary my-2 my-sm-0" onclick="openRatingModal(${finished.recruitSeq})">평가<br>하기</div>
+									<a href="/review/writeForm?recruitSeq=${finished.recruitSeq }"><div class="btn btn-secondary me-2 my-2 my-sm-0" style="color:black; background-color:#f2f2f2; border:transparent"> 후기<br>쓰기</div></a>
+								    <div class="btn btn-secondary my-2 my-sm-0" onclick="openRatingModal(${finished.recruitSeq})" style="color:black; background-color:#f2f2f2; border:transparent ">평가<br>하기</div>
 								</div>
 							</div>		
 							
@@ -42,22 +38,9 @@
 					</c:forEach>
 
                     </div>
-<%-- 
- 					<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
- 					 --%>
 
-                    <div class="row text-start pt-5 border-top">
-                        <div class="col-md-12">
-                            <div class="custom-pagination">
-                                <span>1</span>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <span>...</span>
-                                <a href="#">15</a>
-                            </div>
-                        </div>
-                    </div>
+					<!-- 권형 페이징 -->                    
+ 					<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
 
 				</div>
             </div>

@@ -87,7 +87,7 @@
   }
   .volunteerSearch .searchBases{
       position:relative;
-      padding:20px 20px 5px 20px;
+      padding:20px 20px 50px 20px;
       box-sizing:border-box;
       /* background:#edf7fb; */
       background:#f8f8f8;
@@ -206,7 +206,20 @@
   .position_right{
       text-align:right !important
   }
+  
+      .btnSearch {
+        position: absolute;
+        bottom: 12px;
+        right: 20px;
+        padding: 12px;
+        color: #424242;
+        background: #ededed;
+        border-radius: 0 0 8px 8px;
+    }
 
+  select {
+  padding-left: 12px;
+  }
   </style>
   
 
@@ -214,47 +227,44 @@
     <div class="volunteerSearch">
       <div class="searchBases">
         <dl>
-          <dt>활동지역</dt>
+          <dt>봉사지역</dt>
           <dd>
             <div class="part">
               <select id="area" name="area" title="활동지역 선택" onchange="drawAreaList(this);">
-                <option value=""> - 선택 - </option>
+                <option value="">  시/도 선택  </option>
                 
-                  
-                  <option value="0100">중앙</option>
-                  
-                  
-                
-                  
+<!--                   
+                  <option value="0100">강원</option>          
                   <option value="0101">서울</option>
-                  
-                  
-                
-                  
                   <option value="0102">부산</option>
-                  
-                  
-                
-                  
                   <option value="0103">대구</option>
-                  
-                  
-                
-                  
                   <option value="0104">인천</option>
-                  
-                  
-                
-                  
                   <option value="0105">광주</option>
-      
-                  
+-->
+
+				<option value="general01">강원</option>
+				<option value="general02">경기</option>
+				<option value="general03">경남</option>
+				<option value="general04">경북</option>
+				<option value="general05">광주</option>
+				<option value="general06">대구</option>
+				<option value="general07">대전</option>
+				<option value="general08">부산</option>
+				<option value="general09">서울</option>
+				<option value="general10">울산</option>
+				<option value="general11">인천</option>
+				<option value="general12">전남</option>
+				<option value="general13">전북</option>
+				<option value="general14">제주</option>
+				<option value="general15">충남</option>
+				<option value="general16">충북</option>      
+             
                 
               </select>
             </div>
             <div class="part part_r">
               <select id="areagugun" name="areagugun" title="시/군/구 선택을 선택">
-                <option value="" selected="selected"> - 선택 - </option>
+                <option value="" selected="selected">  선택  </option>
                 
                   
                     <option value="0000000000" >중앙</option>
@@ -283,7 +293,7 @@
           <dt>활동분야</dt>
           <dd>
             <select id="acttype" name="acttype" title="활동분야 선택">
-              <option value=""> - 선택 - </option>
+              <option value="">  선택  </option>
               
                 <option value="01"
                   >시설봉사</option>
@@ -304,41 +314,8 @@
             </select>
           </dd>
         </dl>
-        <dl class="dl01">
-          <dt>모집현황</dt>
-          <dd>
-            <div class="part">
-              <select name="status" id="status" title="모집현황 선택"
-                class="year">
-                <option value="">- 선택 -</option>
-                
-                  <option value="1" selected="selected">모집중</option>
-                
-                
-                <option value="2" >모집완료</option>
-              </select>
-            </div>
-          </dd>
-        </dl>
-        <dl class="dl02">
-          <dt class="dt2">
-            청소년 여부
-          </dt>
-          <dd>
-            <label><input type="checkbox" name="teenager_yn" value="Y"  title="청소년봉사일감 선택"> 청소년도 참여 가능해요.</label>
-          </dd>
-        </dl>
-        <dl class="dl01">
-          <dt>활동유형</dt>
-          <dd>
-            <div class="part">
-              <select name="volacttype" id="volacttype" chk="null" class="null" if="null" title="활동유형" style="width:100px;"><option value="">- 선택 -</option><option value="01" >대면</option><option value="02" >비대면</option><option value="03" >대면+비대면</option></select>
-            </div>
-          </dd>		
-        </dl>
         <div class="dl02 position_right">
- <!--            <button type="button" class="btn btn-secondary my-2 my-sm-0 text-white" onclick="goPage(1);" style="background-color:#285ed8;">검색</button> -->
-           <button type="button" class="btn btn-secondary my-2 my-sm-0 text-white btnSearch" onclick="goPage(1);" style="background-color:#3ab41cb5; border-color:transparent ">검색</button>
+            <button type="button" class="btn btn-secondary my-2 my-sm-0 text-white btnSearch" onclick="goPage(1);" style="background-color:#3ab41cb5; border-color:transparent ">검색</button>
         </div>
       </div>
       
