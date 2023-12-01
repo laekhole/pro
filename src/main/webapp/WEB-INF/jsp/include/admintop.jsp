@@ -57,16 +57,19 @@
    <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href=""<c:url value='adminmain'/>"" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>관리자페이지</h3>
-                </a>
-                <div class="d-flex align-items-center ms-4 mb-4">
+				<a href="<c:url value='adminmain'/>" class="navbar-brand mx-4 mb-3">
+					<div style="width: 290px; height: 50px; background: #F3F6F9;">
+						<img src="/admintemplate/img/volunteeradmin.png" alt="관리자 페이지 로고"
+							style="width: 100%; height: 100%;" />
+					</div>
+				</a>
+				<div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
    <img class="rounded-circle" src="/admintemplate/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Admin</h6>
+                        <h5 class="mb-0">관리자</h5>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -99,7 +102,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="/admintemplate/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">Admin</span>
+                        <span class="d-none d-lg-inline-flex">관리자</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="<c:url value='/'/>" class="dropdown-item">메인홈으로 </a>       

@@ -39,7 +39,6 @@
 				                <c:choose>
 				                    <c:when test="${not empty chatRoom.recruitSeq}">
 				                        <h5>단체 주관한 채팅방: ${chatRoom.recruitTitle}
-				                            <span class="chat_date">Dec 25</span>
 				                        </h5>
 				                        <p>대화방이 열렸습니다.</p>
 				                        <button class="enter_chat_button" data-recruitSeq="${chatRoom.recruitSeq}" data-groupName="${chatRoom.groupName}" data-recruitTitle="${chatRoom.recruitTitle}">채팅방 입장</button>
