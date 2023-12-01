@@ -7,7 +7,7 @@
     <input type="hidden" id="pageName" value="review">
 
       <!-- Page content wrapper-->
-      <div class="col-md-10 col-lg-9 col-xl-10" id="page-content-wrapper">
+      <div class="col-md-10 col-lg-9 col-xl-10 ms-3 mt-4" id="page-content-wrapper">
 
             <!-- Page content-->
             <div class="container-fluid">
@@ -23,7 +23,7 @@
 		                 전체 선택
 		             </div>
                 
-                     <div class="btn btn-secondary my-2 my-sm-0 ms-auto" style="width: 5rem;">
+                     <div class="btn btn-secondary my-2 my-sm-0 ms-auto" style="width: 5rem; color:black; background-color:#f2f2f2; border:transparent;">
                         삭제
                      </div>
       		     </div>
@@ -36,20 +36,20 @@
 						<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 						<label class="form-check-label" for="flexCheckDefault"></label>
 					</div>
-                     <a href="single.html" class="img-link me-4">
-                        <img src="images/img_1_sq.jpg" alt="Image" class="img-fluid"> <!-- 이미지 시퀀스 어케 넣지  -->
+                     <a href="/review/info?reviewSeq=${review.reviewSeq }"" class="img-link me-4">
+                        <img src="/files/${review.imageSeq}" alt="Image" class="img-fluid"> <!-- 이미지 시퀀스 어케 넣지  -->
                      </a>
                      <div>
                         <span class="date">${review.regDate}</span>
-                        <h2><a href="single.html">${review.reviewTitle}/a></h2>
+                        <h2><a href="/review/info?reviewSeq=${review.reviewSeq }">${review.reviewTitle}/a></h2>
                         <p>${review.reviewContent}</p>
                      </div>
                   </div>
                  </div>
                </c:forEach>
 
-<%-- 				<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%> --%>
- 
+ 				<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%> 
+<!--  
                     <div class="row text-start pt-5 border-top">
                         <div class="col-md-12">
                             <div class="custom-pagination">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                  
+ -->                  
                </div>
 
 

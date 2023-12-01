@@ -43,12 +43,7 @@
 
 												<div>
 													<div class="data clear">
-															<dl>
-																<dt>신청/필요인원:</dt>
-																<dd>
-																	<span>${today.count}</span>/<span>${today.memCount}</span>
-																</dd>
-															</dl>
+									
 															<dl>
 															<dt>모집기간:</dt>
 																<dd><span>${today.recruitStartDate}</span>~<span>${today.recruitEndDate}</span></dd>
