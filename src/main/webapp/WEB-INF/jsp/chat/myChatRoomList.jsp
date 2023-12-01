@@ -45,7 +45,6 @@
 									<h5>나의 신청게시글번호:${chatRoom.recruitSeq}
 									</h5>
 									<h5>나의 신청봉사주제:${chatRoom.recruitTitle}
-										<span class="chat_date">Dec 25</span>
 									</h5>
 									<p>대화방이 열렸습니다.</p>
 									<button class="enter_chat_button" 
