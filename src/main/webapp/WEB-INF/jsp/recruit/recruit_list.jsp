@@ -10,10 +10,10 @@
 		<div class="container">
 			<div style="display: flex; justify-content: center;">
 				<div style="width:75%;">
-					<div class="recuit">봉사자모집 및 신청</div>
+					<div class="recuit" >봉사자모집 및 신청</div>
 					<br>
 					<!-- 검색 구간 -->
-					<div>※ [모집중] 이라도 VolunTree 외 다른 경로를 통해 자원봉사자가 모집되는 경우 참여가 어려울 수 있습니다.</div>
+					<div style="font-weight:bold;">※ [모집중] 이라도 VolunTree 외 다른 경로를 통해 자원봉사자가 모집되는 경우 참여가 어려울 수 있습니다.</div>
 					<br>
 				<div class="search_section">
 					<form action="/recruit/list" >
@@ -22,7 +22,7 @@
 							<!-- 봉사 지역 -->
 						<div style="width:100%;">
 						<div class="form-region" style="margin-right:1%;">
-							<label for="form-select">봉사지역 </label>
+							<label for="form-select" >봉사지역 </label>
 								<select class="form-select" id="volun_region1" name="volunRegion1" style="width:170px;" onchange="categoryChange(this)" >
 									<option value>시/도 선택</option>
 									<option value="general01">강원</option>
@@ -118,13 +118,13 @@
 										<!-- 모집 날짜 정보를 저장하는 hidden input -->
 
 										<ul class="tags">
-											<li style="font-size:18px;"><a href="#" id="recruitLink${status.index}" class="recruitLink" style="width: 100px; text-align: center; padding: 6px;">${recruit.recruitState}</a></li>
-											<li id="recruitList"><a href="#" style=" width: 100px; text-align: center; padding: 6px; ">${recruit.volunRegion1}</a></li>
+											<li style="font-size:18px;"><a href="#" id="recruitState" class="recruitLink" style="width: 100px; text-align: center; padding: 6px; font-weight:bold; ">${recruit.recruitState}</a></li>
+											<li id="recruitList"><a href="#" style=" width: 100px; text-align: center; padding: 6px; font-weight:bold;">${recruit.volunRegion1}</a></li>
 											
 											<!-- 이거 디데이 자바스크립트로 설정하기 -->
 											<!-- 여러 개의 리스트 아이템이 있을 때, 각각에 대한 클래스 추가 -->
 											<li class="recruit-list-item">
-											    <a href="#" style="background-color: #fff28d; width: 100px; text-align: center; padding: 6px;" >
+											    <a href="#" style="background-color: #fbeb6c; width: 100px; text-align: center; padding: 6px; font-weight:bold;" >
 											        <span class="dday-element"></span>
 											    </a>
 											    <input type="hidden" class="recruit-start-date" name="recruitStartDate" value="${recruit.recruitStartDate}">
@@ -137,17 +137,26 @@
 									</div>
 									
 <%-- 									<a href="/exam/get.do?boardNum=${board.boardNum}">${board.title}</a> --%>
-									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}" style="font-size:30px; font-weight:bold;">${recruit.recruitTitle}</a></p>
+									<p class="title"><a href="/recruit/detail?recruitSeq=${recruit.recruitSeq}" style="font-size:30px; ">${recruit.recruitTitle}</a></p>
 									<div style="margin-top:10px;">
 										<div class="data clear">
 										<div style="width:100%;">
-												<dl style="width:20%; font-size:18px;">
+												<dl style="width:15%; font-size:15px;">
 													<dt>신청/필요인원:</dt>
 													<dd>
 														<span>${recruit.count}</span>/<span>${recruit.memCount}</span>
 													</dd>
 												</dl>
-												<dl style="width:35%; font-size:18px;">
+												<dl style="width:25%; font-size:15px;">
+													<dt>모집기간:</dt>
+													<dd>
+													
+													  <span><fmt:formatDate value="${recruit.recruitStartDate}" pattern="yyyy-MM-dd" /></span>~
+													  <span><fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd" /></span>
+
+													</dd>
+												</dl>												
+												<dl style="width:25%; font-size:15px;">
 													<dt>봉사기간:</dt>
 													<dd>
 													
@@ -156,7 +165,7 @@
 
 													</dd>
 												</dl>
-												<dl style="width:35%; font-size:18px;" >
+												<dl style="width:25%; font-size:15px;" >
 													<dt>모집기관:</dt>
 													<dd>${recruit.groupName}</dd>
 												</dl>
@@ -182,14 +191,26 @@
 		
 	</div>
 <script>
-   var recruitState${status.index} = "${recruit.recruitState}";
+    // 문서가 로드된 후 실행되는 함수
+    document.addEventListener("DOMContentLoaded", function() {
+        // 모든 클래스가 "recruitLink"인 요소들을 선택
+        var recruitLinks = document.querySelectorAll('.recruitLink');
 
-   var recruitLink${status.index} = document.getElementById("recruitLink${status.index}");
+        // 각 링크에 대해 반복
+        recruitLinks.forEach(function(link) {
+            // 해당 요소의 텍스트 값이 "모집중"인 경우
+            if (link.innerText.trim() === "모집중") {
+                // 링크의 텍스트 색상을 변경하여 흰색으로 설정
+                link.style.color = 'white';
+                // 링크의 배경색을 변경하여 원하는 색상으로 설정
+                link.style.backgroundColor = '#3ab41cb5';
+            }
+        });
+    });
+</script>
 
-   if (recruitState${status.index} === '모집완료') {
-     recruitLink${status.index}.style.backgroundColor = 'red';
-   }
 
+<script>
    
 // calculateDday 함수 정의
 function calculateDday(targetDate) {

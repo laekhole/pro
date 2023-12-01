@@ -128,25 +128,19 @@ public class MypageGroupController extends PrtController {
 	// 3-2. 승인처리하기
 	@ResponseBody
 	@PostMapping("/approve")
-	public Map<String, Object> approve (@RequestBody VolunteerProceedVO vpvo, Model model) throws Exception {
+	public Map<String, Object> approve (@RequestBody VolunteerProceedVO vpvo, RecruitBoardVO rbvo, Model model) throws Exception {
 		log.info(">>>>>>>>>>>>>>단체 신청 승인 컨트롤러");
-		
 		
 		Map<String, Object> result = new HashMap<>();
 		int status = _mypageGroupService.updateApprove(vpvo);
 		
     	if(status > 0) {
-    		
-    		if(vpvo.getMemCount() > vpvo.getCount()) {
+
 	    		result.put("status", true);
 	    		result.put("message", "봉사신청 '승인' 처리 되었습니다.");
 	    		result.put("count", vpvo.getCount()); // getCountAfterApproval 메서드는 업데이트된 count 값을 반환하는 메서드라 가정
 	    		result.put("approve", _mypageGroupService.approve(vpvo));
-    		} else {
-    			result.put("status", false);
-        		result.put("message", "인원이 초과되었습니다.");
-    		}
-    		
+
     	} else {
     		result.put("status", false);
     		System.out.println("모집인원 : " + vpvo.getMemCount());

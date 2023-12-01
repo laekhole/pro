@@ -79,7 +79,7 @@
                                  </div>
                               
                                  <div class="col-md-4" >
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0; padding:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> IN</h5>
                                           <p class="card-text" id="arrivalDateTime" style="text-align:right">날짜 및 시간</p>
@@ -87,7 +87,7 @@
                                        </div>
                                     </div>
             
-                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0;">
+                                    <div class="card" style="width: 100%; height: 8rem; margin-bottom: 1rem !important; margin:0; padding:0;">
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
                                           <p class="card-text" id="departureDateTime" style="text-align:right">날짜 및 시간</p>
