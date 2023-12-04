@@ -89,7 +89,7 @@
 						        <td style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${volunteer.memSeq}</td>
 						        <td style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${volunteer.name}</td>
 						        <td style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;">${volunteer.state}</td>
-						        <td style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px;" class="attendanceCk" id="attendanceCkId_${volunteer.memSeq}"></td>
+						        <td style="border:none; border-bottom: 1px solid #ddd;  border-radius: 5px; font-weight:bold;" class="attendanceCk" id="attendanceCkId_${volunteer.memSeq}"></td>
 						    </tr>
 						</c:forEach>
 

@@ -45,6 +45,10 @@
 													<div class="data clear">
 									
 															<dl>
+															<dt>모집기간:</dt>
+																<dd><span>${today.recruitStartDate}</span>~<span>${today.recruitEndDate}</span></dd>
+															</dl>
+															<dl>
 																<dt>봉사기간:</dt>
 																<dd><span>${today.volunStartDate}</span>~<span>${today.volunEndDate}</span></dd>
 															</dl>
@@ -73,6 +77,10 @@
 																<span>${withinAWeek.count}</span>/<span>${withinAWeek.memCount}</span>
 															</dd>
 														</dl>
+															<dl>
+															<dt>모집기간:</dt>
+																<dd><span>${withinAWeek.recruitStartDate}</span>~<span>${withinAWeek.recruitEndDate}</span></dd>
+															</dl>														
 														<dl>
 															<dt>봉사기간:</dt>
 															<dd><span>${withinAWeek.volunStartDate}</span>~<span>${withinAWeek.volunEndDate}</span></dd>
@@ -94,7 +102,7 @@
 							</div>
 						</div>
 		
-		
+						<%@ include file="/WEB-INF/jsp/common/inc-paging.jsp"%>
 					</div>
 	</div>
 	</div>
