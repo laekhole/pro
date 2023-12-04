@@ -91,7 +91,7 @@
                                        <div class="card-body">
                                           <h5 class="card-title"><i class="bi bi-clock"></i> OUT</h5>
                                           <p class="card-text" id="departureDateTime" style="text-align:right">날짜 및 시간</p>
-                                          <p class="card-text" id="departure" style="text-align:right">${timeinout.timeout }</p>
+                                          <p class="card-text" id="departure" style="text-align:right">${timeinout.timeout}</p>
                                        </div>
                                     </div>
             
@@ -595,7 +595,7 @@ function finishCheck() {
            // Arrival 데이터가 있으면 업데이트, 없으면 기본값으로 유지
           if (arrivalElement.innerText.trim() != '') {     
         	  
-              arrivalDataTimeElement.innerText = '${timeinout.timein} 에 출석하셨습니다.';
+              arrivalDataTimeElement.innerText = '${timeinout.timeinhhmm} 에 출석하셨습니다.';
                             
               arrivalElement.innerHTML = '보람찬 봉사, 감사합니다! <i class="bi bi-thermometer"></i>';
           }
@@ -603,7 +603,7 @@ function finishCheck() {
 
           // Departure 데이터가 있으면 업데이트, 없으면 기본값으로 유지
           if (departureElement.innerText.trim() !== '') {
-              departureDataTimeElement.innerHTML = '${timeinout.timeout}에 끝마쳤습니다.';
+              departureDataTimeElement.innerHTML = '${timeinout.timeouthhmm}에 끝마쳤습니다.';
               departureElement.innerHTML = '덕분에 더 따뜻해졌어요! <i class="bi bi-thermometer-sun"></i>';
           }
       }
