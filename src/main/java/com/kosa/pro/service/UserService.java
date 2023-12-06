@@ -39,10 +39,9 @@ public class UserService extends BaseService {
 	// volunteer_time 테이블의 volun_addtime 컬럼도 업데이트하는 용도
 	public boolean recordUpdate(UserSearchVO search) {
 		boolean success = (getDAO().update("user.recordUpdate", search)>0
-		// 여기서 volunteer_time 테이블 volun_addtime 업데이트하자
-				// &&
-//				getDAO().update("user.timeUpdate", search)>0				
-				);
+						   &&
+						   getDAO().update("user.updateVolunteerTime", search)>0				
+						  );
 		return success;
 	}
 	

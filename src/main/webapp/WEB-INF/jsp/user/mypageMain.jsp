@@ -255,7 +255,7 @@
 
         // 거리에 따라 버튼 눌렀을 때 버튼 활성화/비활성화
 //        if (distance <= 100) { // 의도대로 짠 거리 로직
-        if (distance <= 100000000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
+        if (distance <= 2000) { // GPS 오차가 너무 심함; 모바일에서도 해봐야 할 듯
            document.getElementById('btnTimeRecord').classList.add('btn-secondary');
            document.getElementById('btnTimeRecord').classList.remove('btn-gray');
            // 들어올 때 함수 돌리고

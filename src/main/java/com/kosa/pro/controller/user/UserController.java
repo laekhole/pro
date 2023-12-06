@@ -133,7 +133,8 @@ public class UserController extends PrtController {
 	    // UserSearchVO에 memSeq 셋팅
 	    getMemSeq(search, authentication);
 
-	    boolean success = _userService.recordUpdate(search);
+	    boolean success = _userService.recordUpdate(search) // volunteer_record 테이블의 timeout컬럼 및 volunteer_time 테이블의 addTime컬럼 업데이트 쿼리
+	    																						
 
 	    Map<String, Object> response = new HashMap<>();
 	    if (success) {
